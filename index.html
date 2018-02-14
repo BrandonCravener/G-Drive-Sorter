@@ -8,6 +8,7 @@
         <!-- Style Sheets -->
         <link rel="stylesheet" href="css/index.css">
         <link rel="stylesheet" href="css/materialize.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <!-- Other Tags -->
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
         <title>G-Drive Sorter</title>
@@ -15,8 +16,28 @@
     <body>
         <nav class="green">
             <div class="nav-wrapper">
+                <a href="#" data-target="slide-out" class="sidenav-trigger left hide-on-med-and-up auth"><i class="material-icons">menu</i></a>
                 <img class="brand-logo center" src="images/icon.png" alt="Folder with sorting options.">
+                <ul class="right no-auth">
+                    <li><a id="login-button" class="waves-effect waves-light btn">Login</a></li>
+                </ul>
             </div>
         </nav>
+        <ul id="slide-out" class="sidenav">
+            <li>
+                <div class="user-view">
+                    <div class="background">
+                      <img class="nav-bg" src="images/messy_files.jpg">
+                    </div>
+                    <a href="#!user"><img id="prof-img" class="circle" src="" alt="Profile Image"></a>
+                    <a href="#!name"><span id="prof-name" class="white-text name"></span></a>
+                    <a href="#!email"><span id="prof-email" class="white-text email"></span></a>
+                </div>
+            </li>
+        </ul>
     </body>
+    <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/materialize.min.js"></script>
+    <script src="js/index.js"></script>
 </html>
