@@ -1,87 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <!-- Meta Tags -->
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <!-- Style Sheets -->
-        <link rel="preload" class="lazyLoad" href="css/index.css">
-        <link rel="preload" class="lazyLoad" href="css/materialize.min.css">
-        <link rel="preload" class="lazyLoad" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <!-- Other Tags -->
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-        <title>G-Drive Sorter</title>
-<style>
-            #loader-background,
-            #loading-overlay {
-                top: 0;
-                left: 0;
-                top: 50%;
-                right: 0;
-                left: 50%;
-                bottom: 0;
-                width: 200vw;
-                height: 200vw;
-                transform: translate(-50%, -50%);
+
+<head>
+    <!-- Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Style Sheets -->
+    <link rel="preload" class="lazyLoad" href="css/index.css">
+    <link rel="preload" class="lazyLoad" href="css/materialize.min.css">
+    <link rel="preload" class="lazyLoad" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- Other Tags -->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <title>G-Drive Sorter</title>
+    <style>
+        #loader-background,
+        #loading-overlay {
+            top: 0;
+            left: 0;
+            top: 50%;
+            right: 0;
+            left: 50%;
+            bottom: 0;
+            width: 200vw;
+            height: 200vw;
+            transform: translate(-50%, -50%);
+        }
+
+        #loading-overlay {
+            z-index: 1000;
+            position: fixed;
+            transition: 0.3s opacity ease-in-out 0.5s;
+        }
+
+        #loading-overlay.fade {
+            opacity: 0;
+        }
+
+        #loader-background {
+            position: absolute;
+            border-radius: 100%;
+            background-color: #4CAF50;
+            transition: 0.5s all ease-in-out;
+        }
+
+        #loader-background.shrink {
+            width: 100px;
+            height: 100px;
+        }
+
+        #loading-overlay .inner-wrapper {
+            top: 50%;
+            left: 50%;
+            position: absolute;
+            transform: translate(-50%, -50%)
+        }
+
+        #loading-overlay .spinner {
+            width: 50px;
+            height: 50px;
+            border-radius: 20%;
+            animation-duration: 2s;
+            animation-name: loader;
+            background-color: black;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes loader {
+            25% {
+                transform: scale(1.1) rotate(90deg);
             }
-            #loading-overlay {
-                z-index: 1000;
-                position: fixed;
-                transition: 0.3s opacity ease-in-out 0.5s;
+            50% {
+                transform: scale(1.2) rotate(180deg);
             }
-            #loading-overlay.fade {
-                opacity: 0;
+            75% {
+                transform: scale(1.3) rotate(270deg);
             }
-            #loader-background {
-                position: absolute;
-                border-radius: 100%;
-                background-color: #4CAF50;
-                transition: 0.5s all ease-in-out;
+            100% {
+                transform: scale(1) rotate(360deg);
             }
-            #loader-background.shrink {
-                width: 100px;
-                height: 100px;
-            }
-            #loading-overlay .inner-wrapper {
-                top: 50%;
-                left: 50%;
-                position: absolute;
-                transform: translate(-50%, -50%)
-            }
-            #loading-overlay .spinner {
-                width: 50px;
-                height: 50px;
-                border-radius: 20%;
-                animation-duration: 2s;
-                animation-name: loader;
-                background-color: black;
-                animation-iteration-count: infinite;
-            }
-            @keyframes loader {
-                25% {
-                    transform: scale(1.1) rotate(90deg);
-                }
-                50% {
-                    transform: scale(1.2) rotate(180deg);
-                }
-                75% {
-                    transform: scale(1.3) rotate(270deg);
-                }
-                100% {
-                    transform: scale(1) rotate(360deg);
-                }
-            }
-        </style>
-        
-    </head>
-    <body>
-        <div id="loading-overlay">
-            <div id="loader-background"></div>
-            <div class="inner-wrapper">
-                <div class="spinner"></div>
-            </div>
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="loading-overlay">
+        <div id="loader-background"></div>
+        <div class="inner-wrapper">
+            <div class="spinner"></div>
         </div>
+    </div>
+    <main>
         <nav class="green">
             <div class="nav-wrapper">
                 <a href="#" data-target="slide-out" class="sidenav-trigger left auth"><i class="material-icons">menu</i></a>
@@ -89,7 +99,7 @@
                 <ul class="right no-auth">
                     <li><a id="login-button" class="waves-effect waves-light btn">Login</a></li>
                 </ul>
-                <ul class="right">
+                <ul class="right auth">
                     <li><a class='dropdown-trigger right auth' href='#' data-target='user-dropdown'><i class="material-icons">more_vert</i></a></li>
                 </ul>
             </div>
@@ -109,26 +119,29 @@
         <ul id='user-dropdown' class='dropdown-content'>
             <li><a id="logout-button" href="#!">Logout</a></li>
         </ul>
-        <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
-        <script src="js/materialize.min.js"></script>
-        <script src="js/index.js"></script>
         <div class="no-auth">
-            <div class="section">
-              <i class="material-icons section-svg">view_list</i>
-              <h1 class="header"><b>Effectively Sort Files</b></h1>
-              <p class="sectionParagraph">Sorts files quickly and efficiently based off of multiple functions and parameters et by the user and/or the program.</p>
-            </div>
-            <div class="section">
-              <i class="material-icons section-svg">accessibility</i>
-              <h1 class="header"><b>Simplistic Use</b></h1>
-              <p class="sectionParagraph">Preset configurations and simplistic user interface makes the G-Drive sorter suitable for all types of Google Drive users.</p>
-            </div>
-            <div class="section">
-              <i class="material-icons section-svg">art_track</i>
-              <h1 class="header"><b>Fully Customizable</b></h1>
-              <p class="sectionParagraph">Fully customizable conifgurations that sort all google drive files based on type, creation date, name, current owner, and mcuh more.</p>
-            </div>
+            <div class="row center">
+                <div class="col s12 m4">
+                    <h2><i class="teal-text large material-icons">view_list</i></h2>
+                    <h5 class="center"><b>Effectively Sort Files</b></h5>
+                    <p class="flow-text">Place holder text.</p>
+                </div>
+                <div class="col s12 m4">
+                    <h2 class="center"><i class="teal-text large material-icons">accessibility</i></h2>
+                    <h5 class="center"><b>Simplistic Use</b></h5>
+                    <p class="flow-text">Preset configurations and simplistic user interface makes the G-Drive sorter suitable for all types of Google Drive users.</p>
+                </div>
+                <div class="col s12 m4">
+                    <h2 class="center"><i class="teal-text large material-icons">art_track</i></h2>
+                    <h5 class="center"><b>Fully Customizable</b></h5>
+                    <p class="flow-text">Fully customizable conifgurations that sorts all Google Drive files based on type, creation date, name, current owner, and much more.</p>
+                </div>
             </div>
         </div>
-    </body>
+    </main>
+    <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
+    <script src="js/materialize.min.js"></script>
+    <script src="js/index.js"></script>
+</body>
+
 </html>
