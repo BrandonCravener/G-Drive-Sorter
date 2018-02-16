@@ -5,8 +5,8 @@
 }
 .nav-bg {
     width: 100%;
-    filter: blur(5px);
     transform: scale(1.1);
+    filter: blur(5px) brightness(70%);
 }
 
 .auth {
