@@ -1,8 +1,24 @@
+body, h1, h2, h3, h4, h5, h6, ul, ol, a, p, li, small, nav, img{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+  background:#E8EAF6;
+  overflow-x:hidden;
+}
+
 .brand-logo {
     height: 54px;
     top: 5px;
     filter: drop-shadow(0 0 0.5rem #121212b3);
 }
+
+#login-button{
+  position:relative;
+  right:25%;
+}
+
 .nav-bg {
     width: 100%;
     transform: scale(1.1);
@@ -18,4 +34,52 @@
         height: 46px;
         top: 5px;
     }
+}
+
+.no-auth{
+  left:2.8%;
+  position:relative;
+  margin:auto;
+}
+
+.section{
+  display:inline-block;
+  margin-top:50px;
+  margin-left:8px;
+  margin-right:8px;
+  width:30%;
+  height:350px;
+  border:2px solid;
+  box-shadow:0 2px 0;
+  background:#FFFFFF
+}
+
+@media all and (max-width: 600px) {
+  .section{
+    display:block;
+    margin: 20px 5px 20px 5px;
+    width:95%;
+  } 
+}
+
+.sectionParagraph{
+  margin:25px 17px 0 17px;
+  text-align:center;
+}
+
+.section-svg{
+  position:relative;
+  height:36px;
+  width:36px;
+  right:9px;
+  margin-left:50%;
+  margin-right:50%;
+  opacity:.75;
+}
+
+.header{
+  text-align:center;
+  font-family:robotto;
+  font-size:20px;
+  text-decoration:underline;
 }
