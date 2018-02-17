@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
+html {
+    font-family: 'Lato', sans-serif;
+}
+
 .brand-logo {
     height: 54px;
     top: 5px;
@@ -10,13 +16,42 @@
     filter: blur(5px) brightness(70%);
 }
 
+.parallax-bg {
+    width: 100%;
+    transform: scale(1.1) translate3d(-50%, 0px, 0px) !important;
+    filter: brightness(70%);
+}
+
 .auth {
     display: none;
+}
+
+.top-bar {
+    padding: 40px 0;
+}
+
+html, body, main {
+    height: 100%;
+}
+
+.bottom-bar {
+    bottom: 0;
+}
+
+.top-bar h2, .top-bar h5 {
+    width: 100%;
 }
 
 @media all and (max-width: 600px) {
     .brand-logo {
         height: 46px;
         top: 5px;
+    }
+}
+
+@media all and (max-width: 650px) {
+    .parallax-bg {
+        width: auto;
+        height: 100%;
     }
 }

@@ -13,6 +13,9 @@
             coverTrigger: false
         });
 
+    var parallax = document.querySelector('.parallax'),
+        parallaxInstance = Materialize.Parallax.init(parallax, {});
+
     // Firebase variables
     var googleProvider = new Firebase.auth.GoogleAuthProvider(),
         firebaseConfig = {
@@ -30,7 +33,6 @@
 
     // Elements
     var logoutButton = document.getElementById('logout-button'),
-        loginButton =  document.getElementById('login-button'),
         loadingOverlay = document.getElementById('loading-overlay'),
         loaderBackground = document.getElementById('loader-background');
 
@@ -82,11 +84,13 @@
     }
         
     Firebase.initializeApp(firebaseConfig);
-        
-    loginButton.addEventListener('click', function() {
-        Firebase.auth().signInWithPopup(googleProvider).then(function(result) {
-            var token = result.credential.accessToken;
-        }).catch(function(error) {});
+
+    applyToElements('.login-button', function(element) {
+        element.addEventListener('click', function() {
+            Firebase.auth().signInWithPopup(googleProvider).then(function(result) {
+                var token = result.credential.accessToken;
+            }).catch(function(error) {});
+        });
     });
 
     Firebase.auth().onAuthStateChanged(function(user) {
