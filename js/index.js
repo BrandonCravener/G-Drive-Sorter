@@ -1,5 +1,4 @@
 (function(window, document) {
-
     // Put variables from window into variables for easy reference
     var Materialize = window.M,
         Firebase = window.firebase;
@@ -9,7 +8,6 @@
 
     var dropdown = document.querySelector('.dropdown-trigger'),
         dropdownInstance = Materialize.Dropdown.init(dropdown, {
-            hover: true,
             coverTrigger: false
         });
 
@@ -62,14 +60,20 @@
             document.getElementById("prof-img").setAttribute('src', user.photoURL);
             document.getElementById("prof-name").textContent = user.displayName;
             document.getElementById("prof-email").textContent = user.email;
+            Database.ref('users/' + user.uid).once('value').then(function(snapshot){
+                var data = snapshot.val(),
+                    token = data.access_token;
+                if (token) {
+                }
+            });
         }
     }
-
+    
     function userNotAuthenticated(user) {
         hide('.auth');
         show('.no-auth');
     }
-
+    
     function removeLoader() {
         removeLoaderCallCount += 1;
         if (removeLoaderCallCount == 2) {
@@ -82,17 +86,34 @@
             }
         }
     }
-        
+    
     Firebase.initializeApp(firebaseConfig);
+    
+    var Database = Firebase.database();
 
+    googleProvider.addScope('https://www.googleapis.com/auth/drive.metadata.readonly');
+    
+    // Get all of the login buttons
     applyToElements('.login-button', function(element) {
+        // Apply a click listener to the button
         element.addEventListener('click', function() {
+            // Login to the app with Google
             Firebase.auth().signInWithPopup(googleProvider).then(function(result) {
-                var token = result.credential.accessToken;
-            }).catch(function(error) {});
+                var token = result.credential.accessToken,
+                    userID = result.user.uid
+                Database.ref('users/' + userID).set({
+                    access_token: token
+                });
+            });
         });
     });
 
+    // Add event listener to logout button
+    logoutButton.addEventListener('click', function() {
+        // Log the user out
+        Firebase.auth().signOut();
+    });
+    
     Firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             userAuthenticated(user);
@@ -120,11 +141,5 @@
                 });
             }
         }
-    });
-
-    // Add event listener to logout button
-    logoutButton.addEventListener('click', function() {
-        // Log the user out
-        Firebase.auth().signOut();
     });
 })(window, document);
