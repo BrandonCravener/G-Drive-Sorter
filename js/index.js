@@ -1,7 +1,8 @@
 (function(window, document) {
     // Put variables from window into variables for easy reference
     var Materialize = window.M,
-        Firebase = window.firebase;
+        Firebase = window.firebase,
+        Google;
 
     var sidenav = document.getElementById('slide-out'),
         sidenavInstance = Materialize.Sidenav.init(sidenav);
@@ -15,8 +16,7 @@
         parallaxInstance = Materialize.Parallax.init(parallax, {});
 
     // Firebase variables
-    var googleProvider = new Firebase.auth.GoogleAuthProvider(),
-        firebaseConfig = {
+    var firebaseConfig = {
             apiKey: 'AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM',
             authDomain: 'g-drive-sorter-2.firebaseapp.com',
             databaseURL: 'https://g-drive-sorter-2.firebaseio.com',
@@ -33,6 +33,8 @@
     var logoutButton = document.getElementById('logout-button'),
         loadingOverlay = document.getElementById('loading-overlay'),
         loaderBackground = document.getElementById('loader-background');
+
+    var googleUser;
 
     function applyToElements(selector, callingFunction) {
         var items = document.querySelectorAll(selector);
@@ -52,27 +54,6 @@
             element.style.display = 'block';
         });
     }
-
-    function userAuthenticated(user) {
-        show('.auth');
-        hide('.no-auth');
-        if (user) {
-            document.getElementById("prof-img").setAttribute('src', user.photoURL);
-            document.getElementById("prof-name").textContent = user.displayName;
-            document.getElementById("prof-email").textContent = user.email;
-            Database.ref('users/' + user.uid).once('value').then(function(snapshot){
-                var data = snapshot.val(),
-                    token = data.access_token;
-                if (token) {
-                }
-            });
-        }
-    }
-    
-    function userNotAuthenticated(user) {
-        hide('.auth');
-        show('.no-auth');
-    }
     
     function removeLoader() {
         removeLoaderCallCount += 1;
@@ -86,41 +67,48 @@
             }
         }
     }
-    
+
+    function userAuthentication(authenticated) {
+        if (authenticated) {
+            googleUser = Google.auth2.getAuthInstance().currentUser.get();
+            hide('.no-auth');
+            show('.auth');
+            if (googleUser) {
+                var idToken = googleUser.getAuthResponse().id_token,
+                    credentials = Firebase.auth.GoogleAuthProvider.credential(idToken);
+                Firebase.auth().signInWithCredential(credentials).then(function(user) {
+                    if (user) {
+                        document.getElementById("prof-img").setAttribute('src', user.photoURL);
+                        document.getElementById("prof-name").textContent = user.displayName;
+                        document.getElementById("prof-email").textContent = user.email;
+                    }
+                });
+            }
+        } else {
+            hide('.auth');
+            show('.no-auth');
+        }
+        removeLoader();
+    }
+
+    // Initlaize the Firebase app
     Firebase.initializeApp(firebaseConfig);
     
     var Database = Firebase.database();
-
-    googleProvider.addScope('https://www.googleapis.com/auth/drive.metadata.readonly');
     
     // Get all of the login buttons
     applyToElements('.login-button', function(element) {
         // Apply a click listener to the button
         element.addEventListener('click', function() {
             // Login to the app with Google
-            Firebase.auth().signInWithPopup(googleProvider).then(function(result) {
-                var token = result.credential.accessToken,
-                    userID = result.user.uid
-                Database.ref('users/' + userID).set({
-                    access_token: token
-                });
-            });
+            Google.auth2.getAuthInstance().signIn();
         });
     });
 
     // Add event listener to logout button
     logoutButton.addEventListener('click', function() {
         // Log the user out
-        Firebase.auth().signOut();
-    });
-    
-    Firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-            userAuthenticated(user);
-        } else {
-            userNotAuthenticated(user);
-        }
-        removeLoader();
+        Google.auth2.getAuthInstance().signOut();
     });
 
     // Add event listener for when the document is loaded
@@ -141,5 +129,25 @@
                 });
             }
         }
+
+        var googleApiScript = document.createElement('script');
+        googleApiScript.src = 'https://apis.google.com/js/api.js';
+        googleApiScript.addEventListener('load', function() {
+            Google = window.gapi;
+            Google.load('client:auth2', function() {
+                Google.client.init({
+                    apiKey: 'AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM',
+                    clientId: '362606538820-om1dhhvv5d9npas7jj02mbtvi5mjksmo.apps.googleusercontent.com',
+                    discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'],
+                    scope: 'https://www.googleapis.com/auth/drive',
+                }).then(function() {
+                    Google.auth2.getAuthInstance().isSignedIn.listen(userAuthentication);
+                    userAuthentication(Google.auth2.getAuthInstance().isSignedIn.get());
+                }, function(err) {
+                    console.log(err)
+                });
+            });
+        });
+        document.getElementsByTagName('body')[0].appendChild(googleApiScript);
     });
 })(window, document);
