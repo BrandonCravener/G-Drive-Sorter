@@ -26,6 +26,10 @@ html {
     display: none;
 }
 
+.tabs-content {
+    height: auto !important;
+}
+
 .top-bar {
     padding: 40px 0;
 }

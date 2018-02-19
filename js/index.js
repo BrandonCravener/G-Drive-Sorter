@@ -9,11 +9,15 @@
 
     var dropdown = document.querySelector('.dropdown-trigger'),
         dropdownInstance = Materialize.Dropdown.init(dropdown, {
-            coverTrigger: false
+            coverTrigger: false,
+            alignment: 'right'
         });
 
     var parallax = document.querySelector('.parallax'),
         parallaxInstance = Materialize.Parallax.init(parallax, {});
+
+    var tabs = document.querySelector('.tabs'),
+        tabsInstance = Materialize.Tabs.init(tabs,{});
 
     // Firebase variables
     var firebaseConfig = {
@@ -32,7 +36,8 @@
     // Elements
     var logoutButton = document.getElementById('logout-button'),
         loadingOverlay = document.getElementById('loading-overlay'),
-        loaderBackground = document.getElementById('loader-background');
+        loaderBackground = document.getElementById('loader-background'),
+        deleteAccountButton = document.getElementById('button-delete-account');
 
     var googleUser;
 
@@ -109,6 +114,13 @@
     logoutButton.addEventListener('click', function() {
         // Log the user out
         Google.auth2.getAuthInstance().signOut();
+    });
+
+    deleteAccountButton.addEventListener('click', function() {
+        Firebase.auth().currentUser.delete().then(function() {
+            Google.auth2.getAuthInstance().disconnect();
+            Google.auth2.getAuthInstance().signOut();
+        });
     });
 
     // Add event listener for when the document is loaded
