@@ -13,8 +13,17 @@
             alignment: 'right'
         });
 
-    var datepicker = document.querySelector('.datepicker'),
-        datepickerInstance = Materialize.Datepicker.init(datepicker);
+    var datepicker0 = document.getElementById('sorting-datepicker-0'),
+        datepickerInstance = Materialize.Datepicker.init(datepicker0);
+
+    var timepicker0 = document.getElementById('sorting-timepicker-0'),
+        timepickerInstance0 = Materialize.Timepicker.init(timepicker0);
+    
+    var datepicker1 = document.getElementById('sorting-datepicker-1'),
+        datepickerInstance1 = Materialize.Datepicker.init(datepicker1);
+
+    var timepicker1 = document.getElementById('sorting-timepicker-1'),
+        timepickerInstance1 = Materialize.Timepicker.init(timepicker1);
 
     var parallax = document.querySelector('.parallax'),
         parallaxInstance = Materialize.Parallax.init(parallax);
@@ -22,8 +31,6 @@
     var tabs = document.querySelector('.tabs'),
         tabsInstance = Materialize.Tabs.init(tabs);
 
-    var timepicker = document.querySelector('.timepicker'),
-        timepickerInstance = Materialize.Timepicker.init(timepicker);
 
     // Firebase variables
     var firebaseConfig = {
@@ -46,7 +53,10 @@
         deleteAccountButton = document.getElementById('button-delete-account');
 
     var sortingTypeDropdown = document.getElementById('sorting-type-dropdown'),
-        sortingTypeDropdownInstanance = Materialize.FormSelect.init(sortingTypeDropdown);
+        sortingTypeDropdownInstance = Materialize.FormSelect.init(sortingTypeDropdown);
+    
+    var sortingConstraintDropdown = document.getElementById('sorting-constraint-dropdown'),
+        sortingConstraintDropdownInstance = Materialize.FormSelect.init(sortingConstraintDropdown);
 
     var googleUser;
 
@@ -137,30 +147,57 @@
     });
 
     sortingTypeDropdown.addEventListener('change', function(element) {
+        // Show the constraint select
+        sortingConstraintDropdown.parentNode.parentNode.parentNode.classList.remove('hidden');
+        // Hide all the constraint fields
+        document.getElementById('sorting-text-field').parentNode.parentNode.classList.add('hidden');
+        document.getElementById('sorting-email-field').parentNode.parentNode.classList.add('hidden');
+        document.getElementById('sorting-datepicker-0').parentNode.parentNode.classList.add('hidden');
+        document.getElementById('sorting-timepicker-0').parentNode.parentNode.classList.add('hidden');
         // Switch between the possible sorting types
-        switch (element.target.value) {
+        switch (Number(element.target.value)) {
             // Title | Text
             case 1:
+                // Show text field
+                document.getElementById('sorting-text-field').parentNode.parentNode.classList.remove('hidden');
             break;
             // Type | Dropdown
             case 2:
+
             break;
             // Location | Folder Picker
             case 3:
             break;
             // Owner | Name / Email
             case 4:
+                document.getElementById('sorting-text-field').parentNode.parentNode.classList.remove('hidden');
+                document.getElementById('sorting-email-field').parentNode.parentNode.classList.remove('hidden');
             break;
             // Creation Date | Date Picker
             case 5:
+                document.getElementById('sorting-datepicker-0').parentNode.childNodes[4].textContent = "Creation Date";
+                document.getElementById('sorting-datepicker-0').parentNode.parentNode.classList.remove('hidden');
             break;
             // Last Opened | Date & Time Picker
             case 6:
+                document.getElementById('sorting-datepicker-0').parentNode.childNodes[4].textContent = "Opened Date";
+                document.getElementById('sorting-datepicker-0').parentNode.parentNode.classList.remove('hidden');
+                document.getElementById('sorting-timepicker-0').parentNode.childNodes[4].textContent = "Opened Time";
+                document.getElementById('sorting-timepicker-0').parentNode.parentNode.classList.remove('hidden');
             break;
-            case 7:
             // Last Modified | Date & Time Picker
+            case 7:
+                document.getElementById('sorting-datepicker-0').parentNode.childNodes[4].textContent = "Modified Date";
+                document.getElementById('sorting-datepicker-0').parentNode.parentNode.classList.remove('hidden');
+                document.getElementById('sorting-timepicker-0').parentNode.childNodes[4].textContent = "Modified Time";
+                document.getElementById('sorting-timepicker-0').parentNode.parentNode.classList.remove('hidden');
             break;
         }
+    });
+    
+    // Listen for sorting constraint change
+    sortingConstraintDropdown.addEventListener('change', function(element) {
+        
     });
 
     // Add event listener for when the document is loaded
