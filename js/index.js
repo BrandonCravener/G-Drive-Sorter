@@ -13,11 +13,17 @@
             alignment: 'right'
         });
 
+    var datepicker = document.querySelector('.datepicker'),
+        datepickerInstance = Materialize.Datepicker.init(datepicker);
+
     var parallax = document.querySelector('.parallax'),
-        parallaxInstance = Materialize.Parallax.init(parallax, {});
+        parallaxInstance = Materialize.Parallax.init(parallax);
 
     var tabs = document.querySelector('.tabs'),
-        tabsInstance = Materialize.Tabs.init(tabs,{});
+        tabsInstance = Materialize.Tabs.init(tabs);
+
+    var timepicker = document.querySelector('.timepicker'),
+        timepickerInstance = Materialize.Timepicker.init(timepicker);
 
     // Firebase variables
     var firebaseConfig = {
@@ -38,6 +44,9 @@
         loadingOverlay = document.getElementById('loading-overlay'),
         loaderBackground = document.getElementById('loader-background'),
         deleteAccountButton = document.getElementById('button-delete-account');
+
+    var sortingTypeDropdown = document.getElementById('sorting-type-dropdown'),
+        sortingTypeDropdownInstanance = Materialize.FormSelect.init(sortingTypeDropdown);
 
     var googleUser;
 
@@ -116,11 +125,42 @@
         Google.auth2.getAuthInstance().signOut();
     });
 
+    // Get event listener to the delete account button
     deleteAccountButton.addEventListener('click', function() {
+        // Delete the firebase user
         Firebase.auth().currentUser.delete().then(function() {
+            // Disconnect the app form the users Google account
             Google.auth2.getAuthInstance().disconnect();
+            // Sign the user out of their account
             Google.auth2.getAuthInstance().signOut();
         });
+    });
+
+    sortingTypeDropdown.addEventListener('change', function(element) {
+        // Switch between the possible sorting types
+        switch (element.target.value) {
+            // Title | Text
+            case 1:
+            break;
+            // Type | Dropdown
+            case 2:
+            break;
+            // Location | Folder Picker
+            case 3:
+            break;
+            // Owner | Name / Email
+            case 4:
+            break;
+            // Creation Date | Date Picker
+            case 5:
+            break;
+            // Last Opened | Date & Time Picker
+            case 6:
+            break;
+            case 7:
+            // Last Modified | Date & Time Picker
+            break;
+        }
     });
 
     // Add event listener for when the document is loaded
