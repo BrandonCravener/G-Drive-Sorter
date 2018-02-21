@@ -57,6 +57,9 @@
     
     var sortingConstraintDropdown = document.getElementById('sorting-constraint-dropdown'),
         sortingConstraintDropdownInstance = Materialize.FormSelect.init(sortingConstraintDropdown);
+    
+    var sortingFileTypeDropdown = document.getElementById('sorting-file-type-dropdown'),
+        sortingFileTypeDropdownInstance = Materialize.FormSelect.init(sortingFileTypeDropdown);
 
     var googleUser;
 
@@ -146,58 +149,86 @@
         });
     });
 
+    var sortingTextField = document.getElementById('sorting-text-field'),
+        sortingEmailField = document.getElementById('sorting-email-field');
+
     sortingTypeDropdown.addEventListener('change', function(element) {
         // Show the constraint select
         sortingConstraintDropdown.parentNode.parentNode.parentNode.classList.remove('hidden');
         // Hide all the constraint fields
-        document.getElementById('sorting-text-field').parentNode.parentNode.classList.add('hidden');
-        document.getElementById('sorting-email-field').parentNode.parentNode.classList.add('hidden');
-        document.getElementById('sorting-datepicker-0').parentNode.parentNode.classList.add('hidden');
-        document.getElementById('sorting-timepicker-0').parentNode.parentNode.classList.add('hidden');
+        sortingTextField.parentNode.parentNode.classList.add('hidden');
+        sortingEmailField.parentNode.parentNode.classList.add('hidden');
+        datepicker0.parentNode.parentNode.classList.add('hidden');
+        timepicker0.parentNode.parentNode.classList.add('hidden');
+        if (element.target.value !== '5') {
+            timepicker0.parentNode.className = 'input-field col s12 m5 l3';
+            datepicker0.parentNode.className = 'input-field col s12 m5 l3';
+        }
         // Switch between the possible sorting types
         switch (Number(element.target.value)) {
             // Title | Text
             case 1:
                 // Show text field
-                document.getElementById('sorting-text-field').parentNode.parentNode.classList.remove('hidden');
+                sortingTextField.parentNode.parentNode.classList.remove('hidden');
             break;
             // Type | Dropdown
             case 2:
-
+                // Show the file type dropdown
+                sortingFileTypeDropdown.parentNode.parentNode.parentNode.classList.remove('hidden');
             break;
             // Location | Folder Picker
             case 3:
             break;
             // Owner | Name / Email
             case 4:
-                document.getElementById('sorting-text-field').parentNode.parentNode.classList.remove('hidden');
-                document.getElementById('sorting-email-field').parentNode.parentNode.classList.remove('hidden');
+                sortingTextField.parentNode.parentNode.classList.remove('hidden');
+                sortingEmailField.parentNode.parentNode.classList.remove('hidden');
             break;
             // Creation Date | Date Picker
             case 5:
-                document.getElementById('sorting-datepicker-0').parentNode.childNodes[4].textContent = "Creation Date";
-                document.getElementById('sorting-datepicker-0').parentNode.parentNode.classList.remove('hidden');
+                datepicker0.parentNode.childNodes[4].textContent = "Creation Date";
+                datepicker0.parentNode.parentNode.classList.remove('hidden');
+                timepicker0.parentNode.className = 'input-field col s0 m0 l0 hidden';
+                datepicker0.parentNode.className = 'input-field col s12 m 10 l6';
             break;
             // Last Opened | Date & Time Picker
             case 6:
-                document.getElementById('sorting-datepicker-0').parentNode.childNodes[4].textContent = "Opened Date";
-                document.getElementById('sorting-datepicker-0').parentNode.parentNode.classList.remove('hidden');
-                document.getElementById('sorting-timepicker-0').parentNode.childNodes[4].textContent = "Opened Time";
-                document.getElementById('sorting-timepicker-0').parentNode.parentNode.classList.remove('hidden');
+                datepicker0.parentNode.childNodes[4].textContent = "Opened Date";
+                datepicker0.parentNode.parentNode.classList.remove('hidden');
+                timepicker0.parentNode.childNodes[4].textContent = "Opened Time";
+                timepicker0.parentNode.parentNode.classList.remove('hidden');
             break;
             // Last Modified | Date & Time Picker
             case 7:
-                document.getElementById('sorting-datepicker-0').parentNode.childNodes[4].textContent = "Modified Date";
-                document.getElementById('sorting-datepicker-0').parentNode.parentNode.classList.remove('hidden');
-                document.getElementById('sorting-timepicker-0').parentNode.childNodes[4].textContent = "Modified Time";
-                document.getElementById('sorting-timepicker-0').parentNode.parentNode.classList.remove('hidden');
+                datepicker0.parentNode.childNodes[4].textContent = "Modified Date";
+                datepicker0.parentNode.parentNode.classList.remove('hidden');
+                timepicker0.parentNode.childNodes[4].textContent = "Modified Time";
+                timepicker0.parentNode.parentNode.classList.remove('hidden');
             break;
         }
     });
     
     // Listen for sorting constraint change
     sortingConstraintDropdown.addEventListener('change', function(element) {
-        
+        var sortingTypeDropdownValue = sortingTypeDropdown.value;
+        if (element.target.value == '5') {
+            // Check if the sorting classifer needs two of each picker 
+            if (sortingTypeDropdownValue == '5' || sortingTypeDropdownValue == '6' || sortingTypeDropdownValue == '7') {
+                datepicker0.parentNode.childNodes[4].textContent = "First Date";
+                timepicker0.parentNode.childNodes[4].textContent = "First Time";
+                datepicker1.parentNode.parentNode.classList.remove('hidden');
+                if (sortingTypeDropdownValue == '5') {
+                    timepicker0.parentNode.className = 'input-field col s12 m5 l3';
+                    datepicker0.parentNode.className = 'input-field col s12 m5 l3';
+                }
+            }
+        } else {
+            if (sortingTypeDropdownValue == '5') {
+                timepicker0.parentNode.className = 'input-field col s0 m0 l0 hidden';
+                datepicker0.parentNode.className = 'input-field col s12 m 10 l6';
+            }
+            datepicker1.parentNode.parentNode.classList.add('hidden');
+        }
     });
 
     // Add event listener for when the document is loaded

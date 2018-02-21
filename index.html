@@ -132,7 +132,9 @@
                 
             </div>
             <div id="config">
-                <div>
+                <!-- UI used to create a new config rule -->
+                <div id="new-rule-ui" class="hidden">
+                    <h5 class="center">New Rule</h5>
                     <div class="row">
                         <div class="col s0 m2 l4"></div>
                         <div class="input-field col s12 m8 l4">
@@ -158,18 +160,41 @@
                               <option value="2">Excludes</option>
                               <option value="3">Starts With</option>
                               <option value="4">Ends With</option>
-                              <option value="5">Between / Contains</option>
+                              <option value="5">Between</option>
                             </select>
-                            <label>Sorting Classifier</label>
+                            <label>Sorting Constraint</label>
                         </div>
                         <div class="col s0 m2 l4"></div>
                     </div>
-                    <!-- Reserved for future use -->
                     <div class="row hidden"> 
                         <div class="col s0 m2 l4"></div>
                         <div class="input-field col s12 m8 l4">
                             <input id="sorting-text-field" type="text" class="validate">
                             <label for="sorting-text-field">Name</label>
+                        </div>
+                        <div class="col s0 m2 l4"></div>
+                    </div>
+                    <div class="row hidden">
+                        <div class="col s0 m2 l4"></div>
+                        <div class="input-field col s12 m8 l4">
+                            <select id="sorting-file-type-dropdown">
+                                <option selected disabled>Select One</option>
+                                <option value="application/vnd.google-apps.audio">Sound File</option>
+                                <option value="application/vnd.google-apps.document">Document</option>
+                                <option value="application/vnd.google-apps.drawing">Drawing</option>
+                                <option value="application/vnd.google-apps.file">Drive File</option>
+                                <option value="application/vnd.google-apps.folder">Drive Folder</option>
+                                <option value="application/vnd.google-apps.form">Forms</option>
+                                <option value="application/vnd.google-apps.fusiontable">Fusion Tables</option>
+                                <option value="application/vnd.google-apps.map">My Maps</option>
+                                <option value="application/vnd.google-apps.photo">Image</option>
+                                <option value="application/vnd.google-apps.presentation">Slides</option>
+                                <option value="application/vnd.google-apps.script">Apps Script</option>
+                                <option value="application/vnd.google-apps.site">Sites</option>
+                                <option value="application/vnd.google-apps.spreadsheet">Sheets</option>
+                                <option value="application/vnd.google-apps.video">Video</option>
+                            </select>
+                            <label>Type</label>
                         </div>
                         <div class="col s0 m2 l4"></div>
                     </div>
@@ -183,36 +208,28 @@
                         <div class="col s0 m2 l4"></div>
                     </div>
                     <div class="row hidden"> 
-                        <div class="col s0 m2 l4"></div>
-                        <div class="input-field col s12 m8 l4">
+                        <div class="col s0 m1 l3"></div>
+                        <div class="input-field col s12 m5 l3">
                             <input id="sorting-datepicker-0" type="text" class="datepicker">
                             <label for="sorting-datepicker-0"></label>
                         </div>
-                        <div class="col s0 m2 l4"></div>
-                    </div>
-                    <div class="row hidden"> 
-                        <div class="col s0 m2 l4"></div>
-                        <div class="input-field col s12 m8 l4">
+                        <div class="input-field col s12 m5 l3">
                             <input id="sorting-timepicker-0" type="text" class="timepicker">
                             <label for="sorting-timepicker-0"></label>
                         </div>
-                        <div class="col s0 m2 l4"></div>
+                        <div class="col s0 m1 l3"></div>
                     </div>
                     <div class="row hidden"> 
-                        <div class="col s0 m2 l4"></div>
-                        <div class="input-field col s12 m8 l4">
+                        <div class="col s0 m1 l3"></div>
+                        <div class="input-field col s12 m5 l3">
                             <input id="sorting-datepicker-1" type="text" class="datepicker">
-                            <label for="sorting-datepicker-1"></label>
+                            <label for="sorting-datepicker-1">Second Date</label>
                         </div>
-                        <div class="col s0 m2 l4"></div>
-                    </div>
-                    <div class="row hidden"> 
-                        <div class="col s0 m2 l4"></div>
-                        <div class="input-field col s12 m8 l4">
-                            <input id="sorting-timepicker-1" type="text" class="timepicker">
-                            <label for="sorting-timepicker-1"></label>
+                        <div class="input-field col s12 m5 l3">
+                                <input id="sorting-timepicker-1" type="text" class="timepicker">
+                                <label for="sorting-timepicker-1">Second Time</label>
                         </div>
-                        <div class="col s0 m2 l4"></div>
+                        <div class="col s0 m1 l3"></div>
                     </div>
                 </div>
             </div>
