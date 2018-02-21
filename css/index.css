@@ -50,6 +50,10 @@ html, body, main {
     padding: 40px 0;
 }
 
+#config-stepper {
+    padding: 10px 0;
+}
+
 @media all and (max-width: 600px) {
     .brand-logo {
         height: 46px;
