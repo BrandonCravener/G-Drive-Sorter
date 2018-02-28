@@ -1,3 +1,4 @@
+'use strict';
 (function(window, document) {
     // Put variables from window into variables for easy reference
     var Materialize = window.M,
@@ -118,6 +119,124 @@
         removeLoader();
     }
 
+    function initlaizeStepper(stepperElement) {
+        // Get the steps in the stepper
+        var steps = stepperElement.children;
+        // Set the step the steppers currently on
+        stepperElement.setAttribute('data-step', 0);
+        for (var i = 0; i < steps.length; i++) {
+            var step = steps[i];
+            // Add an atribute to the step element to identify it
+            step.setAttribute('data-stepnum', i);
+            // Declare variables to hold the continue and next buttons in memory
+            var backButton = document.createElement('a'),
+                nextButton = document.createElement('a');
+            // Add the text Back to the back button
+            backButton.appendChild(document.createTextNode('Back'));
+            // Add the text Continue to the next button
+            nextButton.appendChild(document.createTextNode('Continue'));
+            // Give each of the buttons their needed classes
+            backButton.className = 'waves-effect waves-green btn-flat';
+            nextButton.className = 'waves-effect waves-light btn';
+            // Give the back button a margin to space it from the continue
+            backButton.style.marginLeft = '8px';
+            // Add a event listener to the back button
+            backButton.addEventListener('click', function() {
+                // Declare variables used to get step numbers and elements
+                var currentStepNum = Number(stepperElement.getAttribute('data-step')),
+                    parentStep = this.parentNode.parentNode,
+                    previousStepNum = currentStepNum - 1,
+                    previousStep = stepperElement.querySelector('[data-stepnum=\'' + previousStepNum + '\']');
+                if (currentStepNum != 0) {
+                    // Hide the current step
+                    parentStep.children[1].style.display = 'none';
+                    // Hide the previous step
+                    previousStep.children[1].style.display = 'block';
+                    // Update the current step on the stepper element
+                    stepperElement.setAttribute('data-step', previousStepNum);
+                }
+            });
+            // Add a event listener to the next button
+            nextButton.addEventListener('click', function() {
+                var parentStep = this.parentNode.parentNode,
+                    thisStepNum = Number(parentStep.getAttribute('data-stepnum')),
+                    nextStepNum = (thisStepNum + 1),
+                    nextStep = stepperElement.querySelector('[data-stepnum=\''+ nextStepNum +'\']'),
+                    requiredFields = parentStep.children[1].querySelectorAll('[required]');
+                // Set a variable to be changed if any of the fields are invalid
+                var fieldsClear = true;
+                // Loop through all of the required fields
+                for (var i = 0; i < requiredFields.length; i++) {
+                    var field = requiredFields[i];
+                    // Check if the field is vaild
+                    if (!field.classList.contains('valid')) {
+                        // Changed the variable to indicate that not all of the fields are valid
+                        fieldsClear = false;
+                    }  
+                };
+                if (fieldsClear) {
+                    stepperElement.setAttribute('data-step', nextStepNum);
+                    parentStep.children[1].style.display = 'none';
+                    nextStep.children[1].style.display = 'block';
+                }
+            });
+            // Check if it isn't the last step
+            if (i != steps.length - 1) {
+                // Add the continue button to the bottom of the content element
+                step.children[1].appendChild(nextButton);
+            } else {
+                // Remove any margin from the back button
+                backButton.style.marginLeft = 0;
+            }
+            // Check if it is the first step
+            if (i != 0) {
+                // Add the back button to the bottom of the content element
+                step.children[1].appendChild(backButton);
+            }
+            // Add an event listener to the steps header element
+            step.firstElementChild.addEventListener('click', function() {
+                var currentStep = stepperElement.querySelector('[data-stepnum=\''+ stepperElement.getAttribute('data-step') +'\']'),
+                    requiredFields = currentStep.children[1].querySelectorAll('[required]'),
+                    clickedStepNum = Number(this.parentNode.getAttribute('data-stepnum')),
+                    currentStepNum = Number(stepperElement.getAttribute('data-step')),
+                    nextStepNum = (currentStepNum + 1),
+                    nextStep = stepperElement.querySelector('[data-stepnum=\'' + nextStepNum + '\']');
+                // Check if the clicked step number is less than the current step number
+                if (clickedStepNum < currentStepNum) {
+                    // Hide the current step's content
+                    currentStep.children[1].style.display = 'none';
+                    // Show the clicked step's content
+                    this.parentNode.children[1].style.display = 'block';
+                    // Update the current step attribute
+                    stepperElement.setAttribute('data-step', clickedStepNum);
+                } else {
+                    // Set a variable to be changed if any of the fields are invalid
+                    var fieldsClear = true;
+                    // Loop through all of the required fields
+                    for (var i = 0; i < requiredFields.length; i++) {
+                        var field = requiredFields[i];
+                        // Check if the field is vaild
+                        if (!field.classList.contains('valid')) {
+                            // Chnaged the variable to indicate that not all of the fields are valid
+                            fieldsClear = false;
+                        }  
+                    };
+                    // Check if all of the fields are clear and the clicked step number is equal to the next step number
+                    if (fieldsClear && (clickedStepNum == nextStepNum)) {
+                        // Update the current step
+                        stepperElement.setAttribute('data-step', nextStepNum);
+                        // Hide the current step's content
+                        currentStep.children[1].style.display = 'none';
+                        // Show the nexts step's content
+                        nextStep.children[1].style.display = 'block';
+                    }
+                }
+            });
+        }
+    } 
+
+    initlaizeStepper(document.getElementById('config-stepper'));
+
     // Initlaize the Firebase app
     Firebase.initializeApp(firebaseConfig);
     
@@ -153,6 +272,9 @@
         sortingEmailField = document.getElementById('sorting-email-field');
 
     sortingTypeDropdown.addEventListener('change', function(element) {
+        var constraintBetweenOption = sortingConstraintDropdownInstance.dropdownOptions.lastChild;
+        // Hide the between constraint
+        constraintBetweenOption.style.display = 'none';
         // Show the constraint select
         sortingConstraintDropdown.parentNode.parentNode.parentNode.classList.remove('hidden');
         // Hide all the constraint fields
@@ -160,6 +282,9 @@
         sortingEmailField.parentNode.parentNode.classList.add('hidden');
         datepicker0.parentNode.parentNode.classList.add('hidden');
         timepicker0.parentNode.parentNode.classList.add('hidden');
+        datepicker1.parentNode.parentNode.classList.add('hidden');
+        timepicker1.parentNode.parentNode.classList.add('hidden');
+        // Check if the between constraint selected
         if (element.target.value !== '5') {
             timepicker0.parentNode.className = 'input-field col s12 m5 l3';
             datepicker0.parentNode.className = 'input-field col s12 m5 l3';
@@ -178,14 +303,19 @@
             break;
             // Location | Folder Picker
             case 3:
+                // To be implemented later
             break;
             // Owner | Name / Email
             case 4:
+                // Show the needed fields
                 sortingTextField.parentNode.parentNode.classList.remove('hidden');
                 sortingEmailField.parentNode.parentNode.classList.remove('hidden');
             break;
             // Creation Date | Date Picker
             case 5:
+                // Show the between constraint
+                constraintBetweenOption.style.display = 'block';
+                // Show the needed fields
                 datepicker0.parentNode.childNodes[4].textContent = "Creation Date";
                 datepicker0.parentNode.parentNode.classList.remove('hidden');
                 timepicker0.parentNode.className = 'input-field col s0 m0 l0 hidden';
@@ -193,6 +323,9 @@
             break;
             // Last Opened | Date & Time Picker
             case 6:
+                // Show the between constraint
+                constraintBetweenOption.style.display = 'block';
+                // Show the needed fields
                 datepicker0.parentNode.childNodes[4].textContent = "Opened Date";
                 datepicker0.parentNode.parentNode.classList.remove('hidden');
                 timepicker0.parentNode.childNodes[4].textContent = "Opened Time";
@@ -200,6 +333,9 @@
             break;
             // Last Modified | Date & Time Picker
             case 7:
+                // Show the between constraint
+                constraintBetweenOption.style.display = 'block';
+                // Show the needed fields
                 datepicker0.parentNode.childNodes[4].textContent = "Modified Date";
                 datepicker0.parentNode.parentNode.classList.remove('hidden');
                 timepicker0.parentNode.childNodes[4].textContent = "Modified Time";
