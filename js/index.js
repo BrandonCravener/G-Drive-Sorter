@@ -3,7 +3,10 @@
     // Put variables from window into variables for easy reference
     var Materialize = window.M,
         Firebase = window.firebase,
-        Google;
+        Google,
+        google,
+        apiKey = 'AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM',
+        folderPicker;
 
     var sidenav = document.getElementById('slide-out'),
         sidenavInstance = Materialize.Sidenav.init(sidenav);
@@ -51,7 +54,8 @@
     var logoutButton = document.getElementById('logout-button'),
         loadingOverlay = document.getElementById('loading-overlay'),
         loaderBackground = document.getElementById('loader-background'),
-        deleteAccountButton = document.getElementById('button-delete-account');
+        deleteAccountButton = document.getElementById('button-delete-account'),
+        folderPickerButton = document.getElementById('button-pick-drive-folder');
 
     var sortingTypeDropdown = document.getElementById('sorting-type-dropdown'),
         sortingTypeDropdownInstance = Materialize.FormSelect.init(sortingTypeDropdown);
@@ -102,6 +106,7 @@
             hide('.no-auth');
             show('.auth');
             if (googleUser) {
+                window.user = googleUser;
                 var idToken = googleUser.getAuthResponse().id_token,
                     credentials = Firebase.auth.GoogleAuthProvider.credential(idToken);
                 Firebase.auth().signInWithCredential(credentials).then(function(user) {
@@ -235,6 +240,9 @@
         }
     } 
 
+    function folderPicked(data) {
+    }
+
     initlaizeStepper(document.getElementById('config-stepper'));
 
     // Initlaize the Firebase app
@@ -284,6 +292,7 @@
         timepicker0.parentNode.parentNode.classList.add('hidden');
         datepicker1.parentNode.parentNode.classList.add('hidden');
         timepicker1.parentNode.parentNode.classList.add('hidden');
+        folderPickerButton.parentNode.classList.add('hidden');
         // Check if the between constraint selected
         if (element.target.value !== '5') {
             timepicker0.parentNode.className = 'input-field col s12 m5 l3';
@@ -303,7 +312,7 @@
             break;
             // Location | Folder Picker
             case 3:
-                // To be implemented later
+                folderPickerButton.parentNode.classList.remove('hidden');
             break;
             // Owner | Name / Email
             case 4:
@@ -367,6 +376,10 @@
         }
     });
 
+    folderPickerButton.addEventListener('click', function() {
+        folderPicker.setVisible(true);
+    });
+
     // Add event listener for when the document is loaded
     document.addEventListener('DOMContentLoaded', function() {
         var lazyLoadElements = document.getElementsByClassName('lazyLoad');
@@ -392,13 +405,29 @@
             Google = window.gapi;
             Google.load('client:auth2', function() {
                 Google.client.init({
-                    apiKey: 'AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM',
+                    apiKey: apiKey,
                     clientId: '362606538820-om1dhhvv5d9npas7jj02mbtvi5mjksmo.apps.googleusercontent.com',
                     discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'],
                     scope: 'https://www.googleapis.com/auth/drive',
                 }).then(function() {
                     Google.auth2.getAuthInstance().isSignedIn.listen(userAuthentication);
                     userAuthentication(Google.auth2.getAuthInstance().isSignedIn.get());
+                    Google.load('picker', function() {
+                        google = window.google;
+                        var view = new google.picker.DocsView(google.picker.ViewId.FOLDERS)
+                            .setIncludeFolders(true)
+                            .setSelectFolderEnabled(true),
+                            picker = new google.picker.PickerBuilder()
+                            .disableFeature(google.picker.Feature.SUPPORT_TEAM_DRIVES)
+                            .setAppId(362606538820)
+                            .setOAuthToken(Google.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token)
+                            .setDeveloperKey('AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM')
+                            .setSelectableMimeTypes('application/vnd.google-apps.folder')
+                            .addView(view)
+                            .setCallback(folderPicked)
+                            .build();
+                        folderPicker = picker;
+                    });
                 }, function(err) {
                     console.log(err)
                 });
