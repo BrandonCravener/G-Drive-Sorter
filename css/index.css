@@ -50,49 +50,8 @@ html, body, main {
     padding: 40px 0;
 }
 
-
-.stepper {
-    padding: 10px 0;
-}
-
-.step-header {
-    height: 48px;
-    display: flex;
-    padding: 12px 0;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    transition: 0.5s opacity,filter ease-in-out;
-}
-
-.step-header:hover {
-    opacity: 0.8;
-    cursor: pointer;
-    filter: grayscale(20%);
-    background-color: rgba(0, 0, 0, 0.2);
-}
-
-.step-content {
-    padding: 10px 20px;
-    margin-left: 21.5px;
-}
-
-.step-content:not(.last) {
-    border-left: 1px solid #BDBDBD;
-}
-
-.step-number {
-    width: 24px;
-    height: 24px;
-    margin: 0 10px;
-    font-size: 12px;
-    line-height: 24px;
-    text-align: center;
-    border-radius: 100%;
-    background-color: #4CAF50;
-}
-
-.stepper > .step:not(:first-child) .step-content {
-    display: none;
+.height-100 ul {
+    height: 100px !important;
 }
 
 @media all and (max-width: 600px) {
