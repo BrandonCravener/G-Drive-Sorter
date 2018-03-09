@@ -1,0 +1,24 @@
+{
+  "name": "g-drive-sorter",
+  "version": "0.0.1-A",
+  "description": "This repo houses the code for a year long research project for our iSTEM class.",
+  "main": "gulp.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BrandonCravener/G-Drive-Sorter.git"
+  },
+  "author": "BrandonCravener",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BrandonCravener/G-Drive-Sorter/issues"
+  },
+  "homepage": "https://github.com/BrandonCravener/G-Drive-Sorter#readme",
+  "devDependencies": {
+    "eslint-config-standard": "^11.0.0",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^4.0.2"
+  }
+}
