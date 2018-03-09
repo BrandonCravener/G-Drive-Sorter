@@ -8,30 +8,40 @@
         apiKey = 'AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM',
         folderPicker;
 
+
+    // Declare variable to hold the initlalized instance of the side nav
     var sidenav = document.getElementById('slide-out'),
         sidenavInstance = Materialize.Sidenav.init(sidenav);
 
+    // Declare a varibale to gold the intialized instance of the dropdown
     var dropdown = document.querySelector('.dropdown-trigger'),
         dropdownInstance = Materialize.Dropdown.init(dropdown, {
             coverTrigger: false,
             alignment: 'right'
         });
 
+
+    // Declare a variable to hold the first instance of the time picker
     var datepicker0 = document.getElementById('sorting-datepicker-0'),
         datepickerInstance = Materialize.Datepicker.init(datepicker0);
 
+    // Declare a variable to hold the second instance of the time picker
     var timepicker0 = document.getElementById('sorting-timepicker-0'),
         timepickerInstance0 = Materialize.Timepicker.init(timepicker0);
     
+    // Declare a variable to hold the first instance of the date picker    
     var datepicker1 = document.getElementById('sorting-datepicker-1'),
         datepickerInstance1 = Materialize.Datepicker.init(datepicker1);
 
+    // Declare a variable to hold the second instance of the date picker        
     var timepicker1 = document.getElementById('sorting-timepicker-1'),
         timepickerInstance1 = Materialize.Timepicker.init(timepicker1);
 
+    // Declare a varibale to hold the initalized instance of the paralax
     var parallax = document.querySelector('.parallax'),
         parallaxInstance = Materialize.Parallax.init(parallax);
 
+    // Declare a variable to hold the initalized instance of the tabs
     var tabs = document.querySelector('.tabs'),
         tabsInstance = Materialize.Tabs.init(tabs);
 
