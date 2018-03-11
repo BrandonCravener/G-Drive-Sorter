@@ -17,8 +17,23 @@
   },
   "homepage": "https://github.com/BrandonCravener/G-Drive-Sorter#readme",
   "devDependencies": {
+    "browserify": "^16.1.1",
+    "del": "^3.0.0",
     "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "glob": "^7.1.2",
     "gulp": "^3.9.1",
-    "gulp-eslint": "^4.0.2"
+    "gulp-eslint": "^4.0.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-uglify": "^3.0.0",
+    "pump": "^3.0.0",
+    "tsify": "^3.0.4",
+    "typescript": "^2.7.2",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
   }
 }

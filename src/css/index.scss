@@ -19,7 +19,6 @@ html, body, main {
 .brand-logo {
     height: 54px;
     top: 5px;
-    filter: drop-shadow(0 0 0.5rem #121212b3);
 }
 
 .hidden {
@@ -50,8 +49,8 @@ html, body, main {
     padding: 40px 0;
 }
 
-.height-100 ul {
-    height: 100px !important;
+.height-125 ul {
+    height: 125px !important;
 }
 
 @media all and (max-width: 600px) {
