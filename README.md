@@ -19,7 +19,7 @@ https://gdrive.brandoncravener.com
   - Free to use.
    ________
   ### Installation
-    Install this project by running:
+  Install this project by running:
   $ git clone https://github.com/BrandonCravener/G-Drive-Sorter
    ________
   ### Contribution
