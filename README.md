@@ -7,7 +7,7 @@ https://gdrive.brandoncravener.com
   - Brandon Cravener(Project Manager/Developer)
   - Fernando Arredondo(Developer)
   - Lane Faccoldi(Software Tester)
-  - Ivan Abreu-Cespedes<--!(?)-->
+  - Ivan Abreu-Cespedes(?)
 
 ### Description
   This project solves the problem of constantly needing to organize Google Drive files, by customly organizing it whenever necessary.
@@ -20,14 +20,14 @@ https://gdrive.brandoncravener.com
   
   ### Installation
     Install this project by running:
-    <--!Insert Later-->
+    ________
   
   ### Contribution
   - Issue Tracker: https://github.com/BrandonCravener/G-Drive-Sorter/issues/new
   - Source Code: https://github.com/BrandonCravener/G-Drive-Sorter
   ### Support
   -If there are any major issues with this project, please report them at:
-   <--!(Insert project email here)-->
+   ________
   
 ### License
   This project is licensed under the MIT license.
