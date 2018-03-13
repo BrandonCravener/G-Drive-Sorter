@@ -1,7 +1,7 @@
 {
   "name": "g-drive-sorter",
   "version": "0.0.1-A",
-  "description": "This repo houses the code for a year long research project for our iSTEM class.",
+  "description": "This repository houses the code for a year long research project for our iSTEM class.",
   "main": "gulp.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -24,15 +24,17 @@
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-standard": "^3.0.1",
+    "eslint-plugin-typescript": "^0.10.0",
     "glob": "^7.1.2",
     "gulp": "^3.9.1",
     "gulp-eslint": "^4.0.2",
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.6.4",
-    "gulp-uglify": "^3.0.0",
+    "gulp-uglify-es": "^1.0.1",
     "pump": "^3.0.0",
     "tsify": "^3.0.4",
     "typescript": "^2.7.2",
+    "typescript-eslint-parser": "^14.0.0",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0"
   }

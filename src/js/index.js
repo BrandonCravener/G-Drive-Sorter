@@ -1,13 +1,37 @@
 'use strict';
 (function (window, document) {
-  // Put variables from window into variables for easy reference
-  var Materialize = window.M
-  var Firebase = window.firebase
-  var Stepper = window.Stepper
+  // Browserify / Typescript imports
+  const utils = require('./utils.ts')
+
+  // Variables
   var Google
   var google
-  var apiKey = 'AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM'
+  var googleUser
   var folderPicker
+  var Materialize = window.M
+  var Stepper = window.Stepper
+  var Firebase = window.firebase
+  var apiKey = 'AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM'
+  var firebaseConfig = {
+    apiKey: 'AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM',
+    authDomain: 'g-drive-sorter-2.firebaseapp.com',
+    databaseURL: 'https://g-drive-sorter-2.firebaseio.com',
+    projectId: 'g-drive-sorter-2',
+    storageBucket: 'g-drive-sorter-2.appspot.com',
+    messagingSenderId: '362606538820'
+  }
+
+  // Counting variables
+  var removeLoaderCallCount = 0
+
+  // Elements
+  var logoutButton = document.getElementById('logout-button')
+  var loadingOverlay = document.getElementById('loading-overlay')
+  var loaderBackground = document.getElementById('loader-background')
+  var sortingTextField = document.getElementById('sorting-text-field')
+  var sortingEmailField = document.getElementById('sorting-email-field')
+  var deleteAccountButton = document.getElementById('button-delete-account')
+  var folderPickerButton = document.getElementById('button-pick-drive-folder')
 
   var sidenav = document.getElementById('slide-out')
   Materialize.Sidenav.init(sidenav)
@@ -35,26 +59,6 @@
 
   var tabs = document.querySelector('.tabs')
   Materialize.Tabs.init(tabs)
-  // Firebase variables
-  var firebaseConfig = {
-    apiKey: 'AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM',
-    authDomain: 'g-drive-sorter-2.firebaseapp.com',
-    databaseURL: 'https://g-drive-sorter-2.firebaseio.com',
-    projectId: 'g-drive-sorter-2',
-    storageBucket: 'g-drive-sorter-2.appspot.com',
-    messagingSenderId: '362606538820'
-  }
-
-  // Counting variables
-  var lazyLoadElementsLoaded = 0
-  var removeLoaderCallCount = 0
-
-  // Elements
-  var logoutButton = document.getElementById('logout-button')
-  var loadingOverlay = document.getElementById('loading-overlay')
-  var loaderBackground = document.getElementById('loader-background')
-  var deleteAccountButton = document.getElementById('button-delete-account')
-  var folderPickerButton = document.getElementById('button-pick-drive-folder')
 
   var sortingTypeDropdown = document.getElementById('sorting-type-dropdown')
   Materialize.FormSelect.init(sortingTypeDropdown, {
@@ -70,27 +74,6 @@
   Materialize.FormSelect.init(sortingFileTypeDropdown, {
     classes: 'height-125'
   })
-
-  var googleUser
-
-  function applyToElements (selector, callingFunction) {
-    var items = document.querySelectorAll(selector)
-    for (var i = 0; i < items.length; i++) {
-      callingFunction(items[i])
-    }
-  }
-
-  function hide (selector) {
-    applyToElements(selector, function (element) {
-      element.style.display = 'none'
-    })
-  }
-
-  function show (selector) {
-    applyToElements(selector, function (element) {
-      element.style.display = 'block'
-    })
-  }
 
   function removeLoader () {
     removeLoaderCallCount += 1
@@ -108,8 +91,8 @@
   function userAuthentication (authenticated) {
     if (authenticated) {
       googleUser = Google.auth2.getAuthInstance().currentUser.get()
-      hide('.no-auth')
-      show('.auth')
+      utils.hide('.no-auth')
+      utils.show('.auth')
       if (googleUser) {
         window.user = googleUser
         var idToken = googleUser.getAuthResponse().id_token
@@ -123,8 +106,8 @@
         })
       }
     } else {
-      hide('.auth')
-      show('.no-auth')
+      utils.hide('.auth')
+      utils.show('.no-auth')
     }
     removeLoader()
   }
@@ -135,10 +118,8 @@
   // Initialize the Firebase app
   Firebase.initializeApp(firebaseConfig)
 
-  // Declare a variable for easy reference to the database
-
   // Get all of the login buttons
-  applyToElements('.login-button', function (element) {
+  utils.applyToElements('.login-button', function (element) {
     // Apply a click listener to the button
     element.addEventListener('click', function () {
       // Login to the app with Google
@@ -147,13 +128,11 @@
   })
 
   // Add event listener to logout button
-  logoutButton.addEventListener('click', function () {
+  utils.click(logoutButton, () => {
     // Log the user out
     Google.auth2.getAuthInstance().signOut()
   })
-
-  // Get event listener to the delete account button
-  deleteAccountButton.addEventListener('click', function () {
+  utils.click(deleteAccountButton, () => {
     // Delete the firebase user
     Firebase.auth().currentUser.delete().then(function () {
       // Disconnect the app form the users Google account
@@ -165,7 +144,7 @@
 
   var stepper = new Stepper(document.getElementById('config-stepper'), {
     linear: true,
-    completionCallback: function () {
+    completionCallback: () => {
       var newConfig = {groups: {}}
       var configurationName = document.getElementById('new-config-name').value
       var groupName = document.getElementById('new-group-name').value
@@ -187,13 +166,10 @@
 
   console.log(stepper)
 
-  var sortingTextField = document.getElementById('sorting-text-field')
-  var sortingEmailField = document.getElementById('sorting-email-field')
-
-  sortingTypeDropdown.addEventListener('change', function (element) {
+  utils.click(sortingTypeDropdown, element => {
     var constraintBetweenOption = sortingConstraintDropdownInstance.dropdownOptions.lastChild
     // Hide the between constraint
-    constraintBetweenOption.style.display = 'none'
+    utils.hide(constraintBetweenOption)
     // Show the constraint select
     sortingConstraintDropdown.parentNode.parentNode.parentNode.classList.remove('hidden')
     // Hide all the constraint fields
@@ -264,8 +240,7 @@
     }
   })
 
-  // Listen for sorting constraint change
-  sortingConstraintDropdown.addEventListener('change', function (element) {
+  utils.click(sortingConstraintDropdown, element => {
     var sortingTypeDropdownValue = sortingTypeDropdown.value
     if (element.target.value === '5') {
       // Check if the sorting classifier needs two of each picker
@@ -287,28 +262,13 @@
     }
   })
 
-  folderPickerButton.addEventListener('click', function () {
+  utils.click(folderPickerButton, () => {
     folderPicker.setVisible(true)
   })
 
   // Add event listener for when the document is loaded
   document.addEventListener('DOMContentLoaded', function () {
-    var lazyLoadElements = document.getElementsByClassName('lazyLoad')
-    // Itterate through the preload stylesheets and start to load them
-    for (var i = 0; i < lazyLoadElements.length; i++) {
-      var elem = lazyLoadElements[i]
-      if (elem.getAttribute('rel') === 'preload') {
-        elem.setAttribute('rel', 'stylesheet')
-        elem.addEventListener('load', function () {
-          lazyLoadElementsLoaded += 1
-          // Check if all of the stylesheets are loaded
-          if (lazyLoadElementsLoaded === lazyLoadElements.length) {
-            // Remove loader overlay
-            removeLoader()
-          }
-        })
-      }
-    }
+    utils.lazyLoadCSS(removeLoader)
 
     var googleApiScript = document.createElement('script')
     googleApiScript.src = 'https://apis.google.com/js/api.js'

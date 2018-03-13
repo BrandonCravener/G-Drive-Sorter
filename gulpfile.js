@@ -4,12 +4,12 @@ const glob = require('glob')
 const pump = require('pump')
 const tsify = require('tsify')
 const sass = require('gulp-sass')
-const uglify = require('gulp-uglify')
 const eslint = require('gulp-eslint')
 const buffer = require('vinyl-buffer')
 const browserify = require('browserify')
 const source = require('vinyl-source-stream')
 const sourcemaps = require('gulp-sourcemaps')
+const uglify = require('gulp-uglify-es').default
 
 del('dist')
 
