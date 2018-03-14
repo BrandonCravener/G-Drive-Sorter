@@ -1,4 +1,4 @@
-# G-Drive-Sorter [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com) [![Build Status](https://travis-ci.org/BrandonCravener/G-Drive-Sorter.svg?branch=ci-intigration)](https://travis-ci.org/BrandonCravener/G-Drive-Sorter)
+# G-Drive-Sorter [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com) [![Build Status](https://travis-ci.org/BrandonCravener/G-Drive-Sorter.svg?branch=ci-intigration)](https://travis-ci.org/BrandonCravener/G-Drive-Sorter) [![Join the chat at https://gitter.im/G-Drive-Sorter/Lobby](https://badges.gitter.im/G-Drive-Sorter/Lobby.svg)](https://gitter.im/G-Drive-Sorter/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## WIP
 https://gdrive.brandoncravener.com
