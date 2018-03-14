@@ -39,18 +39,29 @@ export function show (selector: string) {
  * Adds a click event listener to the passed element
  * 
  * @export
- * @param {HTMLElement} element 
- * @param {EventListenerOrEventListenerObject} callback 
+ * @param {HTMLElement} element The HTML element
+ * @param {EventListenerOrEventListenerObject} callback The function to handel the click
  */
 export function click (element: HTMLElement, callback: EventListenerOrEventListenerObject) {
   element.addEventListener('click', callback)
 }
 
 /**
+ * Adds a change listener to the element passed
+ * 
+ * @export
+ * @param {HTMLElement} element The HTML Element
+ * @param {EventListenerOrEventListenerObject} callback The function to handel the change
+ */
+export function change (element: HTMLElement, callback: EventListenerOrEventListenerObject) {
+  element.addEventListener('change', callback)
+}
+
+/**
  * Loads all elements with the class lazyLoad the calls the callback
  * 
  * @export
- * @param {Function} callback 
+ * @param {Function} callback Called when all the stylesheets are loaded
  */
 export function lazyLoadCSS(callback: Function) {
   let lazyLoadElementsLoaded = 0
