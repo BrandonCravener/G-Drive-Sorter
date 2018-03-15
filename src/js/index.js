@@ -1,349 +1,311 @@
-'use strict';
-(function (window, document) {
-  // Put variables from window into variables for easy reference
-  var Materialize = window.M
-  var Firebase = window.firebase
-  var Stepper = window.Stepper
-  var Google
-  var google
-  var apiKey = 'AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM'
-  var folderPicker
+// Browserify / Typescript imports
+const utils = require('./utils.ts')
 
-  var sidenav = document.getElementById('slide-out')
-  Materialize.Sidenav.init(sidenav)
+// Variables
+var Google
+var google
+var googleUser
+var folderPicker
+var Materialize = window.M
+var Stepper = window.Stepper
+var Firebase = window.firebase
+var apiKey = 'AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM'
+var firebaseConfig = {
+  apiKey: 'AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM',
+  authDomain: 'g-drive-sorter-2.firebaseapp.com',
+  databaseURL: 'https://g-drive-sorter-2.firebaseio.com',
+  projectId: 'g-drive-sorter-2',
+  storageBucket: 'g-drive-sorter-2.appspot.com',
+  messagingSenderId: '362606538820'
+}
 
-  var dropdown = document.querySelector('.dropdown-trigger')
-  Materialize.Dropdown.init(dropdown, {
-    coverTrigger: false,
-    alignment: 'right'
-  })
+// Counting variables
+var removeLoaderCallCount = 0
 
-  var datepicker0 = document.getElementById('sorting-datepicker-0')
-  Materialize.Datepicker.init(datepicker0)
+// Elements
+var logoutButton = document.getElementById('logout-button')
+var loadingOverlay = document.getElementById('loading-overlay')
+var loaderBackground = document.getElementById('loader-background')
+var sortingTextField = document.getElementById('sorting-text-field')
+var sortingEmailField = document.getElementById('sorting-email-field')
+var deleteAccountButton = document.getElementById('button-delete-account')
+var folderPickerButton = document.getElementById('button-pick-drive-folder')
 
-  var timepicker0 = document.getElementById('sorting-timepicker-0')
-  Materialize.Timepicker.init(timepicker0)
+// MaterializeCSS initialization
+var sidenav = document.getElementById('slide-out')
+Materialize.Sidenav.init(sidenav)
 
-  var datepicker1 = document.getElementById('sorting-datepicker-1')
-  Materialize.Datepicker.init(datepicker1)
+var dropdown = document.querySelector('.dropdown-trigger')
+Materialize.Dropdown.init(dropdown, {
+  coverTrigger: false,
+  alignment: 'right'
+})
 
-  var timepicker1 = document.getElementById('sorting-timepicker-1')
-  Materialize.Timepicker.init(timepicker1)
+var datepicker0 = document.getElementById('sorting-datepicker-0')
+Materialize.Datepicker.init(datepicker0)
 
-  var parallax = document.querySelector('.parallax')
-  Materialize.Parallax.init(parallax)
+var timepicker0 = document.getElementById('sorting-timepicker-0')
+Materialize.Timepicker.init(timepicker0)
 
-  var tabs = document.querySelector('.tabs')
-  Materialize.Tabs.init(tabs)
-  // Firebase variables
-  var firebaseConfig = {
-    apiKey: 'AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM',
-    authDomain: 'g-drive-sorter-2.firebaseapp.com',
-    databaseURL: 'https://g-drive-sorter-2.firebaseio.com',
-    projectId: 'g-drive-sorter-2',
-    storageBucket: 'g-drive-sorter-2.appspot.com',
-    messagingSenderId: '362606538820'
-  }
+var datepicker1 = document.getElementById('sorting-datepicker-1')
+Materialize.Datepicker.init(datepicker1)
 
-  // Counting variables
-  var lazyLoadElementsLoaded = 0
-  var removeLoaderCallCount = 0
+var timepicker1 = document.getElementById('sorting-timepicker-1')
+Materialize.Timepicker.init(timepicker1)
 
-  // Elements
-  var logoutButton = document.getElementById('logout-button')
-  var loadingOverlay = document.getElementById('loading-overlay')
-  var loaderBackground = document.getElementById('loader-background')
-  var deleteAccountButton = document.getElementById('button-delete-account')
-  var folderPickerButton = document.getElementById('button-pick-drive-folder')
+var parallax = document.querySelector('.parallax')
+Materialize.Parallax.init(parallax)
 
-  var sortingTypeDropdown = document.getElementById('sorting-type-dropdown')
-  Materialize.FormSelect.init(sortingTypeDropdown, {
-    classes: 'height-125'
-  })
+var tabs = document.querySelector('.tabs')
+Materialize.Tabs.init(tabs)
 
-  var sortingConstraintDropdown = document.getElementById('sorting-constraint-dropdown')
-  var sortingConstraintDropdownInstance = Materialize.FormSelect.init(sortingConstraintDropdown, {
-    classes: 'height-125'
-  })
+var sortingTypeDropdown = document.getElementById('sorting-type-dropdown')
+Materialize.FormSelect.init(sortingTypeDropdown, {
+  classes: 'height-125'
+})
 
-  var sortingFileTypeDropdown = document.getElementById('sorting-file-type-dropdown')
-  Materialize.FormSelect.init(sortingFileTypeDropdown, {
-    classes: 'height-125'
-  })
+var sortingConstraintDropdown = document.getElementById('sorting-constraint-dropdown')
+var sortingConstraintDropdownInstance = Materialize.FormSelect.init(sortingConstraintDropdown, {
+  classes: 'height-125'
+})
 
-  var googleUser
+var sortingFileTypeDropdown = document.getElementById('sorting-file-type-dropdown')
+Materialize.FormSelect.init(sortingFileTypeDropdown, {
+  classes: 'height-125'
+})
 
-  function applyToElements (selector, callingFunction) {
-    var items = document.querySelectorAll(selector)
-    for (var i = 0; i < items.length; i++) {
-      callingFunction(items[i])
-    }
-  }
-
-  function hide (selector) {
-    applyToElements(selector, function (element) {
-      element.style.display = 'none'
-    })
-  }
-
-  function show (selector) {
-    applyToElements(selector, function (element) {
-      element.style.display = 'block'
-    })
-  }
-
-  function removeLoader () {
-    removeLoaderCallCount += 1
-    if (removeLoaderCallCount === 2) {
-      if (loadingOverlay) {
-        loaderBackground.classList.add('shrink')
-        loadingOverlay.classList.add('fade')
-        setTimeout(function () {
-          loadingOverlay.parentNode.removeChild(loadingOverlay)
-        }, 800)
+// Init stepper
+var stepper = new Stepper(document.getElementById('config-stepper'), {
+  linear: true,
+  completionCallback: () => {
+    var newConfig = {groups: {}}
+    var configurationName = document.getElementById('new-config-name').value
+    var groupName = document.getElementById('new-group-name').value
+    var sortingClassifier = sortingTypeDropdown.value
+    var sortingConstraint = sortingConstraintDropdown.value
+    // Set the name of the new configuration
+    newConfig['name'] = configurationName
+    // Set the constraint and classifier type of the configuration as well as the data
+    newConfig['groups'][groupName] = {
+      classifier: sortingClassifier,
+      constraint: sortingConstraint,
+      data: {
       }
     }
   }
+})
 
-  function userAuthentication (authenticated) {
-    if (authenticated) {
-      googleUser = Google.auth2.getAuthInstance().currentUser.get()
-      hide('.no-auth')
-      show('.auth')
-      if (googleUser) {
-        window.user = googleUser
-        var idToken = googleUser.getAuthResponse().id_token
-        var credentials = Firebase.auth.GoogleAuthProvider.credential(idToken)
-        Firebase.auth().signInWithCredential(credentials).then(function (user) {
-          if (user) {
-            document.getElementById('prof-img').setAttribute('src', user.photoURL)
-            document.getElementById('prof-name').textContent = user.displayName
-            document.getElementById('prof-email').textContent = user.email
-          }
-        })
-      }
-    } else {
-      hide('.auth')
-      show('.no-auth')
+// Temp to bypass rule - will update lib later
+console.log(stepper)
+
+function removeLoader () {
+  removeLoaderCallCount += 1
+  if (removeLoaderCallCount === 2) {
+    if (loadingOverlay) {
+      loaderBackground.classList.add('shrink')
+      loadingOverlay.classList.add('fade')
+      setTimeout(function () {
+        loadingOverlay.parentNode.removeChild(loadingOverlay)
+      }, 800)
     }
-    removeLoader()
   }
+}
 
-  function folderPicked (data) {
+function userAuthentication (authenticated) {
+  if (authenticated) {
+    googleUser = Google.auth2.getAuthInstance().currentUser.get()
+    utils.hide('.no-auth')
+    utils.show('.auth')
+    if (googleUser) {
+      window.user = googleUser
+      var idToken = googleUser.getAuthResponse().id_token
+      var credentials = Firebase.auth.GoogleAuthProvider.credential(idToken)
+      Firebase.auth().signInWithCredential(credentials).then(function (user) {
+        if (user) {
+          document.getElementById('prof-img').setAttribute('src', user.photoURL)
+          document.getElementById('prof-name').textContent = user.displayName
+          document.getElementById('prof-email').textContent = user.email
+        }
+      })
+    }
+  } else {
+    utils.hide('.auth')
+    utils.show('.no-auth')
   }
+  removeLoader()
+}
 
-  // Initialize the Firebase app
-  Firebase.initializeApp(firebaseConfig)
+function folderPicked (data) {
+}
 
-  // Declare a variable for easy reference to the database
+// Initialize the Firebase app
+Firebase.initializeApp(firebaseConfig)
 
-  // Get all of the login buttons
-  applyToElements('.login-button', function (element) {
-    // Apply a click listener to the button
-    element.addEventListener('click', function () {
-      // Login to the app with Google
-      Google.auth2.getAuthInstance().signIn()
-    })
+// Get all of the login buttons
+utils.applyToElements('.login-button', function (element) {
+  // Apply a click listener to the button
+  element.addEventListener('click', function () {
+    // Login to the app with Google
+    Google.auth2.getAuthInstance().signIn()
   })
+})
 
-  // Add event listener to logout button
-  logoutButton.addEventListener('click', function () {
-    // Log the user out
+// Add click listener to logout button
+utils.click(logoutButton, () => {
+  // Log the user out
+  Google.auth2.getAuthInstance().signOut()
+})
+
+// Add click listener to the delete account button
+utils.click(deleteAccountButton, () => {
+  // Delete the firebase user
+  Firebase.auth().currentUser.delete().then(function () {
+    // Disconnect the app form the users Google account
+    Google.auth2.getAuthInstance().disconnect()
+    // Sign the user out of their account
     Google.auth2.getAuthInstance().signOut()
   })
+})
 
-  // Get event listener to the delete account button
-  deleteAccountButton.addEventListener('click', function () {
-    // Delete the firebase user
-    Firebase.auth().currentUser.delete().then(function () {
-      // Disconnect the app form the users Google account
-      Google.auth2.getAuthInstance().disconnect()
-      // Sign the user out of their account
-      Google.auth2.getAuthInstance().signOut()
-    })
-  })
+// Add change listener to sorting dropdown
+utils.change(sortingTypeDropdown, element => {
+  var constraintBetweenOption = sortingConstraintDropdownInstance.dropdownOptions.lastChild
+  // Hide the between constraint
+  utils.hide(constraintBetweenOption)
+  // Show the constraint select
+  sortingConstraintDropdown.parentNode.parentNode.parentNode.classList.remove('hidden')
+  // Hide all the constraint fields
+  sortingTextField.parentNode.parentNode.classList.add('hidden')
+  sortingEmailField.parentNode.parentNode.classList.add('hidden')
+  datepicker0.parentNode.parentNode.classList.add('hidden')
+  timepicker0.parentNode.parentNode.classList.add('hidden')
+  datepicker1.parentNode.parentNode.classList.add('hidden')
+  timepicker1.parentNode.parentNode.classList.add('hidden')
+  folderPickerButton.parentNode.classList.add('hidden')
+  // Check if the between constraint selected
+  if (element.target.value !== '5') {
+    timepicker0.parentNode.className = 'input-field col s12 m5 l3'
+    datepicker0.parentNode.className = 'input-field col s12 m5 l3'
+  }
+  // Switch between the possible sorting types
+  switch (Number(element.target.value)) {
+    // Title | Text
+    case 1:
+      // Show text field
+      sortingTextField.parentNode.parentNode.classList.remove('hidden')
+      break
+      // Type | Dropdown
+    case 2:
+      // Show the file type dropdown
+      sortingFileTypeDropdown.parentNode.parentNode.parentNode.classList.remove('hidden')
+      break
+      // Location | Folder Picker
+    case 3:
+      folderPickerButton.parentNode.classList.remove('hidden')
+      break
+      // Owner | Name / Email
+    case 4:
+      // Show the needed fields
+      sortingTextField.parentNode.parentNode.classList.remove('hidden')
+      sortingEmailField.parentNode.parentNode.classList.remove('hidden')
+      break
+      // Creation Date | Date Picker
+    case 5:
+      // Show the between constraint
+      constraintBetweenOption.style.display = 'block'
+      // Show the needed fields
+      datepicker0.parentNode.childNodes[4].textContent = 'Creation Date'
+      datepicker0.parentNode.parentNode.classList.remove('hidden')
+      timepicker0.parentNode.className = 'input-field col s0 m0 l0 hidden'
+      datepicker0.parentNode.className = 'input-field col s12 m 10 l6'
+      break
+      // Last Opened | Date & Time Picker
+    case 6:
+      // Show the between constraint
+      constraintBetweenOption.style.display = 'block'
+      // Show the needed fields
+      datepicker0.parentNode.childNodes[4].textContent = 'Opened Date'
+      datepicker0.parentNode.parentNode.classList.remove('hidden')
+      timepicker0.parentNode.childNodes[4].textContent = 'Opened Time'
+      timepicker0.parentNode.parentNode.classList.remove('hidden')
+      break
+      // Last Modified | Date & Time Picker
+    case 7:
+      // Show the between constraint
+      constraintBetweenOption.style.display = 'block'
+      // Show the needed fields
+      datepicker0.parentNode.childNodes[4].textContent = 'Modified Date'
+      datepicker0.parentNode.parentNode.classList.remove('hidden')
+      timepicker0.parentNode.childNodes[4].textContent = 'Modified Time'
+      timepicker0.parentNode.parentNode.classList.remove('hidden')
+      break
+  }
+})
 
-  var stepper = new Stepper(document.getElementById('config-stepper'), {
-    linear: true,
-    completionCallback: function () {
-      var newConfig = {groups: {}}
-      var configurationName = document.getElementById('new-config-name').value
-      var groupName = document.getElementById('new-group-name').value
-      var sortingClassifier = sortingTypeDropdown.value
-      var sortingConstraint = sortingConstraintDropdown.value
-
-      // Set the name of the new configuration
-      newConfig['name'] = configurationName
-      // Set the constraint and classifier type of the configuration as well as the data
-      newConfig['groups'][groupName] = {
-        classifier: sortingClassifier,
-        constraint: sortingConstraint,
-        data: {
-
-        }
-      }
-    }
-  })
-
-  console.log(stepper)
-
-  var sortingTextField = document.getElementById('sorting-text-field')
-  var sortingEmailField = document.getElementById('sorting-email-field')
-
-  sortingTypeDropdown.addEventListener('change', function (element) {
-    var constraintBetweenOption = sortingConstraintDropdownInstance.dropdownOptions.lastChild
-    // Hide the between constraint
-    constraintBetweenOption.style.display = 'none'
-    // Show the constraint select
-    sortingConstraintDropdown.parentNode.parentNode.parentNode.classList.remove('hidden')
-    // Hide all the constraint fields
-    sortingTextField.parentNode.parentNode.classList.add('hidden')
-    sortingEmailField.parentNode.parentNode.classList.add('hidden')
-    datepicker0.parentNode.parentNode.classList.add('hidden')
-    timepicker0.parentNode.parentNode.classList.add('hidden')
-    datepicker1.parentNode.parentNode.classList.add('hidden')
-    timepicker1.parentNode.parentNode.classList.add('hidden')
-    folderPickerButton.parentNode.classList.add('hidden')
-    // Check if the between constraint selected
-    if (element.target.value !== '5') {
-      timepicker0.parentNode.className = 'input-field col s12 m5 l3'
-      datepicker0.parentNode.className = 'input-field col s12 m5 l3'
-    }
-    // Switch between the possible sorting types
-    switch (Number(element.target.value)) {
-      // Title | Text
-      case 1:
-        // Show text field
-        sortingTextField.parentNode.parentNode.classList.remove('hidden')
-        break
-        // Type | Dropdown
-      case 2:
-        // Show the file type dropdown
-        sortingFileTypeDropdown.parentNode.parentNode.parentNode.classList.remove('hidden')
-        break
-        // Location | Folder Picker
-      case 3:
-        folderPickerButton.parentNode.classList.remove('hidden')
-        break
-        // Owner | Name / Email
-      case 4:
-        // Show the needed fields
-        sortingTextField.parentNode.parentNode.classList.remove('hidden')
-        sortingEmailField.parentNode.parentNode.classList.remove('hidden')
-        break
-        // Creation Date | Date Picker
-      case 5:
-        // Show the between constraint
-        constraintBetweenOption.style.display = 'block'
-        // Show the needed fields
-        datepicker0.parentNode.childNodes[4].textContent = 'Creation Date'
-        datepicker0.parentNode.parentNode.classList.remove('hidden')
-        timepicker0.parentNode.className = 'input-field col s0 m0 l0 hidden'
-        datepicker0.parentNode.className = 'input-field col s12 m 10 l6'
-        break
-        // Last Opened | Date & Time Picker
-      case 6:
-        // Show the between constraint
-        constraintBetweenOption.style.display = 'block'
-        // Show the needed fields
-        datepicker0.parentNode.childNodes[4].textContent = 'Opened Date'
-        datepicker0.parentNode.parentNode.classList.remove('hidden')
-        timepicker0.parentNode.childNodes[4].textContent = 'Opened Time'
-        timepicker0.parentNode.parentNode.classList.remove('hidden')
-        break
-        // Last Modified | Date & Time Picker
-      case 7:
-        // Show the between constraint
-        constraintBetweenOption.style.display = 'block'
-        // Show the needed fields
-        datepicker0.parentNode.childNodes[4].textContent = 'Modified Date'
-        datepicker0.parentNode.parentNode.classList.remove('hidden')
-        timepicker0.parentNode.childNodes[4].textContent = 'Modified Time'
-        timepicker0.parentNode.parentNode.classList.remove('hidden')
-        break
-    }
-  })
-
-  // Listen for sorting constraint change
-  sortingConstraintDropdown.addEventListener('change', function (element) {
-    var sortingTypeDropdownValue = sortingTypeDropdown.value
-    if (element.target.value === '5') {
-      // Check if the sorting classifier needs two of each picker
-      if (sortingTypeDropdownValue === '5' || sortingTypeDropdownValue === '6' || sortingTypeDropdownValue === '7') {
-        datepicker0.parentNode.childNodes[4].textContent = 'First Date'
-        timepicker0.parentNode.childNodes[4].textContent = 'First Time'
-        datepicker1.parentNode.parentNode.classList.remove('hidden')
-        if (sortingTypeDropdownValue === '5') {
-          timepicker0.parentNode.className = 'input-field col s12 m5 l3'
-          datepicker0.parentNode.className = 'input-field col s12 m5 l3'
-        }
-      }
-    } else {
+// Add a click listener to the sorting constraint dropdown
+utils.click(sortingConstraintDropdown, element => {
+  var sortingTypeDropdownValue = sortingTypeDropdown.value
+  if (element.target.value === '5') {
+    // Check if the sorting classifier needs two of each picker
+    if (sortingTypeDropdownValue === '5' || sortingTypeDropdownValue === '6' || sortingTypeDropdownValue === '7') {
+      datepicker0.parentNode.childNodes[4].textContent = 'First Date'
+      timepicker0.parentNode.childNodes[4].textContent = 'First Time'
+      datepicker1.parentNode.parentNode.classList.remove('hidden')
       if (sortingTypeDropdownValue === '5') {
-        timepicker0.parentNode.className = 'input-field col s0 m0 l0 hidden'
-        datepicker0.parentNode.className = 'input-field col s12 m 10 l6'
-      }
-      datepicker1.parentNode.parentNode.classList.add('hidden')
-    }
-  })
-
-  folderPickerButton.addEventListener('click', function () {
-    folderPicker.setVisible(true)
-  })
-
-  // Add event listener for when the document is loaded
-  document.addEventListener('DOMContentLoaded', function () {
-    var lazyLoadElements = document.getElementsByClassName('lazyLoad')
-    // Itterate through the preload stylesheets and start to load them
-    for (var i = 0; i < lazyLoadElements.length; i++) {
-      var elem = lazyLoadElements[i]
-      if (elem.getAttribute('rel') === 'preload') {
-        elem.setAttribute('rel', 'stylesheet')
-        elem.addEventListener('load', function () {
-          lazyLoadElementsLoaded += 1
-          // Check if all of the stylesheets are loaded
-          if (lazyLoadElementsLoaded === lazyLoadElements.length) {
-            // Remove loader overlay
-            removeLoader()
-          }
-        })
+        timepicker0.parentNode.className = 'input-field col s12 m5 l3'
+        datepicker0.parentNode.className = 'input-field col s12 m5 l3'
       }
     }
+  } else {
+    if (sortingTypeDropdownValue === '5') {
+      timepicker0.parentNode.className = 'input-field col s0 m0 l0 hidden'
+      datepicker0.parentNode.className = 'input-field col s12 m 10 l6'
+    }
+    datepicker1.parentNode.parentNode.classList.add('hidden')
+  }
+})
 
-    var googleApiScript = document.createElement('script')
-    googleApiScript.src = 'https://apis.google.com/js/api.js'
-    googleApiScript.addEventListener('load', function () {
-      Google = window.gapi
-      Google.load('client:auth2', function () {
-        Google.client.init({
-          apiKey: apiKey,
-          clientId: '362606538820-om1dhhvv5d9npas7jj02mbtvi5mjksmo.apps.googleusercontent.com',
-          discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'],
-          scope: 'https://www.googleapis.com/auth/drive'
-        }).then(function () {
-          Google.auth2.getAuthInstance().isSignedIn.listen(userAuthentication)
-          userAuthentication(Google.auth2.getAuthInstance().isSignedIn.get())
-          Google.load('picker', function () {
-            google = window.google
-            var view = new google.picker.DocsView(google.picker.ViewId.FOLDERS)
-              .setIncludeFolders(true)
-              .setSelectFolderEnabled(true)
-            var picker = new google.picker.PickerBuilder()
-              .disableFeature(google.picker.Feature.SUPPORT_TEAM_DRIVES)
-              .setAppId(362606538820)
-              .setOAuthToken(Google.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token)
-              .setDeveloperKey('AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM')
-              .setSelectableMimeTypes('application/vnd.google-apps.folder')
-              .addView(view)
-              .setCallback(folderPicked)
-              .build()
-            folderPicker = picker
-          })
-        }, function (err) {
-          console.error(err)
+// Add a click listener to the pick folder button
+utils.click(folderPickerButton, () => {
+  folderPicker.setVisible(true)
+})
+
+// Add event listener for when the document is loaded
+document.addEventListener('DOMContentLoaded', function () {
+  utils.lazyLoadCSS(removeLoader)
+  var googleApiScript = document.createElement('script')
+  googleApiScript.src = 'https://apis.google.com/js/api.js'
+  googleApiScript.addEventListener('load', function () {
+    Google = window.gapi
+    Google.load('client:auth2', function () {
+      Google.client.init({
+        apiKey: apiKey,
+        clientId: '362606538820-om1dhhvv5d9npas7jj02mbtvi5mjksmo.apps.googleusercontent.com',
+        discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'],
+        scope: 'https://www.googleapis.com/auth/drive'
+      }).then(function () {
+        Google.auth2.getAuthInstance().isSignedIn.listen(userAuthentication)
+        userAuthentication(Google.auth2.getAuthInstance().isSignedIn.get())
+        Google.load('picker', function () {
+          google = window.google
+          var view = new google.picker.DocsView(google.picker.ViewId.FOLDERS)
+            .setIncludeFolders(true)
+            .setSelectFolderEnabled(true)
+          var picker = new google.picker.PickerBuilder()
+            .disableFeature(google.picker.Feature.SUPPORT_TEAM_DRIVES)
+            .setAppId(362606538820)
+            .setOAuthToken(Google.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token)
+            .setDeveloperKey('AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM')
+            .setSelectableMimeTypes('application/vnd.google-apps.folder')
+            .addView(view)
+            .setCallback(folderPicked)
+            .build()
+          folderPicker = picker
         })
+      }, function (err) {
+        console.error(err)
       })
     })
-    document.getElementsByTagName('body')[0].appendChild(googleApiScript)
   })
-})(window, document)
+  document.getElementsByTagName('body')[0].appendChild(googleApiScript)
+})
