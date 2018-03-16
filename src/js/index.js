@@ -23,60 +23,30 @@ var firebaseConfig = {
 var removeLoaderCallCount = 0
 
 // Elements
+var tabs = document.querySelector('.tabs')
+var sidenav = document.getElementById('slide-out')
+var parallax = document.querySelector('.parallax')
+var dropdown = document.querySelector('.dropdown-trigger')
 var logoutButton = document.getElementById('logout-button')
 var loadingOverlay = document.getElementById('loading-overlay')
+var newConfigModal = document.getElementById('new-config-modal')
+var datepicker0 = document.getElementById('sorting-datepicker-0')
+var timepicker0 = document.getElementById('sorting-timepicker-0')
+var datepicker1 = document.getElementById('sorting-datepicker-1')
+var timepicker1 = document.getElementById('sorting-timepicker-1')
 var loaderBackground = document.getElementById('loader-background')
 var sortingTextField = document.getElementById('sorting-text-field')
 var sortingEmailField = document.getElementById('sorting-email-field')
 var deleteAccountButton = document.getElementById('button-delete-account')
-var folderPickerButton = document.getElementById('button-pick-drive-folder')
-
-// MaterializeCSS initialization
-var sidenav = document.getElementById('slide-out')
-Materialize.Sidenav.init(sidenav)
-
-var dropdown = document.querySelector('.dropdown-trigger')
-Materialize.Dropdown.init(dropdown, {
-  coverTrigger: false,
-  alignment: 'right'
-})
-
-var datepicker0 = document.getElementById('sorting-datepicker-0')
-Materialize.Datepicker.init(datepicker0)
-
-var timepicker0 = document.getElementById('sorting-timepicker-0')
-Materialize.Timepicker.init(timepicker0)
-
-var datepicker1 = document.getElementById('sorting-datepicker-1')
-Materialize.Datepicker.init(datepicker1)
-
-var timepicker1 = document.getElementById('sorting-timepicker-1')
-Materialize.Timepicker.init(timepicker1)
-
-var parallax = document.querySelector('.parallax')
-Materialize.Parallax.init(parallax)
-
-var tabs = document.querySelector('.tabs')
-Materialize.Tabs.init(tabs)
-
 var sortingTypeDropdown = document.getElementById('sorting-type-dropdown')
-Materialize.FormSelect.init(sortingTypeDropdown, {
-  classes: 'height-125'
-})
-
-var sortingConstraintDropdown = document.getElementById('sorting-constraint-dropdown')
-var sortingConstraintDropdownInstance = Materialize.FormSelect.init(sortingConstraintDropdown, {
-  classes: 'height-125'
-})
-
+var folderPickerButton = document.getElementById('button-pick-drive-folder')
 var sortingFileTypeDropdown = document.getElementById('sorting-file-type-dropdown')
-Materialize.FormSelect.init(sortingFileTypeDropdown, {
-  classes: 'height-125'
-})
+var sortingConstraintDropdown = document.getElementById('sorting-constraint-dropdown')
 
-// Init stepper
+// Define stepper with config
 var stepper = new Stepper(document.getElementById('config-stepper'), {
   linear: true,
+  invalidClass: 'invalid',
   completionCallback: () => {
     var newConfig = {groups: {}}
     var configurationName = document.getElementById('new-config-name').value
@@ -94,9 +64,6 @@ var stepper = new Stepper(document.getElementById('config-stepper'), {
     }
   }
 })
-
-// Temp to bypass rule - will update lib later
-console.log(stepper)
 
 function removeLoader () {
   removeLoaderCallCount += 1
@@ -141,6 +108,23 @@ function folderPicked (data) {
 // Initialize the Firebase app
 Firebase.initializeApp(firebaseConfig)
 
+// MaterializeCSS initialization
+Materialize.Sidenav.init(sidenav)
+Materialize.Dropdown.init(dropdown, {
+  coverTrigger: false,
+  alignment: 'right'
+})
+Materialize.Datepicker.init(datepicker0)
+Materialize.Timepicker.init(timepicker0)
+Materialize.Datepicker.init(datepicker1)
+Materialize.Timepicker.init(timepicker1)
+Materialize.Parallax.init(parallax)
+Materialize.Tabs.init(tabs)
+Materialize.Modal.init(newConfigModal)
+
+// Initialize stepper
+stepper.initialize()
+
 // Get all of the login buttons
 utils.applyToElements('.login-button', function (element) {
   // Apply a click listener to the button
@@ -169,11 +153,11 @@ utils.click(deleteAccountButton, () => {
 
 // Add change listener to sorting dropdown
 utils.change(sortingTypeDropdown, element => {
-  var constraintBetweenOption = sortingConstraintDropdownInstance.dropdownOptions.lastChild
-  // Hide the between constraint
-  utils.hide(constraintBetweenOption)
+  var constraintBetweenOption = sortingConstraintDropdown.lastElementChild
+  // Disable the between option by default
+  constraintBetweenOption.setAttribute('disabled', true)
   // Show the constraint select
-  sortingConstraintDropdown.parentNode.parentNode.parentNode.classList.remove('hidden')
+  sortingConstraintDropdown.parentNode.classList.remove('hidden')
   // Hide all the constraint fields
   sortingTextField.parentNode.parentNode.classList.add('hidden')
   sortingEmailField.parentNode.parentNode.classList.add('hidden')
@@ -197,7 +181,7 @@ utils.change(sortingTypeDropdown, element => {
       // Type | Dropdown
     case 2:
       // Show the file type dropdown
-      sortingFileTypeDropdown.parentNode.parentNode.parentNode.classList.remove('hidden')
+      sortingFileTypeDropdown.parentNode.classList.remove('hidden')
       break
       // Location | Folder Picker
     case 3:
@@ -212,7 +196,7 @@ utils.change(sortingTypeDropdown, element => {
       // Creation Date | Date Picker
     case 5:
       // Show the between constraint
-      constraintBetweenOption.style.display = 'block'
+      constraintBetweenOption.removeAttribute('disabled')
       // Show the needed fields
       datepicker0.parentNode.childNodes[4].textContent = 'Creation Date'
       datepicker0.parentNode.parentNode.classList.remove('hidden')
@@ -222,7 +206,7 @@ utils.change(sortingTypeDropdown, element => {
       // Last Opened | Date & Time Picker
     case 6:
       // Show the between constraint
-      constraintBetweenOption.style.display = 'block'
+      constraintBetweenOption.removeAttribute('disabled')
       // Show the needed fields
       datepicker0.parentNode.childNodes[4].textContent = 'Opened Date'
       datepicker0.parentNode.parentNode.classList.remove('hidden')
@@ -232,7 +216,7 @@ utils.change(sortingTypeDropdown, element => {
       // Last Modified | Date & Time Picker
     case 7:
       // Show the between constraint
-      constraintBetweenOption.style.display = 'block'
+      constraintBetweenOption.removeAttribute('disabled')
       // Show the needed fields
       datepicker0.parentNode.childNodes[4].textContent = 'Modified Date'
       datepicker0.parentNode.parentNode.classList.remove('hidden')

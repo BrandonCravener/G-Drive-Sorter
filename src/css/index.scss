@@ -1,5 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Lato');
 
+
+#button-create-configuration {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+}
+
+#config-stepper {
+  box-shadow: unset !important;
+}
+
 html {
     font-family: 'Lato', sans-serif;
 }
@@ -47,10 +58,6 @@ html, body, main {
 
 .top-bar {
     padding: 40px 0;
-}
-
-.height-125 ul {
-    height: 125px !important;
 }
 
 @media all and (max-width: 600px) {
