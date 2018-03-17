@@ -138,7 +138,7 @@
                     <div class="modal-content">
                         <h4>New Config</h4>
                         <hr>
-                        <div id="config-stepper" class="stepper vertical">
+                        <form id="config-stepper" class="stepper vertical">
                             <div class="step visible">
                                 <div class="step-header">
                                     <div class="step-circle"></div>
@@ -148,17 +148,17 @@
                                     <div class="step-content">
                                         <!-- Add Place to Select Configuration to add Group to? -->
                                         <div class="row">
-                                            <div class="col s0 m2 l4"></div>
-                                            <div class="input-field col s12 m8 l4">
+                                            <div class="col s0 m1 l2"></div>
+                                            <div class="input-field col s12 m10 l8">
                                                 <input id="new-config-name" type="text" class="validate" required>
                                                 <label for="new-config-name">Configuration Name</label>
                                             </div>
-                                            <div class="col s0 m2 l4"></div>
+                                            <div class="col s0 m1 l2"></div>
                                         </div>
                                     </div>
                                     <div class="step-buttons">
-                                        <button class="button button-step-next">Continue</button>
-                                        <button class="button button-step-cancel">Cancel</button>
+                                        <button type="button" class="button button-step-next">Continue</button>
+                                        <button type="button" class="button button-step-cancel">Cancel</button>
                                     </div>
                                 </div>
                             </div>
@@ -170,17 +170,17 @@
                                 <div class="inner-step-content">
                                     <div class="step-content">
                                         <div class="row">
-                                            <div class="col s0 m2 l4"></div>
-                                            <div class="input-field col s12 m8 l4">
+                                            <div class="col s0 m1 l2"></div>
+                                            <div class="input-field col s12 m10 l8">
                                                 <input id="new-group-name" type="text" class="validate" required>
                                                 <label for="new-group-name">Rule Group Name</label>
                                             </div>
-                                            <div class="col s0 m2 l4"></div>
+                                            <div class="col s0 m1 l2"></div>
                                         </div>
                                     </div>
                                     <div class="step-buttons">
-                                        <button class="button button-step-next">Continue</button>
-                                        <button class="button button-step-cancel">Cancel</button>
+                                        <button type="button" class="button button-step-next">Continue</button>
+                                        <button type="button" class="button button-step-cancel">Cancel</button>
                                     </div>
                                 </div>
                             </div>
@@ -193,8 +193,8 @@
                                     <!-- UI used to create a new config rule -->
                                     <div id="new-rule-ui" class="step-content last">
                                         <div class="row">
-                                            <div class="col s0 m2 l4"></div>
-                                            <select id="sorting-type-dropdown" class="browser-default col s12 m8 l4" required>
+                                            <div class="col s0 m1 l2"></div>
+                                            <select id="sorting-type-dropdown" class="browser-default col s12 m10 l8" required>
                                                 <option selected disabled>Sorting Classifier</option>
                                                 <option value="1">Title</option>
                                                 <option value="2">Type</option>
@@ -204,30 +204,31 @@
                                                 <option value="6">Last Opened</option>
                                                 <option value="7">Last Modified</option>
                                             </select>
-                                            <div class="col s0 m2 l4"></div>
+                                            <div class="col s0 m1 l2"></div>
                                         </div>
                                         <div class="row hidden">
-                                            <div class="col s0 m2 l4"></div>
-                                            <select id="sorting-constraint-dropdown" class="browser-default col s12 m8 l4" required>
-                                                <option value="1" selected>Includes</option>
+                                            <div class="col s0 m1 l2"></div>
+                                            <select id="sorting-constraint-dropdown" class="browser-default col s12 m10 l8" required>
+                                                <option selected disabled>Sorting Constraint</option>
+                                                <option value="1">Includes</option>
                                                 <option value="2">Excludes</option>
                                                 <option value="3">Starts With</option>
                                                 <option value="4">Ends With</option>
                                                 <option value="5">Between</option>
                                             </select>
-                                            <div class="col s0 m2 l4"></div>
+                                            <div class="col s0 m1 l2"></div>
                                         </div>
                                         <div class="row hidden">
-                                            <div class="col s0 m2 l4"></div>
-                                            <div class="input-field col s12 m8 l4">
+                                            <div class="col s0 m1 l2"></div>
+                                            <div class="input-field col s12 m10 l8">
                                                 <input id="sorting-text-field" type="text" class="validate">
                                                 <label for="sorting-text-field">Name</label>
                                             </div>
-                                            <div class="col s0 m2 l4"></div>
+                                            <div class="col s0 m1 l2"></div>
                                         </div>
                                         <div class="row hidden">
-                                            <div class="col s0 m2 l4"></div>
-                                              <select id="sorting-file-type-dropdown" class="browser-default col s12 m8 l4">
+                                            <div class="col s0 m1 l2"></div>
+                                              <select id="sorting-file-type-dropdown" class="browser-default col s12 m10 l8">
                                                 <option selected disabled>Select One</option>
                                                 <option value="application/vnd.google-apps.audio">Sound File</option>
                                                 <option value="application/vnd.google-apps.document">Document</option>
@@ -244,21 +245,21 @@
                                                 <option value="application/vnd.google-apps.spreadsheet">Sheets</option>
                                                 <option value="application/vnd.google-apps.video">Video</option>
                                               </select>
-                                            <div class="col s0 m2 l4"></div>
+                                            <div class="col s0 m1 l2"></div>
                                         </div>
                                         <div class="row hidden">
-                                            <div class="col s0 m2 l4"></div>
-                                            <div class="input-field col s12 m8 l4">
+                                            <div class="col s0 m1 l2"></div>
+                                            <div class="input-field col s12 m10 l8">
                                                 <input id="sorting-email-field" type="email" class="validate">
                                                 <label for="sorting-email-field">Email</label>
                                                 <span class="helper-text" data-error="Please enter a valid email address" data-success="Valid Email">Enter the Sharing User's Email</span>
                                             </div>
-                                            <div class="col s0 m2 l4"></div>
+                                            <div class="col s0 m1 l2"></div>
                                         </div>
                                         <div class="row hidden">
-                                            <div class="col s0 m2 l4"></div>
-                                            <a id="button-pick-drive-folder" class="waves-effect waves-light btn-large col s12 m8 l4">Pick File</a>
-                                            <div class="col s0 m2 l4"></div>
+                                            <div class="col s0 m1 l2"></div>
+                                            <a id="button-pick-drive-folder" class="waves-effect waves-light btn-large col s12 m10 l8">Pick File</a>
+                                            <div class="col s0 m1 l2"></div>
                                         </div>
                                         <div class="row hidden">
                                             <div class="col s0 m1 l3"></div>
@@ -286,12 +287,12 @@
                                         </div>
                                     </div>
                                     <div class="step-buttons">
-                                        <button class="button button-step-next">Continue</button>
-                                        <button class="button button-step-cancel">Cancel</button>
+                                        <button type="button" class="button button-step-next">Continue</button>
+                                        <button type="button" class="button button-step-cancel">Cancel</button>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
                 <a class="btn-floating btn-large waves-effect waves-light green modal-trigger" href="#new-config-modal" id="button-create-configuration"><i class="material-icons">add</i></a>

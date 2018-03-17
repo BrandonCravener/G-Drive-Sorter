@@ -42,6 +42,10 @@ html, body, main {
     filter: blur(5px) brightness(70%);
 }
 
+.picker, .timepicker-modal {
+  z-index: 10000 !important;
+}
+
 .parallax-bg {
     width: 100%;
     filter: brightness(70%);

@@ -11,7 +11,7 @@ const source = require('vinyl-source-stream')
 const sourcemaps = require('gulp-sourcemaps')
 const uglify = require('gulp-uglify-es').default
 
-del('dist')
+del.sync('dist')
 
 gulp.task('sass', cb => {
   pump([
