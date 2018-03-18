@@ -17,7 +17,6 @@
   },
   "homepage": "https://github.com/BrandonCravener/G-Drive-Sorter#readme",
   "devDependencies": {
-    "@types/gapi": "0.0.35",
     "browserify": "^16.1.1",
     "del": "^3.0.0",
     "eslint-config-standard": "^11.0.0",

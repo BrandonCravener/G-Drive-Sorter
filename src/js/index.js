@@ -1,5 +1,6 @@
 // Browserify / Typescript imports
 const utils = require('./utils.ts')
+const config = require('./config.ts')
 
 // Variables
 let Google
@@ -30,6 +31,7 @@ let parallax = document.querySelector('.parallax')
 let dropdown = document.querySelector('.dropdown-trigger')
 let logoutButton = document.getElementById('logout-button')
 let configStepper = document.getElementById('config-stepper')
+let configList = document.getElementById('configuration-list')
 let loadingOverlay = document.getElementById('loading-overlay')
 let newConfigModal = document.getElementById('new-config-modal')
 let datepicker0 = document.getElementById('sorting-datepicker-0')
@@ -41,9 +43,13 @@ let sortingTextField = document.getElementById('sorting-text-field')
 let sortingEmailField = document.getElementById('sorting-email-field')
 let deleteAccountButton = document.getElementById('button-delete-account')
 let sortingTypeDropdown = document.getElementById('sorting-type-dropdown')
+let newConfigButton = document.getElementById('button-create-configuration')
 let folderPickerButton = document.getElementById('button-pick-drive-folder')
 let sortingFileTypeDropdown = document.getElementById('sorting-file-type-dropdown')
 let sortingConstraintDropdown = document.getElementById('sorting-constraint-dropdown')
+
+// Declare variable for easy reference to thew new config button class list
+let configButtonClasses = newConfigButton.classList
 
 // Define stepper with config
 let stepper = new Stepper(configStepper, {
@@ -101,7 +107,8 @@ let stepper = new Stepper(configStepper, {
         break
     }
     newConfig['groups'][groupName]['data'] = data
-    console.log(newConfig)
+    // Add the new config to the database
+    Firebase.database().ref('/users/' + Firebase.auth().currentUser.uid + '/config/').push(newConfig)
   }
 })
 
@@ -111,6 +118,8 @@ function removeLoader () {
     if (loadingOverlay) {
       loaderBackground.classList.add('shrink')
       loadingOverlay.classList.add('fade')
+      // Fix the tab indicator
+      Materialize.Tabs.getInstance(tabs).updateTabIndicator()
       setTimeout(() => {
         loadingOverlay.parentNode.removeChild(loadingOverlay)
       }, 800)
@@ -294,7 +303,39 @@ Materialize.Timepicker.init(timepicker1, {
   container: 'body'
 })
 Materialize.Parallax.init(parallax)
-Materialize.Tabs.init(tabs)
+Materialize.Tabs.init(tabs, {
+  onShow: () => {
+    let currentTab = Materialize.Tabs.getInstance(tabs).index
+    if (currentTab === 1) {
+      configButtonClasses.add('scale-in')
+      Firebase
+        .database()
+        .ref(`/users/${Firebase.auth().currentUser.uid}`)
+        .child('config')
+        .limitToFirst(10)
+        .once('value')
+        .then(snapshot => {
+            let data = snapshot.val()
+            /**
+             * TODO:
+             *  Add fade out function
+             *  Add fade in function
+             */
+            utils.hide('#config-loader')
+            if (data === null) {
+              utils.show('#no-configs-message')
+            } else {
+              configList.innerHTML += config.ConfigHandler.generateListItems(data)
+              utils.show('#class-list-container')
+            }
+        })
+    } else {
+      configButtonClasses.remove('scale-out')
+      configButtonClasses.remove('scale-in')
+      configButtonClasses.add('scale-out')
+    }
+  }
+})
 Materialize.Modal.init(newConfigModal, {
   onOpenStart: () => {
     configStepper.reset()
@@ -343,7 +384,14 @@ utils.click(folderPickerButton, () => {
 
 // Add event listener for when the document is loaded
 document.addEventListener('DOMContentLoaded', () => {
+  // Check if the page is starting on the config tab
+  if (window.location.hash === '#config') {
+    // Show the new class button
+    configButtonClasses.add('scale-in')
+  }
+  // Call a utility method to load all css and pass a callback
   utils.lazyLoadCSS(removeLoader)
+  // Declare a variable to hold the new script element
   let googleApiScript = document.createElement('script')
   googleApiScript.src = 'https://apis.google.com/js/api.js'
   googleApiScript.addEventListener('load', () => {
