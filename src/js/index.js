@@ -28,23 +28,28 @@ let removeLoaderCallCount = 0
 let tabs = document.querySelector('.tabs')
 let sidenav = document.getElementById('slide-out')
 let parallax = document.querySelector('.parallax')
+let collapsible = document.querySelector('.collapsible')
 let dropdown = document.querySelector('.dropdown-trigger')
 let logoutButton = document.getElementById('logout-button')
 let configStepper = document.getElementById('config-stepper')
-let configList = document.getElementById('configuration-list')
 let loadingOverlay = document.getElementById('loading-overlay')
 let newConfigModal = document.getElementById('new-config-modal')
 let datepicker0 = document.getElementById('sorting-datepicker-0')
 let timepicker0 = document.getElementById('sorting-timepicker-0')
 let datepicker1 = document.getElementById('sorting-datepicker-1')
 let timepicker1 = document.getElementById('sorting-timepicker-1')
+let configsContainer = document.getElementById('configs-container')
 let loaderBackground = document.getElementById('loader-background')
+let sideNewConfigButton = document.getElementById('side-new-config')
 let sortingTextField = document.getElementById('sorting-text-field')
 let sortingEmailField = document.getElementById('sorting-email-field')
+let settingsLinkButton = document.getElementById('settings-link-button')
 let deleteAccountButton = document.getElementById('button-delete-account')
+let dashboardLinkButton = document.getElementById('dashboard-link-button')
 let sortingTypeDropdown = document.getElementById('sorting-type-dropdown')
 let newConfigButton = document.getElementById('button-create-configuration')
 let folderPickerButton = document.getElementById('button-pick-drive-folder')
+let configurationLinkButton = document.getElementById('configuration-link-button')
 let sortingFileTypeDropdown = document.getElementById('sorting-file-type-dropdown')
 let sortingConstraintDropdown = document.getElementById('sorting-constraint-dropdown')
 
@@ -119,7 +124,7 @@ function removeLoader () {
       loaderBackground.classList.add('shrink')
       loadingOverlay.classList.add('fade')
       // Fix the tab indicator
-      Materialize.Tabs.getInstance(tabs).updateTabIndicator()
+      tabsInstance.updateTabIndicator()
       setTimeout(() => {
         loadingOverlay.parentNode.removeChild(loadingOverlay)
       }, 800)
@@ -145,14 +150,29 @@ function userAuthentication (authenticated) {
       })
     }
   } else {
+    utils.hide('#no-configs-message')
+    utils.hide('#class-list-container')
+    // Clear configurations
+    configsContainer.innerHTML = ''
+    // Hide all elements shown with authentication
     utils.hide('.auth')
+    // Show all elements shown without authentication
     utils.show('.no-auth')
   }
+  // Wait 100 milliseconds
+  setTimeout(() => {
+    // Fix the tab indicator
+    tabsInstance.updateTabIndicator()
+  }, 100)
+  // Remove the loader from the screen
   removeLoader()
 }
 
+// Function to handel the google drive file picker picking a folder
 function folderPicked (data) {
+  // Check if the user picked a folder
   if (data.action === 'picked') {
+    // Set the global variable to the selected folders id
     selectedFolder = data.docs[0].id
   }
 }
@@ -305,7 +325,7 @@ Materialize.Timepicker.init(timepicker1, {
 Materialize.Parallax.init(parallax)
 Materialize.Tabs.init(tabs, {
   onShow: () => {
-    let currentTab = Materialize.Tabs.getInstance(tabs).index
+    let currentTab = tabsInstance.index
     if (currentTab === 1) {
       configButtonClasses.add('scale-in')
       Firebase
@@ -315,19 +335,19 @@ Materialize.Tabs.init(tabs, {
         .limitToFirst(10)
         .once('value')
         .then(snapshot => {
-            let data = snapshot.val()
-            /**
-             * TODO:
-             *  Add fade out function
-             *  Add fade in function
-             */
-            utils.hide('#config-loader')
-            if (data === null) {
-              utils.show('#no-configs-message')
-            } else {
-              configList.innerHTML += config.ConfigHandler.generateListItems(data)
-              utils.show('#class-list-container')
-            }
+          let data = snapshot.val()
+          /**
+           * TODO:
+           *  Add fade out function
+           *  Add fade in function
+           */
+          utils.hide('#config-loader')
+          if (data === null) {
+            utils.show('#no-configs-message')
+          } else {
+            configsContainer.innerHTML += config.ConfigHandler.generateListItems(data)
+            utils.show('#class-list-container')
+          }
         })
     } else {
       configButtonClasses.remove('scale-out')
@@ -341,6 +361,10 @@ Materialize.Modal.init(newConfigModal, {
     configStepper.reset()
   }
 })
+Materialize.Collapsible.init(collapsible)
+
+// Materialize Instances
+let tabsInstance = Materialize.Tabs.getInstance(tabs)
 
 // Initialize stepper
 stepper.initialize()
@@ -371,16 +395,33 @@ utils.click(deleteAccountButton, () => {
   })
 })
 
+// Add a click listener to the pick folder button
+utils.click(folderPickerButton, () => {
+  folderPicker.setVisible(true)
+})
+
+utils.click(dashboardLinkButton, () => {
+  tabsInstance.select('overview')
+})
+
+utils.click(configurationLinkButton, () => {
+  tabsInstance.select('config')
+})
+
+utils.click(settingsLinkButton, () => {
+  tabsInstance.select('settings')
+})
+
+utils.click(sideNewConfigButton, () => {
+  tabsInstance.select('config')
+  Materialize.Modal.getInstance(newConfigModal).open()
+})
+
 // Add change listener to sorting dropdown
 utils.change(sortingTypeDropdown, handelNewConfigSelect)
 
 // Add a click listener to the sorting constraint dropdown
 utils.change(sortingConstraintDropdown, handelNewConfigSelect)
-
-// Add a click listener to the pick folder button
-utils.click(folderPickerButton, () => {
-  folderPicker.setVisible(true)
-})
 
 // Add event listener for when the document is loaded
 document.addEventListener('DOMContentLoaded', () => {

@@ -96,18 +96,18 @@
   <main>
     <nav class="nav-extended green">
       <div class="nav-wrapper">
-        <a href="#" data-target="slide-out" class="sidenav-trigger left auth"><i class="material-icons">menu</i></a>
+        <a href="#!" data-target="slide-out" class="sidenav-trigger left auth"><i class="material-icons">menu</i></a>
         <img class="brand-logo center" src="images/icon.png" alt="Folder with sorting options.">
         <ul class="right no-auth">
           <li><a class="login-button waves-effect waves-teal btn-flat">Login</a></li>
         </ul>
         <ul class="right auth">
-          <li><a class='dropdown-trigger right auth' href='#' data-target='user-dropdown'><i class="material-icons">more_vert</i></a></li>
+          <li><a class='dropdown-trigger right auth' href='#!' data-target='user-dropdown'><i class="material-icons">more_vert</i></a></li>
         </ul>
       </div>
       <div class="nav-content auth">
         <ul class="tabs tabs-fixed-width tabs-transparent">
-          <li class="tab"><a href="#overview">Overview</a></li>
+          <li class="tab"><a href="#overview">Dashboard</a></li>
           <li class="tab"><a href="#config">Configuration</a></li>
           <li class="tab"><a href="#settings">Settings</a></li>
         </ul>
@@ -124,6 +124,34 @@
           <a><span id="prof-email" class="white-text email"></span></a>
         </div>
       </li>
+      <li class="no-padding">
+        <a class="waves-effect waves-green" id="dashboard-link-button" href="#!">
+          <i class="material-icons">dashboard</i>Dashboard
+        </a>
+      </li>
+      <li class="no-padding">
+        <ul class="collapsible">
+          <li>
+              <a class="collapsible-header waves-effect waves-green" id="configuration-link-button" href="#!">
+                  <i class="material-icons">list</i>Configuration
+              </a>
+              <div class="collapsible-body">
+                <ul>
+                  <li>
+                    <a id="side-new-config" href="#!">
+                        <i class="material-icons">add</i>Create New Config
+                    </a>
+                  </li>
+                </ul>
+              </div>
+          </li>
+        </ul>
+      </li>
+      <li class="no-padding">
+          <a class="waves-effect waves-green" id="settings-link-button" href="#!">
+            <i class="material-icons">settings</i>Settings
+          </a>
+      </li>
     </ul>
     <ul id='user-dropdown' class='dropdown-content'>
       <li><a id="logout-button" href="#!">Logout</a></li>
@@ -137,11 +165,12 @@
         <div id="config-loader" class="progress">
           <div class="indeterminate"></div>
         </div>
-        <h1 id="no-configs-message" class="hidden">You have no configuration's!</h1>
+        <h4 id="no-configs-message" class="hidden center">You have no configuration's!</h4>
         <div id="class-list-container" class="hidden">
           <ul id="configuration-list" class="collection with-header">
             <li class="collection-header">
               <h4>Configurations</h4>
+              <div id="configs-container"></div>
             </li>
           </ul>
           <ul class="pagination">

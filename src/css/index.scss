@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Lato');
 
+#configuration-link-button {
+  padding: 0 32px;
+}
 
 #button-create-configuration {
   position: fixed;
@@ -17,6 +20,10 @@ html {
 
 html, body, main {
     height: 100%;
+}
+
+.collapsible-body li {
+  padding: 0 20px !important;
 }
 
 .auth {
