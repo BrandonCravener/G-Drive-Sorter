@@ -9,4 +9,18 @@ export class ConfigHandler {
     }
     return listItemsHTML
   }
+
+  static generatePageNumbers(numberOfPages: number) {
+    let pageNumbersHTML = ''
+    let classes
+    for (let i = 1; i < (numberOfPages + 1); i++) {
+      if (i === 1) {
+        classes = 'active waves-effect'
+      } else {
+        classes = 'waves-effect'
+      }
+      pageNumbersHTML += `<li class="${classes}"><a class="config-page" href="#!">${i}</a></li>`
+    }
+    return pageNumbersHTML
+  }
 }

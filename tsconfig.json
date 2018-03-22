@@ -4,6 +4,7 @@
         "./src/js/greet.ts"
     ],
     "compilerOptions": {
+        "module": "commonjs",
         "target": "es5"
     }
 }

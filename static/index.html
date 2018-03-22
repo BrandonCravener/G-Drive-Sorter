@@ -106,7 +106,7 @@
         </ul>
       </div>
       <div class="nav-content auth">
-        <ul class="tabs tabs-fixed-width tabs-transparent">
+        <ul id="tabs" class="tabs tabs-fixed-width tabs-transparent">
           <li class="tab"><a href="#overview">Dashboard</a></li>
           <li class="tab"><a href="#config">Configuration</a></li>
           <li class="tab"><a href="#settings">Settings</a></li>
@@ -174,9 +174,9 @@
             </li>
           </ul>
           <ul class="pagination">
-            <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-            <li class="active"><a href="#!">1</a></li>
-            <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+            <li class="disabled"><a id="prev-page-config-button" href="#!"><i class="material-icons">chevron_left</i></a></li>
+            <span id="config-page-wrapper"></span>
+            <li class="waves-effect"><a id="next-page-config-button" href="#!"><i class="material-icons">chevron_right</i></a></li>
           </ul>
         </div>
         <div id="new-config-modal" class="modal">
@@ -381,8 +381,6 @@
       </div>
     </div>
   </main>
-  <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
-  <script src="js/materialize.min.js"></script>
   <script src="js/vstepper.min.js"></script>
   <script src="js/index.min.js"></script>
 </body>

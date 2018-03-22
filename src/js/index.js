@@ -1,71 +1,36 @@
 // Browserify / Typescript imports
 const utils = require('./utils.ts')
+const Firebase = require('firebase')
 const config = require('./config.ts')
+const { elements } = require('./variables.ts')
+const materialize = require('./materialize.ts')
+const Materialize = require('materialize-css')
 
 // Variables
 let Google
 let google
 let googleUser
 let folderPicker
-let Materialize = window.M
-let Stepper = window.Stepper
-let Firebase = window.firebase
-let apiKey = 'AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM'
-let firebaseConfig = {
-  apiKey: 'AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM',
-  authDomain: 'g-drive-sorter-2.firebaseapp.com',
-  databaseURL: 'https://g-drive-sorter-2.firebaseio.com',
-  projectId: 'g-drive-sorter-2',
-  storageBucket: 'g-drive-sorter-2.appspot.com',
-  messagingSenderId: '362606538820'
-}
 let selectedFolder
+let Stepper = window.Stepper
+let apiKey = 'AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM'
 
 // Counting variables
 let removeLoaderCallCount = 0
 
-// Elements
-let tabs = document.querySelector('.tabs')
-let sidenav = document.getElementById('slide-out')
-let parallax = document.querySelector('.parallax')
-let collapsible = document.querySelector('.collapsible')
-let dropdown = document.querySelector('.dropdown-trigger')
-let logoutButton = document.getElementById('logout-button')
-let configStepper = document.getElementById('config-stepper')
-let loadingOverlay = document.getElementById('loading-overlay')
-let newConfigModal = document.getElementById('new-config-modal')
-let datepicker0 = document.getElementById('sorting-datepicker-0')
-let timepicker0 = document.getElementById('sorting-timepicker-0')
-let datepicker1 = document.getElementById('sorting-datepicker-1')
-let timepicker1 = document.getElementById('sorting-timepicker-1')
-let configsContainer = document.getElementById('configs-container')
-let loaderBackground = document.getElementById('loader-background')
-let sideNewConfigButton = document.getElementById('side-new-config')
-let sortingTextField = document.getElementById('sorting-text-field')
-let sortingEmailField = document.getElementById('sorting-email-field')
-let settingsLinkButton = document.getElementById('settings-link-button')
-let deleteAccountButton = document.getElementById('button-delete-account')
-let dashboardLinkButton = document.getElementById('dashboard-link-button')
-let sortingTypeDropdown = document.getElementById('sorting-type-dropdown')
-let newConfigButton = document.getElementById('button-create-configuration')
-let folderPickerButton = document.getElementById('button-pick-drive-folder')
-let configurationLinkButton = document.getElementById('configuration-link-button')
-let sortingFileTypeDropdown = document.getElementById('sorting-file-type-dropdown')
-let sortingConstraintDropdown = document.getElementById('sorting-constraint-dropdown')
-
 // Declare variable for easy reference to thew new config button class list
-let configButtonClasses = newConfigButton.classList
+let configButtonClasses = elements.newConfigButton.classList
 
 // Define stepper with config
-let stepper = new Stepper(configStepper, {
+let stepper = new Stepper(elements.configStepper, {
   linear: true,
   invalidClass: 'invalid',
   completionCallback: () => {
     let newConfig = {groups: {}}
     let configurationName = document.getElementById('new-config-name').value
     let groupName = document.getElementById('new-group-name').value
-    let sortingClassifier = sortingTypeDropdown.value
-    let sortingConstraint = sortingConstraintDropdown.value
+    let sortingClassifier = elements.sortingTypeDropdown.value
+    let sortingConstraint = elements.sortingConstraintDropdown.value
     let data = {}
     // Set the name of the new configuration
     newConfig['name'] = configurationName
@@ -76,63 +41,123 @@ let stepper = new Stepper(configStepper, {
     }
     switch (Number(sortingClassifier)) {
       case 1:
-        data['title'] = sortingTextField.value
+        data['title'] = elements.sortingTextField.value
         break
       case 2:
-        data['type'] = sortingFileTypeDropdown.value
+        data['type'] = elements.sortingFileTypeDropdown.value
         break
       case 3:
         data['location'] = selectedFolder
         break
       case 4:
         data = {
-          name: sortingTextField.value,
-          email: sortingEmailField.value
+          name: elements.sortingTextField.value,
+          email: elements.sortingEmailField.value
         }
         break
       case 5:
         data = {
-          date0: Materialize.Datepicker.getInstance(datepicker0).date,
-          date1: Materialize.Datepicker.getInstance(datepicker1).date
+          date0: datepicker0.date,
+          date1: datepicker1.date
         }
         break
       default:
         data = {
           dateTime0: {
-            date: Materialize.Datepicker.getInstance(datepicker0).date,
-            time: Materialize.Timepicker.getInstance(timepicker0).time
+            date: datepicker0.date,
+            time: timepicker0.time
           }
         }
         if (sortingConstraint === '5') {
           data['dateTime1'] = {
-            date: Materialize.Datepicker.getInstance(datepicker1).date,
-            time: Materialize.Timepicker.getInstance(timepicker1).time
+            date: datepicker1.date,
+            time: timepicker1.time
           }
         }
         break
     }
     newConfig['groups'][groupName]['data'] = data
     // Add the new config to the database
-    Firebase.database().ref('/users/' + Firebase.auth().currentUser.uid + '/config/').push(newConfig)
+    Firebase
+      .database()
+      .ref('/users/' + Firebase.auth().currentUser.uid + '/config/')
+      .push(newConfig)
+    // Close the modal
+    newConfigModal.close()
   }
 })
+
+function configTabHandler () {
+  let currentTab = tabsInstance.index
+  // Declare variable for easy reference to thew new config button class list
+  let configButtonClasses = elements.newConfigButton.classList
+  let nextConfigPageButtonParent = elements.nextConfigPageButton.parentNode
+  if (currentTab === 1) {
+    configButtonClasses.add('scale-in')
+    Firebase
+      .database()
+      .ref(`/users/${Firebase.auth().currentUser.uid}`)
+      .child('config')
+      .limitToFirst(10)
+      .once('value')
+      .then(snapshot => {
+        let data = snapshot.val()
+        let numConfigs = snapshot.numChildren()
+        let numPages = Math.ceil(numConfigs / 10)
+        if (numPages === 1) {
+          nextConfigPageButtonParent.classList.add('disabled')
+          nextConfigPageButtonParent.classList.remove('waves-effect')
+        } else {
+          nextConfigPageButtonParent.classList.remove('disabled')
+          nextConfigPageButtonParent.classList.add('waves-effect')
+        }
+        elements.configPageWrapper.innerHTML = ''
+        elements.configPageWrapper.innerHTML = config.ConfigHandler.generatePageNumbers(numPages)
+        /**
+         * TODO:
+         *  Add fade out function
+         *  Add fade in function
+         */
+        utils.hide('#config-loader')
+        if (data === null) {
+          utils.show('#no-configs-message')
+        } else {
+          elements.configsContainer.innerHTML += config.ConfigHandler.generateListItems(data)
+          utils.show('#class-list-container')
+        }
+      })
+  } else {
+    configButtonClasses.remove('scale-out')
+    configButtonClasses.remove('scale-in')
+    configButtonClasses.add('scale-out')
+  }
+}
 
 function removeLoader () {
   removeLoaderCallCount += 1
   if (removeLoaderCallCount === 2) {
-    if (loadingOverlay) {
-      loaderBackground.classList.add('shrink')
-      loadingOverlay.classList.add('fade')
+    if (elements.loadingOverlay) {
+      elements.loaderBackground.classList.add('shrink')
+      elements.loadingOverlay.classList.add('fade')
       // Fix the tab indicator
       tabsInstance.updateTabIndicator()
       setTimeout(() => {
-        loadingOverlay.parentNode.removeChild(loadingOverlay)
+        elements.loadingOverlay.parentNode.removeChild(elements.loadingOverlay)
       }, 800)
     }
   }
 }
 
 function userAuthentication (authenticated) {
+  // Check if the page is starting on the config tab
+  if (window.location.hash === '#config') {
+    // Show the new class button
+    configButtonClasses.add('scale-in')
+    if (authenticated) {
+      // Handel the tab loading
+      configTabHandler()
+    }
+  }
   if (authenticated) {
     googleUser = Google.auth2.getAuthInstance().currentUser.get()
     utils.hide('.no-auth')
@@ -153,7 +178,7 @@ function userAuthentication (authenticated) {
     utils.hide('#no-configs-message')
     utils.hide('#class-list-container')
     // Clear configurations
-    configsContainer.innerHTML = ''
+    elements.configsContainer.innerHTML = ''
     // Hide all elements shown with authentication
     utils.hide('.auth')
     // Show all elements shown without authentication
@@ -178,95 +203,95 @@ function folderPicked (data) {
 }
 
 function handelNewConfigSelect () {
-  let sortingTypeDropdownValue = sortingTypeDropdown.value
-  let sortingConstraintDropdownValue = sortingConstraintDropdown.value
-  let constraintBetweenOption = sortingConstraintDropdown.lastElementChild
+  let sortingTypeDropdownValue = elements.sortingTypeDropdown.value
+  let sortingConstraintDropdownValue = elements.sortingConstraintDropdown.value
+  let constraintBetweenOption = elements.sortingConstraintDropdown.lastElementChild
   // Disable the between option by default
   constraintBetweenOption.setAttribute('disabled', true)
   // Show the constraint select
-  sortingConstraintDropdown.parentNode.classList.remove('hidden')
+  elements.sortingConstraintDropdown.parentNode.classList.remove('hidden')
   // Hide all the constraint fields
-  folderPickerButton.parentNode.classList.add('hidden')
-  datepicker0.parentNode.parentNode.classList.add('hidden')
-  datepicker0.removeAttribute('required')
-  timepicker0.parentNode.parentNode.classList.add('hidden')
-  timepicker0.removeAttribute('required')
-  datepicker1.parentNode.parentNode.classList.add('hidden')
-  datepicker1.removeAttribute('required')
-  timepicker1.parentNode.parentNode.classList.add('hidden')
-  timepicker1.removeAttribute('required')
-  sortingFileTypeDropdown.parentNode.classList.add('hidden')
-  sortingFileTypeDropdown.removeAttribute('required')
-  sortingTextField.parentNode.parentNode.classList.add('hidden')
-  sortingTextField.removeAttribute('required')
-  sortingEmailField.parentNode.parentNode.classList.add('hidden')
-  sortingEmailField.removeAttribute('required')
+  elements.folderPickerButton.parentNode.classList.add('hidden')
+  elements.datepicker0.parentNode.parentNode.classList.add('hidden')
+  elements.datepicker0.removeAttribute('required')
+  elements.timepicker0.parentNode.parentNode.classList.add('hidden')
+  elements.timepicker0.removeAttribute('required')
+  elements.datepicker1.parentNode.parentNode.classList.add('hidden')
+  elements.datepicker1.removeAttribute('required')
+  elements.timepicker1.parentNode.parentNode.classList.add('hidden')
+  elements.timepicker1.removeAttribute('required')
+  elements.sortingFileTypeDropdown.parentNode.classList.add('hidden')
+  elements.sortingFileTypeDropdown.removeAttribute('required')
+  elements.sortingTextField.parentNode.parentNode.classList.add('hidden')
+  elements.sortingTextField.removeAttribute('required')
+  elements.sortingEmailField.parentNode.parentNode.classList.add('hidden')
+  elements.sortingEmailField.removeAttribute('required')
   // Check if the between constraint selected
   if (sortingTypeDropdownValue !== '5') {
-    timepicker0.parentNode.className = 'input-field col s12 m5 l3'
-    datepicker0.parentNode.className = 'input-field col s12 m5 l3'
+    elements.timepicker0.parentNode.className = 'input-field col s12 m5 l3'
+    elements.datepicker0.parentNode.className = 'input-field col s12 m5 l3'
   }
   // Switch between the possible sorting types
   switch (Number(sortingTypeDropdownValue)) {
     // Title | Text
     case 1:
       // Show text field
-      sortingTextField.parentNode.parentNode.classList.remove('hidden')
+      elements.sortingTextField.parentNode.parentNode.classList.remove('hidden')
       // Make the text field required
-      sortingTextField.setAttribute('required', '')
+      elements.sortingTextField.setAttribute('required', '')
       break
       // Type | Dropdown
     case 2:
       // Show the file type dropdown
-      sortingFileTypeDropdown.parentNode.classList.remove('hidden')
-      sortingFileTypeDropdown.setAttribute('required', '')
+      elements.sortingFileTypeDropdown.parentNode.classList.remove('hidden')
+      elements.sortingFileTypeDropdown.setAttribute('required', '')
       break
       // Location | Folder Picker
     case 3:
-      folderPickerButton.parentNode.classList.remove('hidden')
+      elements.folderPickerButton.parentNode.classList.remove('hidden')
       break
       // Owner | Name / Email
     case 4:
       // Show the needed fields
-      sortingTextField.parentNode.parentNode.classList.remove('hidden')
-      sortingTextField.setAttribute('required', '')
-      sortingEmailField.parentNode.parentNode.classList.remove('hidden')
-      sortingFileTypeDropdown.setAttribute('required', '')
+      elements.sortingTextField.parentNode.parentNode.classList.remove('hidden')
+      elements.sortingTextField.setAttribute('required', '')
+      elements.sortingEmailField.parentNode.parentNode.classList.remove('hidden')
+      elements.sortingFileTypeDropdown.setAttribute('required', '')
       break
       // Creation Date | Date Picker
     case 5:
       // Show the between constraint
       constraintBetweenOption.removeAttribute('disabled')
       // Show the needed fields
-      datepicker0.parentNode.children[1].textContent = 'Creation Date'
-      datepicker0.parentNode.parentNode.classList.remove('hidden')
-      datepicker0.setAttribute('required', '')
-      datepicker0.parentNode.className = 'input-field col s12 m 10 l6'
-      timepicker0.parentNode.className = 'input-field col s0 m0 l0 hidden'
+      elements.datepicker0.parentNode.children[1].textContent = 'Creation Date'
+      elements.datepicker0.parentNode.parentNode.classList.remove('hidden')
+      elements.datepicker0.setAttribute('required', '')
+      elements.datepicker0.parentNode.className = 'input-field col s12 m 10 l6'
+      elements.timepicker0.parentNode.className = 'input-field col s0 m0 l0 hidden'
       break
       // Last Opened | Date & Time Picker
     case 6:
       // Show the between constraint
       constraintBetweenOption.removeAttribute('disabled')
       // Show the needed fields
-      datepicker0.parentNode.children[1].textContent = 'Opened Date'
-      datepicker0.parentNode.parentNode.classList.remove('hidden')
-      datepicker0.setAttribute('required', '')
-      timepicker0.parentNode.children[1].textContent = 'Opened Time'
-      timepicker0.parentNode.parentNode.classList.remove('hidden')
-      timepicker0.setAttribute('required', '')
+      elements.datepicker0.parentNode.children[1].textContent = 'Opened Date'
+      elements.datepicker0.parentNode.parentNode.classList.remove('hidden')
+      elements.datepicker0.setAttribute('required', '')
+      elements.timepicker0.parentNode.children[1].textContent = 'Opened Time'
+      elements.timepicker0.parentNode.parentNode.classList.remove('hidden')
+      elements.timepicker0.setAttribute('required', '')
       break
       // Last Modified | Date & Time Picker
     case 7:
       // Show the between constraint
       constraintBetweenOption.removeAttribute('disabled')
       // Show the needed fields
-      datepicker0.parentNode.children[1].textContent = 'Modified Date'
-      datepicker0.parentNode.parentNode.classList.remove('hidden')
-      datepicker0.setAttribute('required', '')
-      timepicker0.parentNode.children[1].textContent = 'Modified Time'
-      timepicker0.parentNode.parentNode.classList.remove('hidden')
-      timepicker0.setAttribute('required', '')
+      elements.datepicker0.parentNode.children[1].textContent = 'Modified Date'
+      elements.datepicker0.parentNode.parentNode.classList.remove('hidden')
+      elements.datepicker0.setAttribute('required', '')
+      elements.timepicker0.parentNode.children[1].textContent = 'Modified Time'
+      elements.timepicker0.parentNode.parentNode.classList.remove('hidden')
+      elements.timepicker0.setAttribute('required', '')
       break
   }
   // Check if the user selected the between option
@@ -275,29 +300,29 @@ function handelNewConfigSelect () {
     if (sortingTypeDropdownValue === '5' || sortingTypeDropdownValue === '6' || sortingTypeDropdownValue === '7') {
       // Check if the user selected the creation date option
       if (sortingTypeDropdownValue === '5') {
-        datepicker0.parentNode.className = 'input-field col s12 m10 l6'
-        datepicker1.parentNode.className = 'input-field col s12 m10 l6'
-        timepicker0.parentNode.className = 'input-field col s0 m0 l0 hidden'
-        timepicker1.parentNode.className = 'input-field col s0 m0 l0 hidden'
-        datepicker0.parentNode.children[1].textContent = 'From'
-        datepicker1.parentNode.children[1].textContent = 'To'
-        datepicker1.parentNode.parentNode.classList.remove('hidden')
+        elements.datepicker0.parentNode.className = 'input-field col s12 m10 l6'
+        elements.datepicker1.parentNode.className = 'input-field col s12 m10 l6'
+        elements.timepicker0.parentNode.className = 'input-field col s0 m0 l0 hidden'
+        elements.timepicker1.parentNode.className = 'input-field col s0 m0 l0 hidden'
+        elements.datepicker0.parentNode.children[1].textContent = 'From'
+        elements.datepicker1.parentNode.children[1].textContent = 'To'
+        elements.datepicker1.parentNode.parentNode.classList.remove('hidden')
       } else {
-        datepicker0.parentNode.children[1].textContent = 'First Date'
-        timepicker0.parentNode.children[1].textContent = 'First Time'
-        datepicker1.parentNode.children[1].textContent = 'Second Date'
-        datepicker1.parentNode.parentNode.classList.remove('hidden')
-        datepicker1.parentNode.className = 'input-field col s12 m5 l3'
-        timepicker1.parentNode.className = 'input-field col s12 m5 l3'
+        elements.datepicker0.parentNode.children[1].textContent = 'First Date'
+        elements.timepicker0.parentNode.children[1].textContent = 'First Time'
+        elements.datepicker1.parentNode.children[1].textContent = 'Second Date'
+        elements.datepicker1.parentNode.parentNode.classList.remove('hidden')
+        elements.datepicker1.parentNode.className = 'input-field col s12 m5 l3'
+        elements.timepicker1.parentNode.className = 'input-field col s12 m5 l3'
       }
     }
   } else {
     // Check if the user selected the creation date option
     if (sortingTypeDropdownValue === '5') {
-      timepicker0.parentNode.className = 'input-field col s0 m0 l0 hidden'
-      datepicker0.parentNode.className = 'input-field col s12 m 10 l6'
+      elements.timepicker0.parentNode.className = 'input-field col s0 m0 l0 hidden'
+      elements.datepicker0.parentNode.className = 'input-field col s12 m 10 l6'
     }
-    datepicker1.parentNode.parentNode.classList.add('hidden')
+    elements.datepicker1.parentNode.parentNode.classList.add('hidden')
   }
 }
 
@@ -305,66 +330,15 @@ function handelNewConfigSelect () {
 Firebase.initializeApp(firebaseConfig)
 
 // MaterializeCSS initialization
-Materialize.Sidenav.init(sidenav)
-Materialize.Dropdown.init(dropdown, {
-  coverTrigger: false,
-  alignment: 'right'
-})
-Materialize.Datepicker.init(datepicker0, {
-  container: 'body'
-})
-Materialize.Timepicker.init(timepicker0, {
-  container: 'body'
-})
-Materialize.Datepicker.init(datepicker1, {
-  container: 'body'
-})
-Materialize.Timepicker.init(timepicker1, {
-  container: 'body'
-})
-Materialize.Parallax.init(parallax)
-Materialize.Tabs.init(tabs, {
-  onShow: () => {
-    let currentTab = tabsInstance.index
-    if (currentTab === 1) {
-      configButtonClasses.add('scale-in')
-      Firebase
-        .database()
-        .ref(`/users/${Firebase.auth().currentUser.uid}`)
-        .child('config')
-        .limitToFirst(10)
-        .once('value')
-        .then(snapshot => {
-          let data = snapshot.val()
-          /**
-           * TODO:
-           *  Add fade out function
-           *  Add fade in function
-           */
-          utils.hide('#config-loader')
-          if (data === null) {
-            utils.show('#no-configs-message')
-          } else {
-            configsContainer.innerHTML += config.ConfigHandler.generateListItems(data)
-            utils.show('#class-list-container')
-          }
-        })
-    } else {
-      configButtonClasses.remove('scale-out')
-      configButtonClasses.remove('scale-in')
-      configButtonClasses.add('scale-out')
-    }
-  }
-})
-Materialize.Modal.init(newConfigModal, {
-  onOpenStart: () => {
-    configStepper.reset()
-  }
-})
-Materialize.Collapsible.init(collapsible)
+materialize.init(configTabHandler)
 
-// Materialize Instances
-let tabsInstance = Materialize.Tabs.getInstance(tabs)
+// Materialize instances
+let datepicker0 = Materialize.Datepicker.getInstance(elements.datepicker0)
+let datepicker1 = Materialize.Datepicker.getInstance(elements.datepicker1)
+let timepicker0 = Materialize.Timepicker.getInstance(elements.timepicker0)
+let timepicker1 = Materialize.Timepicker.getInstance(elements.timepicker1)
+let newConfigModal = Materialize.Modal.getInstance(elements.newConfigModal)
+let tabsInstance = Materialize.Tabs.getInstance(document.getElementById('tabs'))
 
 // Initialize stepper
 stepper.initialize()
@@ -379,13 +353,13 @@ utils.applyToElements('.login-button', element => {
 })
 
 // Add click listener to logout button
-utils.click(logoutButton, () => {
+utils.click(elements.logoutButton, () => {
   // Log the user out
   Google.auth2.getAuthInstance().signOut()
 })
 
 // Add click listener to the delete account button
-utils.click(deleteAccountButton, () => {
+utils.click(elements.deleteAccountButton, () => {
   // Delete the firebase user
   Firebase.auth().currentUser.delete().then(() => {
     // Disconnect the app form the users Google account
@@ -396,40 +370,35 @@ utils.click(deleteAccountButton, () => {
 })
 
 // Add a click listener to the pick folder button
-utils.click(folderPickerButton, () => {
+utils.click(elements.folderPickerButton, () => {
   folderPicker.setVisible(true)
 })
 
-utils.click(dashboardLinkButton, () => {
+utils.click(elements.dashboardLinkButton, () => {
   tabsInstance.select('overview')
 })
 
-utils.click(configurationLinkButton, () => {
+utils.click(elements.configurationLinkButton, () => {
   tabsInstance.select('config')
 })
 
-utils.click(settingsLinkButton, () => {
+utils.click(elements.settingsLinkButton, () => {
   tabsInstance.select('settings')
 })
 
-utils.click(sideNewConfigButton, () => {
+utils.click(elements.sideNewConfigButton, () => {
   tabsInstance.select('config')
-  Materialize.Modal.getInstance(newConfigModal).open()
+  newConfigModal.open()
 })
 
 // Add change listener to sorting dropdown
-utils.change(sortingTypeDropdown, handelNewConfigSelect)
+utils.change(elements.sortingTypeDropdown, handelNewConfigSelect)
 
 // Add a click listener to the sorting constraint dropdown
-utils.change(sortingConstraintDropdown, handelNewConfigSelect)
+utils.change(elements.sortingConstraintDropdown, handelNewConfigSelect)
 
 // Add event listener for when the document is loaded
 document.addEventListener('DOMContentLoaded', () => {
-  // Check if the page is starting on the config tab
-  if (window.location.hash === '#config') {
-    // Show the new class button
-    configButtonClasses.add('scale-in')
-  }
   // Call a utility method to load all css and pass a callback
   utils.lazyLoadCSS(removeLoader)
   // Declare a variable to hold the new script element
@@ -451,7 +420,8 @@ document.addEventListener('DOMContentLoaded', () => {
           let view = new google.picker.DocsView(google.picker.ViewId.FOLDERS)
             .setIncludeFolders(true)
             .setSelectFolderEnabled(true)
-          let picker = new google.picker.PickerBuilder()
+
+          folderPicker = new google.picker.PickerBuilder()
             .disableFeature(google.picker.Feature.SUPPORT_TEAM_DRIVES)
             .setAppId(362606538820)
             .setOAuthToken(Google.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token)
@@ -460,7 +430,6 @@ document.addEventListener('DOMContentLoaded', () => {
             .addView(view)
             .setCallback(folderPicked)
             .build()
-          folderPicker = picker
         })
       }, err => {
         console.error(err)
