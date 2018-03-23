@@ -32,8 +32,8 @@ Below, is a guide to making potential suggestions and enhancements to this proje
 - Name the operating system that you are currently using.
 
 ## Pull Requests
-- Fill in the required pull request [template](unfinished).
+- Fill in the required pull request template.
 - Ensure to provide an accurate title and description to the pull request, and to disclude issue numbers.
-- Follow the standard js [styling guidelines](http://standardjs.com) as well as the [materialize guidelines]()
+- Follow the standard js [styling guidelines](http://standardjs.com) as well as the [materialize guidelines](http://materializecss.com/getting-started.html)
 - End any changed files with a blank line.
 - Include any possible dependencies that the pull request may have.
