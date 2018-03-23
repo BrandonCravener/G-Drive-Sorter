@@ -1,6 +1,6 @@
 // Browserify / Typescript imports
 const utils = require('./utils.ts')
-const Firebase = require('firebase')
+const firebase = require('./firebase.ts')
 const config = require('./config.ts')
 const { elements } = require('./variables.ts')
 const materialize = require('./materialize.ts')
@@ -78,10 +78,7 @@ let stepper = new Stepper(elements.configStepper, {
     }
     newConfig['groups'][groupName]['data'] = data
     // Add the new config to the database
-    Firebase
-      .database()
-      .ref('/users/' + Firebase.auth().currentUser.uid + '/config/')
-      .push(newConfig)
+    firebase.createConfig(newConfig)
     // Close the modal
     newConfigModal.close()
   }
@@ -94,12 +91,8 @@ function configTabHandler () {
   let nextConfigPageButtonParent = elements.nextConfigPageButton.parentNode
   if (currentTab === 1) {
     configButtonClasses.add('scale-in')
-    Firebase
-      .database()
-      .ref(`/users/${Firebase.auth().currentUser.uid}`)
-      .child('config')
-      .limitToFirst(10)
-      .once('value')
+    firebase
+      .getClasses()
       .then(snapshot => {
         let data = snapshot.val()
         let numConfigs = snapshot.numChildren()
@@ -165,8 +158,7 @@ function userAuthentication (authenticated) {
     if (googleUser) {
       window.user = googleUser
       let idToken = googleUser.getAuthResponse().id_token
-      let credentials = Firebase.auth.GoogleAuthProvider.credential(idToken)
-      Firebase.auth().signInWithCredential(credentials).then(user => {
+      firebase.signinWithCredential(idToken).then(user => {
         if (user) {
           document.getElementById('prof-img').setAttribute('src', user.photoURL)
           document.getElementById('prof-name').textContent = user.displayName
@@ -327,7 +319,7 @@ function handelNewConfigSelect () {
 }
 
 // Initialize the Firebase app
-Firebase.initializeApp(firebaseConfig)
+firebase.init()
 
 // MaterializeCSS initialization
 materialize.init(configTabHandler)
@@ -361,7 +353,7 @@ utils.click(elements.logoutButton, () => {
 // Add click listener to the delete account button
 utils.click(elements.deleteAccountButton, () => {
   // Delete the firebase user
-  Firebase.auth().currentUser.delete().then(() => {
+  firebase.deleteUser().then(() => {
     // Disconnect the app form the users Google account
     Google.auth2.getAuthInstance().disconnect()
     // Sign the user out of their account
