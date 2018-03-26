@@ -1,10 +1,19 @@
 {
-    "files": [
-        "./src/js/test.ts",
-        "./src/js/greet.ts"
+  "compileOnSave": false,
+  "compilerOptions": {
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
     ],
-    "compilerOptions": {
-        "noImplicitAny": true,
-        "target": "es5"
-    }
+    "lib": [
+      "es2017",
+      "dom"
+    ]
+  }
 }
