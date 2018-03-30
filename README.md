@@ -1,4 +1,4 @@
-# [G-Drive-Sorter](https://gdrive.brandoncravener.com) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com) [![Build Status](https://travis-ci.org/BrandonCravener/G-Drive-Sorter.svg?branch=develop)](https://travis-ci.org/BrandonCravener/G-Drive-Sorter) [![Join the chat at https://gitter.im/G-Drive-Sorter/Lobby](https://badges.gitter.im/G-Drive-Sorter/Lobby.svg)](https://gitter.im/G-Drive-Sorter/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# [G-Drive-Sorter](https://gdrive.brandoncravener.com) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com) [![Build Status](https://travis-ci.org/BrandonCravener/G-Drive-Sorter.svg?branch=angularjs)](https://travis-ci.org/BrandonCravener/G-Drive-Sorter) [![Join the chat at https://gitter.im/G-Drive-Sorter/Lobby](https://badges.gitter.im/G-Drive-Sorter/Lobby.svg)](https://gitter.im/G-Drive-Sorter/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 ________
 ### Main Countributors
   - Brandon Cravener (Project Manager/Developer)
@@ -6,8 +6,11 @@ ________
   - Lane Faccoldi (Software Tester)
   - Ivan Abreu-Cespedes (Public Relations)
 ________
+### Other Contributors
+  - Ashhad Hanafi, made the logo for the app
+________
 ### Description
-This project solves the problem of constantly needing to organize Google Drive files, by customly organizing it whenever necessary.
+This project solves the problem of constantly needing to organize Google Drive files, by organizing it your way whenever necessary.
 ________
 ### Features
   - User friendly interface.
@@ -22,6 +25,7 @@ Install this project by running:
 3. `$ git checkout angularjs`
 4. `$ yarn global add @angular/cli`
 5. `$ yarn`
+
 Run with `$ ng serve`
 ________
 ### Contribution
