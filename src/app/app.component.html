@@ -1,3 +1,17 @@
 <mat-toolbar color="primary">
-  <img class="toolbar-logo" src="assets/images/icon.png" alt="G-Drive Sorter Logo">
+  <div></div>
+  <div>
+    <img class="toolbar-logo" src="assets/images/icon.png" alt="G-Drive Sorter Logo">
+  </div>
+  <div>
+    <mat-menu #appMenu="matMenu">
+      <button mat-menu-item (click)="signOut()">Sign Out</button>
+    </mat-menu>
+    <button *ngIf="authenticated" mat-icon-button [matMenuTriggerFor]="appMenu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+  </div>
 </mat-toolbar>
+<div [@routerAnimation]="getRouteAnimation(route)">
+  <router-outlet #route="outlet"></router-outlet>
+</div>

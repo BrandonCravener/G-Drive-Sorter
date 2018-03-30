@@ -1,41 +1,49 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 
-import { gapi } from 'gapi-client';
+let authInstance;
 
 @Injectable()
 export class GoogleService {
 
-  config: Object;
-  authState: Observable<any>;
+  private _authState = new Subject<Boolean>();
 
-  constructor (config: Object) {
-    this.config = config;
+  public authState$ = this._authState.asObservable();
+
+  constructor () {
   }
 
-  init() {
+  init(config: Object) {
     gapi.load('client:auth2', () => {
-      gapi.client
-      .init(this.config)
+      gapi
+      .client
+      .init(config)
       .then(() => {
-        this.authState = new Observable(observer => {
-          const {
-            next,
-            error
-          } = observer;
-          const authInstance = gapi.auth2.getAuthInstance();
-          if (authInstance) {
-            authInstance.isSignedIn.listen(next);
-          }
-          return;
+        authInstance = gapi.auth2.getAuthInstance();
+        authInstance.isSignedIn.listen(() => {
+          this._authState.next(authInstance.isSignedIn.get());
         });
-
-        gapi.load('picker', () => {
-          const view = new gapi.picker.DocsView(gapi.picker.ViewId.FOLDERS)
-          .setIncludeFolders(true)
-          .setSelectFolderEnabled(true);
-        });
+        const authStatus = authInstance.isSignedIn.get();
+        this._authState.next(authStatus);
       }, console.error);
     });
   }
+
+  getAuthStatus() {
+    if (authInstance) {
+      return authInstance.isSignedIn.get();
+    } else {
+      return false;
+    }
+  }
+
+  signIn() {
+    authInstance.signIn();
+  }
+
+  signOut() {
+    authInstance.signOut();
+  }
+
 }

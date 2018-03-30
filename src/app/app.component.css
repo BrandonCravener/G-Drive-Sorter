@@ -2,6 +2,18 @@ mat-toolbar {
   justify-content: center;
 }
 
+mat-toolbar > div {
+  flex: 1;
+}
+
+mat-toolbar > div:nth-child(2) {
+  text-align: center;
+}
+
+mat-toolbar > div:nth-child(3) {
+  text-align: right;
+}
+
 .toolbar-logo {
   width: 74px;
 }

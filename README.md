@@ -22,6 +22,7 @@ Install this project by running:
 3. `$ git checkout angularjs`
 4. `$ yarn global add @angular/cli`
 5. `$ yarn`
+Run with `$ ng serve`
 ________
 ### Contribution
   - [Issue Tracker](https://github.com/BrandonCravener/G-Drive-Sorter/issues/new)
@@ -31,4 +32,4 @@ ________
 If there are any major issues with this project, please report them at: [contact@brandoncravener.com](mailto:contact@brandoncravener.com)
 ________
 ### License
-  This project is licensed under the MIT license.
+  This project is licensed under the [MIT license](https://opensource.org/licenses/MIT).
