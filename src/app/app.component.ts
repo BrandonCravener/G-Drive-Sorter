@@ -5,6 +5,8 @@ import { GoogleService } from './services/google/google.service';
 
 import { routerAnimation } from '../router.animations';
 
+declare var gapi: any;
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -17,7 +19,7 @@ export class AppComponent {
 
   constructor(public google: GoogleService, public router: Router, public zone: NgZone) {
     const googleInitInterval = setInterval(() => {
-      if (gapi) {
+      if (window['gapi']) {
         this.google.init({
           apiKey: 'AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM',
           clientId: '362606538820-om1dhhvv5d9npas7jj02mbtvi5mjksmo.apps.googleusercontent.com',
