@@ -1,17 +1,31 @@
 <mat-toolbar color="primary">
-  <div></div>
-  <div>
-    <img class="toolbar-logo" src="assets/images/icon.png" alt="G-Drive Sorter Logo">
-  </div>
-  <div>
-    <mat-menu #appMenu="matMenu">
-      <button mat-menu-item (click)="signOut()">Sign Out</button>
-    </mat-menu>
-    <button *ngIf="authenticated" mat-icon-button [matMenuTriggerFor]="appMenu">
-      <mat-icon>more_vert</mat-icon>
-    </button>
-  </div>
+  <mat-toolbar-row>
+    <div></div>
+    <div>
+      <img class="toolbar-logo" src="assets/images/icon.png" alt="G-Drive Sorter Logo">
+    </div>
+    <div>
+      <mat-menu #appMenu="matMenu">
+        <button mat-menu-item (click)="signOut()">Sign Out</button>
+      </mat-menu>
+      <button *ngIf="authenticated" mat-icon-button [matMenuTriggerFor]="appMenu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar-row>
+  <mat-toolbar-row *ngIf="authenticated">
+    <nav mat-tab-nav-bar color="accent">
+      <a mat-tab-link
+         *ngFor="let link of tabLinks"
+         [routerLink]="link.path"
+         routerLinkActive #rla="routerLinkActive"
+         [active]="rlaSafe&&rla.isActive">
+        {{ link.label }}
+      </a>
+    </nav>
+  </mat-toolbar-row>
 </mat-toolbar>
+
 <div [@routerAnimation]="getRouteAnimation(route)">
   <router-outlet #route="outlet"></router-outlet>
 </div>

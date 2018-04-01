@@ -1,19 +1,31 @@
-mat-toolbar {
+mat-toolbar > mat-toolbar-row:first-child {
   justify-content: center;
 }
 
-mat-toolbar > div {
+mat-toolbar > mat-toolbar-row:first-child > div {
   flex: 1;
 }
 
-mat-toolbar > div:nth-child(2) {
+mat-toolbar > mat-toolbar-row:first-child > div:nth-child(2) {
   text-align: center;
 }
 
-mat-toolbar > div:nth-child(3) {
+mat-toolbar > mat-toolbar-row:first-child > div:nth-child(3) {
   text-align: right;
 }
 
 .toolbar-logo {
   width: 74px;
+}
+
+nav.mat-tab-nav-bar {
+  width: 100%;
+}
+
+::ng-deep .mat-tab-links {
+  display: flex;
+}
+
+.mat-tab-link {
+  flex: 1 1 auto;
 }

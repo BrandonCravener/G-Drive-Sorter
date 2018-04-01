@@ -30,7 +30,7 @@ export class PreventAuthGuardService implements CanActivate {
       return true;
     }
     this.zone.run(() => {
-      this.router.navigate(['/app']);
+      this.router.navigate(['/app/home']);
     });
     return false;
   }

@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, NgZone, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { GoogleService } from './services/google/google.service';
@@ -14,9 +14,28 @@ declare var gapi: any;
   providers: [GoogleService],
   animations: [ routerAnimation ]
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
+  private rlaSafe: boolean = false;
+  
   authenticated: Boolean;
 
+
+  
+  tabLinks = [
+    {
+      path: 'app/home',
+      label: 'Home'
+    },
+    {
+      path: 'app/config',
+      label: 'Configuration'
+    },
+    {
+      path: 'app/settings',
+      label: 'Settings'
+    }
+  ];
+  
   constructor(public google: GoogleService, public router: Router, public zone: NgZone) {
     const googleInitInterval = setInterval(() => {
       if (window['gapi']) {
@@ -30,7 +49,7 @@ export class AppComponent {
           this.authenticated = state;
           if (state) {
             this.zone.run(() => {
-              this.router.navigate(['/app']);
+              this.router.navigate(['/app/home']);
             });
           } else {
             this.zone.run(() => {
@@ -42,11 +61,15 @@ export class AppComponent {
       }
     }, 250);
   }
-
+  
+  public ngAfterViewInit() {
+    this.rlaSafe = true;
+  }
+  
   signOut() {
     this.google.signOut();
   }
-
+  
   getRouteAnimation(outlet) {
     return outlet.activatedRouteData.name;
   }

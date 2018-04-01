@@ -7,14 +7,18 @@ import { GoogleService } from '../google/google.service';
 import { appRoutes } from '../../app.routes';
 
 import { UnauthenticatedComponent } from '../../components/auth/unauthenticated/unauthenticated.component';
-import { AuthenticatedComponent } from '../../components/auth/authenticated/authenticated.component';
+import { HomeComponent } from '../../components/tabs/home/home.component';
+import { ConfigComponent } from '../../components/tabs/config/config.component';
+import { SettingsComponent } from '../../components/tabs/settings/settings.component';
 
 describe('AuthGuardService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
         UnauthenticatedComponent,
-        AuthenticatedComponent
+        HomeComponent,
+        ConfigComponent,
+        SettingsComponent
       ],
       imports: [ 
         RouterModule.forRoot(
