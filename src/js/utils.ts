@@ -1,9 +1,9 @@
 /**
  * Gets elements by the selector and passes them to the calling function.
- * 
+ *
  * @export
- * @param {string} selector 
- * @param {Function} callingFunction 
+ * @param {string} selector
+ * @param {Function} callingFunction
  */
 export function applyToElements (selector: string, callingFunction: Function) {
   let items = document.querySelectorAll(selector)
@@ -14,7 +14,7 @@ export function applyToElements (selector: string, callingFunction: Function) {
 
 /**
  * Sets an element or elements display to none
- * 
+ *
  * @export
  * @param {string} selector
  */
@@ -25,7 +25,7 @@ export function hide (selector: string) {
 }
 /**
  * Sets an element or elements display to block
- * 
+ *
  * @export
  * @param {string} selector
  */
@@ -37,7 +37,7 @@ export function show (selector: string) {
 
 /**
  * Adds a click event listener to the passed element
- * 
+ *
  * @export
  * @param {HTMLElement} element The HTML element
  * @param {EventListenerOrEventListenerObject} callback The function to handel the click
@@ -48,7 +48,7 @@ export function click (element: HTMLElement, callback: EventListenerOrEventListe
 
 /**
  * Adds a change listener to the element passed
- * 
+ *
  * @export
  * @param {HTMLElement} element The HTML Element
  * @param {EventListenerOrEventListenerObject} callback The function to handel the change
@@ -59,7 +59,7 @@ export function change (element: HTMLElement, callback: EventListenerOrEventList
 
 /**
  * Loads all elements with the class lazyLoad the calls the callback
- * 
+ *
  * @export
  * @param {Function} callback Called when all the stylesheets are loaded
  */

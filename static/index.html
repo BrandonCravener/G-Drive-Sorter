@@ -2,344 +2,387 @@
 <html lang="en">
 
 <head>
-    <!-- Meta Tags -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- Style Sheets -->
-    <link rel="preload" class="lazyLoad" href="css/index.css">
-    <link rel="preload" class="lazyLoad" href="css/vstepper.min.css">
-    <link rel="preload" class="lazyLoad" href="css/materialize.min.css">
-    <link rel="preload" class="lazyLoad" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <!-- Other Tags -->
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <title>G-Drive Sorter</title>
-    <style>
-        #loader-background,
-        #loading-overlay {
-            top: 0;
-            left: 0;
-            top: 50%;
-            right: 0;
-            left: 50%;
-            bottom: 0;
-            width: 200vw;
-            height: 200vw;
-            transform: translate(-50%, -50%);
-        }
+  <!-- Meta Tags -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Style Sheets -->
+  <link rel="preload" class="lazyLoad" href="css/index.css">
+  <link rel="preload" class="lazyLoad" href="css/vstepper.min.css">
+  <link rel="preload" class="lazyLoad" href="css/materialize.min.css">
+  <link rel="preload" class="lazyLoad" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <!-- Other Tags -->
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <title>G-Drive Sorter</title>
+  <style>
+    #loader-background,
+    #loading-overlay {
+      top: 0;
+      left: 0;
+      top: 50%;
+      right: 0;
+      left: 50%;
+      bottom: 0;
+      width: 200vw;
+      height: 200vw;
+      transform: translate(-50%, -50%);
+    }
 
-        #loading-overlay {
-            overflow: hidden;
-            z-index: 1000;
-            position: fixed;
-            transition: 0.3s opacity ease-in-out 0.5s;
-        }
+    #loading-overlay {
+      overflow: hidden;
+      z-index: 1000;
+      position: fixed;
+      transition: 0.3s opacity ease-in-out 0.5s;
+    }
 
-        #loading-overlay.fade {
-            opacity: 0;
-        }
+    #loading-overlay.fade {
+      opacity: 0;
+    }
 
-        #loader-background {
-            position: absolute;
-            border-radius: 100%;
-            background-color: #4CAF50;
-            transition: 0.5s all ease-in-out;
-        }
+    #loader-background {
+      position: absolute;
+      border-radius: 100%;
+      background-color: #4CAF50;
+      transition: 0.5s all ease-in-out;
+    }
 
-        #loader-background.shrink {
-            width: 100px;
-            height: 100px;
-        }
+    #loader-background.shrink {
+      width: 100px;
+      height: 100px;
+    }
 
-        #loading-overlay .inner-wrapper {
-            top: 50%;
-            left: 50%;
-            position: absolute;
-            transform: translate(-50%, -50%)
-        }
+    #loading-overlay .inner-wrapper {
+      top: 50%;
+      left: 50%;
+      position: absolute;
+      transform: translate(-50%, -50%)
+    }
 
-        #loading-overlay .spinner {
-            width: 50px;
-            height: 50px;
-            border-radius: 20%;
-            animation-duration: 2s;
-            animation-name: loader;
-            background-color: black;
-            animation-iteration-count: infinite;
-        }
+    #loading-overlay .spinner {
+      width: 50px;
+      height: 50px;
+      border-radius: 20%;
+      animation-duration: 2s;
+      animation-name: loader;
+      background-color: black;
+      animation-iteration-count: infinite;
+    }
 
-        @keyframes loader {
-            25% {
-                transform: scale(1.1) rotate(90deg);
-            }
-            50% {
-                transform: scale(1.2) rotate(180deg);
-            }
-            75% {
-                transform: scale(1.3) rotate(270deg);
-            }
-            100% {
-                transform: scale(1) rotate(360deg);
-            }
-        }
-    </style>
+    @keyframes loader {
+      25% {
+        transform: scale(1.1) rotate(90deg);
+      }
+      50% {
+        transform: scale(1.2) rotate(180deg);
+      }
+      75% {
+        transform: scale(1.3) rotate(270deg);
+      }
+      100% {
+        transform: scale(1) rotate(360deg);
+      }
+    }
+  </style>
 
 </head>
 
 <body>
-    <div id="loading-overlay">
-        <div id="loader-background"></div>
-        <div class="inner-wrapper">
-            <div class="spinner"></div>
-        </div>
+  <div id="loading-overlay">
+    <div id="loader-background"></div>
+    <div class="inner-wrapper">
+      <div class="spinner"></div>
     </div>
-    <main>
-        <nav class="nav-extended green">
-            <div class="nav-wrapper">
-                <a href="#" data-target="slide-out" class="sidenav-trigger left auth"><i class="material-icons">menu</i></a>
-                <img class="brand-logo center" src="images/icon.png" alt="Folder with sorting options.">
-                <ul class="right no-auth">
-                    <li><a class="login-button waves-effect waves-teal btn-flat">Login</a></li>
-                </ul>
-                <ul class="right auth">
-                    <li><a class='dropdown-trigger right auth' href='#' data-target='user-dropdown'><i class="material-icons">more_vert</i></a></li>
-                </ul>
-            </div>
-            <div class="nav-content auth">
-                <ul class="tabs tabs-fixed-width tabs-transparent">
-                    <li class="tab"><a href="#overview">Overview</a></li>
-                    <li class="tab"><a href="#config">Configuration</a></li>
-                    <li class="tab"><a href="#settings">Settings</a></li>
-                </ul>
-            </div>
-        </nav>
-        <ul id="slide-out" class="sidenav">
-            <li>
-                <div class="user-view">
-                    <div class="background">
-                        <img class="nav-bg" src="images/messy_files.jpg">
-                    </div>
-                    <a><img id="prof-img" class="circle" src="" alt="Profile Image"></a>
-                    <a><span id="prof-name" class="white-text name"></span></a>
-                    <a><span id="prof-email" class="white-text email"></span></a>
-                </div>
-            </li>
+  </div>
+  <main>
+    <nav class="nav-extended green">
+      <div class="nav-wrapper">
+        <a href="#!" data-target="slide-out" class="sidenav-trigger left auth"><i class="material-icons">menu</i></a>
+        <img class="brand-logo center" src="images/icon.png" alt="Folder with sorting options.">
+        <ul class="right no-auth">
+          <li><a class="login-button waves-effect waves-teal btn-flat">Login</a></li>
         </ul>
-        <ul id='user-dropdown' class='dropdown-content'>
-            <li><a id="logout-button" href="#!">Logout</a></li>
+        <ul class="right auth">
+          <li><a class='dropdown-trigger right auth' href='#!' data-target='user-dropdown'><i class="material-icons">more_vert</i></a></li>
         </ul>
-        <div class="auth container">
-            <br>
-            <div id="overview">
+      </div>
+      <div class="nav-content auth">
+        <ul id="tabs" class="tabs tabs-fixed-width tabs-transparent">
+          <li class="tab"><a href="#overview">Dashboard</a></li>
+          <li class="tab"><a href="#config">Configuration</a></li>
+          <li class="tab"><a href="#settings">Settings</a></li>
+        </ul>
+      </div>
+    </nav>
+    <ul id="slide-out" class="sidenav">
+      <li>
+        <div class="user-view">
+          <div class="background">
+            <img class="nav-bg" src="images/messy_files.jpg">
+          </div>
+          <a><img id="prof-img" class="circle" src="" alt="Profile Image"></a>
+          <a><span id="prof-name" class="white-text name"></span></a>
+          <a><span id="prof-email" class="white-text email"></span></a>
+        </div>
+      </li>
+      <li class="no-padding">
+        <a class="waves-effect waves-green" id="dashboard-link-button" href="#!">
+          <i class="material-icons">dashboard</i>Dashboard
+        </a>
+      </li>
+      <li class="no-padding">
+        <ul class="collapsible">
+          <li>
+              <a class="collapsible-header waves-effect waves-green" id="configuration-link-button" href="#!">
+                  <i class="material-icons">list</i>Configuration
+              </a>
+              <div class="collapsible-body">
+                <ul>
+                  <li>
+                    <a id="side-new-config" href="#!">
+                        <i class="material-icons">add</i>Create New Config
+                    </a>
+                  </li>
+                </ul>
+              </div>
+          </li>
+        </ul>
+      </li>
+      <li class="no-padding">
+          <a class="waves-effect waves-green" id="settings-link-button" href="#!">
+            <i class="material-icons">settings</i>Settings
+          </a>
+      </li>
+    </ul>
+    <ul id='user-dropdown' class='dropdown-content'>
+      <li><a id="logout-button" href="#!">Logout</a></li>
+    </ul>
+    <div class="auth container">
+      <br>
+      <div id="overview">
 
-            </div>
-            <div id="config">
-                <div id="new-config-modal" class="modal">
-                    <div class="modal-content">
-                        <h4>New Config</h4>
-                        <hr>
-                        <form id="config-stepper" class="stepper vertical">
-                            <div class="step visible">
-                                <div class="step-header">
-                                    <div class="step-circle"></div>
-                                    <div class="step-title">Rule Set Name</div>
-                                </div>
-                                <div class="inner-step-content">
-                                    <div class="step-content">
-                                        <!-- Add Place to Select Configuration to add Group to? -->
-                                        <div class="row">
-                                            <div class="col s0 m1 l2"></div>
-                                            <div class="input-field col s12 m10 l8">
-                                                <input id="new-config-name" type="text" class="validate" required>
-                                                <label for="new-config-name">Configuration Name</label>
-                                            </div>
-                                            <div class="col s0 m1 l2"></div>
-                                        </div>
-                                    </div>
-                                    <div class="step-buttons">
-                                        <button type="button" class="button button-step-next">Continue</button>
-                                        <button type="button" class="button button-step-cancel">Cancel</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="step">
-                                <div class="step-header">
-                                    <div class="step-circle"></div>
-                                    <div class="step-title">Rule Group Name</div>
-                                </div>
-                                <div class="inner-step-content">
-                                    <div class="step-content">
-                                        <div class="row">
-                                            <div class="col s0 m1 l2"></div>
-                                            <div class="input-field col s12 m10 l8">
-                                                <input id="new-group-name" type="text" class="validate" required>
-                                                <label for="new-group-name">Rule Group Name</label>
-                                            </div>
-                                            <div class="col s0 m1 l2"></div>
-                                        </div>
-                                    </div>
-                                    <div class="step-buttons">
-                                        <button type="button" class="button button-step-next">Continue</button>
-                                        <button type="button" class="button button-step-cancel">Cancel</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="step">
-                                <div class="step-header">
-                                    <div class="step-circle"></div>
-                                    <div class="step-title">First Rule</div>
-                                </div>
-                                <div class="inner-step-content">
-                                    <!-- UI used to create a new config rule -->
-                                    <div id="new-rule-ui" class="step-content last">
-                                        <div class="row">
-                                            <div class="col s0 m1 l2"></div>
-                                            <select id="sorting-type-dropdown" class="browser-default col s12 m10 l8" required>
-                                                <option selected disabled>Sorting Classifier</option>
-                                                <option value="1">Title</option>
-                                                <option value="2">Type</option>
-                                                <option value="3">Location</option>
-                                                <option value="4">Owner</option>
-                                                <option value="5">Creation Date</option>
-                                                <option value="6">Last Opened</option>
-                                                <option value="7">Last Modified</option>
-                                            </select>
-                                            <div class="col s0 m1 l2"></div>
-                                        </div>
-                                        <div class="row hidden">
-                                            <div class="col s0 m1 l2"></div>
-                                            <select id="sorting-constraint-dropdown" class="browser-default col s12 m10 l8" required>
-                                                <option selected disabled>Sorting Constraint</option>
-                                                <option value="1">Includes</option>
-                                                <option value="2">Excludes</option>
-                                                <option value="3">Starts With</option>
-                                                <option value="4">Ends With</option>
-                                                <option value="5">Between</option>
-                                            </select>
-                                            <div class="col s0 m1 l2"></div>
-                                        </div>
-                                        <div class="row hidden">
-                                            <div class="col s0 m1 l2"></div>
-                                            <div class="input-field col s12 m10 l8">
-                                                <input id="sorting-text-field" type="text" class="validate">
-                                                <label for="sorting-text-field">Name</label>
-                                            </div>
-                                            <div class="col s0 m1 l2"></div>
-                                        </div>
-                                        <div class="row hidden">
-                                            <div class="col s0 m1 l2"></div>
-                                              <select id="sorting-file-type-dropdown" class="browser-default col s12 m10 l8">
-                                                <option selected disabled>Select One</option>
-                                                <option value="application/vnd.google-apps.audio">Sound File</option>
-                                                <option value="application/vnd.google-apps.document">Document</option>
-                                                <option value="application/vnd.google-apps.drawing">Drawing</option>
-                                                <option value="application/vnd.google-apps.file">Drive File</option>
-                                                <option value="application/vnd.google-apps.folder">Drive Folder</option>
-                                                <option value="application/vnd.google-apps.form">Forms</option>
-                                                <option value="application/vnd.google-apps.fusiontable">Fusion Tables</option>
-                                                <option value="application/vnd.google-apps.map">My Maps</option>
-                                                <option value="application/vnd.google-apps.photo">Image</option>
-                                                <option value="application/vnd.google-apps.presentation">Slides</option>
-                                                <option value="application/vnd.google-apps.script">Apps Script</option>
-                                                <option value="application/vnd.google-apps.site">Sites</option>
-                                                <option value="application/vnd.google-apps.spreadsheet">Sheets</option>
-                                                <option value="application/vnd.google-apps.video">Video</option>
-                                              </select>
-                                            <div class="col s0 m1 l2"></div>
-                                        </div>
-                                        <div class="row hidden">
-                                            <div class="col s0 m1 l2"></div>
-                                            <div class="input-field col s12 m10 l8">
-                                                <input id="sorting-email-field" type="email" class="validate">
-                                                <label for="sorting-email-field">Email</label>
-                                                <span class="helper-text" data-error="Please enter a valid email address" data-success="Valid Email">Enter the Sharing User's Email</span>
-                                            </div>
-                                            <div class="col s0 m1 l2"></div>
-                                        </div>
-                                        <div class="row hidden">
-                                            <div class="col s0 m1 l2"></div>
-                                            <a id="button-pick-drive-folder" class="waves-effect waves-light btn-large col s12 m10 l8">Pick File</a>
-                                            <div class="col s0 m1 l2"></div>
-                                        </div>
-                                        <div class="row hidden">
-                                            <div class="col s0 m1 l3"></div>
-                                            <div class="input-field col s12 m5 l3">
-                                                <input id="sorting-datepicker-0" type="text" class="datepicker">
-                                                <label for="sorting-datepicker-0"></label>
-                                            </div>
-                                            <div class="input-field col s12 m5 l3">
-                                                <input id="sorting-timepicker-0" type="text" class="timepicker">
-                                                <label for="sorting-timepicker-0"></label>
-                                            </div>
-                                            <div class="col s0 m1 l3"></div>
-                                        </div>
-                                        <div class="row hidden">
-                                            <div class="col s0 m1 l3"></div>
-                                            <div class="input-field col s12 m5 l3">
-                                                <input id="sorting-datepicker-1" type="text" class="datepicker">
-                                                <label for="sorting-datepicker-1">Second Date</label>
-                                            </div>
-                                            <div class="input-field col s12 m5 l3">
-                                                <input id="sorting-timepicker-1" type="text" class="timepicker">
-                                                <label for="sorting-timepicker-1">Second Time</label>
-                                            </div>
-                                            <div class="col s0 m1 l3"></div>
-                                        </div>
-                                    </div>
-                                    <div class="step-buttons">
-                                        <button type="button" class="button button-step-next">Continue</button>
-                                        <button type="button" class="button button-step-cancel">Cancel</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <a class="btn-floating btn-large waves-effect waves-light green modal-trigger" href="#new-config-modal" id="button-create-configuration"><i class="material-icons">add</i></a>
-            </div>
-            <div id="settings" class="valign-wrapper">
-                <div class="row">
-                    <div class="col s0 m2 l4"></div>
-                    <a id="button-delete-account" class="waves-effect waves-light red btn-large col s12 m8 l4">Delete Account</a>
-                    <div class="col s0 m2 l4"></div>
-                </div>
-            </div>
+      </div>
+      <div id="config">
+        <div id="config-loader" class="progress">
+          <div class="indeterminate"></div>
         </div>
-        <div class="no-auth landing-page">
-            <div class="center-align top-bar parallax-container white-text">
-                <h2>G-Drive Sorter</h2>
-                <br>
-                <br>
-                <h5>An organized Google Drive™ has never been easier</h5>
-                <br>
-                <a class="login-button waves-effect waves-light btn-large">Get Organized</a>
-                <div class="parallax"><img class="parallax-bg" src="images/messy_files.jpg"></div>
-            </div>
-            <div class="white bottom-bar">
-                <div class="row center">
-                    <div class="col s12 m4">
-                        <h2><i class="teal-text large material-icons">view_list</i></h2>
-                        <h5 class="center"><b>Effectively Sort Files</b></h5>
-                        <p class="flow-text">Sorting your drive only requires a quick visit to this website. And we do the rest of the work for you!</p>
-                    </div>
-                    <div class="col s12 m4">
-                        <h2 class="center"><i class="teal-text large material-icons">accessibility</i></h2>
-                        <h5 class="center"><b>Simplistic Use</b></h5>
-                        <p class="flow-text">Preset configurations and a simplistic user interface makes the G-Drive sorter suitable for all Google Drive users.</p>
-                    </div>
-                    <div class="col s12 m4">
-                        <h2 class="center"><i class="teal-text large material-icons">art_track</i></h2>
-                        <h5 class="center"><b>Fully Customizable</b></h5>
-                        <p class="flow-text">Fully customizable conifgurations that sorts all Google Drive files based on type, creation date, name, current owner, and much more.</p>
-                    </div>
-                </div>
-            </div>
+        <h4 id="no-configs-message" class="hidden center">You have no configuration's!</h4>
+        <div id="class-list-container" class="hidden">
+          <ul id="configuration-list" class="collection with-header">
+            <li class="collection-header">
+              <h4>Configurations</h4>
+              <div id="configs-container"></div>
+            </li>
+          </ul>
+          <ul class="pagination">
+            <li class="disabled"><a id="prev-page-config-button" href="#!"><i class="material-icons">chevron_left</i></a></li>
+            <span id="config-page-wrapper"></span>
+            <li class="waves-effect"><a id="next-page-config-button" href="#!"><i class="material-icons">chevron_right</i></a></li>
+          </ul>
         </div>
-    </main>
-    <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
-    <script src="js/materialize.min.js"></script>
-    <script src="js/vstepper.min.js"></script>
-    <script src="js/index.min.js"></script>
+        <div id="new-config-modal" class="modal">
+          <div class="modal-content">
+            <h4>New Config</h4>
+            <hr>
+            <form id="config-stepper" class="stepper vertical">
+              <div class="step visible">
+                <div class="step-header">
+                  <div class="step-circle"></div>
+                  <div class="step-title">Rule Set Name</div>
+                </div>
+                <div class="inner-step-content">
+                  <div class="step-content">
+                    <!-- Add Place to Select Configuration to add Group to? -->
+                    <div class="row">
+                      <div class="col s0 m1 l2"></div>
+                      <div class="input-field col s12 m10 l8">
+                        <input id="new-config-name" type="text" class="validate" required>
+                        <label for="new-config-name">Configuration Name</label>
+                      </div>
+                      <div class="col s0 m1 l2"></div>
+                    </div>
+                  </div>
+                  <div class="step-buttons">
+                    <button type="button" class="button button-step-next">Continue</button>
+                    <button type="button" class="button button-step-cancel">Cancel</button>
+                  </div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-header">
+                  <div class="step-circle"></div>
+                  <div class="step-title">Rule Group Name</div>
+                </div>
+                <div class="inner-step-content">
+                  <div class="step-content">
+                    <div class="row">
+                      <div class="col s0 m1 l2"></div>
+                      <div class="input-field col s12 m10 l8">
+                        <input id="new-group-name" type="text" class="validate" required>
+                        <label for="new-group-name">Rule Group Name</label>
+                      </div>
+                      <div class="col s0 m1 l2"></div>
+                    </div>
+                  </div>
+                  <div class="step-buttons">
+                    <button type="button" class="button button-step-next">Continue</button>
+                    <button type="button" class="button button-step-cancel">Cancel</button>
+                  </div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-header">
+                  <div class="step-circle"></div>
+                  <div class="step-title">First Rule</div>
+                </div>
+                <div class="inner-step-content">
+                  <!-- UI used to create a new config rule -->
+                  <div id="new-rule-ui" class="step-content last">
+                    <div class="row">
+                      <div class="col s0 m1 l2"></div>
+                      <select id="sorting-type-dropdown" class="browser-default col s12 m10 l8" required>
+                        <option selected disabled>Sorting Classifier</option>
+                        <option value="1">Title</option>
+                        <option value="2">Type</option>
+                        <option value="3">Location</option>
+                        <option value="4">Owner</option>
+                        <option value="5">Creation Date</option>
+                        <option value="6">Last Opened</option>
+                        <option value="7">Last Modified</option>
+                      </select>
+                      <div class="col s0 m1 l2"></div>
+                    </div>
+                    <div class="row hidden">
+                      <div class="col s0 m1 l2"></div>
+                      <select id="sorting-constraint-dropdown" class="browser-default col s12 m10 l8" required>
+                        <option selected disabled>Sorting Constraint</option>
+                        <option value="1">Includes</option>
+                        <option value="2">Excludes</option>
+                        <option value="3">Starts With</option>
+                        <option value="4">Ends With</option>
+                        <option value="5">Between</option>
+                      </select>
+                      <div class="col s0 m1 l2"></div>
+                    </div>
+                    <div class="row hidden">
+                      <div class="col s0 m1 l2"></div>
+                      <div class="input-field col s12 m10 l8">
+                        <input id="sorting-text-field" type="text" class="validate">
+                        <label for="sorting-text-field">Name</label>
+                      </div>
+                      <div class="col s0 m1 l2"></div>
+                    </div>
+                    <div class="row hidden">
+                      <div class="col s0 m1 l2"></div>
+                      <select id="sorting-file-type-dropdown" class="browser-default col s12 m10 l8">
+                        <option selected disabled>Select One</option>
+                        <option value="application/vnd.google-apps.audio">Sound File</option>
+                        <option value="application/vnd.google-apps.document">Document</option>
+                        <option value="application/vnd.google-apps.drawing">Drawing</option>
+                        <option value="application/vnd.google-apps.file">Drive File</option>
+                        <option value="application/vnd.google-apps.folder">Drive Folder</option>
+                        <option value="application/vnd.google-apps.form">Forms</option>
+                        <option value="application/vnd.google-apps.fusiontable">Fusion Tables</option>
+                        <option value="application/vnd.google-apps.map">My Maps</option>
+                        <option value="application/vnd.google-apps.photo">Image</option>
+                        <option value="application/vnd.google-apps.presentation">Slides</option>
+                        <option value="application/vnd.google-apps.script">Apps Script</option>
+                        <option value="application/vnd.google-apps.site">Sites</option>
+                        <option value="application/vnd.google-apps.spreadsheet">Sheets</option>
+                        <option value="application/vnd.google-apps.video">Video</option>
+                      </select>
+                      <div class="col s0 m1 l2"></div>
+                    </div>
+                    <div class="row hidden">
+                      <div class="col s0 m1 l2"></div>
+                      <div class="input-field col s12 m10 l8">
+                        <input id="sorting-email-field" type="email" class="validate">
+                        <label for="sorting-email-field">Email</label>
+                        <span class="helper-text" data-error="Please enter a valid email address" data-success="Valid Email">Enter the Sharing User's Email</span>
+                      </div>
+                      <div class="col s0 m1 l2"></div>
+                    </div>
+                    <div class="row hidden">
+                      <div class="col s0 m1 l2"></div>
+                      <a id="button-pick-drive-folder" class="waves-effect waves-light btn-large col s12 m10 l8">Pick File</a>
+                      <div class="col s0 m1 l2"></div>
+                    </div>
+                    <div class="row hidden">
+                      <div class="col s0 m1 l3"></div>
+                      <div class="input-field col s12 m5 l3">
+                        <input id="sorting-datepicker-0" type="text" class="datepicker">
+                        <label for="sorting-datepicker-0"></label>
+                      </div>
+                      <div class="input-field col s12 m5 l3">
+                        <input id="sorting-timepicker-0" type="text" class="timepicker">
+                        <label for="sorting-timepicker-0"></label>
+                      </div>
+                      <div class="col s0 m1 l3"></div>
+                    </div>
+                    <div class="row hidden">
+                      <div class="col s0 m1 l3"></div>
+                      <div class="input-field col s12 m5 l3">
+                        <input id="sorting-datepicker-1" type="text" class="datepicker">
+                        <label for="sorting-datepicker-1">Second Date</label>
+                      </div>
+                      <div class="input-field col s12 m5 l3">
+                        <input id="sorting-timepicker-1" type="text" class="timepicker">
+                        <label for="sorting-timepicker-1">Second Time</label>
+                      </div>
+                      <div class="col s0 m1 l3"></div>
+                    </div>
+                  </div>
+                  <div class="step-buttons">
+                    <button type="button" class="button button-step-next">Continue</button>
+                    <button type="button" class="button button-step-cancel">Cancel</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div id="settings" class="valign-wrapper">
+        <div class="row">
+          <div class="col s0 m2 l4"></div>
+          <a id="button-delete-account" class="waves-effect waves-light red btn-large col s12 m8 l4">Delete Account</a>
+          <div class="col s0 m2 l4"></div>
+        </div>
+      </div>
+      <a class="btn-floating btn-large waves-effect waves-circle waves-light green modal-trigger scale-transition scale-out" href="#new-config-modal" id="button-create-configuration"><i class="material-icons">add</i></a>
+    </div>
+    <div class="no-auth landing-page">
+      <div class="center-align top-bar parallax-container white-text">
+        <h2>G-Drive Sorter</h2>
+        <br>
+        <br>
+        <h5>An organized Google Drive™ has never been easier</h5>
+        <br>
+        <a class="login-button waves-effect waves-light btn-large">Get Organized</a>
+        <div class="parallax"><img class="parallax-bg" src="images/messy_files.jpg"></div>
+      </div>
+      <div class="white bottom-bar">
+        <div class="row center">
+          <div class="col s12 m4">
+            <h2><i class="teal-text large material-icons">view_list</i></h2>
+            <h5 class="center"><b>Effectively Sort Files</b></h5>
+            <p class="flow-text">Sorting your drive only requires a quick visit to this website. And we do the rest of the work for you!</p>
+          </div>
+          <div class="col s12 m4">
+            <h2 class="center"><i class="teal-text large material-icons">accessibility</i></h2>
+            <h5 class="center"><b>Simplistic Use</b></h5>
+            <p class="flow-text">Preset configurations and a simplistic user interface makes the G-Drive sorter suitable for all Google Drive users.</p>
+          </div>
+          <div class="col s12 m4">
+            <h2 class="center"><i class="teal-text large material-icons">art_track</i></h2>
+            <h5 class="center"><b>Fully Customizable</b></h5>
+            <p class="flow-text">Fully customizable conifgurations that sorts all Google Drive files based on type, creation date, name, current owner, and much more.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="js/vstepper.min.js"></script>
+  <script src="js/index.min.js"></script>
 </body>
 
 </html>
