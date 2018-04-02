@@ -6,12 +6,12 @@ import { Subject } from 'rxjs/Subject';
 /**
  * Workaround for testing
  */
-var google = window['gapi']
+declare var gapi: any;
 
 /**
  * Variable for easy reference to the authenitcation instance.
  */
-let authInstance = google.auth2.GoogleAuth;
+let authInstance;
 
 /**
  * Utility class to handle all interacting with the Google API
@@ -50,12 +50,12 @@ export class GoogleService {
    * @memberof GoogleService
    */
   init(config: Object) {
-    google.load('client:auth2', () => {
-      google
+    gapi.load('client:auth2', () => {
+      gapi
       .client
       .init(config)
       .then(() => {
-        authInstance = google.auth2.getAuthInstance();
+        authInstance = gapi.auth2.getAuthInstance();
         authInstance.isSignedIn.listen(() => {
           this._authState.next(authInstance.isSignedIn.get());
         });
