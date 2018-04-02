@@ -6,12 +6,12 @@
 }
 
 .usage-points h1 i {
-  font-size: 80px !important;
+  font-size: 80px;
 }
 
 .container {
-  width: 96% !important;
-  max-width: unset !important;
+  width: 96%;
+  max-width: unset;
 }
 
 .usage-points p {
@@ -24,7 +24,7 @@
 }
 
 .parallax-overlay > * {
-  color: white !important;
+  color: white;
 }
 
 @media all and (max-width: 650px) {
