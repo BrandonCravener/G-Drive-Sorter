@@ -8,7 +8,11 @@
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "doc": "./node_modules/.bin/compodoc -p src/tsconfig.app.json --theme 'material'",
+    "doc:serve": "./node_modules/.bin/compodoc -s --theme 'material'",
+    "doc:serveandwatch": "./node_modules/.bin/compodoc -p src/tsconfig.app.json -s -w --theme 'material'",
+    "doc:buildandserve": "./node_modules/.bin/compodoc -p src/tsconfig.app.json -s --theme 'material'"
   },
   "private": true,
   "dependencies": {
@@ -36,6 +40,7 @@
     "@angular/cli": "~1.7.3",
     "@angular/compiler-cli": "^5.2.0",
     "@angular/language-service": "^5.2.0",
+    "@compodoc/compodoc": "^1.1.1",
     "@types/gapi": "^0.0.35",
     "@types/jasmine": "~2.8.3",
     "@types/jasminewd2": "~2.0.2",

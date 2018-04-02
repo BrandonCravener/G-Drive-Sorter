@@ -1,5 +1,8 @@
 import {  trigger, state, style, animate, transition, query} from '@angular/animations';
 
+/**
+ * Animation for switching between routes
+ */
 export const routerAnimation = trigger('routerAnimation', [
   transition('* <=> *', [
     query(':enter',

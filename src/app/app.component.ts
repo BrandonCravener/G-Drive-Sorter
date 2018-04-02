@@ -5,8 +5,17 @@ import { GoogleService } from './services/google/google.service';
 
 import { routerAnimation } from '../router.animations';
 
+/**
+ * Workaround for testing
+ */
 declare var gapi: any;
-
+/**
+ * Base application component.
+ * 
+ * @export
+ * @class AppComponent
+ * @implements {AfterViewInit}
+ */
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -15,12 +24,27 @@ declare var gapi: any;
   animations: [ routerAnimation ]
 })
 export class AppComponent implements AfterViewInit {
+  /**
+   * Checks if the view has initalized yet.
+   * 
+   * @private
+   * @type {boolean}
+   * @memberof AppComponent
+   */
   private rlaSafe: boolean = false;
-  
+  /**
+   * Hold the users authenitcation status
+   * 
+   * @type {Boolean}
+   * @memberof AppComponent
+   */
   authenticated: Boolean;
 
-
-  
+  /**
+   * An array of links thats translated into tabs.
+   * 
+   * @memberof AppComponent
+   */
   tabLinks = [
     {
       path: 'app/home',
@@ -35,7 +59,13 @@ export class AppComponent implements AfterViewInit {
       label: 'Settings'
     }
   ];
-  
+  /**
+   * Creates an instance of AppComponent.
+   * @param {GoogleService} google Declare the Google Service as google
+   * @param {Router} router Declare the Router as router
+   * @param {NgZone} zone  Declare NgZone as zon
+   * @memberof AppComponent
+   */
   constructor(public google: GoogleService, public router: Router, public zone: NgZone) {
     const googleInitInterval = setInterval(() => {
       if (window['gapi']) {
@@ -61,15 +91,31 @@ export class AppComponent implements AfterViewInit {
       }
     }, 250);
   }
-  
+  /**
+   * Called after the view is initalized.
+   * 
+   * @memberof AppComponent
+   */
   public ngAfterViewInit() {
     this.rlaSafe = true;
   }
   
+  /**
+   * Signs the user out.
+   * 
+   * @memberof AppComponent
+   */
   signOut() {
     this.google.signOut();
   }
   
+  /**
+   * Gets the current route information.
+   * 
+   * @param {any} outlet The route
+   * @returns 
+   * @memberof AppComponent
+   */
   getRouteAnimation(outlet) {
     return outlet.activatedRouteData.name;
   }

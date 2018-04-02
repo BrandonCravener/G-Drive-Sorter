@@ -2,12 +2,29 @@ import { Injectable, NgZone } from '@angular/core';
 
 import { GoogleService } from '../google/google.service';
 import { Router, CanActivate } from '@angular/router';
-
+/**
+ * Prevent a user from accessing a route if they aren't authenticated.
+ * 
+ * @export
+ * @class AuthGuardService
+ * @implements {CanActivate}
+ */
 @Injectable()
 export class AuthGuardService implements CanActivate {
-
-  constructor(public google: GoogleService, public router: Router, public zone: NgZone) { }
-
+/**
+ * Creates an instance of AuthGuardService.
+ * @param {GoogleService} google Declare the Google Service as google.
+ * @param {Router} router Declare the Router as router
+ * @param {NgZone} zone Declare NgZone as zone
+ * @memberof AuthGuardService
+ */
+constructor(public google: GoogleService, public router: Router, public zone: NgZone) { }
+  /**
+   * Determines whether the user can go to the page and handle it.
+   * 
+   * @returns {boolean} Whether or not the user can access the route
+   * @memberof AuthGuardService
+   */
   canActivate(): boolean {
     if (this.google.getAuthStatus()) {
       return true;
@@ -19,12 +36,29 @@ export class AuthGuardService implements CanActivate {
   }
 }
 
-
+/**
+ * Prevent a user from accessing a route if they are authenticated.
+ * 
+ * @export
+ * @class PreventAuthGuardService
+ * @implements {CanActivate}
+ */
 @Injectable()
 export class PreventAuthGuardService implements CanActivate {
-
-  constructor(public google: GoogleService, public router: Router, public zone: NgZone) { }
-
+/**
+ * Creates an instance of PreventAuthGuardService.
+ * @param {GoogleService} google Declare the Google Service as google.
+ * @param {Router} router Declare the Router as router
+ * @param {NgZone} zone Declare NgZone as zone
+ * @memberof PreventAuthGuardService
+ */
+constructor(public google: GoogleService, public router: Router, public zone: NgZone) { }
+  /**
+   * Determines whether the user can go to the page and handle it.
+   * 
+   * @returns {boolean} Whether or not the user can access the route
+   * @memberof PreventAuthGuardService
+   */
   canActivate(): boolean {
     if (!this.google.getAuthStatus()) {
       return true;

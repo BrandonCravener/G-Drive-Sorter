@@ -21,18 +21,14 @@ import { UnauthenticatedComponent } from './components/auth/unauthenticated/unau
 // Service imports
 import { GoogleService } from './services/google/google.service';
 import { AuthGuardService, PreventAuthGuardService } from './services/auth/auth-guard.service';
-import { HomeComponent } from './components/tabs/home/home.component';
-import { ConfigComponent } from './components/tabs/config/config.component';
-import { SettingsComponent } from './components/tabs/settings/settings.component';
+import { AuthenticatedModule } from './modules/authenticated/authenticated.module';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     UnauthenticatedComponent,
     Parallax,
-    HomeComponent,
-    ConfigComponent,
-    SettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -42,6 +38,7 @@ import { SettingsComponent } from './components/tabs/settings/settings.component
     MatMenuModule,
     MatIconModule,
     MatTabsModule,
+    AuthenticatedModule.forRoot(),
     RouterModule.forRoot(
       appRoutes
     )
