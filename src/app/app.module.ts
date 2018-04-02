@@ -15,7 +15,7 @@ import { appRoutes } from './app.routes';
 
 // Component imports
 import { AppComponent } from './app.component';
-import { Parallax, ParallaxConfig } from 'ngx-parallax';
+import { ParallaxModule, ParallaxConfig } from 'ngx-parallax';
 import { UnauthenticatedComponent } from './components/auth/unauthenticated/unauthenticated.component';
 
 // Service imports
@@ -27,8 +27,7 @@ import { AuthenticatedModule } from './modules/authenticated/authenticated.modul
 @NgModule({
   declarations: [
     AppComponent,
-    UnauthenticatedComponent,
-    Parallax,
+    UnauthenticatedComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +37,7 @@ import { AuthenticatedModule } from './modules/authenticated/authenticated.modul
     MatMenuModule,
     MatIconModule,
     MatTabsModule,
+    ParallaxModule,
     AuthenticatedModule.forRoot(),
     RouterModule.forRoot(
       appRoutes
