@@ -29,6 +29,6 @@
 
 @media all and (max-width: 650px) {
   *[parallax] {
-      width: 500%;
+      background-size: cover;
   }
 }

@@ -23,6 +23,14 @@ import { SettingsComponent } from '../../components/tabs/settings/settings.compo
   ]
 })
 export class AuthenticatedModule { 
+
+  /**
+   * Register with the root module of the app
+   * 
+   * @static
+   * @returns {ModuleWithProviders} This module
+   * @memberof AuthenticatedModule
+   */
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: AuthenticatedModule,

@@ -97,4 +97,14 @@ export class GoogleService {
     authInstance.signOut();
   }
 
+  /**
+   * Gets the users id token
+   * 
+   * @returns {string} 
+   * @memberof GoogleService
+   */
+  getToken(): string {
+    return authInstance.currentUser.get().getAuthResponse().id_token;
+  }
+
 }
