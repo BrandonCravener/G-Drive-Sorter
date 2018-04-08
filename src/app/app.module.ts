@@ -22,6 +22,7 @@ import { UnauthenticatedComponent } from './components/auth/unauthenticated/unau
 import { GoogleService } from './services/google/google.service';
 import { AuthGuardService, PreventAuthGuardService } from './services/auth/auth-guard.service';
 import { AuthenticatedModule } from './modules/authenticated/authenticated.module';
+import { FirebaseService } from './services/firebase/firebase.service';
 
 
 @NgModule({
@@ -43,7 +44,7 @@ import { AuthenticatedModule } from './modules/authenticated/authenticated.modul
       appRoutes
     )
   ],
-  providers: [GoogleService, AuthGuardService, PreventAuthGuardService],
+  providers: [GoogleService, FirebaseService, AuthGuardService, PreventAuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

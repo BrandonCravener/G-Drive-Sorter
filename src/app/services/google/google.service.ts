@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import { FirebaseService } from '../firebase/firebase.service';
 
 /**
  * Workaround for testing
@@ -40,8 +41,7 @@ export class GoogleService {
    * Creates an instance of GoogleService.
    * @memberof GoogleService
    */
-  constructor () {
-  }
+  constructor () {}
 
   /**
    * Initialize the Google API
@@ -49,7 +49,7 @@ export class GoogleService {
    * @param {Object} config 
    * @memberof GoogleService
    */
-  init(config: Object) {
+  init(config: Object, callback?: Function) {
     gapi.load('client:auth2', () => {
       gapi
       .client
@@ -61,6 +61,9 @@ export class GoogleService {
         });
         const authStatus = authInstance.isSignedIn.get();
         this._authState.next(authStatus);
+        if (callback) {
+          callback();
+        }
       }, console.error);
     });
   }
@@ -95,6 +98,16 @@ export class GoogleService {
    */
   signOut() {
     authInstance.signOut();
+  }
+
+  /**
+   * Gets the users id token
+   * 
+   * @returns {string} 
+   * @memberof GoogleService
+   */
+  getToken(): string {
+    return authInstance.currentUser.get().getAuthResponse().id_token;
   }
 
 }
