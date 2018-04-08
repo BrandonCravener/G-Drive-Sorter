@@ -23,27 +23,28 @@ export class FirebaseService {
    * @param {GoogleService} google Reference to Google Service
    * @memberof FirebaseService
    */
-  constructor(public google: GoogleService) {
-    // Intialize Firebase
-    firebase.initializeApp(environment.firebase)
-    
-    this.signInWithCredential();
+  constructor(public google: GoogleService) {}
 
-    google.authState$.subscribe(state => {
-      if (!state) {
-        firebase.auth().signOut();
-      } else {
-        this.signInWithCredential();
-      }
-    })
+  private calculateStart(page: number, pageSize: number): number {
+    return (page ? page * pageSize:0);
+  }
 
-    firebase.auth().onAuthStateChanged(user => {
-      if (user && !google.getAuthStatus()) {
-        google.signIn();
-      } else if (!user && google.getAuthStatus()) {
-        google.signOut();
-      }
-    })
+  getNumConfigs() {
+    return firebase
+      .database()
+      .ref(`/users/${firebase.auth().currentUser.uid}/config/`)
+      .once('value')
+  }
+
+  getUserConfigs(page: number, pageSize: number): Promise<firebase.database.DataSnapshot> {
+    const startEnd = this.calculateStart(page, pageSize);
+    return firebase
+      .database()
+      .ref(`/users/${firebase.auth().currentUser.uid}/config/`)
+      .orderByKey()
+      .startAt(String(startEnd))
+      .limitToFirst(pageSize)
+      .once('value');
   }
 
   /**
@@ -56,5 +57,28 @@ export class FirebaseService {
       const credential = firebase.auth.GoogleAuthProvider.credential(this.google.getToken());
       firebase.auth().signInWithCredential(credential);
     }
+  }
+
+  init() {
+    // Intialize Firebase
+    firebase.initializeApp(environment.firebase)
+    
+    this.signInWithCredential();
+
+    this.google.authState$.subscribe(state => {
+      if (!state) {
+        firebase.auth().signOut();
+      } else {
+        this.signInWithCredential();
+      }
+    })
+
+    firebase.auth().onAuthStateChanged(user => {
+      if (user && !this.google.getAuthStatus()) {
+        this.google.signIn();
+      } else if (!user && this.google.getAuthStatus()) {
+        this.google.signOut();
+      }
+    })
   }
 }

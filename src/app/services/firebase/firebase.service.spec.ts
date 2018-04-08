@@ -1,11 +1,12 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { FirebaseService } from './firebase.service';
+import { GoogleService } from '../google/google.service';
 
 describe('FirebaseService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [FirebaseService]
+      providers: [GoogleService ,FirebaseService]
     });
   });
 
