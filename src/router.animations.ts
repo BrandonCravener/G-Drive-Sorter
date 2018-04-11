@@ -42,7 +42,23 @@ export const routerAnimation = trigger('routerTransition', [
           transform: 'translateX(0%)'
         }))
       ],
-      { optional: true })
+      { optional: true }),
+      
+    ])
+  ]),
+  transition("* => appConfig", [
+    query('button', [
+      // Inital styles
+      style({
+        opacity: 0
+      }),
+      animate('0.5s ease-in', style({
+        opacity: 1
+      }))
     ])
   ])
+])
+
+export const fabAnimation = trigger('fabAnimation', [
+
 ])

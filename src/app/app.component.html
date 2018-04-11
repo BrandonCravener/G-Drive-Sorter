@@ -11,6 +11,9 @@
       <button *ngIf="authenticated" mat-icon-button [matMenuTriggerFor]="appMenu">
         <mat-icon>more_vert</mat-icon>
       </button>
+      <button *ngIf="!authenticated" mat-button (click)="signIn()">
+        Sign In
+      </button>
     </div>
   </mat-toolbar-row>
   <mat-toolbar-row *ngIf="authenticated">
@@ -25,7 +28,6 @@
     </nav>
   </mat-toolbar-row>
 </mat-toolbar>
-
 <div [@routerTransition]="getRouteAnimation(route)">
   <router-outlet #route="outlet"></router-outlet>
 </div>

@@ -21,7 +21,7 @@ export const appRoutes: Routes = [
     component: HomeComponent,
     canActivate: [AuthGuard],
     data: {
-      name: 'app/home'
+      name: 'appHome'
     }
   },
   {
@@ -29,7 +29,7 @@ export const appRoutes: Routes = [
     component: ConfigComponent,
     canActivate: [AuthGuard],
     data: {
-      name: 'app/config'
+      name: 'appConfig'
     }
   },
   {
@@ -37,7 +37,7 @@ export const appRoutes: Routes = [
     component: SettingsComponent,
     canActivate: [AuthGuard],
     data: {
-      name: 'app/settings'
+      name: 'appSettings'
     }
   },
   {

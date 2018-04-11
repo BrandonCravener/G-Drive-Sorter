@@ -28,11 +28,11 @@ export class AppComponent implements AfterViewInit {
   /**
    * Checks if the view has initalized yet.
    * 
-   * @private
+   * @public
    * @type {boolean}
    * @memberof AppComponent
    */
-  private rlaSafe: boolean = false;
+  public rlaSafe: boolean = false;
   /**
    * Hold the users authenitcation status
    * 
@@ -111,6 +111,10 @@ export class AppComponent implements AfterViewInit {
    */
   signOut() {
     this.google.signOut();
+  }
+
+  signIn() {
+    this.google.signIn();
   }
   
   /**

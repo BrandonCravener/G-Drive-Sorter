@@ -2,7 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // Modules
-import { MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule } from '@angular/material';
+import { MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, MatTooltipModule } from '@angular/material';
 
 // Components
 import { HomeComponent } from '../../components/tabs/home/home.component';
@@ -28,7 +28,8 @@ import { ConfigListComponent } from '../../components/tabs/config/config-list/co
     MatTableModule,
     MatIconModule,
     MatButtonModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatTooltipModule
   ]
 })
 export class AuthenticatedModule { 
