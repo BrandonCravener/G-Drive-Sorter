@@ -8,7 +8,7 @@ import { GoogleService } from '../google/google.service';
 import { appRoutes } from '../../app.routes';
 
 // Modules
-import { MatTableModule, MatPaginatorModule } from '@angular/material';
+import { MatTableModule, MatPaginatorModule, MatIconModule } from '@angular/material';
 
 // Components
 import { UnauthenticatedComponent } from '../../components/auth/unauthenticated/unauthenticated.component';
@@ -30,6 +30,7 @@ describe('AuthGuardService', () => {
       imports: [
         MatTableModule,
         MatPaginatorModule,
+        MatIconModule,
         RouterModule.forRoot(
           appRoutes
         )

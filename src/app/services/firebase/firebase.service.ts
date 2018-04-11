@@ -72,13 +72,5 @@ export class FirebaseService {
         this.signInWithCredential();
       }
     })
-
-    firebase.auth().onAuthStateChanged(user => {
-      if (user && !this.google.getAuthStatus()) {
-        this.google.signIn();
-      } else if (!user && this.google.getAuthStatus()) {
-        this.google.signOut();
-      }
-    })
   }
 }
