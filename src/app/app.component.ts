@@ -4,12 +4,12 @@ import { Router } from '@angular/router';
 import { GoogleService } from './services/google/google.service';
 
 import { routerAnimation } from '../router.animations';
-import { FirebaseService } from './services/firebase/firebase.service';
 
 /**
  * Workaround for testing
  */
 declare var gapi: any;
+
 /**
  * Base application component.
  * 
@@ -67,7 +67,7 @@ export class AppComponent implements AfterViewInit {
    * @param {NgZone} zone  Declare NgZone as zon
    * @memberof AppComponent
    */
-  constructor(private google: GoogleService, private firebase: FirebaseService, private router: Router, private zone: NgZone) {
+  constructor(private google: GoogleService, private router: Router, private zone: NgZone) {
     const googleInitInterval = setInterval(() => {
       if (window['gapi']) {
         this.google.init({
@@ -76,7 +76,7 @@ export class AppComponent implements AfterViewInit {
           discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'],
           scope: 'https://www.googleapis.com/auth/drive'
         }, () => {
-          this.firebase.init();
+          console.debug('Google initalized.')
         });
         this.google.authState$.subscribe(state => {
           this.authenticated = state;

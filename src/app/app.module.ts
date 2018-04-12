@@ -10,8 +10,15 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule, MatIconModule } from '@angular/material';
 
+// AngularFire imports
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+
 // Route imports
 import { appRoutes } from './app.routes';
+
+import { environment } from '../environments/environment.prod';
 
 // Component imports
 import { AppComponent } from './app.component';
@@ -22,7 +29,6 @@ import { UnauthenticatedComponent } from './components/auth/unauthenticated/unau
 import { GoogleService } from './services/google/google.service';
 import { AuthGuardService, PreventAuthGuardService } from './services/auth/auth-guard.service';
 import { AuthenticatedModule } from './modules/authenticated/authenticated.module';
-import { FirebaseService } from './services/firebase/firebase.service';
 
 
 @NgModule({
@@ -32,6 +38,9 @@ import { FirebaseService } from './services/firebase/firebase.service';
   ],
   imports: [
     BrowserModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
@@ -44,7 +53,7 @@ import { FirebaseService } from './services/firebase/firebase.service';
       appRoutes
     )
   ],
-  providers: [GoogleService, FirebaseService, AuthGuardService, PreventAuthGuardService],
+  providers: [GoogleService, AuthGuardService, PreventAuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

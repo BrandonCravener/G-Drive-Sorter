@@ -1,4 +1,4 @@
-# [G-Drive-Sorter](https://gdrive.brandoncravener.com) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com) [![Build Status](https://travis-ci.org/BrandonCravener/G-Drive-Sorter.svg?branch=master)](https://travis-ci.org/BrandonCravener/G-Drive-Sorter) [![Join the chat at https://gitter.im/G-Drive-Sorter/Lobby](https://badges.gitter.im/G-Drive-Sorter/Lobby.svg)](https://gitter.im/G-Drive-Sorter/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# [G-Drive-Sorter](https://gdrive.brandoncravener.com) [![Build Status](https://travis-ci.org/BrandonCravener/G-Drive-Sorter.svg?branch=development)](https://travis-ci.org/BrandonCravener/G-Drive-Sorter) [![Join the chat at https://gitter.im/G-Drive-Sorter/Lobby](https://badges.gitter.im/G-Drive-Sorter/Lobby.svg)](https://gitter.im/G-Drive-Sorter/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 ________
 ### Main Countributors
   - Brandon Cravener (Project Manager/Developer)

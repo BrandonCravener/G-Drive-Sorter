@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { FirebaseService } from '../firebase/firebase.service';
+import { AngularFireAuth } from 'angularfire2/auth';
+
+import * as firebase from "firebase/app";
+import "firebase/auth";
 
 /**
  * Workaround for testing
@@ -41,7 +44,7 @@ export class GoogleService {
    * Creates an instance of GoogleService.
    * @memberof GoogleService
    */
-  constructor () {}
+  constructor (private firebaseAuth: AngularFireAuth) {}
 
   /**
    * Initialize the Google API
@@ -58,6 +61,10 @@ export class GoogleService {
         authInstance = gapi.auth2.getAuthInstance();
         authInstance.isSignedIn.listen(() => {
           this._authState.next(authInstance.isSignedIn.get());
+          if (authInstance.isSignedIn.get()) {
+            const credential = firebase.auth.GoogleAuthProvider.credential(this.getToken());
+            this.firebaseAuth.auth.signInWithCredential(credential)
+          }
         });
         const authStatus = authInstance.isSignedIn.get();
         this._authState.next(authStatus);
@@ -98,6 +105,7 @@ export class GoogleService {
    */
   signOut() {
     authInstance.signOut();
+    this.firebaseAuth.auth.signOut();
   }
 
   /**

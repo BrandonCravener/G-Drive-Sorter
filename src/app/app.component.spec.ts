@@ -13,11 +13,17 @@ import { MatToolbarModule, MatButtonModule, MatMenuModule, MatIconModule, MatTab
 import { RouterModule } from '@angular/router';
 import { AuthenticatedModule } from './modules/authenticated/authenticated.module';
 
+// Angularfire
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+
+// Utilitys
 import { appRoutes } from './app.routes';
+import { environment } from '../environments/environment';
 
 // Services
 import { GoogleService } from './services/google/google.service';
-import { FirebaseService } from './services/firebase/firebase.service';
 import { AuthGuardService, PreventAuthGuardService } from './services/auth/auth-guard.service';
 
 // Components
@@ -42,12 +48,15 @@ describe('AppComponent', () => {
         MatIconModule,
         MatTabsModule,
         RouterModule,
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireAuthModule,
+        AngularFirestoreModule,
         AuthenticatedModule.forRoot(),
         RouterModule.forRoot(
           appRoutes
         )
       ],
-      providers: [GoogleService, FirebaseService, AuthGuardService, PreventAuthGuardService, {provide: 
+      providers: [GoogleService, AuthGuardService, PreventAuthGuardService, {provide: 
         APP_BASE_HREF, 
         useValue: '/'
       }]
