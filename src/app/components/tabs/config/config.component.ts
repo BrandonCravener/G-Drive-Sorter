@@ -1,4 +1,9 @@
+// Angular
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+
+// Components
+import { ConfigModalComponent } from './config-modal/config-modal.component';
 
 /**
  * Declare component to be shown when the config tab is selected.
@@ -17,7 +22,7 @@ export class ConfigComponent implements OnInit {
    * Creates an instance of ConfigComponent.
    * @memberof ConfigComponent
    */
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   /**
    * Handle component initalization
@@ -25,6 +30,10 @@ export class ConfigComponent implements OnInit {
    * @memberof ConfigComponent
    */
   ngOnInit() {
+  }
+
+  openNewConfigDialog() {
+    this.dialog.open(ConfigModalComponent)
   }
 
 }

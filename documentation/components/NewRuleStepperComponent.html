@@ -139,7 +139,7 @@
                                                         <a href="../components/HomeComponent.html" >HomeComponent</a>
                                                     </li>
                                                     <li class="link">
-                                                        <a href="../components/ConfigComponent.html"  data-type="entity-link" data-context="sub-entity" data-context-id="modules" class="active" >ConfigComponent</a>
+                                                        <a href="../components/ConfigComponent.html" >ConfigComponent</a>
                                                     </li>
                                                     <li class="link">
                                                         <a href="../components/SettingsComponent.html" >SettingsComponent</a>
@@ -151,7 +151,7 @@
                                                         <a href="../components/ConfigModalComponent.html" >ConfigModalComponent</a>
                                                     </li>
                                                     <li class="link">
-                                                        <a href="../components/NewRuleStepperComponent.html" >NewRuleStepperComponent</a>
+                                                        <a href="../components/NewRuleStepperComponent.html"  data-type="entity-link" data-context="sub-entity" data-context-id="modules" class="active" >NewRuleStepperComponent</a>
                                                     </li>
                                             </ul>
                                         </li>
@@ -380,7 +380,7 @@
                                                                <a href="../components/HomeComponent.html" >HomeComponent</a>
                                                            </li>
                                                            <li class="link">
-                                                               <a href="../components/ConfigComponent.html"  data-type="entity-link" data-context="sub-entity" data-context-id="modules" class="active" >ConfigComponent</a>
+                                                               <a href="../components/ConfigComponent.html" >ConfigComponent</a>
                                                            </li>
                                                            <li class="link">
                                                                <a href="../components/SettingsComponent.html" >SettingsComponent</a>
@@ -392,7 +392,7 @@
                                                                <a href="../components/ConfigModalComponent.html" >ConfigModalComponent</a>
                                                            </li>
                                                            <li class="link">
-                                                               <a href="../components/NewRuleStepperComponent.html" >NewRuleStepperComponent</a>
+                                                               <a href="../components/NewRuleStepperComponent.html"  data-type="entity-link" data-context="sub-entity" data-context-id="modules" class="active" >NewRuleStepperComponent</a>
                                                            </li>
                                                    </ul>
                                                </li>
@@ -506,7 +506,7 @@
 
 <ol class="breadcrumb">
   <li>Components</li>
-  <li>ConfigComponent</li>
+  <li>NewRuleStepperComponent</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -519,9 +519,6 @@
     </li>
 
     <li>
-        <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
-    </li>
-    <li>
         <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
     </li>
 </ul>
@@ -531,16 +528,9 @@
     <h3>File</h3>
 </p>
 <p class="comment">
-    <code>src/app/components/tabs/config/config.component.ts</code>
+    <code>src/app/components/shared/new-rule-stepper/new-rule-stepper.component.ts</code>
 </p>
 
-    <p class="comment">
-        <h3>Description</h3>
-    </p>
-    <p class="comment">
-        <p>Declare component to be shown when the config tab is selected.</p>
-
-    </p>
 
 
     <p class="comment">
@@ -550,11 +540,6 @@
                 <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
     </p>
 
-    <p class="comment">
-        <h3>Example</h3>
-    </p>
-    <div class="io-description">
-    </div>
 
 <section>
     <h3>Metadata</h3>
@@ -573,19 +558,19 @@
 
             <tr>
                 <td class="col-md-3">selector</td>
-                <td class="col-md-9"><code>app-config</code></td>
+                <td class="col-md-9"><code>app-new-rule-stepper</code></td>
             </tr>
 
             <tr>
                 <td class="col-md-3">styleUrls</td>
-                <td class="col-md-9"><code>config.component.scss</code></td>
+                <td class="col-md-9"><code>new-rule-stepper.component.scss</code></td>
             </tr>
 
 
 
             <tr>
                 <td class="col-md-3">templateUrl</td>
-                <td class="col-md-9"><code>./config.component.html</code></td>
+                <td class="col-md-9"><code>./new-rule-stepper.component.html</code></td>
             </tr>
 
 
@@ -608,9 +593,6 @@
                             <li>
                                 <a href="#ngOnInit">ngOnInit</a>
                             </li>
-                            <li>
-                                <a href="#openNewConfigDialog">openNewConfigDialog</a>
-                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -624,47 +606,15 @@
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-    <code>constructor(dialog: MatDialog)</code>
+    <code>constructor()</code>
                         </td>
                     </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/components/tabs/config/config.component.ts:20</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">src/app/components/shared/new-rule-stepper/new-rule-stepper.component.ts:8</a></div>
                                 </td>
                             </tr>
     
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-description"><p>Creates an instance of ConfigComponent.</p>
-    </div>
-                                <div>
-                                        <b>Parameters :</b>
-                                        <table class="params">
-                                            <thead>
-                                                <tr>
-                                                    <td>Name</td>
-                                                        <td>Type</td>
-                                                    <td>Optional</td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                    <tr>
-                                                        <td>dialog</td>
-                                                      
-                                                            <td>
-                                                                        <code>MatDialog</code>
-                                                            </td>
-                                                      
-                                                        <td>
-                                                                no
-                                                        </td>
-                                                        
-                                                    </tr>
-                                            </tbody>
-                                        </table>
-                                </div>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
     </section>
@@ -700,46 +650,7 @@
     
                             <tr>
                                 <td class="col-md-4">
-                                        <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/components/tabs/config/config.component.ts:32</a></div>
-                                </td>
-                            </tr>
-    
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-description"><p>Handle component initalization</p>
-    </div>
-    
-                                <div class="io-description">
-                                    <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-    
-                                </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <a name="openNewConfigDialog"></a>
-                            <span class="name">
-                                <b>
-                                openNewConfigDialog
-                                </b>
-                                <a href="#openNewConfigDialog"><span class="fa fa-link"></span></a>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-    <code>openNewConfigDialog()</code>
-                        </td>
-                    </tr>
-    
-    
-                            <tr>
-                                <td class="col-md-4">
-                                        <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/components/tabs/config/config.component.ts:35</a></div>
+                                        <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/app/components/shared/new-rule-stepper/new-rule-stepper.component.ts:12</a></div>
                                 </td>
                             </tr>
     
@@ -762,54 +673,23 @@
 
     <div class="tab-pane fade tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
-import { MatDialog } from &#x27;@angular/material&#x27;;
 
-// Components
-import { ConfigModalComponent } from &#x27;./config-modal/config-modal.component&#x27;;
-
-/**
- * Declare component to be shown when the config tab is selected.
- * 
- * @export
- * @class ConfigComponent
- * @implements {OnInit}
- */
 @Component({
-  selector: &#x27;app-config&#x27;,
-  templateUrl: &#x27;./config.component.html&#x27;,
-  styleUrls: [&#x27;./config.component.scss&#x27;]
+  selector: &#x27;app-new-rule-stepper&#x27;,
+  templateUrl: &#x27;./new-rule-stepper.component.html&#x27;,
+  styleUrls: [&#x27;./new-rule-stepper.component.scss&#x27;]
 })
-export class ConfigComponent implements OnInit {
-  /**
-   * Creates an instance of ConfigComponent.
-   * @memberof ConfigComponent
-   */
-  constructor(private dialog: MatDialog) { }
+export class NewRuleStepperComponent implements OnInit {
 
-  /**
-   * Handle component initalization
-   * 
-   * @memberof ConfigComponent
-   */
+  constructor() { }
+
   ngOnInit() {
-  }
-
-  openNewConfigDialog() {
-    this.dialog.open(ConfigModalComponent)
   }
 
 }
 </code></pre>
     </div>
 
-    <div class="tab-pane fade" id="c-templateData">
-        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;container&quot;&gt;
-    &lt;app-config-list&gt;&lt;/app-config-list&gt;
-&lt;/div&gt;
-&lt;button class&#x3D;&quot;new-config-button&quot; matTooltip&#x3D;&quot;Create Config&quot; matTooltipPosition&#x3D;&quot;left&quot; mat-fab color&#x3D;&quot;accent&quot; (click)&#x3D;&quot;openNewConfigDialog()&quot;&gt;
-    &lt;mat-icon aria-label&#x3D;&quot;Create new config button.&quot;&gt;add&lt;/mat-icon&gt;
-&lt;/button&gt;</code></pre>
-    </div>
 
     <div class="tab-pane fade" id="c-tree">
         <div id="tree-container"></div>
@@ -834,10 +714,10 @@ export class ConfigComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="container">    <app-config-list></app-config-list></div><button class="new-config-button" matTooltip="Create Config" matTooltipPosition="left" mat-fab color="accent" (click)="openNewConfigDialog()">    <mat-icon aria-label="Create new config button.">add</mat-icon></button></div>'
+        var COMPONENT_TEMPLATE = '<div></div>'
     var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ConfigComponent', 'selector': 'app-config'},{'name': 'ConfigListComponent', 'selector': 'app-config-list'},{'name': 'ConfigModalComponent', 'selector': 'app-config-modal'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'NewRuleStepperComponent', 'selector': 'app-new-rule-stepper'},{'name': 'SettingsComponent', 'selector': 'app-settings'},{'name': 'UnauthenticatedComponent', 'selector': 'app-unauthenticated'}];
     var DIRECTIVES = [];
-    var ACTUAL_COMPONENT = {'name': 'ConfigComponent'};
+    var ACTUAL_COMPONENT = {'name': 'NewRuleStepperComponent'};
 </script>
 <script src="../js/tree.js"></script>
 

@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
-import { MatToolbarModule, MatIconModule } from '@angular/material';
+import { MatToolbarModule, MatIconModule, MatStepperModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 
 // AngularFire imports
 import { AngularFireModule } from 'angularfire2';
@@ -25,16 +25,17 @@ import { AppComponent } from './app.component';
 import { ParallaxModule, ParallaxConfig } from 'ngx-parallax';
 import { UnauthenticatedComponent } from './components/auth/unauthenticated/unauthenticated.component';
 
+// Module imports
+import { AuthenticatedModule } from './modules/authenticated/authenticated.module';
+
 // Service imports
 import { GoogleService } from './services/google/google.service';
 import { AuthGuardService, PreventAuthGuardService } from './services/auth/auth-guard.service';
-import { AuthenticatedModule } from './modules/authenticated/authenticated.module';
-
 
 @NgModule({
   declarations: [
     AppComponent,
-    UnauthenticatedComponent
+    UnauthenticatedComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,6 +47,7 @@ import { AuthenticatedModule } from './modules/authenticated/authenticated.modul
     MatButtonModule,
     MatMenuModule,
     MatIconModule,
+    MatInputModule,
     MatTabsModule,
     ParallaxModule,
     AuthenticatedModule.forRoot(),

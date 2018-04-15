@@ -1,0 +1,22 @@
+<h3 mat-dialog-title>Create New Config</h3>
+<div mat-dialog-content>
+  <form [formGroup]="newConfig">
+      <mat-form-field [floatLabel]="newConfig.value.floatLabel">
+        <mat-label>New Config Name</mat-label>
+        <input matInput formControlName="newConfigNameControl" required>
+        <mat-error>Please a config name!</mat-error>
+      </mat-form-field>
+      <br>
+      <mat-form-field [floatLabel]="newConfig.value.floatLabel">
+        <mat-label>First Group Name</mat-label>
+        <input matInput formControlName="newGroupNameControl" required>
+        <mat-error>Please enter a inital group name!</mat-error>
+      </mat-form-field>
+      <br>
+      <app-new-rule-stepper></app-new-rule-stepper>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button>Create</button>
+  <button mat-button (click)="close()">Cancel</button>
+</div>

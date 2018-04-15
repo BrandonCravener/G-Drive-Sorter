@@ -1,14 +1,18 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
+// Angular imports
 import { CommonModule } from '@angular/common';
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-// Modules
-import { MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, MatTooltipModule } from '@angular/material';
+// Modules imports
+import { MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, MatTooltipModule, MatDialogModule, MatDialogContent, MatStepperModule, MatFormFieldModule, MatInputModule, MatListModule } from '@angular/material';
 
-// Components
+// Components imports
 import { HomeComponent } from '../../components/tabs/home/home.component';
 import { ConfigComponent } from '../../components/tabs/config/config.component';
 import { SettingsComponent } from '../../components/tabs/settings/settings.component';
 import { ConfigListComponent } from '../../components/tabs/config/config-list/config-list.component';
+import { ConfigModalComponent } from '../../components/tabs/config/config-modal/config-modal.component';
+import { NewRuleStepperComponent } from '../../components/shared/new-rule-stepper/new-rule-stepper.component';
 
 /**
  * Handles all authenticated components
@@ -21,15 +25,27 @@ import { ConfigListComponent } from '../../components/tabs/config/config-list/co
     HomeComponent,
     ConfigComponent,
     SettingsComponent,
-    ConfigListComponent
+    ConfigListComponent,
+    ConfigModalComponent,
+    NewRuleStepperComponent
   ],
   imports: [
+    FormsModule,
     CommonModule,
-    MatTableModule,
     MatIconModule,
+    MatListModule,
+    MatInputModule,
+    MatTableModule,
     MatButtonModule,
+    MatDialogModule,
+    MatStepperModule,
+    MatTooltipModule,
+    MatFormFieldModule,
     MatPaginatorModule,
-    MatTooltipModule
+    ReactiveFormsModule
+  ],
+  entryComponents: [
+    ConfigModalComponent
   ]
 })
 export class AuthenticatedModule { 
