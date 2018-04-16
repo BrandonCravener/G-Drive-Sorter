@@ -1,6 +1,18 @@
+// Angular imports
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+// Component imports
+import { ConfigComponent } from '../config.component';
+import { HomeComponent } from '../../home/home.component';
 import { ConfigModalComponent } from './config-modal.component';
+import { SettingsComponent } from '../../settings/settings.component';
+import { ConfigListComponent } from '../config-list/config-list.component';
+import { NewRuleStepperComponent } from '../../../shared/new-rule-stepper/new-rule-stepper.component';
+import { AuthenticatedModule } from '../../../../modules/authenticated/authenticated.module';
+import { MatDialogRef } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('ConfigModalComponent', () => {
   let component: ConfigModalComponent;
@@ -8,7 +20,16 @@ describe('ConfigModalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ConfigModalComponent ]
+      imports: [
+        BrowserAnimationsModule,
+        AuthenticatedModule
+      ],
+      providers: [
+        {
+          provide: MatDialogRef,
+          useValue: {}
+        }
+      ]
     })
     .compileComponents();
   }));

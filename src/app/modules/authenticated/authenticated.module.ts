@@ -4,7 +4,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 // Modules imports
-import { MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, MatTooltipModule, MatDialogModule, MatDialogContent, MatStepperModule, MatFormFieldModule, MatInputModule, MatListModule } from '@angular/material';
+import { MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, MatTooltipModule, MatDialogModule, MatDialogContent, MatStepperModule, MatFormFieldModule, MatInputModule, MatListModule, MatExpansionModule, MatSelectModule } from '@angular/material';
 
 // Components imports
 import { HomeComponent } from '../../components/tabs/home/home.component';
@@ -38,8 +38,10 @@ import { NewRuleStepperComponent } from '../../components/shared/new-rule-steppe
     MatTableModule,
     MatButtonModule,
     MatDialogModule,
+    MatSelectModule,
     MatStepperModule,
     MatTooltipModule,
+    MatExpansionModule,
     MatFormFieldModule,
     MatPaginatorModule,
     ReactiveFormsModule

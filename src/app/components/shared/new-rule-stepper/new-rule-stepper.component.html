@@ -1,0 +1,19 @@
+<mat-horizontal-stepper linear>
+  <mat-step label="Classifier">
+    <mat-form-field>
+      <mat-select placeholder="Classifier">
+        <mat-option *ngFor="let classifier of classifiers " [value]="classifier.value">
+          {{ classifier.label }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div>
+      <button mat-button type="button" matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step label="Constraint">
+    <div>
+      <button mat-button type="button" matStepperPrevious>Back</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>  

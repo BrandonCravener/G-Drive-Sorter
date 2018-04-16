@@ -33,7 +33,9 @@ export class ConfigComponent implements OnInit {
   }
 
   openNewConfigDialog() {
-    this.dialog.open(ConfigModalComponent)
+    this.dialog.open(ConfigModalComponent, {
+      width: `${(document.body.clientWidth / Math.PI) * 1.25}px`,
+    })
   }
 
 }

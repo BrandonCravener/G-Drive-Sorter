@@ -1,20 +1,42 @@
 <h3 mat-dialog-title>Create New Config</h3>
 <div mat-dialog-content>
   <form [formGroup]="newConfig">
-      <mat-form-field [floatLabel]="newConfig.value.floatLabel">
-        <mat-label>New Config Name</mat-label>
-        <input matInput formControlName="newConfigNameControl" required>
-        <mat-error>Please a config name!</mat-error>
-      </mat-form-field>
-      <br>
-      <mat-form-field [floatLabel]="newConfig.value.floatLabel">
-        <mat-label>First Group Name</mat-label>
-        <input matInput formControlName="newGroupNameControl" required>
-        <mat-error>Please enter a inital group name!</mat-error>
-      </mat-form-field>
-      <br>
-      <app-new-rule-stepper></app-new-rule-stepper>
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          Config Name
+        </mat-expansion-panel-header>
+        <ng-template matExpansionPanelContent>
+          <mat-form-field [floatLabel]="newConfig.value.floatLabel">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="newConfigNameControl" required>
+            <mat-error>Please a config name!</mat-error>
+          </mat-form-field>
+        </ng-template>
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          Group Name
+        </mat-expansion-panel-header>
+        <ng-template matExpansionPanelContent>
+          <mat-form-field [floatLabel]="newConfig.value.floatLabel">
+            <mat-label>Group Name</mat-label>
+            <input matInput formControlName="newGroupNameControl" required>
+            <mat-error>Please enter a inital group name!</mat-error>
+          </mat-form-field>
+        </ng-template>
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          First Rule
+        </mat-expansion-panel-header>
+        <ng-template matExpansionPanelContent>
+          <app-new-rule-stepper></app-new-rule-stepper>
+        </ng-template>
+      </mat-expansion-panel>
+    </mat-accordion>
   </form>
+  <br>
 </div>
 <div mat-dialog-actions>
   <button mat-button>Create</button>

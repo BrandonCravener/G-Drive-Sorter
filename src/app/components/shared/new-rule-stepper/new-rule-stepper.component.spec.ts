@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NewRuleStepperComponent } from './new-rule-stepper.component';
+import { AuthenticatedModule } from '../../../modules/authenticated/authenticated.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('NewRuleStepperComponent', () => {
   let component: NewRuleStepperComponent;
@@ -8,7 +10,10 @@ describe('NewRuleStepperComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NewRuleStepperComponent ]
+      imports: [
+        BrowserAnimationsModule,
+        AuthenticatedModule
+      ]
     })
     .compileComponents();
   }));
