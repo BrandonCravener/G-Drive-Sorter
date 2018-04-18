@@ -1,19 +1,63 @@
-<mat-horizontal-stepper linear>
-  <mat-step label="Classifier">
-    <mat-form-field>
-      <mat-select placeholder="Classifier">
-        <mat-option *ngFor="let classifier of classifiers " [value]="classifier.value">
-          {{ classifier.label }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <div>
-      <button mat-button type="button" matStepperNext>Next</button>
-    </div>
+<mat-horizontal-stepper (selectionChange)="stepChanged($event)" linear>
+  <mat-step label="Classifier" [stepControl]="classifierFormGroup">
+    <form [formGroup]="classifierFormGroup">
+      <mat-form-field>
+        <mat-select placeholder="Classifier" formControlName="classifierControl" [(value)]="classifierSelectOption">
+          <mat-option *ngFor="let classifier of classifiers" [value]="classifier.value">
+            {{ classifier.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div>
+        <button mat-button type="button" matStepperNext>Next</button>
+      </div>
+    </form>
   </mat-step>
-  <mat-step label="Constraint">
-    <div>
-      <button mat-button type="button" matStepperPrevious>Back</button>
-    </div>
+  <mat-step label="Constraint" [stepControl]="constraintFormGroup">
+    <form [formGroup]="constraintFormGroup">
+      <mat-form-field>
+        <mat-select placeholder="Constraint" formControlName="constraintControl">
+          <mat-option *ngFor="let constraint of constriants" [value]="constraint.value">
+            {{ constraint.label }}
+          </mat-option>
+          <mat-option [disabled]="startEndWithDisabled" value="startWith">
+              Start's With
+          </mat-option>
+          <mat-option [disabled]="startEndWithDisabled" value="endWith">
+              End's With
+          </mat-option>
+          <mat-option [disabled]="betweenConstraintDisabled" value="between">
+            Between
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div>
+        <button mat-button type="button" matStepperNext>Next</button>
+        <button mat-button type="button" matStepperPrevious>Back</button>
+      </div>
+    </form>
   </mat-step>
-</mat-horizontal-stepper>  
+  <mat-step label="Input" [stepControl]="inputFieldGroup">
+    <form [formGroup]="inputFieldGroup">
+      <mat-grid-list cols="2" rowHeight="2:1">
+        <mat-grid-tile colspan="2" *ngIf="classifierSelectOption === 'title'">
+          <mat-form-field>
+            <input matInput placeholder="Title Text" formControlName="titleTextControl" [required]="classifierSelectOption === 'title'">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="2" *ngIf="classifierSelectOption === 'type'">
+          <mat-form-field>
+            <mat-select placeholder="Drive File Type" formControlName="fileTypeControl" [required]="classifierSelectOption === 'type'">
+              <mat-option *ngFor="let fileType of driveFileTypes" [value]="fileType.value">
+              {{ fileType.label }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <div>
+        <button mat-button type="button" matStepperPrevious>Back</button>
+      </div>
+    </form>
+  </mat-step>
+</mat-horizontal-stepper>
