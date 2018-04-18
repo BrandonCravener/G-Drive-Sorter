@@ -1,4 +1,4 @@
-<mat-horizontal-stepper (selectionChange)="stepChanged($event)" linear>
+<mat-vertical-stepper (selectionChange)="stepChanged($event)" linear>
   <mat-step label="Classifier" [stepControl]="classifierFormGroup">
     <form [formGroup]="classifierFormGroup">
       <mat-form-field>
@@ -16,7 +16,7 @@
   <mat-step label="Constraint" [stepControl]="constraintFormGroup">
     <form [formGroup]="constraintFormGroup">
       <mat-form-field>
-        <mat-select placeholder="Constraint" formControlName="constraintControl">
+        <mat-select placeholder="Constraint" formControlName="constraintControl" [(value)]="constraintSelectOption">
           <mat-option *ngFor="let constraint of constriants" [value]="constraint.value">
             {{ constraint.label }}
           </mat-option>
@@ -39,7 +39,7 @@
   </mat-step>
   <mat-step label="Input" [stepControl]="inputFieldGroup">
     <form [formGroup]="inputFieldGroup">
-      <mat-grid-list cols="2" rowHeight="2:1">
+      <mat-grid-list cols="2" rowHeight="2:1" gutterSize="4px">
         <mat-grid-tile colspan="2" *ngIf="classifierSelectOption === 'title'">
           <mat-form-field>
             <input matInput placeholder="Title Text" formControlName="titleTextControl" [required]="classifierSelectOption === 'title'">
@@ -54,10 +54,33 @@
             </mat-select>
           </mat-form-field>
         </mat-grid-tile>
+        <mat-grid-tile colspan="2" *ngIf="classifierSelectOption === 'creationDate' && constraintSelectOption !== 'between'">
+          <mat-form-field>
+            <input matInput [matDatepicker]="datePicker" placeholder="Creation Date">
+            <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+            <mat-datepicker #datePicker startView="month"></mat-datepicker>
+          </mat-form-field>          
+        </mat-grid-tile>
+        <div *ngIf="classifierSelectOption === 'creationDate' && constraintSelectOption === 'between'">
+          <mat-grid-tile colspan="2">
+            <mat-form-field>
+              <input matInput [matDatepicker]="datePickerBetweenFirst" placeholder="Starting Date">
+              <mat-datepicker-toggle matSuffix [for]="datePickerBetweenFirst"></mat-datepicker-toggle>
+              <mat-datepicker #datePickerBetweenFirst startView="month"></mat-datepicker>
+            </mat-form-field>          
+          </mat-grid-tile>
+          <mat-grid-tile colspan="2">
+            <mat-form-field>
+              <input matInput [matDatepicker]="datePickerBetweenSecond" placeholder="Ending Date">
+              <mat-datepicker-toggle matSuffix [for]="datePickerBetweenSecond"></mat-datepicker-toggle>
+              <mat-datepicker #datePickerBetweenSecond startView="month"></mat-datepicker>
+            </mat-form-field>          
+          </mat-grid-tile>
+        </div>
       </mat-grid-list>
       <div>
         <button mat-button type="button" matStepperPrevious>Back</button>
       </div>
     </form>
   </mat-step>
-</mat-horizontal-stepper>
+</mat-vertical-stepper>

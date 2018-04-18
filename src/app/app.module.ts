@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
-import { MatToolbarModule, MatIconModule, MatStepperModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatToolbarModule, MatIconModule, MatStepperModule, MatFormFieldModule, MatInputModule, MatDialogModule } from '@angular/material';
 
 // AngularFire imports
 import { AngularFireModule } from 'angularfire2';
@@ -35,25 +35,26 @@ import { AuthGuardService, PreventAuthGuardService } from './services/auth/auth-
 @NgModule({
   declarations: [
     AppComponent,
-    UnauthenticatedComponent,
+    UnauthenticatedComponent
   ],
   imports: [
     BrowserModule,
-    AngularFireModule.initializeApp(environment.firebase),
+    MatMenuModule,
+    MatIconModule,
+    MatTabsModule,
+    ParallaxModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatToolbarModule,
+    RouterModule.forRoot(
+      appRoutes
+    ),
     AngularFireAuthModule,
     AngularFirestoreModule,
     BrowserAnimationsModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatMenuModule,
-    MatIconModule,
-    MatInputModule,
-    MatTabsModule,
-    ParallaxModule,
     AuthenticatedModule.forRoot(),
-    RouterModule.forRoot(
-      appRoutes
-    )
+    AngularFireModule.initializeApp(environment.firebase),
   ],
   providers: [GoogleService, AuthGuardService, PreventAuthGuardService],
   bootstrap: [AppComponent]

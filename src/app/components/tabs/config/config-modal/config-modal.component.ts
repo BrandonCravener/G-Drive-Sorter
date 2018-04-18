@@ -12,6 +12,8 @@ export class ConfigModalComponent implements OnInit {
 
   newConfig: FormGroup;
 
+  isPage = false;
+
   constructor(private formBuilder: FormBuilder, public dialogRef: MatDialogRef<ConfigModalComponent>) { }
 
   ngOnInit() {

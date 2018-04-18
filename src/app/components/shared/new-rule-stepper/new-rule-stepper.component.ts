@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-rule-stepper',
@@ -17,6 +18,7 @@ export class NewRuleStepperComponent implements OnInit {
   startEndWithDisabled: boolean = false;
 
   classifierSelectOption: string;
+  constraintSelectOption: string;
 
   classifiers = [
     {
@@ -145,7 +147,7 @@ export class NewRuleStepperComponent implements OnInit {
     },
   ]
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(public formBuilder: FormBuilder, public zone: NgZone, public router: Router) { }
 
   private valueArrayToObject(array: Array<object>): object {
     const searchableObject: object = {};
