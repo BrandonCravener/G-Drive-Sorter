@@ -1,5 +1,5 @@
 import { Component, OnInit, NgZone } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { Router } from '@angular/router';
 
@@ -163,6 +163,29 @@ export class NewRuleStepperComponent implements OnInit {
 
   private checkIfStartEndDisabled (classifierValue: string): boolean {
     return this.valueArrayToObject(this.classifiers)[classifierValue].hideStartEnd;
+  }
+
+  /*
+    Datepicker Need Codes:
+      0 - No picker needed
+      1 - Single picker needed
+      2 - Double picker needed
+  */
+  datePickerSingleNeeded(): number {
+    const classifierVal = this.classifierSelectOption;
+    const constraintVal = this.constraintSelectOption;
+    if (
+      classifierVal === 'creationDate' ||
+      classifierVal === 'lastOpened' ||
+      classifierVal === 'lastModified'
+    ) {
+      if (constraintVal !== 'between') {
+        return 1;
+      } else {
+        return 2;
+      }
+    }
+    return 0;
   }
 
   ngOnInit() {

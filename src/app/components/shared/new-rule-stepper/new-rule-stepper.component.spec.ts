@@ -1,8 +1,14 @@
+// Angular imports
+import { APP_BASE_HREF } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewRuleStepperComponent } from './new-rule-stepper.component';
+// Module imports
+import { AppModule } from '../../../app.module';
 import { AuthenticatedModule } from '../../../modules/authenticated/authenticated.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+// Componet imports
+import { NewRuleStepperComponent } from './new-rule-stepper.component';
 
 describe('NewRuleStepperComponent', () => {
   let component: NewRuleStepperComponent;
@@ -12,7 +18,14 @@ describe('NewRuleStepperComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
+        AppModule,
         AuthenticatedModule
+      ],
+      providers: [
+        {
+          provide: APP_BASE_HREF, 
+          useValue: '/'
+        }
       ]
     })
     .compileComponents();

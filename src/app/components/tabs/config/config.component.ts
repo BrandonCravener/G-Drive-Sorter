@@ -1,10 +1,12 @@
 // Angular
+import { Router } from '@angular/router';
 import { Component, OnInit, NgZone } from '@angular/core';
+
+// Material
 import { MatDialog } from '@angular/material';
 
 // Components
-import { ConfigModalComponent } from './config-modal/config-modal.component';
-import { Router } from '@angular/router';
+import { ConfigModalComponent } from '../../shared/config-modal/config-modal.component';
 
 /**
  * Declare component to be shown when the config tab is selected.

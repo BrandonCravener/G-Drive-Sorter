@@ -1,7 +1,8 @@
 // Angular
 import { MatDialogRef } from '@angular/material';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-config-modal',
@@ -14,7 +15,11 @@ export class ConfigModalComponent implements OnInit {
 
   isPage = false;
 
-  constructor(private formBuilder: FormBuilder, public dialogRef: MatDialogRef<ConfigModalComponent>) { }
+  constructor(
+    public formBuilder: FormBuilder, 
+    public zone: NgZone, 
+    public router: Router
+  ) { }
 
   ngOnInit() {
     this.newConfig = this.formBuilder.group({
@@ -24,8 +29,8 @@ export class ConfigModalComponent implements OnInit {
     })
   }
 
-  close(): void {
-    this.dialogRef.close();
+  create() {
+    
   }
 
 }
