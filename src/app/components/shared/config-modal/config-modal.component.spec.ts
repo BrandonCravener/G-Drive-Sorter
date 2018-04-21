@@ -1,18 +1,11 @@
-// Angular imports
-import { CommonModule, APP_BASE_HREF } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-// Component imports
-import { ConfigModalComponent } from './config-modal.component';
-
-// Material
-import { MatDialogRef } from '@angular/material';
-
-// Module
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthenticatedModule } from '../../../modules/authenticated/authenticated.module';
+import { APP_BASE_HREF, CommonModule } from '@angular/common';
 import { AppModule } from '../../../app.module';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { AuthenticatedModule } from '../../../modules/authenticated/authenticated.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ConfigModalComponent } from './config-modal.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatDialogRef } from '@angular/material';
 
 describe('ConfigModalComponent', () => {
   let component: ConfigModalComponent;

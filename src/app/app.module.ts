@@ -31,6 +31,7 @@ import { AuthenticatedModule } from './modules/authenticated/authenticated.modul
 // Service imports
 import { GoogleService } from './services/google/google.service';
 import { AuthGuardService, PreventAuthGuardService } from './services/auth/auth-guard.service';
+import { ConfigModule } from './modules/config/config.module';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { AuthGuardService, PreventAuthGuardService } from './services/auth/auth-
     ),
     AngularFireAuthModule,
     AngularFirestoreModule,
+    ConfigModule.forRoot(),
     BrowserAnimationsModule,
     AuthenticatedModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),

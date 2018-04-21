@@ -1,13 +1,8 @@
-// Angular
 import { APP_BASE_HREF } from '@angular/common';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-// Module imports
 import { AppModule } from '../../../app.module';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuthenticatedModule } from '../../../modules/authenticated/authenticated.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-// Components
 import { SettingsComponent } from './settings.component';
 
 describe('SettingsComponent', () => {

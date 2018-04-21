@@ -1,12 +1,7 @@
-// Angular
-import { Router } from '@angular/router';
-import { Component, OnInit, NgZone } from '@angular/core';
-
-// Material
-import { MatDialog } from '@angular/material';
-
-// Components
+import { Component, NgZone, OnInit } from '@angular/core';
 import { ConfigModalComponent } from '../../shared/config-modal/config-modal.component';
+import { MatDialog } from '@angular/material';
+import { Router } from '@angular/router';
 
 /**
  * Declare component to be shown when the config tab is selected.
@@ -49,9 +44,12 @@ export class ConfigComponent implements OnInit {
   openNewConfigDialog() {
     let dialogWidth = this.getDialogWidth();
     if (dialogWidth) {
-      this.dialog.open(ConfigModalComponent, {
+      const dialogInstance = this.dialog.open(ConfigModalComponent, {
         width: `${this.getDialogWidth()}px`,
-      })
+      });
+      dialogInstance.componentInstance.closeCommand.subscribe(close => {
+        dialogInstance.close();
+      });
     } else {
       this.zone.run(() => {
         this.router.navigate(['/app/config/create']);

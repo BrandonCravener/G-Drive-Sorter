@@ -1,14 +1,9 @@
-// Angular
-import { Router } from '@angular/router';
-import { TestBed, inject } from '@angular/core/testing';
-
-// Modules
 import { AppModule } from '../../app.module';
 import { AuthenticatedModule } from '../../modules/authenticated/authenticated.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-// Services
 import { AuthGuardService } from './auth-guard.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { inject, TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
 
 describe('AuthGuardService', () => {
   beforeEach(() => {

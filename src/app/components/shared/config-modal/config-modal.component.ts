@@ -1,8 +1,8 @@
-// Angular
+import { Component, NgZone, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
-import { Component, OnInit, NgZone } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-config-modal',
@@ -12,20 +12,23 @@ import { Router } from '@angular/router';
 export class ConfigModalComponent implements OnInit {
 
   newConfig: FormGroup;
-
   isPage = false;
 
+  private _closeCommand = new Subject<Boolean>();
+  public closeCommand = this._closeCommand.asObservable();
+
   constructor(
-    public formBuilder: FormBuilder, 
     public zone: NgZone, 
-    public router: Router
+    public router: Router,
+    public formBuilder: FormBuilder 
   ) { }
 
   ngOnInit() {
     this.newConfig = this.formBuilder.group({
       floatLabel: 'auto',
       newConfigNameControl: ['', Validators.required],
-      newGroupNameControl: ['', Validators.required]
+      newGroupNameControl: ['', Validators.required],
+      newRuleStepperControl: ['', Validators.required]
     })
   }
 
@@ -33,4 +36,7 @@ export class ConfigModalComponent implements OnInit {
     
   }
 
+  close() {
+    this._closeCommand.next(true);
+  }
 }

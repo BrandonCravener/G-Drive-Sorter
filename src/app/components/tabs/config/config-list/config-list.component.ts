@@ -1,15 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator } from '@angular/material';
-
-import { DataSource } from '@angular/cdk/collections';
-
-// Rx Imports
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-
-// Services
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { DataSource } from '@angular/cdk/collections';
+import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { Observable } from 'rxjs/Observable';
 
 export interface Config {
   name: String,
@@ -22,20 +17,15 @@ export interface Config {
   styleUrls: ['./config-list.component.scss']
 })
 export class ConfigListComponent implements OnInit {
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   private configCollection;
-
   private userID: string;
 
   noConfigs;
-
   dataSource: ConfigDataSource;
-
   oldPageSize: number = 10;
-
   tableColumns = ['name'];
-
-  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private firebase: AngularFirestore, private firebaseAuth: AngularFireAuth) {
     this.userID = firebaseAuth.auth.currentUser.uid;
@@ -63,7 +53,6 @@ export class ConfigListComponent implements OnInit {
     this.dataSource.loadConfigs();
     this.dataSource.numberConfigs();
   }
-
 }
 
 export class ConfigDataSource implements DataSource<Config> {

@@ -1,13 +1,8 @@
-// Angular imports
 import { APP_BASE_HREF } from '@angular/common';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-// Module imports
 import { AppModule } from '../../../app.module';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuthenticatedModule } from '../../../modules/authenticated/authenticated.module';
-
-// Componet imports
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NewRuleStepperComponent } from './new-rule-stepper.component';
 
 describe('NewRuleStepperComponent', () => {

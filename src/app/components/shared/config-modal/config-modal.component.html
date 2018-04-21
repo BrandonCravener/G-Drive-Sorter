@@ -1,5 +1,6 @@
 <div [class.container]="isPage">
-  <h3 mat-dialog-title>Create New Config</h3>
+  <h3 mat-dialog-title *ngIf="!isPage">Create New Config</h3>
+  <h3 *ngIf="isPage">Create New Config</h3>
   <div mat-dialog-content>
     <form [formGroup]="newConfig">
       <mat-accordion>
@@ -32,7 +33,7 @@
             First Rule
           </mat-expansion-panel-header>
           <ng-template matExpansionPanelContent>
-            <app-new-rule-stepper></app-new-rule-stepper>
+            <app-new-rule-stepper formControlName="newRuleStepperControl"></app-new-rule-stepper>
           </ng-template>
         </mat-expansion-panel>
       </mat-accordion>
@@ -40,7 +41,6 @@
     <br>
   <div mat-dialog-actions>
     <button mat-button (click)="create()">Create</button>
-    <button mat-button mat-dialog-close *ngIf="!isPage">Cancel</button>
-    <button mat-button (click)="close()" *ngIf="isPage">Cancel</button>
+    <button mat-button (click)="close()">Cancel</button>
   </div>
 </div>

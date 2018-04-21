@@ -1,15 +1,61 @@
-import { Component, OnInit, NgZone } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { StepperSelectionEvent } from '@angular/cdk/stepper';
+import {
+  Component,
+  forwardRef,
+  NgZone,
+  OnInit
+  } from '@angular/core';
+import {
+  ControlValueAccessor,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  NG_VALUE_ACCESSOR,
+  Validators
+  } from '@angular/forms';
 import { Router } from '@angular/router';
+import { StepperSelectionEvent } from '@angular/cdk/stepper';
 
 @Component({
   selector: 'app-new-rule-stepper',
   templateUrl: './new-rule-stepper.component.html',
-  styleUrls: ['./new-rule-stepper.component.scss']
+  styleUrls: ['./new-rule-stepper.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => NewRuleStepperComponent),
+      multi: true
+    }
+  ]
 })
-export class NewRuleStepperComponent implements OnInit {
+export class NewRuleStepperComponent implements OnInit, ControlValueAccessor {
+  // Form control variables and methods
+  _value: Object;
+  onChange: any = () => {};
+  onTouched: any = () => {};
 
+  get value() {
+    return this._value;
+  }
+
+  set value(newValue) {
+    this._value = newValue;
+    this.onChange(newValue);
+    this.onTouched();
+  }
+
+  writeValue(obj: any): void {
+    this.value = obj;
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
+  // Stepper variables and methods
   classifierFormGroup: FormGroup;
   constraintFormGroup: FormGroup;
   inputFieldGroup: FormGroup;
@@ -73,19 +119,7 @@ export class NewRuleStepperComponent implements OnInit {
     {
       label: 'Exclude\'s',
       value: 'exclude'
-    },
-    // {
-    //   label: 'Start\'s With',
-    //   value: 'startWith'
-    // },
-    // {
-    //   label: 'End\'s With',
-    //   value: 'endWith'
-    // },
-    // {
-    //   label: 'Between',
-    //   value: 'between'
-    // }
+    }
   ]
 
   driveFileTypes = [
@@ -146,9 +180,17 @@ export class NewRuleStepperComponent implements OnInit {
       value: 'application/vnd.google-apps.video'
     },
   ]
-
+  
   constructor(public formBuilder: FormBuilder, public zone: NgZone, public router: Router) { }
+  
+  private checkIfBetweenDisabled(classifierValue: string): boolean {
+    return this.valueArrayToObject(this.classifiers)[classifierValue].hideBetween;
+  }
 
+  private checkIfStartEndDisabled (classifierValue: string): boolean {
+    return this.valueArrayToObject(this.classifiers)[classifierValue].hideStartEnd;
+  }
+  
   private valueArrayToObject(array: Array<object>): object {
     const searchableObject: object = {};
     array.forEach(value => {
@@ -156,13 +198,18 @@ export class NewRuleStepperComponent implements OnInit {
     });
     return searchableObject;
   }
-
-  private checkIfBetweenDisabled(classifierValue: string): boolean {
-    return this.valueArrayToObject(this.classifiers)[classifierValue].hideBetween;
-  }
-
-  private checkIfStartEndDisabled (classifierValue: string): boolean {
-    return this.valueArrayToObject(this.classifiers)[classifierValue].hideStartEnd;
+  
+  ngOnInit() {
+    this.classifierFormGroup = this.formBuilder.group({
+      classifierControl: ['', Validators.required]
+    });
+    this.constraintFormGroup = this.formBuilder.group({
+      constraintControl: ['', Validators.required]
+    });
+    this.inputFieldGroup = this.formBuilder.group({
+      titleTextControl: ['', Validators.required],
+      fileTypeControl: ['', Validators.required]
+    });
   }
 
   /*
@@ -186,19 +233,6 @@ export class NewRuleStepperComponent implements OnInit {
       }
     }
     return 0;
-  }
-
-  ngOnInit() {
-    this.classifierFormGroup = this.formBuilder.group({
-      classifierControl: ['', Validators.required]
-    });
-    this.constraintFormGroup = this.formBuilder.group({
-      constraintControl: ['', Validators.required]
-    });
-    this.inputFieldGroup = this.formBuilder.group({
-      titleTextControl: ['', Validators.required],
-      fileTypeControl: ['', Validators.required]
-    });
   }
 
   stepChanged(event: StepperSelectionEvent) {

@@ -1,0 +1,842 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>g-drive-sorter documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	    <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/material.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">g-drive-sorter documentation</a>
+            <button type="button" class="btn btn-default btn-menu fa fa-bars" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+            <div id="book-search-input" role="search">
+                <input type="text" placeholder="Type to search">
+            </div>
+            <nav>
+            
+                <ul class="list">
+            
+                    <li class="title">
+                        <a href="../index.html">g-drive-sorter documentation</a>
+                    </li>
+            
+                    <li class="divider"></li>
+            
+            
+                    <li class="chapter">
+                        <a data-type="chapter-link" href="../index.html"><span class="fa fa-home"></span>Getting started</a>
+                        <ul class="links">
+                                <li class="link">
+                                    <a 
+                                        
+                                         href="../overview.html" 
+                                         href="../overview.html" 
+                                        >
+                                        <span class="fa fa-fw fa-th"></span>Overview
+                                    </a>
+                                </li>
+                                <li class="link">
+                                  <a href="../index.html" ><span class="fa fa-file-text-o"></span>README</a>
+                                </li>
+                                <li class="link">
+                                        <a href="../license.html"
+                                    >
+                                        <span class="fa fa-fw fa-file-text-o"></span>LICENSE
+                                    </a>
+                                </li>
+                                <li class="link">
+                                    <a href="../dependencies.html"
+                                        
+                                        >
+                                        <span class="fa fa-fw fa-list"></span>Dependencies
+                                    </a>
+                                </li>
+                        </ul>
+                    </li>
+            
+            
+                    <li class="chapter modules">
+                        <a data-type="chapter-link" href="../modules.html" >
+                            <div class="menu-toggler linked" data-toggle="collapse"
+                                    data-target="#xs-modules-links"
+                            >
+                                <span class="fa fa-fw fa-archive"></span>
+                                <span class="link-name">Modules</span>
+                                <span class="fa fa-angle-down"></span>
+                            </div>
+                        </a>
+                        <ul class="links collapse "
+                                id="xs-modules-links"
+                            >
+                                <li class="link">
+                                    <a href="../modules/AppModule.html" >AppModule</a>
+                                        <li class="chapter inner">
+                                            <div class="simple menu-toggler" data-toggle="collapse"
+                                                    data-target="#xs-components-links-module-AppModule-98e6b9a7-4bc9-4fdb-bbb0-19e4705cc1a1"
+                                                >
+                                                <span class="fa fa-fw fa-cogs"></span>
+                                                <span>Components</span>
+                                                <span class="fa fa-angle-down"></span>
+                                            </div>
+                                            <ul class="links collapse"
+                                                    id="xs-components-links-module-AppModule-98e6b9a7-4bc9-4fdb-bbb0-19e4705cc1a1"
+                                                >
+                                                    <li class="link">
+                                                        <a href="../components/AppComponent.html" >AppComponent</a>
+                                                    </li>
+                                                    <li class="link">
+                                                        <a href="../components/UnauthenticatedComponent.html" >UnauthenticatedComponent</a>
+                                                    </li>
+                                            </ul>
+                                        </li>
+                                        <li class="chapter inner">
+                                            <div class="simple menu-toggler" data-toggle="collapse"
+                                                    data-target="#xs-injectables-links-module-AppModule-98e6b9a7-4bc9-4fdb-bbb0-19e4705cc1a1"
+                                                >
+                                                <span class="fa fa-fw fa-long-arrow-down"></span>
+                                                <span>Injectables</span>
+                                                <span class="fa fa-angle-down"></span>
+                                            </div>
+                                            <ul class="links collapse"
+                                                    id="xs-injectables-links-module-AppModule-98e6b9a7-4bc9-4fdb-bbb0-19e4705cc1a1"
+                                                >
+                                                    <li class="link">
+                                                        <a href="../injectables/GoogleService.html" >GoogleService</a>
+                                                    </li>
+                                                    <li class="link">
+                                                        <a href="../injectables/AuthGuardService.html" >AuthGuardService</a>
+                                                    </li>
+                                                    <li class="link">
+                                                        <a href="../injectables/PreventAuthGuardService.html" >PreventAuthGuardService</a>
+                                                    </li>
+                                            </ul>
+                                        </li>
+                                </li>
+                                <li class="link">
+                                    <a href="../modules/AuthenticatedModule.html" >AuthenticatedModule</a>
+                                        <li class="chapter inner">
+                                            <div class="simple menu-toggler" data-toggle="collapse"
+                                                    data-target="#xs-components-links-module-AuthenticatedModule-983f99bf-c910-42cd-8a30-d405ade03970"
+                                                >
+                                                <span class="fa fa-fw fa-cogs"></span>
+                                                <span>Components</span>
+                                                <span class="fa fa-angle-down"></span>
+                                            </div>
+                                            <ul class="links collapse"
+                                                    id="xs-components-links-module-AuthenticatedModule-983f99bf-c910-42cd-8a30-d405ade03970"
+                                                >
+                                                    <li class="link">
+                                                        <a href="../components/HomeComponent.html" >HomeComponent</a>
+                                                    </li>
+                                                    <li class="link">
+                                                        <a href="../components/ConfigComponent.html" >ConfigComponent</a>
+                                                    </li>
+                                                    <li class="link">
+                                                        <a href="../components/SettingsComponent.html" >SettingsComponent</a>
+                                                    </li>
+                                            </ul>
+                                        </li>
+                                </li>
+                                <li class="link">
+                                    <a href="../modules/ConfigModule.html"  data-type="entity-link" class="active" >ConfigModule</a>
+                                        <li class="chapter inner">
+                                            <div class="simple menu-toggler" data-toggle="collapse"
+                                                    data-target="#xs-components-links-module-ConfigModule-2d7aeca6-c340-451a-a57f-dbaede12fb72"
+                                                >
+                                                <span class="fa fa-fw fa-cogs"></span>
+                                                <span>Components</span>
+                                                <span class="fa fa-angle-down"></span>
+                                            </div>
+                                            <ul class="links collapse"
+                                                    id="xs-components-links-module-ConfigModule-2d7aeca6-c340-451a-a57f-dbaede12fb72"
+                                                >
+                                                    <li class="link">
+                                                        <a href="../components/ConfigListComponent.html" >ConfigListComponent</a>
+                                                    </li>
+                                                    <li class="link">
+                                                        <a href="../components/NewRulePageComponent.html" >NewRulePageComponent</a>
+                                                    </li>
+                                                    <li class="link">
+                                                        <a href="../components/ConfigModalComponent.html" >ConfigModalComponent</a>
+                                                    </li>
+                                                    <li class="link">
+                                                        <a href="../components/NewRuleStepperComponent.html" >NewRuleStepperComponent</a>
+                                                    </li>
+                                            </ul>
+                                        </li>
+                                </li>
+                        </ul>
+                    </li>
+            
+            
+            
+                    <li class="chapter">
+                        <div class="simple menu-toggler" data-toggle="collapse"
+                                data-target="#xs-classes-links"
+                            >
+                            <span class="fa fa-fw fa-file-code-o"></span>
+                            <span>Classes</span>
+                            <span class="fa fa-angle-down"></span>
+                        </div>
+                        <ul class="links collapse "
+                                id="xs-classes-links"
+                            >
+                                <li class="link">
+                                    <a href="../classes/ConfigDataSource.html" >ConfigDataSource</a>
+                                </li>
+                        </ul>
+                    </li>
+            
+                            <li class="chapter">
+                                <div class="simple menu-toggler" data-toggle="collapse"
+                                        data-target="#xs-injectables-links"
+                                    >
+                                    <span class="fa fa-fw fa-long-arrow-down"></span>
+                                    <span>Injectables</span>
+                                    <span class="fa fa-angle-down"></span>
+                                </div>
+                                <ul class="links collapse "
+                                        id="xs-injectables-links"
+                                    >
+                                        <li class="link">
+                                            <a href="../injectables/AuthGuardService.html" >AuthGuardService</a>
+                                        </li>
+                                        <li class="link">
+                                            <a href="../injectables/GoogleService.html" >GoogleService</a>
+                                        </li>
+                                        <li class="link">
+                                            <a href="../injectables/PreventAuthGuardService.html" >PreventAuthGuardService</a>
+                                        </li>
+                                </ul>
+                            </li>
+            
+            
+                    <li class="chapter">
+                        <div class="simple menu-toggler" data-toggle="collapse"
+                                data-target="#xs-interfaces-links"
+                            >
+                            <span class="fa fa-fw fa-info"></span>
+                            <span>Interfaces</span>
+                            <span class="fa fa-angle-down"></span>
+                        </div>
+                        <ul class="links collapse "
+                                id="xs-interfaces-links"
+                            >
+                                <li class="link">
+                                    <a href="../interfaces/Config.html" >Config</a>
+                                </li>
+                        </ul>
+                    </li>
+            
+            
+                    <li class="chapter">
+                        <div class="simple menu-toggler" data-toggle="collapse"
+                                data-target="#xs-miscellaneous-links"
+                            >
+                            <span class="fa fa-fw fa-cubes"></span>
+                            <span>Miscellaneous</span>
+                            <span class="fa fa-angle-down"></span>
+                        </div>
+                        <ul class="links collapse "
+                                id="xs-miscellaneous-links"
+                            >
+                                <li class="link">
+                                  <a href="../miscellaneous/variables.html" data-type="entity-link" >Variables</a>
+                                </li>
+                        </ul>
+                    </li>
+            
+            
+                    <li class="chapter">
+                        <a data-type="chapter-link" href="../coverage.html" ><span class="fa fa-fw fa-tasks"></span>Documentation coverage</a>
+                    </li>
+            
+                    <li class="divider"></li>
+                    <li class="copyright">
+                            Documentation generated using <a href="https://compodoc.github.io/website/" target="_blank">
+                                        <img src="../images/compodoc-vectorise.svg" class="img-responsive">
+                            </a>
+                    </li>
+            
+                </ul>
+            
+            </nav>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <nav>
+                   
+                       <ul class="list">
+                   
+                           <li class="title">
+                               <a href="../index.html">g-drive-sorter documentation</a>
+                           </li>
+                   
+                           <li class="divider"></li>
+                   
+                               <div id="book-search-input" role="search">
+                                   <input type="text" placeholder="Type to search">
+                               </div>
+                   
+                           <li class="chapter">
+                               <a data-type="chapter-link" href="../index.html"><span class="fa fa-home"></span>Getting started</a>
+                               <ul class="links">
+                                       <li class="link">
+                                           <a 
+                                               
+                                                href="../overview.html" 
+                                                href="../overview.html" 
+                                               >
+                                               <span class="fa fa-fw fa-th"></span>Overview
+                                           </a>
+                                       </li>
+                                       <li class="link">
+                                         <a href="../index.html" ><span class="fa fa-file-text-o"></span>README</a>
+                                       </li>
+                                       <li class="link">
+                                               <a href="../license.html"
+                                           >
+                                               <span class="fa fa-fw fa-file-text-o"></span>LICENSE
+                                           </a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../dependencies.html"
+                                               
+                                               >
+                                               <span class="fa fa-fw fa-list"></span>Dependencies
+                                           </a>
+                                       </li>
+                               </ul>
+                           </li>
+                   
+                   
+                           <li class="chapter modules">
+                               <a data-type="chapter-link" href="../modules.html" >
+                                   <div class="menu-toggler linked" data-toggle="collapse"
+                                           data-target="#modules-links"
+                                   >
+                                       <span class="fa fa-fw fa-archive"></span>
+                                       <span class="link-name">Modules</span>
+                                       <span class="fa fa-angle-down"></span>
+                                   </div>
+                               </a>
+                               <ul class="links collapse "
+                                       id="modules-links"
+                   >
+                                       <li class="link">
+                                           <a href="../modules/AppModule.html" >AppModule</a>
+                                               <li class="chapter inner">
+                                                   <div class="simple menu-toggler" data-toggle="collapse"
+                                                           data-target="#components-links-module-AppModule-98e6b9a7-4bc9-4fdb-bbb0-19e4705cc1a1"
+                   >
+                                                       <span class="fa fa-fw fa-cogs"></span>
+                                                       <span>Components</span>
+                                                       <span class="fa fa-angle-down"></span>
+                                                   </div>
+                                                   <ul class="links collapse"
+                                                           id="components-links-module-AppModule-98e6b9a7-4bc9-4fdb-bbb0-19e4705cc1a1"
+                   >
+                                                           <li class="link">
+                                                               <a href="../components/AppComponent.html" >AppComponent</a>
+                                                           </li>
+                                                           <li class="link">
+                                                               <a href="../components/UnauthenticatedComponent.html" >UnauthenticatedComponent</a>
+                                                           </li>
+                                                   </ul>
+                                               </li>
+                                               <li class="chapter inner">
+                                                   <div class="simple menu-toggler" data-toggle="collapse"
+                                                           data-target="#injectables-links-module-AppModule-98e6b9a7-4bc9-4fdb-bbb0-19e4705cc1a1"
+                   >
+                                                       <span class="fa fa-fw fa-long-arrow-down"></span>
+                                                       <span>Injectables</span>
+                                                       <span class="fa fa-angle-down"></span>
+                                                   </div>
+                                                   <ul class="links collapse"
+                                                           id="injectables-links-module-AppModule-98e6b9a7-4bc9-4fdb-bbb0-19e4705cc1a1"
+                   >
+                                                           <li class="link">
+                                                               <a href="../injectables/GoogleService.html" >GoogleService</a>
+                                                           </li>
+                                                           <li class="link">
+                                                               <a href="../injectables/AuthGuardService.html" >AuthGuardService</a>
+                                                           </li>
+                                                           <li class="link">
+                                                               <a href="../injectables/PreventAuthGuardService.html" >PreventAuthGuardService</a>
+                                                           </li>
+                                                   </ul>
+                                               </li>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../modules/AuthenticatedModule.html" >AuthenticatedModule</a>
+                                               <li class="chapter inner">
+                                                   <div class="simple menu-toggler" data-toggle="collapse"
+                                                           data-target="#components-links-module-AuthenticatedModule-983f99bf-c910-42cd-8a30-d405ade03970"
+                   >
+                                                       <span class="fa fa-fw fa-cogs"></span>
+                                                       <span>Components</span>
+                                                       <span class="fa fa-angle-down"></span>
+                                                   </div>
+                                                   <ul class="links collapse"
+                                                           id="components-links-module-AuthenticatedModule-983f99bf-c910-42cd-8a30-d405ade03970"
+                   >
+                                                           <li class="link">
+                                                               <a href="../components/HomeComponent.html" >HomeComponent</a>
+                                                           </li>
+                                                           <li class="link">
+                                                               <a href="../components/ConfigComponent.html" >ConfigComponent</a>
+                                                           </li>
+                                                           <li class="link">
+                                                               <a href="../components/SettingsComponent.html" >SettingsComponent</a>
+                                                           </li>
+                                                   </ul>
+                                               </li>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../modules/ConfigModule.html"  data-type="entity-link" class="active" >ConfigModule</a>
+                                               <li class="chapter inner">
+                                                   <div class="simple menu-toggler" data-toggle="collapse"
+                                                           data-target="#components-links-module-ConfigModule-2d7aeca6-c340-451a-a57f-dbaede12fb72"
+                   >
+                                                       <span class="fa fa-fw fa-cogs"></span>
+                                                       <span>Components</span>
+                                                       <span class="fa fa-angle-down"></span>
+                                                   </div>
+                                                   <ul class="links collapse"
+                                                           id="components-links-module-ConfigModule-2d7aeca6-c340-451a-a57f-dbaede12fb72"
+                   >
+                                                           <li class="link">
+                                                               <a href="../components/ConfigListComponent.html" >ConfigListComponent</a>
+                                                           </li>
+                                                           <li class="link">
+                                                               <a href="../components/NewRulePageComponent.html" >NewRulePageComponent</a>
+                                                           </li>
+                                                           <li class="link">
+                                                               <a href="../components/ConfigModalComponent.html" >ConfigModalComponent</a>
+                                                           </li>
+                                                           <li class="link">
+                                                               <a href="../components/NewRuleStepperComponent.html" >NewRuleStepperComponent</a>
+                                                           </li>
+                                                   </ul>
+                                               </li>
+                                       </li>
+                               </ul>
+                           </li>
+                   
+                   
+                   
+                           <li class="chapter">
+                               <div class="simple menu-toggler" data-toggle="collapse"
+                                       data-target="#classes-links"
+                   >
+                                   <span class="fa fa-fw fa-file-code-o"></span>
+                                   <span>Classes</span>
+                                   <span class="fa fa-angle-down"></span>
+                               </div>
+                               <ul class="links collapse "
+                                       id="classes-links"
+                   >
+                                       <li class="link">
+                                           <a href="../classes/ConfigDataSource.html" >ConfigDataSource</a>
+                                       </li>
+                               </ul>
+                           </li>
+                   
+                                   <li class="chapter">
+                                       <div class="simple menu-toggler" data-toggle="collapse"
+                                               data-target="#injectables-links"
+                   >
+                                           <span class="fa fa-fw fa-long-arrow-down"></span>
+                                           <span>Injectables</span>
+                                           <span class="fa fa-angle-down"></span>
+                                       </div>
+                                       <ul class="links collapse "
+                                               id="injectables-links"
+                   >
+                                               <li class="link">
+                                                   <a href="../injectables/AuthGuardService.html" >AuthGuardService</a>
+                                               </li>
+                                               <li class="link">
+                                                   <a href="../injectables/GoogleService.html" >GoogleService</a>
+                                               </li>
+                                               <li class="link">
+                                                   <a href="../injectables/PreventAuthGuardService.html" >PreventAuthGuardService</a>
+                                               </li>
+                                       </ul>
+                                   </li>
+                   
+                   
+                           <li class="chapter">
+                               <div class="simple menu-toggler" data-toggle="collapse"
+                                       data-target="#interfaces-links"
+                   >
+                                   <span class="fa fa-fw fa-info"></span>
+                                   <span>Interfaces</span>
+                                   <span class="fa fa-angle-down"></span>
+                               </div>
+                               <ul class="links collapse "
+                                       id="interfaces-links"
+                   >
+                                       <li class="link">
+                                           <a href="../interfaces/Config.html" >Config</a>
+                                       </li>
+                               </ul>
+                           </li>
+                   
+                   
+                           <li class="chapter">
+                               <div class="simple menu-toggler" data-toggle="collapse"
+                                       data-target="#miscellaneous-links"
+                   >
+                                   <span class="fa fa-fw fa-cubes"></span>
+                                   <span>Miscellaneous</span>
+                                   <span class="fa fa-angle-down"></span>
+                               </div>
+                               <ul class="links collapse "
+                                       id="miscellaneous-links"
+                   >
+                                       <li class="link">
+                                         <a href="../miscellaneous/variables.html" data-type="entity-link" >Variables</a>
+                                       </li>
+                               </ul>
+                           </li>
+                   
+                   
+                           <li class="chapter">
+                               <a data-type="chapter-link" href="../coverage.html" ><span class="fa fa-fw fa-tasks"></span>Documentation coverage</a>
+                           </li>
+                   
+                           <li class="divider"></li>
+                           <li class="copyright">
+                                   Documentation generated using <a href="https://compodoc.github.io/website/" target="_blank">
+                                               <img src="../images/compodoc-vectorise.svg" class="img-responsive">
+                                   </a>
+                           </li>
+                   
+                       </ul>
+                   
+                   </nav>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content module">
+                   <div class="content-data">
+
+
+
+<ol class="breadcrumb">
+  <li>Modules</li>
+  <li>ConfigModule</li>
+</ol>
+
+      <div class="text-center module-graph-container">
+          <div id="module-graph-svg">
+              <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: dependencies Pages: 1 -->
+<svg width="747pt" height="284pt"
+ viewBox="0.00 0.00 747.00 284.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 280)">
+<title>dependencies</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-280 743,-280 743,4 -4,4"/>
+<text text-anchor="start" x="348.5091" y="-42.4" font-family="sans-serif" font-weight="bold" font-size="14.00" fill="#000000">Legend</text>
+<polygon fill="#ffffb3" stroke="transparent" points="135.5,-10 135.5,-30 155.5,-30 155.5,-10 135.5,-10"/>
+<text text-anchor="start" x="159.129" y="-15.4" font-family="sans-serif" font-size="14.00" fill="#000000"> &#160;Declarations</text>
+<polygon fill="#8dd3c7" stroke="transparent" points="248.5,-10 248.5,-30 268.5,-30 268.5,-10 248.5,-10"/>
+<text text-anchor="start" x="272.2251" y="-15.4" font-family="sans-serif" font-size="14.00" fill="#000000"> &#160;Module</text>
+<polygon fill="#80b1d3" stroke="transparent" points="334.5,-10 334.5,-30 354.5,-30 354.5,-10 334.5,-10"/>
+<text text-anchor="start" x="358.2812" y="-15.4" font-family="sans-serif" font-size="14.00" fill="#000000"> &#160;Bootstrap</text>
+<polygon fill="#fdb462" stroke="transparent" points="431.5,-10 431.5,-30 451.5,-30 451.5,-10 431.5,-10"/>
+<text text-anchor="start" x="455.1732" y="-15.4" font-family="sans-serif" font-size="14.00" fill="#000000"> &#160;Providers</text>
+<polygon fill="#fb8072" stroke="transparent" points="527.5,-10 527.5,-30 547.5,-30 547.5,-10 527.5,-10"/>
+<text text-anchor="start" x="551.2258" y="-15.4" font-family="sans-serif" font-size="14.00" fill="#000000"> &#160;Exports</text>
+<g id="clust1" class="cluster">
+<title>cluster_ConfigModule</title>
+<polygon fill="none" stroke="#000000" stroke-dasharray="1,5" points="8,-70 8,-268 731,-268 731,-70 8,-70"/>
+</g>
+<g id="clust2" class="cluster">
+<title>cluster_ConfigModule_declarations</title>
+<polygon fill="none" stroke="#000000" points="16,-78 16,-130 723,-130 723,-78 16,-78"/>
+</g>
+<g id="clust8" class="cluster">
+<title>cluster_ConfigModule_exports</title>
+<polygon fill="none" stroke="#000000" points="304,-208 304,-260 466,-260 466,-208 304,-208"/>
+</g>
+<!-- ConfigListComponent -->
+<g id="node1" class="node">
+<title>ConfigListComponent</title>
+<polygon fill="#ffffb3" stroke="#000000" points="714.9986,-122 573.0014,-122 573.0014,-86 714.9986,-86 714.9986,-122"/>
+<text text-anchor="middle" x="644" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">ConfigListComponent</text>
+</g>
+<!-- ConfigModule -->
+<g id="node5" class="node">
+<title>ConfigModule</title>
+<polygon fill="#8dd3c7" stroke="#000000" points="434.4386,-187 431.4386,-191 410.4386,-191 407.4386,-187 335.5614,-187 335.5614,-151 434.4386,-151 434.4386,-187"/>
+<text text-anchor="middle" x="385" y="-164.8" font-family="Times,serif" font-size="14.00" fill="#000000">ConfigModule</text>
+</g>
+<!-- ConfigListComponent&#45;&gt;ConfigModule -->
+<g id="edge1" class="edge">
+<title>ConfigListComponent&#45;&gt;ConfigModule</title>
+<path fill="none" stroke="#000000" d="M644,-122.1061C644,-141.3391 644,-169 644,-169 644,-169 444.3256,-169 444.3256,-169"/>
+<polygon fill="#000000" stroke="#000000" points="444.3256,-165.5001 434.3256,-169 444.3255,-172.5001 444.3256,-165.5001"/>
+</g>
+<!-- NewRulePageComponent -->
+<g id="node2" class="node">
+<title>NewRulePageComponent</title>
+<polygon fill="#ffffb3" stroke="#000000" points="554.9143,-122 393.0857,-122 393.0857,-86 554.9143,-86 554.9143,-122"/>
+<text text-anchor="middle" x="474" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">NewRulePageComponent</text>
+</g>
+<!-- NewRulePageComponent&#45;&gt;ConfigModule -->
+<g id="edge2" class="edge">
+<title>NewRulePageComponent&#45;&gt;ConfigModule</title>
+<path fill="none" stroke="#000000" d="M413.756,-122.1061C413.756,-122.1061 413.756,-140.991 413.756,-140.991"/>
+<polygon fill="#000000" stroke="#000000" points="410.256,-140.9909 413.756,-150.991 417.256,-140.991 410.256,-140.9909"/>
+</g>
+<!-- ConfigModalComponent -->
+<g id="node3" class="node">
+<title>ConfigModalComponent</title>
+<polygon fill="#ffffb3" stroke="#000000" points="375.2702,-122 218.7298,-122 218.7298,-86 375.2702,-86 375.2702,-122"/>
+<text text-anchor="middle" x="297" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">ConfigModalComponent</text>
+</g>
+<!-- ConfigModalComponent&#45;&gt;ConfigModule -->
+<g id="edge3" class="edge">
+<title>ConfigModalComponent&#45;&gt;ConfigModule</title>
+<path fill="none" stroke="#000000" d="M355.5831,-122.1061C355.5831,-122.1061 355.5831,-140.991 355.5831,-140.991"/>
+<polygon fill="#000000" stroke="#000000" points="352.0832,-140.9909 355.5831,-150.991 359.0832,-140.991 352.0832,-140.9909"/>
+</g>
+<!-- NewRuleStepperComponent -->
+<g id="node4" class="node">
+<title>NewRuleStepperComponent</title>
+<polygon fill="#ffffb3" stroke="#000000" points="200.465,-122 23.535,-122 23.535,-86 200.465,-86 200.465,-122"/>
+<text text-anchor="middle" x="112" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">NewRuleStepperComponent</text>
+</g>
+<!-- NewRuleStepperComponent&#45;&gt;ConfigModule -->
+<g id="edge4" class="edge">
+<title>NewRuleStepperComponent&#45;&gt;ConfigModule</title>
+<path fill="none" stroke="#000000" d="M112,-122.1061C112,-141.3391 112,-169 112,-169 112,-169 325.5618,-169 325.5618,-169"/>
+<polygon fill="#000000" stroke="#000000" points="325.5618,-172.5001 335.5618,-169 325.5617,-165.5001 325.5618,-172.5001"/>
+</g>
+<!-- ConfigListComponent  -->
+<g id="node6" class="node">
+<title>ConfigListComponent </title>
+<polygon fill="#fb8072" stroke="#000000" points="457.9995,-252 312.0005,-252 312.0005,-216 457.9995,-216 457.9995,-252"/>
+<text text-anchor="middle" x="385" y="-229.8" font-family="Times,serif" font-size="14.00" fill="#000000">ConfigListComponent </text>
+</g>
+<!-- ConfigModule&#45;&gt;ConfigListComponent  -->
+<g id="edge5" class="edge">
+<title>ConfigModule&#45;&gt;ConfigListComponent </title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M385,-187.1061C385,-187.1061 385,-205.991 385,-205.991"/>
+<polygon fill="#000000" stroke="#000000" points="381.5001,-205.9909 385,-215.991 388.5001,-205.991 381.5001,-205.9909"/>
+</g>
+</g>
+</svg>
+
+          </div>
+          <i id="fullscreen" class="fa fa-expand module-graph-fullscreen-btn" aria-hidden="true"></i>
+          <div class="btn-group">
+              <button id="zoom-in" class="btn btn-default btn-sm">Zoom in</button>
+              <button id="reset" class="btn btn-default btn-sm">Reset</button>
+              <button id="zoom-out" class="btn btn-default btn-sm">Zoom out</button>
+          </div>
+      </div>
+      <script src="../js/libs/svg-pan-zoom.min.js"></script>
+      <script src="../js/svg-pan-zoom.controls.js"></script>
+
+<ul class="nav nav-tabs" role="tablist">
+    <li class="active">
+        <a href="#info" id="info-tab" role="tab" data-toggle="tab" data-link="info">Info</a>
+    </li>
+
+
+    <li>
+        <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+    </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/modules/config/config.module.ts</code>
+        </p>
+
+
+        
+
+        <div class="container-fluid module">
+            <div class="row">
+                <div class="col-sm-3">
+                    <h3>Declarations<a href="https://angular.io/api/core/NgModule#declarations" target="_blank" title="Official documentation about module declarations"><span class="fa fa-info-circle"></span></a></h3>
+                    <ul class="list-group">
+                            <li class="list-group-item">
+                                <a href="../components/ConfigListComponent.html">ConfigListComponent</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="../components/NewRulePageComponent.html">NewRulePageComponent</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="../components/ConfigModalComponent.html">ConfigModalComponent</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="../components/NewRuleStepperComponent.html">NewRuleStepperComponent</a>
+                            </li>
+                    </ul>
+                </div>
+                <div class="col-sm-3">
+                    <h3>EntryComponents<a href="https://angular.io/api/core/NgModule#entryComponents" target="_blank" title="Official documentation about module entryComponents"><span class="fa fa-info-circle"></span></a></h3>
+                    <ul class="list-group">
+                            <li class="list-group-item">
+                                <a href="../components/ConfigModalComponent.html">ConfigModalComponent</a>
+                            </li>
+                    </ul>
+                </div>
+                <div class="col-sm-3">
+                    <h3>Exports<a href="https://angular.io/api/core/NgModule#exports" target="_blank" title="Official documentation about module exports"><span class="fa fa-info-circle"></a></h3>
+                    <ul class="list-group">
+                            <li class="list-group-item">
+                                    <a href="../components/ConfigListComponent.html" >ConfigListComponent</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="tab-pane fade tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { CommonModule } from &#x27;@angular/common&#x27;;
+import { ConfigListComponent } from &#x27;../../components/tabs/config/config-list/config-list.component&#x27;;
+import { ConfigModalComponent } from &#x27;../../components/shared/config-modal/config-modal.component&#x27;;
+import {
+  MatDatepickerModule,
+  MatExpansionModule,
+  MatFormFieldModule,
+  MatGridListModule,
+  MatInputModule,
+  MatNativeDateModule,
+  MatPaginator,
+  MatPaginatorModule,
+  MatSelectModule,
+  MatStepperModule,
+  MatTableModule,
+  MatButtonModule
+  } from &#x27;@angular/material&#x27;;
+import { ModuleWithProviders, NgModule } from &#x27;@angular/core&#x27;;
+import { NewRulePageComponent } from &#x27;../../components/shared/new-rule-page/new-rule-page.component&#x27;;
+import { NewRuleStepperComponent } from &#x27;../../components/shared/new-rule-stepper/new-rule-stepper.component&#x27;;
+import { ReactiveFormsModule } from &#x27;@angular/forms&#x27;;
+
+@NgModule({
+  declarations: [
+    ConfigListComponent,
+    NewRulePageComponent,
+    ConfigModalComponent,
+    NewRuleStepperComponent
+  ],
+  imports: [
+    CommonModule,
+    MatInputModule,
+    MatTableModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatStepperModule,
+    MatGridListModule,
+    MatPaginatorModule,
+    MatFormFieldModule,
+    MatExpansionModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    ReactiveFormsModule
+  ],
+  entryComponents: [
+    ConfigModalComponent
+  ],
+  exports: [
+    ConfigListComponent
+  ]
+})
+export class ConfigModule { 
+  /**
+   * Register with the root module of the app
+   * 
+   * @static
+   * @returns {ModuleWithProviders} This module
+   * @memberof ConfigModule
+   */
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: ConfigModule,
+      providers: []
+    }
+  }
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script>var COMPODOC_CURRENT_PAGE_DEPTH = 1;</script>
+
+       <script src="../js/search/search.js"></script>
+       <script src="../js/search/lunr.min.js"></script>
+       <script src="../js/search/search-lunr.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+       <script src="../js/search/search_index.js"></script>
+
+
+    </body>
+</html>

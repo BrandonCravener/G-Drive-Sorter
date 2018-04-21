@@ -1,9 +1,6 @@
-// Angular
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
-// Componets
 import { ConfigModalComponent } from '../config-modal/config-modal.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NewRuleStepperComponent } from '../new-rule-stepper/new-rule-stepper.component';
 
 @Component({
