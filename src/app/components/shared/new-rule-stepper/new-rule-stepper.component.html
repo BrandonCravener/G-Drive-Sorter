@@ -21,10 +21,10 @@
             {{ constraint.label }}
           </mat-option>
           <mat-option [disabled]="startEndWithDisabled" value="startWith">
-              Start's With
+            Start's With
           </mat-option>
           <mat-option [disabled]="startEndWithDisabled" value="endWith">
-              End's With
+            End's With
           </mat-option>
           <mat-option [disabled]="betweenConstraintDisabled" value="between">
             Between
@@ -45,18 +45,23 @@
             <input matInput placeholder="Title Text" formControlName="titleTextControl" [required]="classifierSelectOption === 'title'">
           </mat-form-field>
         </mat-grid-tile>
+        <mat-grid-tile colspan="2" *ngIf="classifierSelectOption === 'owner'">
+          <mat-form-field>
+            <input matInput placeholder="Owner Name" formControlName="ownerTextControl" [required]="classifierSelectOption === 'owner'">
+          </mat-form-field>
+        </mat-grid-tile>
         <mat-grid-tile colspan="2" *ngIf="classifierSelectOption === 'type'">
           <mat-form-field>
             <mat-select placeholder="Drive File Type" formControlName="fileTypeControl" [required]="classifierSelectOption === 'type'">
               <mat-option *ngFor="let fileType of driveFileTypes" [value]="fileType.value">
-              {{ fileType.label }}
+                {{ fileType.label }}
               </mat-option>
             </mat-select>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile colspan="2" *ngIf="datePickerSingleNeeded() === 1">
           <mat-form-field>
-            <input matInput [matDatepicker]="datePicker" placeholder="Date" [required]="datePickerSingleNeeded() === 1">
+            <input matInput [matDatepicker]="datePicker" placeholder="Date" formControlName="dateControl" [required]="datePickerSingleNeeded() === 1">
             <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
             <mat-datepicker #datePicker startView="month"></mat-datepicker>
           </mat-form-field>          
@@ -64,21 +69,30 @@
         <div *ngIf="datePickerSingleNeeded() === 2">
           <mat-grid-tile colspan="2">
             <mat-form-field>
-              <input matInput [matDatepicker]="datePickerBetweenFirst" placeholder="Starting Date" [required]="datePickerSingleNeeded() === 2">
+              <input matInput [matDatepicker]="datePickerBetweenFirst" formControlName="firstDateControl" placeholder="Starting Date" [required]="datePickerSingleNeeded() === 2">
               <mat-datepicker-toggle matSuffix [for]="datePickerBetweenFirst"></mat-datepicker-toggle>
               <mat-datepicker #datePickerBetweenFirst startView="month"></mat-datepicker>
             </mat-form-field>          
           </mat-grid-tile>
           <mat-grid-tile colspan="2">
             <mat-form-field>
-              <input matInput [matDatepicker]="datePickerBetweenSecond" placeholder="Ending Date" [required]="datePickerSingleNeeded() === 2">
+              <input matInput [matDatepicker]="datePickerBetweenSecond" formControlName="secondDateControl" placeholder="Ending Date" [required]="datePickerSingleNeeded() === 2">
               <mat-datepicker-toggle matSuffix [for]="datePickerBetweenSecond"></mat-datepicker-toggle>
               <mat-datepicker #datePickerBetweenSecond startView="month"></mat-datepicker>
             </mat-form-field>          
           </mat-grid-tile>
         </div>
+        <mat-grid-tile colspan="2" *ngIf="classifierSelectOption === 'location'">
+          <mat-form-field style="width: 100%;">
+            <input matInput type="text" placeholder="Location" formControlName="folderLocationControl" disabled [required]="classifierSelectOption === 'location'"/>
+            <button mat-button matSuffix mat-icon-button aria-label="Pick Folder" (click)="openFolderPicker()">
+              <mat-icon>folder</mat-icon>
+            </button>
+          </mat-form-field>  
+        </mat-grid-tile>
       </mat-grid-list>
       <div>
+        <button mat-button type="button" (click)="finished()">Done</button>
         <button mat-button type="button" matStepperPrevious>Back</button>
       </div>
     </form>

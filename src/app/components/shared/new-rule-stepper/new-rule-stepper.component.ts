@@ -1,8 +1,11 @@
 import {
   Component,
   forwardRef,
+  Input,
   NgZone,
-  OnInit
+  OnInit,
+  Output,
+  EventEmitter
   } from '@angular/core';
 import {
   ControlValueAccessor,
@@ -12,49 +15,29 @@ import {
   NG_VALUE_ACCESSOR,
   Validators
   } from '@angular/forms';
+import { GoogleService } from '../../../services/google/google.service';
 import { Router } from '@angular/router';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
+
+export const DEFAULT_VALUE_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => NewRuleStepperComponent),
+  multi: true
+}
 
 @Component({
   selector: 'app-new-rule-stepper',
   templateUrl: './new-rule-stepper.component.html',
   styleUrls: ['./new-rule-stepper.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => NewRuleStepperComponent),
-      multi: true
-    }
-  ]
+  providers: [DEFAULT_VALUE_ACCESSOR]
 })
-export class NewRuleStepperComponent implements OnInit, ControlValueAccessor {
-  // Form control variables and methods
-  _value: Object;
-  onChange: any = () => {};
-  onTouched: any = () => {};
+export class NewRuleStepperComponent implements OnInit {
 
-  get value() {
-    return this._value;
-  }
+  @Output()
+  valueChange = new EventEmitter();
 
-  set value(newValue) {
-    this._value = newValue;
-    this.onChange(newValue);
-    this.onTouched();
-  }
-
-  writeValue(obj: any): void {
-    this.value = obj;
-  }
-
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: any): void {
-    this.onTouched = fn;
-  }
-
+  value: any;
+  
   // Stepper variables and methods
   classifierFormGroup: FormGroup;
   constraintFormGroup: FormGroup;
@@ -65,51 +48,8 @@ export class NewRuleStepperComponent implements OnInit, ControlValueAccessor {
 
   classifierSelectOption: string;
   constraintSelectOption: string;
-
-  classifiers = [
-    {
-      label: 'Title',
-      value: 'title',
-      hideBetween: true,
-      hideStartEnd: false
-    },
-    {
-      label: 'Type',
-      value: 'type',
-      hideBetween: true,
-      hideStartEnd: true
-    },
-    {
-      label: 'Location',
-      value: 'location',
-      hideBetween: true,
-      hideStartEnd: false
-    },
-    {
-      label: 'Owner',
-      value: 'owner',
-      hideBetween: true,
-      hideStartEnd: false
-    },
-    {
-      label: 'Creation Date',
-      value: 'creationDate',
-      hideBetween: false,
-      hideStartEnd: true
-    },
-    {
-      label: 'Last Opened',
-      value: 'lastOpened',
-      hideBetween: false,
-      hideStartEnd: true
-    },
-    {
-      label: 'Last Modified',
-      value: 'lastModified',
-      hideBetween: false,
-      hideStartEnd: true
-    }
-  ]
+  
+  pickedFolder: string;
 
   constriants = [
     {
@@ -119,6 +59,58 @@ export class NewRuleStepperComponent implements OnInit, ControlValueAccessor {
     {
       label: 'Exclude\'s',
       value: 'exclude'
+    }
+  ]
+
+  classifiers = [
+    {
+      label: 'Title',
+      value: 'title',
+      inputFieldControl: 'titleTextControl',
+      hideBetween: true,
+      hideStartEnd: false
+    },
+    {
+      label: 'Type',
+      value: 'type',
+      inputFieldControl: 'fileTypeControl',
+      hideBetween: true,
+      hideStartEnd: true
+    },
+    {
+      label: 'Location',
+      value: 'location',
+      inputFieldControl: 'folderLocationControl',
+      hideBetween: true,
+      hideStartEnd: true
+    },
+    {
+      label: 'Owner',
+      value: 'owner',
+      inputFieldControl: 'ownerTextControl',
+      hideBetween: true,
+      hideStartEnd: false
+    },
+    {
+      label: 'Creation Date',
+      value: 'creationDate',
+      inputFieldControl: 'dateControl',
+      hideBetween: false,
+      hideStartEnd: true
+    },
+    {
+      label: 'Last Opened',
+      value: 'lastOpened',
+      inputFieldControl: 'dateControl',
+      hideBetween: false,
+      hideStartEnd: true
+    },
+    {
+      label: 'Last Modified',
+      value: 'lastModified',
+      inputFieldControl: 'dateControl',
+      hideBetween: false,
+      hideStartEnd: true
     }
   ]
 
@@ -181,16 +173,13 @@ export class NewRuleStepperComponent implements OnInit, ControlValueAccessor {
     },
   ]
   
-  constructor(public formBuilder: FormBuilder, public zone: NgZone, public router: Router) { }
-  
-  private checkIfBetweenDisabled(classifierValue: string): boolean {
-    return this.valueArrayToObject(this.classifiers)[classifierValue].hideBetween;
-  }
+  constructor(
+    public formBuilder: FormBuilder, 
+    public zone: NgZone, 
+    public router: Router, 
+    public google: GoogleService
+  ) { }
 
-  private checkIfStartEndDisabled (classifierValue: string): boolean {
-    return this.valueArrayToObject(this.classifiers)[classifierValue].hideStartEnd;
-  }
-  
   private valueArrayToObject(array: Array<object>): object {
     const searchableObject: object = {};
     array.forEach(value => {
@@ -199,7 +188,25 @@ export class NewRuleStepperComponent implements OnInit, ControlValueAccessor {
     return searchableObject;
   }
   
-  ngOnInit() {
+  private checkIfBetweenDisabled(classifierValue: string): boolean {
+    return this
+      .valueArrayToObject(this.classifiers)[classifierValue]
+      .hideBetween;
+  }
+
+  private checkIfStartEndDisabled(classifierValue: string): boolean {
+    return this
+      .valueArrayToObject(this.classifiers)[classifierValue]
+      .hideStartEnd;
+  }
+
+  private getFieldControl(classifierValue: string): string {
+    return this
+      .valueArrayToObject(this.classifiers)[classifierValue]
+      .inputFieldControl;
+  }
+  
+  ngOnInit(): void {
     this.classifierFormGroup = this.formBuilder.group({
       classifierControl: ['', Validators.required]
     });
@@ -207,9 +214,54 @@ export class NewRuleStepperComponent implements OnInit, ControlValueAccessor {
       constraintControl: ['', Validators.required]
     });
     this.inputFieldGroup = this.formBuilder.group({
-      titleTextControl: ['', Validators.required],
-      fileTypeControl: ['', Validators.required]
+      folderLocationControl: [{
+        value: null,
+        disabled: true
+      }],
+      secondDateControl: null,
+      firstDateControl: null,
+      titleTextControl: null,
+      ownerTextControl: null,
+      fileTypeControl: null,
+      dateControl: null
     });
+    this.google.folderPicked$.subscribe(folder => {
+      this.pickedFolder = folder.id;
+      this.inputFieldGroup.get('folderLocationControl').setValue(folder.name);
+    });
+  }
+
+  finished(): void {
+    const data = {}
+    switch (this.getFieldControl(this.classifierSelectOption)) {
+      case 'titleTextControl':
+          data['title'] = this.inputFieldGroup.get('titleTextControl').value;
+        break;
+      case 'fileTypeControl':
+          data['fileType'] = this.inputFieldGroup.get('fileTypeControl').value;
+        break;
+      case 'folderLocationControl':
+          data['folder'] = this.pickedFolder;
+        break;
+      case 'ownerTextControl':
+          data['owner'] = this.inputFieldGroup.get('ownerTextControl').value;
+        break;
+      case 'dateControl':
+          if (this.constraintSelectOption === 'between') {
+            data['firstDate'] = this.inputFieldGroup.get('firstDateControl').value;
+            data['secondDate'] = this.inputFieldGroup.get('secondDateControl').value;
+          } else {
+            data['date'] = this.inputFieldGroup.get('dateControl').value;
+          }
+        break;
+    }
+    const val = {
+      classifier: this.classifierFormGroup.get('classifierControl').value,
+      constraint: this.constraintFormGroup.get('constraintControl').value,
+      data: data
+    }
+    this.value = val;
+    this.valueChange.emit(this.value);
   }
 
   /*
@@ -235,7 +287,7 @@ export class NewRuleStepperComponent implements OnInit, ControlValueAccessor {
     return 0;
   }
 
-  stepChanged(event: StepperSelectionEvent) {
+  stepChanged(event: StepperSelectionEvent): void {
     if (event.previouslySelectedIndex === 0) {
       const classifierValue = this.classifierFormGroup.get('classifierControl').value;
       this.betweenConstraintDisabled = this.checkIfBetweenDisabled(classifierValue);
@@ -244,5 +296,9 @@ export class NewRuleStepperComponent implements OnInit, ControlValueAccessor {
         this.constraintFormGroup.get('constraintControl').setValue('include');
       }
     }
+  }
+
+  openFolderPicker(): void {
+    this.google.openFilePicker();
   }
 }

@@ -2,6 +2,7 @@ import { Component, NgZone, OnInit } from '@angular/core';
 import { ConfigModalComponent } from '../../shared/config-modal/config-modal.component';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
+import { RepositionScrollStrategy } from '@angular/cdk/overlay';
 
 /**
  * Declare component to be shown when the config tab is selected.
@@ -46,6 +47,7 @@ export class ConfigComponent implements OnInit {
     if (dialogWidth) {
       const dialogInstance = this.dialog.open(ConfigModalComponent, {
         width: `${this.getDialogWidth()}px`,
+        maxHeight: `${document.body.clientHeight * .9}px`
       });
       dialogInstance.componentInstance.closeCommand.subscribe(close => {
         dialogInstance.close();

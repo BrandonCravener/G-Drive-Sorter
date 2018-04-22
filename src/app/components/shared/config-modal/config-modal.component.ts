@@ -11,9 +11,12 @@ import { Subject } from 'rxjs/Subject';
 })
 export class ConfigModalComponent implements OnInit {
 
-  newConfig: FormGroup;
+  rule: any;
   isPage = false;
-
+  step: number = -1;
+  newConfig: FormGroup;
+  finished: boolean = false;
+  
   private _closeCommand = new Subject<Boolean>();
   public closeCommand = this._closeCommand.asObservable();
 
@@ -28,12 +31,59 @@ export class ConfigModalComponent implements OnInit {
       floatLabel: 'auto',
       newConfigNameControl: ['', Validators.required],
       newGroupNameControl: ['', Validators.required],
-      newRuleStepperControl: ['', Validators.required]
     })
+  }
+  
+  checkValidation(stepNumber: number) {
+    switch (stepNumber) {
+      case 0:
+        return this.newConfig.get('newConfigNameControl').valid;
+      case 1:
+        return this.newConfig.get('newGroupNameControl').valid;
+      case 2:
+        return ((this.rule === undefined) ? false : true);
+      default:
+        return false;
+    }
+  }
+
+  private checkAllValidation(): boolean {
+    let anyInvalid = false;
+    for (let i = 0; i < 2; i++) {
+      if (!this.checkValidation(i)) {
+        anyInvalid = true;
+      }
+    }
+    return !anyInvalid;
+  }
+
+  
+  setStep(index: number) {
+    this.step = index;
+  }
+  
+  nextStep() {
+    if (this.checkValidation(this.step)) {
+      this.step++;
+    }
+  }
+
+  prevStep() {
+    this.step--;
+  }
+  
+  stepperFinished(rule) {
+    this.rule = rule;
+    this.setStep(-1);
+    this.finished = this.checkAllValidation();
   }
 
   create() {
-    
+    if (this.checkAllValidation()) {
+      
+    } else {
+      this.finished = false;
+    }
   }
 
   close() {

@@ -12,10 +12,22 @@ import "firebase/auth";
  */
 declare var gapi: any;
 
+declare var google: any;
+
 /**
  * Variable for easy reference to the authenitcation instance.
  */
 let authInstance;
+
+let folderPicker;
+
+let _folderPicked = new Subject<any>();
+
+function folderPicked(data: any): void {
+  if (data.action === 'picked') {
+    _folderPicked.next(data.docs[0]);
+  }
+}
 
 /**
  * Utility class to handle all interacting with the Google API
@@ -39,6 +51,8 @@ export class GoogleService {
    * @memberof GoogleService
    */
   public authState$ = this._authState.asObservable();
+
+  public folderPicked$ = _folderPicked.asObservable();
 
   /**
    * Creates an instance of GoogleService.
@@ -68,11 +82,30 @@ export class GoogleService {
         });
         const authStatus = authInstance.isSignedIn.get();
         this._authState.next(authStatus);
-        if (callback) {
-          callback();
-        }
+        gapi.load('picker', () => {
+          const view = new google.picker.DocsView(google.picker.ViewId.FOLDERS)
+            .setIncludeFolders(true)
+            .setSelectFolderEnabled(true);
+
+          folderPicker = new google.picker.PickerBuilder()
+            .disableFeature(google.picker.Feature.SUPPORT_TEAM_DRIVES)
+            .setAppId(362606538820)
+            .setOAuthToken(authInstance.currentUser.get().getAuthResponse().access_token)
+            .setDeveloperKey('AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM')
+            .setSelectableMimeTypes('application/vnd.google-apps.folder')
+            .addView(view)
+            .setCallback(folderPicked)
+            .build()
+          if (callback) {
+            callback();
+          }
+        });
       }, console.error);
     });
+  }
+
+  openFilePicker() {
+    folderPicker.setVisible(true);
   }
 
   /**

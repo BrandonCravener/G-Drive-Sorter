@@ -13,7 +13,8 @@ import {
   MatSelectModule,
   MatStepperModule,
   MatTableModule,
-  MatButtonModule
+  MatButtonModule,
+  MatIconModule
   } from '@angular/material';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { NewRulePageComponent } from '../../components/shared/new-rule-page/new-rule-page.component';
@@ -29,6 +30,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   imports: [
     CommonModule,
+    MatIconModule,
     MatInputModule,
     MatTableModule,
     MatSelectModule,
