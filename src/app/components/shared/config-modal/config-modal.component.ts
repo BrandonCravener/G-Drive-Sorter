@@ -1,4 +1,7 @@
+import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFirestore } from 'angularfire2/firestore';
 import { Component, NgZone, OnInit } from '@angular/core';
+import { ConfigBuilder } from '../../../classes/config-builder';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
@@ -23,7 +26,9 @@ export class ConfigModalComponent implements OnInit {
   constructor(
     public zone: NgZone, 
     public router: Router,
-    public formBuilder: FormBuilder 
+    public formBuilder: FormBuilder,
+    private firebase: AngularFirestore, 
+    private firebaseAuth: AngularFireAuth
   ) { }
 
   ngOnInit() {
@@ -80,7 +85,17 @@ export class ConfigModalComponent implements OnInit {
 
   create() {
     if (this.checkAllValidation()) {
-      
+      let userID = this.firebaseAuth.auth.currentUser.uid;
+      const newConfig = ConfigBuilder.generateNewConfig(
+        this.newConfig.get('newConfigNameControl').value,
+        this.newConfig.get('newGroupNameControl').value,
+        this.rule
+      );
+      this
+        .firebase
+        .doc(`users/${userID}`)
+        .collection('configs')
+        .add(newConfig);
     } else {
       this.finished = false;
     }

@@ -34,10 +34,11 @@ export class ConfigListComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource = new ConfigDataSource(this.configCollection, this.paginator);
-    if (this.dataSource.numberConfigs() === 0) {
-      this.noConfigs = true;
-    }
-  }
+    this.dataSource.numberConfigs(numConfigs => {
+      if (numConfigs === 0) {
+        this.noConfigs = true;
+      }
+    })  }
   
   ngAfterViewInit() {
     this.paginator.page.subscribe(() => {
@@ -51,7 +52,9 @@ export class ConfigListComponent implements OnInit {
 
     });
     this.dataSource.loadConfigs();
-    this.dataSource.numberConfigs();
+    this.dataSource.numberConfigs(numConfigs => {
+      this.paginator.length = numConfigs;
+    });
   }
 }
 
@@ -69,7 +72,7 @@ export class ConfigDataSource implements DataSource<Config> {
   }
 
   private calculateStart(page: number, pageSize: number): number {
-    return (page ? page * pageSize:0);
+    return (page ? page * pageSize : 0);
   }
 
   loadConfigs(page: number = 0, pageSize: number = 10) {
@@ -84,28 +87,24 @@ export class ConfigDataSource implements DataSource<Config> {
           const configs = snapshot.docs;
           let data = [];
           for (const config in configs) {
-            if (configs.hasOwnProperty(config)) {
-              const name = configs[config]['name'];
-              data.push({
-                name: name,
-                key: config
-              })
-            }
+            const name = configs[config].data()['name'];
+            data.push({
+              name: name,
+              key: configs[config].id
+            })
           }
           this.configSubject.next(data);
         }, err => console.error
       )
   }
 
-  numberConfigs(): number {
+  numberConfigs(cb: Function): void {
     this
       .configCollection
       .ref
       .get()
       .then(snapshot => {
-        return snapshot.docs.length;
+        cb(snapshot.docs.length);
       })
-    return 0;
   }
-
 }
