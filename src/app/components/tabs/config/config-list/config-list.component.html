@@ -1,4 +1,4 @@
-<h3>Classes</h3>
+<h2>Configurations</h2>
 
 <div [hidden]="noConfigs">
   <mat-table #table [dataSource]="dataSource">
@@ -17,4 +17,4 @@
     [showFirstLastButtons]="true">
   </mat-paginator>
 </div>
-<h1 *ngIf="noConfigs">You have no configurations try creating one!</h1>
+<p *ngIf="noConfigs">You have no configurations try creating one!</p>

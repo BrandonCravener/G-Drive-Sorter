@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-
 import { GoogleService } from '../../../services/google/google.service';
 
 /**
@@ -11,7 +10,7 @@ import { GoogleService } from '../../../services/google/google.service';
 @Component({
   selector: 'app-unauthenticated',
   templateUrl: './unauthenticated.component.html',
-  styleUrls: ['./unauthenticated.component.css']
+  styleUrls: ['./unauthenticated.component.scss']
 })
 export class UnauthenticatedComponent {
   /**

@@ -22,6 +22,7 @@ export const routerAnimation = trigger('routerTransition', [
         style({
           transform: 'translateX(0%)',
           width:'100%',
+          height: '100%',
           position: 'fixed'        
         }),
         // Animated style
@@ -35,6 +36,8 @@ export const routerAnimation = trigger('routerTransition', [
         // Inital styles
         style({
           transform: 'translateX(-100%)',
+          width: '100%',
+          height: '100%',
           position: 'fixed'        
         }),
         // Animated style
@@ -47,13 +50,13 @@ export const routerAnimation = trigger('routerTransition', [
     ])
   ]),
   transition("* => appConfig", [
-    query('button', [
+    query('.mat-fab', [
       // Inital styles
       style({
-        opacity: 0
+        transform: 'scale(0)'
       }),
       animate('0.5s ease-in', style({
-        opacity: 1
+        transform: 'scale(1)'
       }))
     ])
   ])

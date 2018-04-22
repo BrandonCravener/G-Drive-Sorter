@@ -8,14 +8,10 @@
   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-@import '../node_modules/lato-font/scss/_public-api.scss';
-
-$lato-font-path: '../node_modules/lato-font/fonts';
-
-@include lato-include-font('normal');
+@import './lato/lato.scss';
 
 // fonts
-$font-family: 'Lato', Helvetica, sans-serif;
+$font-family: 'LatoWeb', Helvetica, sans-serif;
 $font-height: 1.5;
 
 // colors
@@ -67,16 +63,18 @@ h6 {
 
 p {
   font-size: 1.125rem;
-  @include lato-font('thin');
+  font-family: 'LatoWebLight';
   line-height: 1.8;
 }
 // utility
 
 .left {
+  float: left;
   text-align: left;
 }
 
 .right {
+  float: right;
   text-align: right;
 }
 

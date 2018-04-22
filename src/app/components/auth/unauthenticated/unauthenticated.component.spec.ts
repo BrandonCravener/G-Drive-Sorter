@@ -1,16 +1,10 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { UnauthenticatedComponent } from './unauthenticated.component';
-
-import { GoogleService } from '../../../services/google/google.service';
-
-// Angularfire
 import { AngularFireAuthModule } from 'angularfire2/auth';
-import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireModule } from 'angularfire2';
-
-// Utils
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { environment } from '../../../../environments/environment.prod';
+import { GoogleService } from '../../../services/google/google.service';
+import { UnauthenticatedComponent } from './unauthenticated.component';
 
 describe('UnauthenticatedComponent', () => {
   let component: UnauthenticatedComponent;
