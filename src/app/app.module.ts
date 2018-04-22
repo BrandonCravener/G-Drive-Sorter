@@ -1,29 +1,30 @@
-// Angular imports
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { BrowserModule } from '@angular/platform-browser';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AppComponent } from './app.component';
+import { appRoutes } from './app.routes';
+import { AuthenticatedModule } from './modules/authenticated/authenticated.module';
+import { AuthGuardService, PreventAuthGuardService } from './services/auth/auth-guard.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-// Angular Material imports
+import { BrowserModule } from '@angular/platform-browser';
+import { ConfigModule } from './modules/config/config.module';
+import { environment } from '../environments/environment.prod';
+import { GoogleService } from './services/google/google.service';
+import { MatButtonModule } from '@angular/material/button';
+import {
+  MatDialogModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule,
+  MatStepperModule,
+  MatToolbarModule
+  } from '@angular/material';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
-import { MatButtonModule } from '@angular/material/button';
-import { MatToolbarModule, MatIconModule } from '@angular/material';
-
-// Route imports
-import { appRoutes } from './app.routes';
-
-// Component imports
-import { AppComponent } from './app.component';
-import { ParallaxModule, ParallaxConfig } from 'ngx-parallax';
+import { NgModule } from '@angular/core';
+import { ParallaxConfig, ParallaxModule } from 'ngx-parallax';
+import { RouterModule, Routes } from '@angular/router';
 import { UnauthenticatedComponent } from './components/auth/unauthenticated/unauthenticated.component';
-
-// Service imports
-import { GoogleService } from './services/google/google.service';
-import { AuthGuardService, PreventAuthGuardService } from './services/auth/auth-guard.service';
-import { AuthenticatedModule } from './modules/authenticated/authenticated.module';
-import { FirebaseService } from './services/firebase/firebase.service';
-
 
 @NgModule({
   declarations: [
@@ -32,19 +33,25 @@ import { FirebaseService } from './services/firebase/firebase.service';
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatButtonModule,
     MatMenuModule,
     MatIconModule,
     MatTabsModule,
     ParallaxModule,
-    AuthenticatedModule.forRoot(),
+    MatInputModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatToolbarModule,
     RouterModule.forRoot(
       appRoutes
-    )
+    ),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    ConfigModule.forRoot(),
+    BrowserAnimationsModule,
+    AuthenticatedModule.forRoot(),
+    AngularFireModule.initializeApp(environment.firebase),
   ],
-  providers: [GoogleService, FirebaseService, AuthGuardService, PreventAuthGuardService],
+  providers: [GoogleService, AuthGuardService, PreventAuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
