@@ -9,7 +9,7 @@
             <mat-panel-title>
               Config Name
             </mat-panel-title>
-            <mat-panel-description>
+            <mat-panel-description *ngIf="!isPage">
               The name of the new configuration.
             </mat-panel-description>
           </mat-expansion-panel-header>
@@ -29,7 +29,7 @@
             <mat-panel-title>
               Group Name
             </mat-panel-title>
-            <mat-panel-description>
+            <mat-panel-description *ngIf="!isPage">
               The new configuration's inital group name.
             </mat-panel-description>
           </mat-expansion-panel-header>
@@ -50,7 +50,7 @@
             <mat-panel-title>
               First Rule
             </mat-panel-title>
-            <mat-panel-description>
+            <mat-panel-description *ngIf="!isPage">
               The new configuration's inital group's first rule.
             </mat-panel-description>
           </mat-expansion-panel-header>

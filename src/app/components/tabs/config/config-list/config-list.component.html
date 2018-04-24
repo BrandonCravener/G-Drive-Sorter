@@ -1,11 +1,25 @@
-<h2>Configurations</h2>
-
+<div class="header">
+  <span style="font-size: 2rem;">Configuration's</span>
+  <span class="right refresh-button" matTooltip="Refresh Config's" matTooltipPosition="left">
+    <button mat-icon-button color="accent" (click)="refreshConfigs()">
+      <mat-icon aria-label="Refresh configurations">refresh</mat-icon>
+    </button>
+  </span>
+</div>
 <div [hidden]="noConfigs">
   <mat-table #table [dataSource]="dataSource">
     <!-- Name Column -->
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-      <mat-cell *matCellDef="let config"> {{config.name}} </mat-cell>
+      <mat-cell *matCellDef="let config">{{config.name}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef style="text-align: right;">Actions</mat-header-cell>
+      <mat-cell style="text-align: right;" *matCellDef="let config">
+        <button mat-icon-button color="warn" matTooltip="Delete config" (click)="deleteConfig(config.key)">
+          <mat-icon aria-label="Delete Config">delete_forever</mat-icon>
+        </button>
+      </mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="tableColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: tableColumns;"></mat-row>

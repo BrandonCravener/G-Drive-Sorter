@@ -28,6 +28,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { NewRulePageComponent } from '../../components/shared/new-rule-page/new-rule-page.component';
 import { NewRuleStepperComponent } from '../../components/shared/new-rule-stepper/new-rule-stepper.component';
 import { SettingsComponent } from '../../components/tabs/settings/settings.component';
+import { DatabaseService } from '../../services/firebase/database.service';
 
 /**
  * Handles all authenticated components
@@ -52,6 +53,9 @@ import { SettingsComponent } from '../../components/tabs/settings/settings.compo
     MatTooltipModule,
     ReactiveFormsModule,
     ConfigModule.forRoot()
+  ],
+  providers: [
+    DatabaseService
   ]
 })
 export class AuthenticatedModule { 

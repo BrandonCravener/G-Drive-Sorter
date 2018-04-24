@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
+import { DatabaseService } from '../../../services/firebase/database.service';
 
 @Component({
   selector: 'app-config-modal',
@@ -27,6 +28,7 @@ export class ConfigModalComponent implements OnInit {
     public zone: NgZone, 
     public router: Router,
     public formBuilder: FormBuilder,
+    private database: DatabaseService,
     private firebase: AngularFirestore, 
     private firebaseAuth: AngularFireAuth
   ) { }
@@ -39,7 +41,7 @@ export class ConfigModalComponent implements OnInit {
     })
   }
   
-  checkValidation(stepNumber: number) {
+  private checkValidation(stepNumber: number) {
     switch (stepNumber) {
       case 0:
         return this.newConfig.get('newConfigNameControl').valid;
@@ -61,7 +63,6 @@ export class ConfigModalComponent implements OnInit {
     }
     return !anyInvalid;
   }
-
   
   setStep(index: number) {
     this.step = index;
@@ -85,17 +86,11 @@ export class ConfigModalComponent implements OnInit {
 
   create() {
     if (this.checkAllValidation()) {
-      let userID = this.firebaseAuth.auth.currentUser.uid;
-      const newConfig = ConfigBuilder.generateNewConfig(
+      this.database.createConfig(
         this.newConfig.get('newConfigNameControl').value,
         this.newConfig.get('newGroupNameControl').value,
         this.rule
       );
-      this
-        .firebase
-        .doc(`users/${userID}`)
-        .collection('configs')
-        .add(newConfig);
     } else {
       this.finished = false;
     }

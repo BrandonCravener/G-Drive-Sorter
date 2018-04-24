@@ -1,8 +1,8 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { ConfigModalComponent } from '../../shared/config-modal/config-modal.component';
 import { MatDialog } from '@angular/material';
-import { Router } from '@angular/router';
 import { RepositionScrollStrategy } from '@angular/cdk/overlay';
+import { Router } from '@angular/router';
 
 /**
  * Declare component to be shown when the config tab is selected.
@@ -21,7 +21,11 @@ export class ConfigComponent implements OnInit {
    * Creates an instance of ConfigComponent.
    * @memberof ConfigComponent
    */
-  constructor(private dialog: MatDialog, private router: Router, private zone: NgZone) { }
+  constructor(
+    private dialog: MatDialog, 
+    private router: Router, 
+    private zone: NgZone
+  ) { }
 
   /**
    * Handle component initalization
@@ -49,9 +53,12 @@ export class ConfigComponent implements OnInit {
         width: `${this.getDialogWidth()}px`,
         maxHeight: `${document.body.clientHeight * .9}px`
       });
-      dialogInstance.componentInstance.closeCommand.subscribe(close => {
-        dialogInstance.close();
-      });
+      const componentInstance = dialogInstance.componentInstance;
+      componentInstance
+        .closeCommand
+        .subscribe(close => {
+          dialogInstance.close();
+        });
     } else {
       this.zone.run(() => {
         this.router.navigate(['/app/config/create']);
