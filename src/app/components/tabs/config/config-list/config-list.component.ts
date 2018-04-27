@@ -108,9 +108,7 @@ export class ConfigListComponent implements OnInit {
   }
 
   refreshConfigs() {
-    this
-    .dataSource
-    .loadConfigs();
+    this.dataSource.loadConfigs();
     this
       .database
       .numberConfigs(numConfigs => {
@@ -123,6 +121,21 @@ export class ConfigListComponent implements OnInit {
   }
   
   deleteConfig(configKey: string) {
+    this.database.deleteConfig(configKey);
+  }
+
+  setActiveConfig(configKey: string) {
+    this.database.setActiveConfig(configKey);
+  }
+
+  getActiveConfig(configKey: string) {
+    this.database.getActiveConfig(activeConfig => {
+      if (configKey === activeConfig) {
+        return true;
+      } else {
+        return false;
+      }
+    });
   }
 }
 

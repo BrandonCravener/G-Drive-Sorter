@@ -1,10 +1,13 @@
+import { ConfigsInterface } from "../../interfaces";
+
 export class ConfigBuilder {
     static generateNewConfig(
         configName: string, 
         firstGroupName: string, 
         firstGroupRule: object
-    ): object {
-        const configHolder: object = {
+    ): ConfigsInterface {
+        const configHolder: ConfigsInterface = {
+            name: '',
             groups: {}
         };
         configHolder['name'] = configName;

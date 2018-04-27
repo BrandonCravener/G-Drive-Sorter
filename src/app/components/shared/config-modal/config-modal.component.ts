@@ -91,6 +91,7 @@ export class ConfigModalComponent implements OnInit {
         this.newConfig.get('newGroupNameControl').value,
         this.rule
       );
+      this._closeCommand.next(true);
     } else {
       this.finished = false;
     }
