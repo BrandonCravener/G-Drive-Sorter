@@ -1,15 +1,14 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppModule } from '../../../../app.module';
-import { ConfigModule } from '../../../../modules/config/config.module';
-import { AuthenticatedModule } from '../../../../modules/authenticated/authenticated.module';
 import { APP_BASE_HREF } from '@angular/common';
-import { ConfigListComponent } from './config-list.component';
+import { AppModule } from '../../../app.module';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { AuthenticatedModule } from '../../../modules/authenticated/authenticated.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ConfigModule } from '../../../modules/config/config.module';
+import { EditConfigModalComponent } from './edit-config-modal.component';
 
-
-describe("ConfigListComponent", () => {
-  let component: ConfigListComponent;
-  let fixture: ComponentFixture<ConfigListComponent>;
+describe('EditConfigModalComponent', () => {
+  let component: EditConfigModalComponent;
+  let fixture: ComponentFixture<EditConfigModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -30,12 +29,12 @@ describe("ConfigListComponent", () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ConfigListComponent);
+    fixture = TestBed.createComponent(EditConfigModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

@@ -35,7 +35,7 @@ export class ConfigComponent implements OnInit {
   ngOnInit() {
   }
 
-  private getDialogWidth() {
+  public getDialogWidth() {
     const width: number = document.body.clientWidth;
     if (width >= 1280) {
       return (width / 2);
@@ -50,7 +50,7 @@ export class ConfigComponent implements OnInit {
     let dialogWidth = this.getDialogWidth();
     if (dialogWidth) {
       const dialogInstance = this.dialog.open(ConfigModalComponent, {
-        width: `${this.getDialogWidth()}px`,
+        width: `${dialogWidth}px`,
         maxHeight: `${document.body.clientHeight * .9}px`
       });
       const componentInstance = dialogInstance.componentInstance;

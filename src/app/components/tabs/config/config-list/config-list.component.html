@@ -16,8 +16,11 @@
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef style="text-align: right;">Actions</mat-header-cell>
       <mat-cell style="text-align: right;" *matCellDef="let config">
-        <button mat-icon-button color="primary" matTooltip="Set Active" (click)="setActiveConfig(config.key)">
-          <mat-icon aria-label="Delete Config">settings_power</mat-icon>
+        <button mat-icon-button color="accent" matTooltip="Edit Config" (click)="editConfig(config.key)">
+          <mat-icon aria-label="Edit Config">edit</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" matTooltip="Set Active" (click)="setActiveConfig(config.key)" [disabled]="getActiveConfig(config.key)">
+          <mat-icon aria-label="Make Config Active">settings_power</mat-icon>
         </button>
         <button mat-icon-button color="warn" matTooltip="Delete config" (click)="deleteConfig(config.key)">
           <mat-icon aria-label="Delete Config">delete_forever</mat-icon>

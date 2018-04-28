@@ -1,11 +1,15 @@
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
+import { createDirective } from '@angular/compiler/src/core';
 import { DatabaseService } from '../../../../services/firebase/database.service';
 import { DataSource } from '@angular/cdk/collections';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
+import { ConfigComponent } from '../config.component';
+import { EditConfigModalComponent } from '../../../shared/edit-config-modal/edit-config-modal.component';
+import { Router } from '@angular/router';
 
 export interface Config {
   name: String,
@@ -22,6 +26,7 @@ export class ConfigListComponent implements OnInit {
 
   private userID: string;
   private configCollection;
+  private activeConfig: string;
   private oldPageSize: number = 10;
   
   public tableColumns = ['name', 'actions'];
@@ -31,96 +36,119 @@ export class ConfigListComponent implements OnInit {
   constructor(
     private firebase: AngularFirestore, 
     private firebaseAuth: AngularFireAuth,
-    private database: DatabaseService
+    private database: DatabaseService,
+    private dialog: MatDialog, 
+    private router: Router, 
+    private zone: NgZone
   ) { }
-
+  
   ngOnInit() {
     if (this.firebaseAuth.auth.currentUser) {
-      this
-        .userID = this
-        .firebaseAuth
-        .auth
-        .currentUser
-        .uid;
-      this
-        .configCollection = this 
-        .firebase
-        .doc(`users/${this.userID}`)
-        .collection('configs');
-      this
-        .dataSource = new ConfigDataSource(this.configCollection, this.paginator);
-      this
-        .database
-        .numberConfigs(numConfigs => {
+      this.userID = this.firebaseAuth.auth.currentUser.uid;
+      this.configCollection = this.firebase
+      .doc(`users/${this.userID}`)
+      .collection('configs');
+      this.dataSource = new ConfigDataSource(
+        this.configCollection, 
+        this.paginator
+        );
+        this.database.numberConfigs(numConfigs => {
           if (numConfigs === 0) {
             this.noConfigs = true;
           } else {
             this.noConfigs = false;
           }
         });
-    }
+      }
   }
   
   ngAfterViewInit() {
     if (this.firebaseAuth.auth.currentUser) {
       // Listen for page changes
-      this
-        .paginator
-        .page
-        .subscribe(() => {
-          if (this.oldPageSize == this.paginator.pageSize) {
-            this
-              .dataSource
-              .loadConfigs(
-                this.paginator.pageIndex, 
-                this.paginator.pageSize
-              );
-          } else {
-            this
-              .dataSource
-              .loadConfigs(
-                0, 
-                this.paginator.pageSize
-              );
-            this.oldPageSize = this.paginator.pageSize;
-            this.paginator.pageIndex = 0;
-          }
-        });
-       // Load the configurations
+      this.paginator.page.subscribe(() => {
+        if (this.oldPageSize == this.paginator.pageSize) {
+          this.dataSource.loadConfigs(
+            this.paginator.pageIndex, 
+            this.paginator.pageSize
+          );
+        } else {
+          this.dataSource.loadConfigs(
+            0, 
+            this.paginator.pageSize
+          );
+          this.oldPageSize = this.paginator.pageSize;
+          this.paginator.pageIndex = 0;
+        }
+      });
+      // Load the configurations
       this.dataSource.loadConfigs();
       // Pass the number of configs to the paginator
-      this
-        .database
-        .numberConfigs(numConfigs => {
-          this.paginator.length = numConfigs;
-        });
-        this
-        .database
-        .configSubject
-        .subscribe(created => {
-          if (created) {
-            this.refreshConfigs();
-          } else {
-
-          }
-        });
+      this.database.numberConfigs(numConfigs => {
+        this.paginator.length = numConfigs;
+      });
+      // Listen for config changes
+      this.database.configSubject.subscribe(created => {
+        if (created) {
+          this.refreshConfigs();
+        } else {
+        }
+      });
+      // Retrive the active config
+      this.database.getActiveConfig(activeConfig => {
+        this.activeConfig = activeConfig;
+      });
+      // Listen for active config changes
+      this.database.activeConfigChanged.subscribe(newConfigID => {
+        this.activeConfig = newConfigID;
+      }, err => console.error);
     }
   }
 
+  getDialogWidth() {
+    const width: number = document.body.clientWidth;
+    if (width >= 1280) {
+      return (width / 2);
+    } else if (width >= 640) {
+      return (width / 1.5);
+    } else {
+      return 0;
+    }
+  }
+  
   refreshConfigs() {
     this.dataSource.loadConfigs();
-    this
-      .database
-      .numberConfigs(numConfigs => {
-        if (numConfigs === 0) {
-          this.noConfigs = true;
-        } else {
-          this.noConfigs = false;
-        }
+    this.database.numberConfigs(numConfigs => {
+      if (numConfigs === 0) {
+        this.noConfigs = true;
+      } else {
+        this.noConfigs = false;
+      }
+    });
+  }
+
+
+  editConfig() {
+    let dialogWidth = this.getDialogWidth();
+    if (dialogWidth) {
+      const dialogInstance = this.dialog.open(EditConfigModalComponent, {
+        width: `${dialogWidth}px`,
+        maxHeight: `${document.body.clientHeight * .9}px`
       });
+      const componentInstance = dialogInstance.componentInstance;
+      componentInstance.closeCommand.subscribe(close => {
+        dialogInstance.close();
+      });
+    } else {
+      this.zone.run(() => {
+        this.router.navigate(['/app/config/edit']);
+      });
+    }
   }
   
   deleteConfig(configKey: string) {
+    if (configKey === this.activeConfig) {
+      this.setActiveConfig('');
+    }
     this.database.deleteConfig(configKey);
   }
 
@@ -128,14 +156,8 @@ export class ConfigListComponent implements OnInit {
     this.database.setActiveConfig(configKey);
   }
 
-  getActiveConfig(configKey: string) {
-    this.database.getActiveConfig(activeConfig => {
-      if (configKey === activeConfig) {
-        return true;
-      } else {
-        return false;
-      }
-    });
+  getActiveConfig(configKey: string): boolean {
+    return (this.activeConfig === configKey) ? true : false;
   }
 }
 

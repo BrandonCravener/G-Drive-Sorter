@@ -18,16 +18,18 @@ import {
   MatTooltipModule
   } from '@angular/material';
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { NewRulePageComponent } from '../../components/shared/new-rule-page/new-rule-page.component';
+import { NewConfigPageComponent } from '../../components/shared/new-config-page/new-config-page.component';
 import { NewRuleStepperComponent } from '../../components/shared/new-rule-stepper/new-rule-stepper.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { EditConfigModalComponent } from '../../components/shared/edit-config-modal/edit-config-modal.component';
 
 @NgModule({
   declarations: [
     ConfigListComponent,
-    NewRulePageComponent,
+    NewConfigPageComponent,
     ConfigModalComponent,
-    NewRuleStepperComponent
+    NewRuleStepperComponent,
+    EditConfigModalComponent
   ],
   imports: [
     CommonModule,
@@ -47,7 +49,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule
   ],
   entryComponents: [
-    ConfigModalComponent
+    ConfigModalComponent,
+    EditConfigModalComponent
   ],
   exports: [
     ConfigListComponent

@@ -25,11 +25,13 @@ import { NgModule } from '@angular/core';
 import { ParallaxConfig, ParallaxModule } from 'ngx-parallax';
 import { RouterModule, Routes } from '@angular/router';
 import { UnauthenticatedComponent } from './components/auth/unauthenticated/unauthenticated.component';
+import { EditConfigPageComponent } from './components/shared/edit-config-page/edit-config-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UnauthenticatedComponent
+    UnauthenticatedComponent,
+    EditConfigPageComponent
   ],
   imports: [
     BrowserModule,

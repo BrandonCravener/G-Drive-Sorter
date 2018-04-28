@@ -4,6 +4,7 @@ export class ConfigBuilder {
     static generateNewConfig(
         configName: string, 
         firstGroupName: string, 
+        destinationFolder: string,
         firstGroupRule: object
     ): ConfigsInterface {
         const configHolder: ConfigsInterface = {
@@ -11,7 +12,10 @@ export class ConfigBuilder {
             groups: {}
         };
         configHolder['name'] = configName;
-        configHolder['groups'][firstGroupName] = [firstGroupRule]
+        configHolder['groups'][firstGroupName] = {
+            destination: destinationFolder,
+            rule: firstGroupRule
+        }
         return configHolder;
     }
 }

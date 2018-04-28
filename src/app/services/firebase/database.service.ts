@@ -16,7 +16,7 @@ export class DatabaseService {
 
   public userID: string;
 
-  private configCollection: AngularFirestoreCollection<ConfigInterface>;
+  private configDocument: AngularFirestoreDocument<ConfigInterface>;
   private configsCollection: AngularFirestoreCollection<ConfigsInterface>;
   private userDoc: AngularFirestoreDocument<UserDocument>;
   
@@ -31,19 +31,21 @@ export class DatabaseService {
         .currentUser
         .uid;
       this.userDoc = firebase.doc(`users/${this.userID}`);
+      this.configDocument = firebase.doc(`users/${this.userID}/userData/config`);
       this.configsCollection = this.userDoc.collection<ConfigsInterface>('configs');
-      this.configCollection = this.userDoc.collection<ConfigInterface>('config');
     }
   }
 
   createConfig(
     configName: string,
-    firstGroupName: string, 
+    firstGroupName: string,
+    destinationLocation: string,
     firstGroupRule: object
-  ) {
+  ): void {
     const newConfig = ConfigBuilder.generateNewConfig(
       configName,
       firstGroupName,
+      destinationLocation,
       firstGroupRule
     );
     this
@@ -57,9 +59,7 @@ export class DatabaseService {
       });
   }
 
-  deleteConfig(
-    configID: string
-  ) {
+  deleteConfig(configID: string): void {
     this
       .configsCollection
       .doc(configID)
@@ -72,13 +72,12 @@ export class DatabaseService {
       })
   }
 
-  setActiveConfig(
-    configID: string
-  ) {
+  setActiveConfig(configID: string): void {
     this
-      .configCollection
-      .doc('activeConfig')
-      .set(configID)
+      .configDocument
+      .set({
+        activeConfig: configID
+      })
       .then(() => {
         this._activeConfigChanged.next(configID);
       }, err => {
@@ -89,20 +88,15 @@ export class DatabaseService {
 
   getActiveConfig(cb: Function): void {
     this
-      .configCollection
-      .doc('activeConfig')
+      .configDocument
       .ref
       .get()
       .then(snapshot => {
-        cb(snapshot.data());
-      }, err => {
-        console.error(err);
-      })
+        cb(snapshot.data()['activeConfig']);
+      }, err => console.error);
   }
 
-  numberConfigs(
-    cb: Function
-  ) {
+  numberConfigs(cb: Function): void {
     this
       .configsCollection
       .ref

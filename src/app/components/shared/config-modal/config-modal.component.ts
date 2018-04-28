@@ -7,6 +7,7 @@ import { MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { DatabaseService } from '../../../services/firebase/database.service';
+import { GoogleService } from '../../../services/google/google.service';
 
 @Component({
   selector: 'app-config-modal',
@@ -19,6 +20,7 @@ export class ConfigModalComponent implements OnInit {
   isPage = false;
   step: number = -1;
   newConfig: FormGroup;
+  location: string;
   finished: boolean = false;
   
   private _closeCommand = new Subject<Boolean>();
@@ -28,6 +30,7 @@ export class ConfigModalComponent implements OnInit {
     public zone: NgZone, 
     public router: Router,
     public formBuilder: FormBuilder,
+    private google: GoogleService,
     private database: DatabaseService,
     private firebase: AngularFirestore, 
     private firebaseAuth: AngularFireAuth
@@ -38,6 +41,10 @@ export class ConfigModalComponent implements OnInit {
       floatLabel: 'auto',
       newConfigNameControl: ['', Validators.required],
       newGroupNameControl: ['', Validators.required],
+      folderLocationControl: [{
+        value: null,
+        disabled: true
+      }]
     })
   }
   
@@ -48,6 +55,8 @@ export class ConfigModalComponent implements OnInit {
       case 1:
         return this.newConfig.get('newGroupNameControl').valid;
       case 2:
+        return (this.location === undefined) ? false : true;
+      case 3:
         return ((this.rule === undefined) ? false : true);
       default:
         return false;
@@ -66,6 +75,17 @@ export class ConfigModalComponent implements OnInit {
   
   setStep(index: number) {
     this.step = index;
+    if (index === 2) {
+      let folderPickedListener = this.google.folderPicked$.subscribe(pickedFolder => {
+        this.location = pickedFolder.id;
+        this.newConfig.get('folderLocationControl').setValue(pickedFolder.name);
+        folderPickedListener.unsubscribe();
+      })
+    }
+  }
+
+  openFolderPicker() {
+    this.google.openFilePicker();
   }
   
   nextStep() {
@@ -89,6 +109,7 @@ export class ConfigModalComponent implements OnInit {
       this.database.createConfig(
         this.newConfig.get('newConfigNameControl').value,
         this.newConfig.get('newGroupNameControl').value,
+        this.location,
         this.rule
       );
       this._closeCommand.next(true);

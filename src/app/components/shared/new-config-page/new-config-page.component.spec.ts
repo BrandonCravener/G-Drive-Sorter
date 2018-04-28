@@ -3,11 +3,11 @@ import { AppModule } from '../../../app.module';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuthenticatedModule } from '../../../modules/authenticated/authenticated.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NewRulePageComponent } from './new-rule-page.component';
+import { NewConfigPageComponent } from './new-config-page.component';
 
-describe('NewRulePageComponent', () => {
-  let component: NewRulePageComponent;
-  let fixture: ComponentFixture<NewRulePageComponent>;
+describe('NewConfigPageComponent', () => {
+  let component: NewConfigPageComponent;
+  let fixture: ComponentFixture<NewConfigPageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -27,7 +27,7 @@ describe('NewRulePageComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NewRulePageComponent);
+    fixture = TestBed.createComponent(NewConfigPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

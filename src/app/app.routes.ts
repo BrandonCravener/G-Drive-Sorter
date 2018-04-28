@@ -9,8 +9,9 @@ import { AuthGuardService as AuthGuard, PreventAuthGuardService as PreventAuthGu
 import { HomeComponent } from './components/tabs/home/home.component';
 import { ConfigComponent } from './components/tabs/config/config.component';
 import { SettingsComponent } from './components/tabs/settings/settings.component';
-import { NewRulePageComponent } from './components/shared/new-rule-page/new-rule-page.component';
+import { NewConfigPageComponent } from './components/shared/new-config-page/new-config-page.component';
 import { UnauthenticatedComponent } from './components/auth/unauthenticated/unauthenticated.component';
+import { EditConfigPageComponent } from './components/shared/edit-config-page/edit-config-page.component';
 
 export const appRoutes: Routes = [
   {
@@ -47,10 +48,18 @@ export const appRoutes: Routes = [
   },
   {
     path: 'app/config/create',
-    component: NewRulePageComponent,
+    component: NewConfigPageComponent,
     canActivate: [AuthGuard],
     data: {
       name: 'appConfigCreate'
+    }
+  },
+  {
+    path: 'app/config/edit',
+    component: EditConfigPageComponent,
+    canActivate: [AuthGuard],
+    data: {
+      name: 'appConfigEdit'
     }
   },
   {

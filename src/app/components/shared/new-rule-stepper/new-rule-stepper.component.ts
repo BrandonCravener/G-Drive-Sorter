@@ -225,10 +225,6 @@ export class NewRuleStepperComponent implements OnInit {
       fileTypeControl: null,
       dateControl: null
     });
-    this.google.folderPicked$.subscribe(folder => {
-      this.pickedFolder = folder.id;
-      this.inputFieldGroup.get('folderLocationControl').setValue(folder.name);
-    });
   }
 
   finished(): void {
@@ -295,6 +291,13 @@ export class NewRuleStepperComponent implements OnInit {
       if (this.betweenConstraintDisabled) {
         this.constraintFormGroup.get('constraintControl').setValue('include');
       }
+    }
+    if (event.selectedIndex === 2) {
+      let folderPickedSubscription = this.google.folderPicked$.subscribe(folder => {
+        this.pickedFolder = folder.id;
+        this.inputFieldGroup.get('folderLocationControl').setValue(folder.name);
+        folderPickedSubscription.unsubscribe();
+      });
     }
   }
 
