@@ -1,14 +1,19 @@
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
+import {
+  Component,
+  NgZone,
+  OnInit,
+  ViewChild
+  } from '@angular/core';
+import { ConfigComponent } from '../config.component';
 import { createDirective } from '@angular/compiler/src/core';
 import { DatabaseService } from '../../../../services/firebase/database.service';
 import { DataSource } from '@angular/cdk/collections';
-import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
-import { ConfigComponent } from '../config.component';
 import { EditConfigModalComponent } from '../../../shared/edit-config-modal/edit-config-modal.component';
+import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
+import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 
 export interface Config {
@@ -29,10 +34,11 @@ export class ConfigListComponent implements OnInit {
   private activeConfig: string;
   private oldPageSize: number = 10;
   
-  public tableColumns = ['name', 'actions'];
   public noConfigs: boolean = true;
   public dataSource: ConfigDataSource;
-
+  public tableColumns = ['name', 'actions'];
+  public loading: boolean = true;
+  
   constructor(
     private firebase: AngularFirestore, 
     private firebaseAuth: AngularFireAuth,
@@ -51,15 +57,15 @@ export class ConfigListComponent implements OnInit {
       this.dataSource = new ConfigDataSource(
         this.configCollection, 
         this.paginator
-        );
-        this.database.numberConfigs(numConfigs => {
-          if (numConfigs === 0) {
-            this.noConfigs = true;
-          } else {
-            this.noConfigs = false;
-          }
-        });
-      }
+      );
+      this.database.numberConfigs(numConfigs => {
+        if (numConfigs === 0) {
+          this.noConfigs = true;
+        } else {
+          this.noConfigs = false;
+        }
+      });
+    } 
   }
   
   ngAfterViewInit() {
@@ -101,6 +107,12 @@ export class ConfigListComponent implements OnInit {
       this.database.activeConfigChanged.subscribe(newConfigID => {
         this.activeConfig = newConfigID;
       }, err => console.error);
+      setTimeout(_=> {
+        // Listen for loading state changes
+        this.dataSource.loading$.subscribe(loading => {
+          this.loading = loading;
+        });
+      });
     }
   }
 
@@ -127,7 +139,8 @@ export class ConfigListComponent implements OnInit {
   }
 
 
-  editConfig() {
+  editConfig(configID: string) {
+    this.database.editingConfig = configID;
     let dialogWidth = this.getDialogWidth();
     if (dialogWidth) {
       const dialogInstance = this.dialog.open(EditConfigModalComponent, {
@@ -164,6 +177,9 @@ export class ConfigListComponent implements OnInit {
 export class ConfigDataSource implements DataSource<Config> {
   private configSubject = new BehaviorSubject<Config[]>([]);
 
+  private loadingSubject = new BehaviorSubject<boolean>(true);
+  public loading$ = this.loadingSubject.asObservable();
+
   constructor (
     private configCollection, 
     private paginator
@@ -178,12 +194,12 @@ export class ConfigDataSource implements DataSource<Config> {
   }
 
   disconnect(): void {
-    return this
-      .configSubject
-      .complete();
+    this.configSubject.complete();
+    this.loadingSubject.complete();
   }
 
   loadConfigs(page: number = 0, pageSize: number = 10) {
+    this.loadingSubject.next(true);
     this
       .configCollection
       .ref
@@ -204,6 +220,7 @@ export class ConfigDataSource implements DataSource<Config> {
           this
             .configSubject
             .next(data);
+          this.loadingSubject.next(false);
         }, err => console.error
       )
   }

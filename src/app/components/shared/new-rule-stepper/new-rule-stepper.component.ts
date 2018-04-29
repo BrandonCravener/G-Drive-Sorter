@@ -1,11 +1,13 @@
 import {
+  AfterViewInit,
   Component,
+  EventEmitter,
   forwardRef,
   Input,
   NgZone,
   OnInit,
   Output,
-  EventEmitter
+  ViewChild
   } from '@angular/core';
 import {
   ControlValueAccessor,
@@ -16,8 +18,10 @@ import {
   Validators
   } from '@angular/forms';
 import { GoogleService } from '../../../services/google/google.service';
+import { MatVerticalStepper } from '@angular/material';
 import { Router } from '@angular/router';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
+import { v4 as uuid } from 'uuid';
 
 export const DEFAULT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -33,8 +37,12 @@ export const DEFAULT_VALUE_ACCESSOR: any = {
 })
 export class NewRuleStepperComponent implements OnInit {
 
-  @Output()
-  valueChange = new EventEmitter();
+  @Input() inputRule: any;
+  @Input() reset: boolean;
+
+  @Output() valueChange = new EventEmitter();
+
+  @ViewChild('stepper') stepper: MatVerticalStepper;
 
   value: any;
   
@@ -42,6 +50,7 @@ export class NewRuleStepperComponent implements OnInit {
   classifierFormGroup: FormGroup;
   constraintFormGroup: FormGroup;
   inputFieldGroup: FormGroup;
+  nameFormGroup: FormGroup;
 
   betweenConstraintDisabled: boolean = false;
   startEndWithDisabled: boolean = false;
@@ -178,7 +187,8 @@ export class NewRuleStepperComponent implements OnInit {
     public zone: NgZone, 
     public router: Router, 
     public google: GoogleService
-  ) { }
+  ) {
+  }
 
   private valueArrayToObject(array: Array<object>): object {
     const searchableObject: object = {};
@@ -207,6 +217,9 @@ export class NewRuleStepperComponent implements OnInit {
   }
   
   ngOnInit(): void {
+    this.nameFormGroup = this.formBuilder.group({
+      ruleName: ['', Validators.required]
+    });
     this.classifierFormGroup = this.formBuilder.group({
       classifierControl: ['', Validators.required]
     });
@@ -225,10 +238,51 @@ export class NewRuleStepperComponent implements OnInit {
       fileTypeControl: null,
       dateControl: null
     });
+    if (this.inputRule && this.inputRule.data) {
+      this.nameFormGroup.get('ruleName').setValue(this.inputRule.name);
+      this.classifierSelectOption = this.inputRule.classifier;
+      this.classifierFormGroup.get('classifierControl').setValue(this.inputRule.classifier);
+      this.constraintSelectOption = this.inputRule.constraint;
+      this.constraintFormGroup.get('constraintControl').setValue(this.inputRule.constraint);
+      switch (this.getFieldControl(this.classifierSelectOption)) {
+        case 'titleTextControl':
+          this.inputFieldGroup.get('titleTextControl')
+            .setValue(this.inputRule.data.title);
+          break;
+        case 'fileTypeControl':
+          this.inputFieldGroup.get('fileTypeControl')
+            .setValue(this.inputRule.data.fileType);
+          break;
+        case 'folderLocationControl':
+          this.pickedFolder = this.inputRule.data.folder
+          break;
+        case 'ownerTextControl':
+          this.inputFieldGroup.get('ownerTextControl')
+            .setValue(this.inputRule.data.owner);
+          break;
+        case 'dateControl':
+          if (this.constraintSelectOption === 'between') {
+            this.inputFieldGroup.get('firstDateControl')
+              .setValue(this.inputRule.data.firstDate);
+            this.inputFieldGroup.get('secondDateControl')
+              .setValue(this.inputRule.data.secondDate);
+          } else {
+            this.inputFieldGroup.get('dateControl')
+              .setValue(this.inputRule.data.date);
+          }
+          break;
+      }
+    }
   }
 
   finished(): void {
     const data = {}
+    let ruleUUID: string;
+    if (this.inputRule) {
+      ruleUUID = this.inputRule.id;
+    } else {
+      ruleUUID = uuid();
+    }
     switch (this.getFieldControl(this.classifierSelectOption)) {
       case 'titleTextControl':
           data['title'] = this.inputFieldGroup.get('titleTextControl').value;
@@ -252,9 +306,11 @@ export class NewRuleStepperComponent implements OnInit {
         break;
     }
     const val = {
+      id: ruleUUID,
       classifier: this.classifierFormGroup.get('classifierControl').value,
       constraint: this.constraintFormGroup.get('constraintControl').value,
-      data: data
+      data: data,
+      name: this.nameFormGroup.get('ruleName').value
     }
     this.value = val;
     this.valueChange.emit(this.value);
@@ -284,7 +340,7 @@ export class NewRuleStepperComponent implements OnInit {
   }
 
   stepChanged(event: StepperSelectionEvent): void {
-    if (event.previouslySelectedIndex === 0) {
+    if (event.previouslySelectedIndex === 1) {
       const classifierValue = this.classifierFormGroup.get('classifierControl').value;
       this.betweenConstraintDisabled = this.checkIfBetweenDisabled(classifierValue);
       this.startEndWithDisabled = this.checkIfStartEndDisabled(classifierValue);

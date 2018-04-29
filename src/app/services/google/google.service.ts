@@ -26,6 +26,8 @@ let _folderPicked = new Subject<any>();
 function folderPicked(data: any): void {
   if (data.action === 'picked') {
     _folderPicked.next(data.docs[0]);
+  } else if (data.action === 'cancel') {
+    _folderPicked.error(true);
   }
 }
 

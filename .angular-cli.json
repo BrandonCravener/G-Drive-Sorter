@@ -10,7 +10,8 @@
       "assets": [
         "assets",
         "favicon.ico",
-        "terms.html"
+        "terms.html",
+        "CNAME"
       ],
       "index": "index.html",
       "main": "main.ts",

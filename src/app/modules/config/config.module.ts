@@ -15,13 +15,20 @@ import {
   MatTableModule,
   MatButtonModule,
   MatIconModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatProgressSpinnerModule,
+  MatProgressBarModule,
+  MatListModule,
+  MatSnackBarModule,
+  MatSlideToggleModule
   } from '@angular/material';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { NewConfigPageComponent } from '../../components/shared/new-config-page/new-config-page.component';
 import { NewRuleStepperComponent } from '../../components/shared/new-rule-stepper/new-rule-stepper.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { EditConfigModalComponent } from '../../components/shared/edit-config-modal/edit-config-modal.component';
+import { EditConfigPageComponent } from '../../components/shared/edit-config-page/edit-config-page.component';
+import { UnNamedPipe } from '../../pipes/un-named.pipe';
 
 @NgModule({
   declarations: [
@@ -29,11 +36,15 @@ import { EditConfigModalComponent } from '../../components/shared/edit-config-mo
     NewConfigPageComponent,
     ConfigModalComponent,
     NewRuleStepperComponent,
-    EditConfigModalComponent
+    EditConfigModalComponent,
+    EditConfigPageComponent,
+    UnNamedPipe
   ],
   imports: [
+    FormsModule,
     CommonModule,
     MatIconModule,
+    MatListModule,
     MatInputModule,
     MatTableModule,
     MatSelectModule,
@@ -41,12 +52,15 @@ import { EditConfigModalComponent } from '../../components/shared/edit-config-mo
     MatTooltipModule,
     MatStepperModule,
     MatGridListModule,
+    MatSnackBarModule,
     MatPaginatorModule,
     MatFormFieldModule,
     MatExpansionModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatProgressBarModule,
+    MatSlideToggleModule
   ],
   entryComponents: [
     ConfigModalComponent,

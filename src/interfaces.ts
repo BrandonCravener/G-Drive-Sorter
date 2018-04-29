@@ -1,15 +1,37 @@
-import { AngularFirestoreCollection } from "angularfire2/firestore";
+import { AngularFirestoreCollection } from 'angularfire2/firestore';
 
 export interface ConfigInterface {
     activeConfig: string;
 }
 
-export interface ConfigsInterface {
+export interface RuleInterface {
+    id: string,
     name: string,
-    groups: Object
+    data?: object,
+    classifier?: string,
+    constraint?: string
+}
+
+export interface GroupFolderInterface {
+    name?: string,
+    folderID?: string
+}
+
+export interface GroupInterface {
+    id: string,
+    name: string,
+    rules: Array<RuleInterface>,
+    source: GroupFolderInterface,
+    destination: GroupFolderInterface
+}
+
+export interface ConfigsInterface {
+    id: string,
+    name: string,
+    groups: Array<GroupInterface>
 }
 
 export interface UserDocument {
-    configs: AngularFirestoreCollection<ConfigsInterface>,
-    activeConfig: string
+    activeConfig: string,
+    configs: AngularFirestoreCollection<ConfigsInterface>
 }

@@ -1,11 +1,70 @@
-<div [class.container]="isPage">
-  <h3 mat-dialog-title *ngIf="!isPage">Edit Config</h3>
-  <h3 *ngIf="isPage">Edit Config</h3>
+<div [class.container]="isPage" *ngIf="configLoaded | async; else loadingConfig">
+  <h3 mat-dialog-title *ngIf="!isPage">Editing Config - {{ config.name | unNamed }}</h3>
+  <h3 *ngIf="isPage">Editing Config - {{ config.name | unNamed }}</h3>
   <div mat-dialog-content>
-    
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Config Name" [(ngModel)]="config.name" required>
+    </mat-form-field>
+    <h4>
+      Group's
+      <button mat-icon-button class="right" color="primary" matTooltip="Add Group" (click)="addGroup()">
+        <mat-icon aria-label="Add Group">add</mat-icon>
+      </button>
+    </h4>
+    <div style="padding: 10px 16px;" class="overflow-limit">
+        <mat-expansion-panel  *ngFor="let group of config.groups">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{ group.name | unNamed }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+            <mat-form-field class="full-width">
+                <input matInput placeholder="Group Name" [(ngModel)]="group.name" required>
+            </mat-form-field>
+            <div class="full-width">
+              <mat-form-field style="width: 70%;">
+                <input matInput type="text" [value]="group.source.name" placeholder="From" disabled required/>
+                <button mat-button matSuffix mat-icon-button aria-label="Pick Source Folder" [disabled]="group.source.folderID === 'root'" (click)="openFolderPicker(group.id, 'source')">
+                  <mat-icon>folder</mat-icon>
+                </button>
+              </mat-form-field>
+              <mat-slide-toggle [checked]="group.source.folderID === 'root'" (change)="rootToggleChange($event, 'source', group.id)">My Drive</mat-slide-toggle>
+            </div>
+            <div class="full-width">
+              <mat-form-field style="width: 70%;">
+                <input matInput type="text" [value]="group.destination.name" placeholder="To" disabled required/>
+                <button mat-button matSuffix mat-icon-button aria-label="Pick Destination Folder" [disabled]="group.destination.folderID === 'root'" (click)="openFolderPicker(group.id, 'destination')">
+                  <mat-icon>folder</mat-icon>
+                </button>
+              </mat-form-field>
+              <mat-slide-toggle [checked]="group.destination.folderID === 'root'" (change)="rootToggleChange($event, 'destination', group.id)">My Drive</mat-slide-toggle> 
+            </div>
+            <h5>
+              Rule's
+              <button mat-icon-button class="right" color="accent" matTooltip="Add Rule" (click)="addRule(group.id)">
+                <mat-icon aria-label="Add Rule">add</mat-icon>
+              </button>
+            </h5>
+            <mat-expansion-panel [expanded]="editingRuleID === rule.id" (opened)="editingRuleID = rule.id" *ngFor="let rule of group.rules">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{ rule.name | unNamed }}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <ng-template matExpansionPanelContent>
+                <app-new-rule-stepper (valueChange)="ruleChanged($event, rule.id, group.id)" [reset]="true" [inputRule]="rule"></app-new-rule-stepper>
+              </ng-template>
+            </mat-expansion-panel>
+          </ng-template>
+        </mat-expansion-panel>            
+    </div>
   </div>
   <div mat-dialog-actions>
-    <button mat-button>Done</button>
+    <button mat-button [disabled]="!valid" (click)="done()">Done</button>
     <button mat-button (click)="close()">Cancel</button>
   </div>
 </div>
+<ng-template #loadingConfig>
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</ng-template>

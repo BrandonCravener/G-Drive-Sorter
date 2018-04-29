@@ -14,7 +14,7 @@
             </mat-panel-description>
           </mat-expansion-panel-header>
           <ng-template matExpansionPanelContent>
-            <mat-form-field [floatLabel]="newConfig.value.floatLabel">
+            <mat-form-field class="full-width" [floatLabel]="newConfig.value.floatLabel">
               <mat-label>Name</mat-label>
               <input matInput formControlName="newConfigNameControl" required>
               <mat-error>Please a config name!</mat-error>
@@ -34,7 +34,7 @@
             </mat-panel-description>
           </mat-expansion-panel-header>
           <ng-template matExpansionPanelContent>
-            <mat-form-field [floatLabel]="newConfig.value.floatLabel">
+            <mat-form-field class="full-width" [floatLabel]="newConfig.value.floatLabel">
               <mat-label>Group Name</mat-label>
               <input matInput formControlName="newGroupNameControl" required>
               <mat-error>Please enter a inital group name!</mat-error>
@@ -48,19 +48,31 @@
         <mat-expansion-panel [disabled]="!checkValidation(1)" [expanded]="step === 2" (opened)="setStep(2)">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Group Destination
+              Group Locations
             </mat-panel-title>
             <mat-panel-description *ngIf="!isPage">
               Where all files matching group rules will go.
             </mat-panel-description>
           </mat-expansion-panel-header>
           <ng-template matExpansionPanelContent>
-              <mat-form-field style="width: 100%;">
-                <input matInput type="text" placeholder="Location" formControlName="folderLocationControl" disabled required/>
-                <button mat-button matSuffix mat-icon-button aria-label="Pick Destination Folder" (click)="openFolderPicker()">
-                  <mat-icon>folder</mat-icon>
-                </button>
-              </mat-form-field> 
+              <div class="full-width">
+                <mat-form-field style="width: 70%;">
+                  <input matInput type="text" placeholder="From" [value]="source.name" disabled required/>
+                  <button mat-button matSuffix mat-icon-button aria-label="Pick From Folder" [disabled]="folderButtonSourceDisabled" (click)="openFolderPicker('source')">
+                    <mat-icon>folder</mat-icon>
+                  </button>
+                </mat-form-field> 
+                <mat-slide-toggle (change)="rootToggleChange($event, 'source')">My Drive</mat-slide-toggle>
+              </div>
+              <div class="full-width">
+                <mat-form-field style="width: 70%;">
+                  <input matInput type="text" placeholder="To" [value]="destination.name" disabled required/>
+                  <button mat-button matSuffix mat-icon-button aria-label="Pick To Folder" [disabled]="folderButtonDestinationDisabled" (click)="openFolderPicker('destination')">
+                    <mat-icon>folder</mat-icon>
+                  </button>
+                </mat-form-field> 
+                <mat-slide-toggle (change)="rootToggleChange($event, 'destination')">My Drive</mat-slide-toggle>
+              </div>
           </ng-template>
           <mat-action-row>
             <button mat-button color="warn" (click)="prevStep()">Previous</button>

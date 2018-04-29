@@ -18,8 +18,5 @@ before_install:
 before_script:
   - yarn global add @angular/cli
   - yarn global add karma
-  - yarn global add codecov
   - yarn
 script: yarn run test --single-run
-after_success:
-  - codecov -f coverage/coverage-final.json

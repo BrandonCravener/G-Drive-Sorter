@@ -1,9 +1,15 @@
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { ConfigBuilder } from '../../classes/config-builder';
+import {
+  ConfigInterface,
+  ConfigsInterface,
+  GroupFolderInterface,
+  RuleInterface,
+  UserDocument
+  } from '../../../interfaces';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
-import { UserDocument, ConfigsInterface, ConfigInterface } from '../../../interfaces';
 
 @Injectable()
 export class DatabaseService {
@@ -19,6 +25,8 @@ export class DatabaseService {
   private configDocument: AngularFirestoreDocument<ConfigInterface>;
   private configsCollection: AngularFirestoreCollection<ConfigsInterface>;
   private userDoc: AngularFirestoreDocument<UserDocument>;
+
+  public editingConfig: string;
   
 
   constructor(
@@ -39,12 +47,14 @@ export class DatabaseService {
   createConfig(
     configName: string,
     firstGroupName: string,
-    destinationLocation: string,
-    firstGroupRule: object
+    sourceLocation: GroupFolderInterface,
+    destinationLocation: GroupFolderInterface,
+    firstGroupRule: RuleInterface
   ): void {
     const newConfig = ConfigBuilder.generateNewConfig(
       configName,
       firstGroupName,
+      sourceLocation,
       destinationLocation,
       firstGroupRule
     );
@@ -84,6 +94,20 @@ export class DatabaseService {
         console.error(err);
         this._activeConfigChanged.error(err);
       })
+  }
+
+  updateConfig(newConfig: ConfigsInterface): void {
+    this.configsCollection.doc(this.editingConfig).ref.set(newConfig)
+      .then(() => {
+        this.editingConfig = '';
+        this._configSubject.next(true);
+      }, err => console.error);
+  }
+
+  getConfig(configID: string, cb: Function): void {
+    this.configsCollection.doc(configID).ref.get().then(snapshot => {
+      cb(snapshot.data());
+    }, err => console.error);
   }
 
   getActiveConfig(cb: Function): void {
