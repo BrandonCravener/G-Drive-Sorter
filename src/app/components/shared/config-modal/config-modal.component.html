@@ -9,12 +9,12 @@
             <mat-panel-title>
               Config Name
             </mat-panel-title>
-            <mat-panel-description>
+            <mat-panel-description *ngIf="!isPage">
               The name of the new configuration.
             </mat-panel-description>
           </mat-expansion-panel-header>
           <ng-template matExpansionPanelContent>
-            <mat-form-field [floatLabel]="newConfig.value.floatLabel">
+            <mat-form-field class="full-width" [floatLabel]="newConfig.value.floatLabel">
               <mat-label>Name</mat-label>
               <input matInput formControlName="newConfigNameControl" required>
               <mat-error>Please a config name!</mat-error>
@@ -29,12 +29,12 @@
             <mat-panel-title>
               Group Name
             </mat-panel-title>
-            <mat-panel-description>
+            <mat-panel-description *ngIf="!isPage">
               The new configuration's inital group name.
             </mat-panel-description>
           </mat-expansion-panel-header>
           <ng-template matExpansionPanelContent>
-            <mat-form-field [floatLabel]="newConfig.value.floatLabel">
+            <mat-form-field class="full-width" [floatLabel]="newConfig.value.floatLabel">
               <mat-label>Group Name</mat-label>
               <input matInput formControlName="newGroupNameControl" required>
               <mat-error>Please enter a inital group name!</mat-error>
@@ -45,17 +45,51 @@
             </mat-action-row>
           </ng-template>
         </mat-expansion-panel>
-        <mat-expansion-panel [class.overflow-limit]="!isPage" [disabled]="!checkValidation(1)" [expanded]="step === 2" (opened)="setStep(2)">
+        <mat-expansion-panel [disabled]="!checkValidation(1)" [expanded]="step === 2" (opened)="setStep(2)">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Group Locations
+            </mat-panel-title>
+            <mat-panel-description *ngIf="!isPage">
+              Where all files matching group rules will go.
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+              <div class="full-width">
+                <mat-form-field style="width: 70%;">
+                  <input matInput type="text" placeholder="From" [value]="source.name" disabled required/>
+                  <button mat-button matSuffix mat-icon-button aria-label="Pick From Folder" [disabled]="folderButtonSourceDisabled" (click)="openFolderPicker('source')">
+                    <mat-icon>folder</mat-icon>
+                  </button>
+                </mat-form-field> 
+                <mat-slide-toggle (change)="rootToggleChange($event, 'source')">My Drive</mat-slide-toggle>
+              </div>
+              <div class="full-width">
+                <mat-form-field style="width: 70%;">
+                  <input matInput type="text" placeholder="To" [value]="destination.name" disabled required/>
+                  <button mat-button matSuffix mat-icon-button aria-label="Pick To Folder" [disabled]="folderButtonDestinationDisabled" (click)="openFolderPicker('destination')">
+                    <mat-icon>folder</mat-icon>
+                  </button>
+                </mat-form-field> 
+                <mat-slide-toggle (change)="rootToggleChange($event, 'destination')">My Drive</mat-slide-toggle>
+              </div>
+          </ng-template>
+          <mat-action-row>
+            <button mat-button color="warn" (click)="prevStep()">Previous</button>
+            <button mat-button color="primary" (click)="nextStep()">Next</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+        <mat-expansion-panel [class.overflow-limit]="!isPage" [disabled]="!checkValidation(2)" [expanded]="step === 3" (opened)="setStep(3)">
           <mat-expansion-panel-header>
             <mat-panel-title>
               First Rule
             </mat-panel-title>
-            <mat-panel-description>
+            <mat-panel-description *ngIf="!isPage">
               The new configuration's inital group's first rule.
             </mat-panel-description>
           </mat-expansion-panel-header>
           <ng-template matExpansionPanelContent>
-            <app-new-rule-stepper (valueChange)="stepperFinished($event)" ></app-new-rule-stepper>
+            <app-new-rule-stepper (valueChange)="stepperFinished($event)"></app-new-rule-stepper>
             <mat-action-row>
               <button mat-button color="warn" (click)="prevStep()">Previous</button>
             </mat-action-row>

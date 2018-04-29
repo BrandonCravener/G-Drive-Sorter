@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConfigModalComponent } from './config-modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
+import { ConfigModule } from '../../../modules/config/config.module';
 
 describe('ConfigModalComponent', () => {
   let component: ConfigModalComponent;
@@ -15,6 +16,7 @@ describe('ConfigModalComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         AppModule,
+        ConfigModule,
         AuthenticatedModule,
         BrowserAnimationsModule
       ],

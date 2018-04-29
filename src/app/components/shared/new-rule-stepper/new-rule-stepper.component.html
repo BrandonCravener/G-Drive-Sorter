@@ -1,8 +1,18 @@
-<mat-vertical-stepper (selectionChange)="stepChanged($event)" linear>
-  <mat-step label="Classifier" [stepControl]="classifierFormGroup">
+<mat-vertical-stepper (selectionChange)="stepChanged($event)" linear #stepper>
+  <mat-step label="Name" [stepControl]="nameFormGroup">
+    <form [formGroup]="nameFormGroup">
+      <mat-form-field>
+          <input matInput placeholder="Rule Name" formControlName="ruleName" required>
+      </mat-form-field>
+      <div>
+        <button mat-button type="button" matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step label="Trait" [stepControl]="classifierFormGroup">
     <form [formGroup]="classifierFormGroup">
       <mat-form-field>
-        <mat-select placeholder="Classifier" formControlName="classifierControl" [(value)]="classifierSelectOption">
+        <mat-select placeholder="Trait" formControlName="classifierControl" [(value)]="classifierSelectOption">
           <mat-option *ngFor="let classifier of classifiers" [value]="classifier.value">
             {{ classifier.label }}
           </mat-option>
@@ -10,13 +20,14 @@
       </mat-form-field>
       <div>
         <button mat-button type="button" matStepperNext>Next</button>
+        <button mat-button type="button" matStepperPrevious>Back</button>
       </div>
     </form>
   </mat-step>
-  <mat-step label="Constraint" [stepControl]="constraintFormGroup">
+  <mat-step label="Limitation" [stepControl]="constraintFormGroup">
     <form [formGroup]="constraintFormGroup">
       <mat-form-field>
-        <mat-select placeholder="Constraint" formControlName="constraintControl" [(value)]="constraintSelectOption">
+        <mat-select placeholder="Limitation" formControlName="constraintControl" [(value)]="constraintSelectOption">
           <mat-option *ngFor="let constraint of constriants" [value]="constraint.value">
             {{ constraint.label }}
           </mat-option>

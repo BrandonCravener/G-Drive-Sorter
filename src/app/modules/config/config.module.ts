@@ -14,38 +14,57 @@ import {
   MatStepperModule,
   MatTableModule,
   MatButtonModule,
-  MatIconModule
+  MatIconModule,
+  MatTooltipModule,
+  MatProgressSpinnerModule,
+  MatProgressBarModule,
+  MatListModule,
+  MatSnackBarModule,
+  MatSlideToggleModule
   } from '@angular/material';
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { NewRulePageComponent } from '../../components/shared/new-rule-page/new-rule-page.component';
+import { NewConfigPageComponent } from '../../components/shared/new-config-page/new-config-page.component';
 import { NewRuleStepperComponent } from '../../components/shared/new-rule-stepper/new-rule-stepper.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { EditConfigModalComponent } from '../../components/shared/edit-config-modal/edit-config-modal.component';
+import { EditConfigPageComponent } from '../../components/shared/edit-config-page/edit-config-page.component';
+import { UnNamedPipe } from '../../pipes/un-named.pipe';
 
 @NgModule({
   declarations: [
     ConfigListComponent,
-    NewRulePageComponent,
+    NewConfigPageComponent,
     ConfigModalComponent,
-    NewRuleStepperComponent
+    NewRuleStepperComponent,
+    EditConfigModalComponent,
+    EditConfigPageComponent,
+    UnNamedPipe
   ],
   imports: [
+    FormsModule,
     CommonModule,
     MatIconModule,
+    MatListModule,
     MatInputModule,
     MatTableModule,
     MatSelectModule,
     MatButtonModule,
+    MatTooltipModule,
     MatStepperModule,
     MatGridListModule,
+    MatSnackBarModule,
     MatPaginatorModule,
     MatFormFieldModule,
     MatExpansionModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatProgressBarModule,
+    MatSlideToggleModule
   ],
   entryComponents: [
-    ConfigModalComponent
+    ConfigModalComponent,
+    EditConfigModalComponent
   ],
   exports: [
     ConfigListComponent

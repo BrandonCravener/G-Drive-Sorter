@@ -29,7 +29,7 @@ import { UnauthenticatedComponent } from './components/auth/unauthenticated/unau
 @NgModule({
   declarations: [
     AppComponent,
-    UnauthenticatedComponent
+    UnauthenticatedComponent,
   ],
   imports: [
     BrowserModule,
