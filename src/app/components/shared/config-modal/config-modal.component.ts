@@ -55,7 +55,18 @@ export class ConfigModalComponent implements OnInit {
     })
   }
   
-  private checkValidation(stepNumber: number) {
+  
+  private checkAllValidation(): boolean {
+    let anyInvalid = false;
+    for (let i = 0; i < 2; i++) {
+      if (!this.checkValidation(i)) {
+        anyInvalid = true;
+      }
+    }
+    return !anyInvalid;
+  }
+  
+  checkValidation(stepNumber: number) {
     switch (stepNumber) {
       case 0:
         return this.newConfig.get('newConfigNameControl').valid;
@@ -75,21 +86,11 @@ export class ConfigModalComponent implements OnInit {
         return false;
     }
   }
-
-  private checkAllValidation(): boolean {
-    let anyInvalid = false;
-    for (let i = 0; i < 2; i++) {
-      if (!this.checkValidation(i)) {
-        anyInvalid = true;
-      }
-    }
-    return !anyInvalid;
-  }
   
   setStep(index: number) {
     this.step = index;
   }
-
+  
   openFolderPicker(folderType: string) {
     let folderPickedListener = this.google.folderPicked$.subscribe(pickedFolder => {
       if (folderType === 'destination') {
