@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DatabaseService } from '../../../services/firebase/database.service';
 
 /**
  * Declare a component to be shown when the home tab is selected.
@@ -13,11 +14,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  
+  public activeConfigName: string = 'Loading...'  
+
   /**
    * Creates an instance of HomeComponent.
    * @memberof HomeComponent
    */
-  constructor() { }
+  constructor(
+    private database: DatabaseService
+  ) { }
 
   /**
    * Handle component initalization
@@ -25,6 +31,17 @@ export class HomeComponent implements OnInit {
    * @memberof HomeComponent
    */
   ngOnInit() {
+    if (this.database.userID) {
+      this.database.getActiveConfig(activeConfig => {
+        if (activeConfig) {
+          this.database.getConfig(activeConfig, config => {
+            this.activeConfigName = config.name;
+          });
+        } else {
+          this.activeConfigName = 'No active configuration!'
+        }
+      });
+    }
   }
 
 }

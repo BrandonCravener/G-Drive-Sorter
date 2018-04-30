@@ -22,7 +22,8 @@ import {
   MatSelectModule,
   MatStepperModule,
   MatTableModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatCardModule
   } from '@angular/material';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { SettingsComponent } from '../../components/tabs/settings/settings.component';
@@ -45,6 +46,7 @@ import { DatabaseService } from '../../services/firebase/database.service';
     CommonModule,
     MatIconModule,
     MatListModule,
+    MatCardModule,
     MatInputModule,
     MatButtonModule,
     MatDialogModule,
