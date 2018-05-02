@@ -6,14 +6,14 @@ import {
   } from '@angular/core';
 import { ConfigBuilder } from '../../../classes/config-builder';
 import { ConfigListComponent } from '../../tabs/config/config-list/config-list.component';
-import { ConfigsInterface, RuleInterface, GroupInterface } from '../../../../interfaces';
+import { ConfigsInterface, GroupInterface, RuleInterface } from '../../../../interfaces';
 import { DatabaseService } from '../../../services/firebase/database.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatExpansionPanel, MatSnackBar, MatSlideToggleChange } from '@angular/material';
+import { GoogleService } from '../../../services/google/google.service';
+import { MatExpansionPanel, MatSlideToggleChange, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { v4 as uuid } from 'uuid';
-import { GoogleService } from '../../../services/google/google.service';
 
 @Component({
   selector: 'app-edit-config-modal',
@@ -133,6 +133,16 @@ export class EditConfigModalComponent implements OnInit {
       });
     }
   }
+
+  removeGroup(groupID: string) {
+    this.config.groups.splice(this.getGroupIndex(groupID), 1);
+  }
+
+  removeRule(groupID: string, ruleID: string) {
+    this.config.groups[this.getGroupIndex(groupID)]
+      .rules.splice(this.getRuleIndex(groupID, ruleID), 1);
+  }
+
   rootToggleChange(event: MatSlideToggleChange,
     folderType: string, 
     groupID: string

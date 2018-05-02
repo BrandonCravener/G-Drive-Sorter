@@ -54,8 +54,14 @@
               </mat-expansion-panel-header>
               <ng-template matExpansionPanelContent>
                 <app-new-rule-stepper (valueChange)="ruleChanged($event, rule.id, group.id)" [reset]="true" [inputRule]="rule"></app-new-rule-stepper>
+                <mat-action-row>
+                  <button mat-button color="warn" (click)="removeRule(group.id, rule.id)" [disabled]="group.rules.length < 2">Remove Rule</button>
+                </mat-action-row>
               </ng-template>
             </mat-expansion-panel>
+            <mat-action-row>
+              <button mat-button color="warn" (click)="removeGroup(group.id)" [disabled]="config.groups.length < 2">Remove Group</button>
+            </mat-action-row>
           </ng-template>
         </mat-expansion-panel>            
     </div>

@@ -111,22 +111,34 @@ export class DatabaseService {
   }
 
   getActiveConfig(cb: Function): void {
-    this
+    if (this.configDocument) {
+      this
       .configDocument
       .ref
       .get()
       .then(snapshot => {
-        cb(snapshot.data()['activeConfig']);
+        if (snapshot && snapshot.data()) {
+          cb(snapshot.data()['activeConfig']);
+        } else {
+          cb(null);
+        }
       }, err => console.error);
+    } else {
+      cb(null);
+    }
   }
 
   numberConfigs(cb: Function): void {
-    this
+    if (this.configsCollection) {
+      this
       .configsCollection
       .ref
       .get()
       .then(snapshot => {
         cb(snapshot.docs.length);
-      })
+      });
+    } else {
+      cb(0);
+    }
   }
 }
