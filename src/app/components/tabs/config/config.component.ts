@@ -1,9 +1,8 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit, AfterViewInit } from '@angular/core';
 import { ConfigModalComponent } from '../../shared/config-modal/config-modal.component';
 import { MatDialog } from '@angular/material';
 import { RepositionScrollStrategy } from '@angular/cdk/overlay';
 import { Router } from '@angular/router';
-
 /**
  * Declare component to be shown when the config tab is selected.
  * 
@@ -14,9 +13,12 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-config',
   templateUrl: './config.component.html',
-  styleUrls: ['./config.component.scss']
+  styleUrls: ['./config.component.scss'],
 })
-export class ConfigComponent implements OnInit {
+export class ConfigComponent implements OnInit, AfterViewInit {
+
+  public initalized: boolean = false;
+
   /**
    * Creates an instance of ConfigComponent.
    * @memberof ConfigComponent
@@ -33,6 +35,10 @@ export class ConfigComponent implements OnInit {
    * @memberof ConfigComponent
    */
   ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    this.initalized = true;
   }
 
   public getDialogWidth() {
