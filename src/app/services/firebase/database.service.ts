@@ -7,9 +7,9 @@ import {
   GroupFolderInterface,
   RuleInterface,
   UserDocument
-  } from '../../../interfaces';
+} from '../../../interfaces';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class DatabaseService {
@@ -33,6 +33,9 @@ export class DatabaseService {
     private firebase: AngularFirestore,
     private firebaseAuth: AngularFireAuth
   ) {
+    firebase.firestore.settings({
+      timestampsInSnapshots: true
+    });
     if (this.firebaseAuth.auth.currentUser) {
       this.userID = firebaseAuth
         .auth

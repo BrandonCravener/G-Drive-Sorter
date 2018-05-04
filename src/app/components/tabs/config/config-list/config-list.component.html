@@ -17,8 +17,8 @@
       <mat-cell *matCellDef="let config">{{config.name}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="actions">
-      <mat-header-cell *matHeaderCellDef style="text-align: right;">Actions</mat-header-cell>
-      <mat-cell style="text-align: right;" *matCellDef="let config">
+      <mat-header-cell class="right" *matHeaderCellDef>Actions</mat-header-cell>
+      <mat-cell class="right" *matCellDef="let config">
         <button mat-icon-button color="accent" matTooltip="Edit Config" (click)="editConfig(config.key)">
           <mat-icon aria-label="Edit Config">edit</mat-icon>
         </button>

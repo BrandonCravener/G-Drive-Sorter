@@ -1,9 +1,8 @@
-import { Component, NgZone, AfterViewInit } from '@angular/core';
-import { Router } from '@angular/router';
-
+import { AfterViewInit, Component, NgZone } from '@angular/core';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { fabAnimation, routerAnimation } from '../animations';
 import { GoogleService } from './services/google/google.service';
-
-import { routerAnimation } from '../router.animations';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 
 /**
  * Workaround for testing
@@ -20,36 +19,25 @@ declare var gapi: any;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  styleUrls: ['./app.component.scss'],
   providers: [ GoogleService ],
-  animations: [ routerAnimation ]
+  animations: [ 
+    routerAnimation,
+    fabAnimation
+  ]
 })
 export class AppComponent implements AfterViewInit {
-  /**
-   * Checks if the view has initalized yet.
-   * 
-   * @public
-   * @type {boolean}
-   * @memberof AppComponent
-   */
-  public rlaSafe: boolean = false;
-  /**
-   * Hold the users authenitcation status
-   * 
-   * @type {Boolean}
-   * @memberof AppComponent
-   */
-  authenticated: Boolean;
 
-  /**
-   * An array of links thats translated into tabs.
-   * 
-   * @memberof AppComponent
-   */
-  tabLinks = [
+  private openConfigModal: Subject<boolean> = new Subject<boolean>();
+
+  public authenticated: Boolean;
+  public rlaSafe: boolean = false;
+  public createConfigButtonState: string = 'inactive';
+  public openConfigModal$ = this.openConfigModal.asObservable();
+  public tabLinks = [
     {
       path: 'app/home',
-      label: 'Home'
+      label: 'Home'	
     },
     {
       path: 'app/config',
@@ -60,6 +48,7 @@ export class AppComponent implements AfterViewInit {
       label: 'Settings'
     }
   ];
+
   /**
    * Creates an instance of AppComponent.
    * @param {GoogleService} google Declare the Google Service as google
@@ -67,7 +56,11 @@ export class AppComponent implements AfterViewInit {
    * @param {NgZone} zone  Declare NgZone as zon
    * @memberof AppComponent
    */
-  constructor(private google: GoogleService, private router: Router, private zone: NgZone) {
+  constructor(
+    private google: GoogleService, 
+    private router: Router, 
+    private zone: NgZone
+  ) {
     const googleInitInterval = setInterval(() => {
       if (window['gapi']) {
         this.google.init({
@@ -102,19 +95,28 @@ export class AppComponent implements AfterViewInit {
    */
   public ngAfterViewInit() {
     this.rlaSafe = true;
+    // Listen for route changes
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        if (event.url === '/app/config') {
+          this.createConfigButtonState = 'active';
+        } else {
+          this.createConfigButtonState = 'inactive';
+        }
+      }
+    })
   }
-  
-  /**
-   * Signs the user out.
-   * 
-   * @memberof AppComponent
-   */
+
   signOut() {
     this.google.signOut();
   }
 
   signIn() {
     this.google.signIn();
+  }
+
+  openConfigModalFunc() {
+    this.openConfigModal.next(true);
   }
   
   /**
@@ -124,8 +126,8 @@ export class AppComponent implements AfterViewInit {
    * @returns 
    * @memberof AppComponent
    */
-  getRouteAnimation(outlet) {
-    return outlet.activatedRouteData.name;
+  getRouteState(outlet) {
+    return outlet.activatedRouteData.state;
   }
 
 }

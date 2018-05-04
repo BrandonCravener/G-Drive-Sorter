@@ -12,7 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GoogleService } from '../../../services/google/google.service';
 import { MatExpansionPanel, MatSlideToggleChange, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { v4 as uuid } from 'uuid';
 
 @Component({

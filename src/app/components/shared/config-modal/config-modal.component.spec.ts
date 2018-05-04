@@ -4,9 +4,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuthenticatedModule } from '../../../modules/authenticated/authenticated.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConfigModalComponent } from './config-modal.component';
+import { ConfigModule } from '../../../modules/config/config.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
-import { ConfigModule } from '../../../modules/config/config.module';
 
 describe('ConfigModalComponent', () => {
   let component: ConfigModalComponent;

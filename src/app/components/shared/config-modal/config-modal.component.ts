@@ -8,7 +8,7 @@ import { GoogleService } from '../../../services/google/google.service';
 import { GroupFolderInterface } from '../../../../interfaces';
 import { MatDialogRef, MatSlideToggleChange } from '@angular/material';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-config-modal',

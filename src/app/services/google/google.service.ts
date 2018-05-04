@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 import { AngularFireAuth } from 'angularfire2/auth';
 
 import * as firebase from "firebase/app";
@@ -87,7 +87,9 @@ export class GoogleService {
         gapi.load('picker', () => {
           const view = new google.picker.DocsView(google.picker.ViewId.FOLDERS)
             .setIncludeFolders(true)
-            .setSelectFolderEnabled(true);
+            .setSelectFolderEnabled(true)
+            .setParent('root')
+            .setOwnedByMe(true);
 
           folderPicker = new google.picker.PickerBuilder()
             .disableFeature(google.picker.Feature.SUPPORT_TEAM_DRIVES)

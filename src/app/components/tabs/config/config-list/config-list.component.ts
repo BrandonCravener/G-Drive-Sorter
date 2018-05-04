@@ -1,9 +1,10 @@
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import {
   Component,
   NgZone,
+  OnDestroy,
   OnInit,
   ViewChild
   } from '@angular/core';
@@ -12,9 +13,15 @@ import { createDirective } from '@angular/compiler/src/core';
 import { DatabaseService } from '../../../../services/firebase/database.service';
 import { DataSource } from '@angular/cdk/collections';
 import { EditConfigModalComponent } from '../../../shared/edit-config-modal/edit-config-modal.component';
-import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
+import {
+  MatDialog,
+  MatPaginator,
+  MatTable,
+  MatTableDataSource
+  } from '@angular/material';
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 export interface Config {
   name: String,
@@ -26,22 +33,26 @@ export interface Config {
   templateUrl: './config-list.component.html',
   styleUrls: ['./config-list.component.scss']
 })
-export class ConfigListComponent implements OnInit {
+export class ConfigListComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   private userID: string;
   private configCollection;
   private activeConfig: string;
   private oldPageSize: number = 10;
+  private loadingSubscription: Subscription;
+  private paginatorSubscription: Subscription;
+  private configChangeSubscription: Subscription;
+  private activeConfigChangeSubscription: Subscription;
   
+  public loading: boolean = true;
   public noConfigs: boolean = true;
   public dataSource: ConfigDataSource;
   public tableColumns = ['name', 'actions'];
-  public loading: boolean = true;
   
   constructor(
-    private firebase: AngularFirestore, 
     private firebaseAuth: AngularFireAuth,
+    private firebase: AngularFirestore, 
     private database: DatabaseService,
     private dialog: MatDialog, 
     private router: Router, 
@@ -71,7 +82,7 @@ export class ConfigListComponent implements OnInit {
   ngAfterViewInit() {
     if (this.firebaseAuth.auth.currentUser) {
       // Listen for page changes
-      this.paginator.page.subscribe(() => {
+      this.paginatorSubscription = this.paginator.page.subscribe(() => {
         if (this.oldPageSize == this.paginator.pageSize) {
           this.dataSource.loadConfigs(
             this.paginator.pageIndex, 
@@ -93,24 +104,24 @@ export class ConfigListComponent implements OnInit {
         this.paginator.length = numConfigs;
       });
       // Listen for config changes
-      this.database.configSubject.subscribe(created => {
-        if (created) {
+      this.configChangeSubscription = 
+        this.database.configSubject.subscribe(created => {
           this.refreshConfigs();
-        } else {
-        }
       });
       // Retrive the active config
       this.database.getActiveConfig(activeConfig => {
         this.activeConfig = activeConfig;
       });
       // Listen for active config changes
-      this.database.activeConfigChanged.subscribe(newConfigID => {
-        this.activeConfig = newConfigID;
+      this.activeConfigChangeSubscription = 
+        this.database.activeConfigChanged.subscribe(newConfigID => {
+          this.activeConfig = newConfigID;
       }, err => console.error);
       setTimeout(_=> {
         // Listen for loading state changes
-        this.dataSource.loading$.subscribe(loading => {
-          this.loading = loading;
+        this.loadingSubscription = this.dataSource
+          .loading$.subscribe(loading => {
+            this.loading = loading;
         });
       });
     }
@@ -148,8 +159,9 @@ export class ConfigListComponent implements OnInit {
         maxHeight: `${document.body.clientHeight * .9}px`
       });
       const componentInstance = dialogInstance.componentInstance;
-      componentInstance.closeCommand.subscribe(close => {
+      let closeSubscription = componentInstance.closeCommand.subscribe(close => {
         dialogInstance.close();
+        closeSubscription.unsubscribe();
       });
     } else {
       this.zone.run(() => {
@@ -172,6 +184,14 @@ export class ConfigListComponent implements OnInit {
   getActiveConfig(configKey: string): boolean {
     return (this.activeConfig === configKey) ? true : false;
   }
+
+  ngOnDestroy() {
+    this.loadingSubscription.unsubscribe();
+    this.paginatorSubscription.unsubscribe();
+    this.configChangeSubscription.unsubscribe();
+    this.activeConfigChangeSubscription.unsubscribe();
+  }
+
 }
 
 export class ConfigDataSource implements DataSource<Config> {
