@@ -32,10 +32,10 @@
             {{ constraint.label }}
           </mat-option>
           <mat-option [disabled]="startEndWithDisabled" value="startWith">
-            Start's With
+            Start
           </mat-option>
           <mat-option [disabled]="startEndWithDisabled" value="endWith">
-            End's With
+            End
           </mat-option>
           <mat-option [disabled]="betweenConstraintDisabled" value="between">
             Between
@@ -93,14 +93,6 @@
             </mat-form-field>          
           </mat-grid-tile>
         </div>
-        <mat-grid-tile colspan="2" *ngIf="classifierSelectOption === 'location'">
-          <mat-form-field style="width: 100%;">
-            <input matInput type="text" placeholder="Location" formControlName="folderLocationControl" disabled [required]="classifierSelectOption === 'location'"/>
-            <button mat-button matSuffix mat-icon-button aria-label="Pick Folder" (click)="openFolderPicker()">
-              <mat-icon>folder</mat-icon>
-            </button>
-          </mat-form-field>  
-        </mat-grid-tile>
       </mat-grid-list>
       <div>
         <button mat-button type="button" (click)="finished()">Done</button>

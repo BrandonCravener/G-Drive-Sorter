@@ -57,8 +57,6 @@ export class NewRuleStepperComponent implements OnInit {
 
   classifierSelectOption: string;
   constraintSelectOption: string;
-  
-  pickedFolder: string;
 
   constriants = [
     {
@@ -83,13 +81,6 @@ export class NewRuleStepperComponent implements OnInit {
       label: 'Type',
       value: 'type',
       inputFieldControl: 'fileTypeControl',
-      hideBetween: true,
-      hideStartEnd: true
-    },
-    {
-      label: 'Location',
-      value: 'location',
-      inputFieldControl: 'folderLocationControl',
       hideBetween: true,
       hideStartEnd: true
     },
@@ -227,10 +218,6 @@ export class NewRuleStepperComponent implements OnInit {
       constraintControl: ['', Validators.required]
     });
     this.inputFieldGroup = this.formBuilder.group({
-      folderLocationControl: [{
-        value: null,
-        disabled: true
-      }],
       secondDateControl: null,
       firstDateControl: null,
       titleTextControl: null,
@@ -252,9 +239,6 @@ export class NewRuleStepperComponent implements OnInit {
         case 'fileTypeControl':
           this.inputFieldGroup.get('fileTypeControl')
             .setValue(this.inputRule.data.fileType);
-          break;
-        case 'folderLocationControl':
-          this.pickedFolder = this.inputRule.data.folder
           break;
         case 'ownerTextControl':
           this.inputFieldGroup.get('ownerTextControl')
@@ -289,9 +273,6 @@ export class NewRuleStepperComponent implements OnInit {
         break;
       case 'fileTypeControl':
           data['fileType'] = this.inputFieldGroup.get('fileTypeControl').value;
-        break;
-      case 'folderLocationControl':
-          data['folder'] = this.pickedFolder;
         break;
       case 'ownerTextControl':
           data['owner'] = this.inputFieldGroup.get('ownerTextControl').value;
@@ -347,13 +328,6 @@ export class NewRuleStepperComponent implements OnInit {
       if (this.betweenConstraintDisabled) {
         this.constraintFormGroup.get('constraintControl').setValue('include');
       }
-    }
-    if (event.selectedIndex === 2) {
-      let folderPickedSubscription = this.google.folderPicked$.subscribe(folder => {
-        this.pickedFolder = folder.id;
-        this.inputFieldGroup.get('folderLocationControl').setValue(folder.name);
-        folderPickedSubscription.unsubscribe();
-      });
     }
   }
 

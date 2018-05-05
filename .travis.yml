@@ -19,4 +19,4 @@ before_script:
   - yarn global add @angular/cli
   - yarn global add karma
   - yarn
-script: yarn run test --single-run
+script: yarn run test

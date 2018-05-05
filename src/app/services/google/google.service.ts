@@ -70,6 +70,7 @@ export class GoogleService {
    */
   init(config: Object, callback?: Function) {
     gapi.load('client:auth2', () => {
+      console.debug('GAPI: Client & Auth Loaded')
       gapi
       .client
       .init(config)
@@ -85,6 +86,7 @@ export class GoogleService {
         const authStatus = authInstance.isSignedIn.get();
         this._authState.next(authStatus);
         gapi.load('picker', () => {
+          console.debug('GAPI: Picker Loaded')
           const view = new google.picker.DocsView(google.picker.ViewId.FOLDERS)
             .setIncludeFolders(true)
             .setSelectFolderEnabled(true)
@@ -131,7 +133,7 @@ export class GoogleService {
    * 
    * @memberof GoogleService
    */
-  signIn() {
+  signIn(): void {
     authInstance.signIn();
   }
   
@@ -140,7 +142,7 @@ export class GoogleService {
    * 
    * @memberof GoogleService
    */
-  signOut() {
+  signOut(): void {
     authInstance.signOut();
     this.firebaseAuth.auth.signOut();
   }
@@ -155,4 +157,12 @@ export class GoogleService {
     return authInstance.currentUser.get().getAuthResponse().id_token;
   }
 
+  listFiles(query: string, cb: Function): void {
+    console.log(query)
+    gapi.client.drive.files.list({
+      q: query
+    }).execute(resp => {
+      cb(resp);
+    })
+  }
 }

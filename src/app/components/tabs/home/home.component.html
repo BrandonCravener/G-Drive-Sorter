@@ -8,4 +8,13 @@
       {{ activeConfigName }}
     </mat-card-content>
   </mat-card>
+  <mat-card class="col-4 col-6-sm">
+    <mat-card-header>
+      <mat-icon mat-card-avatar color="accent">sort</mat-icon>
+      <mat-card-title>Sorting</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <button mat-raised-button style="width: 100%;" color="primary" [disabled]="!isActiveConfig" (click)="sortUsersDrive()">Sort Now</button>
+    </mat-card-content>
+  </mat-card>
 </div>

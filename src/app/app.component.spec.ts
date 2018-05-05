@@ -4,7 +4,7 @@ import { AppModule } from './app.module';
 import { async, TestBed } from '@angular/core/testing';
 
 describe('AppComponent', () => {
-  beforeEach(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         AppModule
@@ -16,7 +16,7 @@ describe('AppComponent', () => {
         }
       ]
     }).compileComponents();
-  });
+  }));
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;

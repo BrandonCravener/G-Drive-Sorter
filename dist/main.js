@@ -4266,7 +4266,7 @@ var NewConfigPageComponent = /** @class */ (function (_super) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-vertical-stepper (selectionChange)=\"stepChanged($event)\" linear #stepper>\n  <mat-step label=\"Name\" [stepControl]=\"nameFormGroup\">\n    <form [formGroup]=\"nameFormGroup\">\n      <mat-form-field>\n          <input matInput placeholder=\"Rule Name\" formControlName=\"ruleName\" required>\n      </mat-form-field>\n      <div>\n        <button mat-button type=\"button\" matStepperNext>Next</button>\n      </div>\n    </form>\n  </mat-step>\n  <mat-step label=\"Trait\" [stepControl]=\"classifierFormGroup\">\n    <form [formGroup]=\"classifierFormGroup\">\n      <mat-form-field>\n        <mat-select placeholder=\"Trait\" formControlName=\"classifierControl\" [(value)]=\"classifierSelectOption\">\n          <mat-option *ngFor=\"let classifier of classifiers\" [value]=\"classifier.value\">\n            {{ classifier.label }}\n          </mat-option>\n        </mat-select>\n      </mat-form-field>\n      <div>\n        <button mat-button type=\"button\" matStepperNext>Next</button>\n        <button mat-button type=\"button\" matStepperPrevious>Back</button>\n      </div>\n    </form>\n  </mat-step>\n  <mat-step label=\"Limitation\" [stepControl]=\"constraintFormGroup\">\n    <form [formGroup]=\"constraintFormGroup\">\n      <mat-form-field>\n        <mat-select placeholder=\"Limitation\" formControlName=\"constraintControl\" [(value)]=\"constraintSelectOption\">\n          <mat-option *ngFor=\"let constraint of constriants\" [value]=\"constraint.value\">\n            {{ constraint.label }}\n          </mat-option>\n          <mat-option [disabled]=\"startEndWithDisabled\" value=\"startWith\">\n            Start's With\n          </mat-option>\n          <mat-option [disabled]=\"startEndWithDisabled\" value=\"endWith\">\n            End's With\n          </mat-option>\n          <mat-option [disabled]=\"betweenConstraintDisabled\" value=\"between\">\n            Between\n          </mat-option>\n        </mat-select>\n      </mat-form-field>\n      <div>\n        <button mat-button type=\"button\" matStepperNext>Next</button>\n        <button mat-button type=\"button\" matStepperPrevious>Back</button>\n      </div>\n    </form>\n  </mat-step>\n  <mat-step label=\"Input\" [stepControl]=\"inputFieldGroup\">\n    <form [formGroup]=\"inputFieldGroup\">\n      <mat-grid-list cols=\"2\" rowHeight=\"2:1\" gutterSize=\"4px\">\n        <mat-grid-tile colspan=\"2\" *ngIf=\"classifierSelectOption === 'title'\">\n          <mat-form-field>\n            <input matInput placeholder=\"Title Text\" formControlName=\"titleTextControl\" [required]=\"classifierSelectOption === 'title'\">\n          </mat-form-field>\n        </mat-grid-tile>\n        <mat-grid-tile colspan=\"2\" *ngIf=\"classifierSelectOption === 'owner'\">\n          <mat-form-field>\n            <input matInput placeholder=\"Owner Name\" formControlName=\"ownerTextControl\" [required]=\"classifierSelectOption === 'owner'\">\n          </mat-form-field>\n        </mat-grid-tile>\n        <mat-grid-tile colspan=\"2\" *ngIf=\"classifierSelectOption === 'type'\">\n          <mat-form-field>\n            <mat-select placeholder=\"Drive File Type\" formControlName=\"fileTypeControl\" [required]=\"classifierSelectOption === 'type'\">\n              <mat-option *ngFor=\"let fileType of driveFileTypes\" [value]=\"fileType.value\">\n                {{ fileType.label }}\n              </mat-option>\n            </mat-select>\n          </mat-form-field>\n        </mat-grid-tile>\n        <mat-grid-tile colspan=\"2\" *ngIf=\"datePickerSingleNeeded() === 1\">\n          <mat-form-field>\n            <input matInput [matDatepicker]=\"datePicker\" placeholder=\"Date\" formControlName=\"dateControl\" [required]=\"datePickerSingleNeeded() === 1\">\n            <mat-datepicker-toggle matSuffix [for]=\"datePicker\"></mat-datepicker-toggle>\n            <mat-datepicker #datePicker startView=\"month\"></mat-datepicker>\n          </mat-form-field>          \n        </mat-grid-tile>\n        <div *ngIf=\"datePickerSingleNeeded() === 2\">\n          <mat-grid-tile colspan=\"2\">\n            <mat-form-field>\n              <input matInput [matDatepicker]=\"datePickerBetweenFirst\" formControlName=\"firstDateControl\" placeholder=\"Starting Date\" [required]=\"datePickerSingleNeeded() === 2\">\n              <mat-datepicker-toggle matSuffix [for]=\"datePickerBetweenFirst\"></mat-datepicker-toggle>\n              <mat-datepicker #datePickerBetweenFirst startView=\"month\"></mat-datepicker>\n            </mat-form-field>          \n          </mat-grid-tile>\n          <mat-grid-tile colspan=\"2\">\n            <mat-form-field>\n              <input matInput [matDatepicker]=\"datePickerBetweenSecond\" formControlName=\"secondDateControl\" placeholder=\"Ending Date\" [required]=\"datePickerSingleNeeded() === 2\">\n              <mat-datepicker-toggle matSuffix [for]=\"datePickerBetweenSecond\"></mat-datepicker-toggle>\n              <mat-datepicker #datePickerBetweenSecond startView=\"month\"></mat-datepicker>\n            </mat-form-field>          \n          </mat-grid-tile>\n        </div>\n        <mat-grid-tile colspan=\"2\" *ngIf=\"classifierSelectOption === 'location'\">\n          <mat-form-field style=\"width: 100%;\">\n            <input matInput type=\"text\" placeholder=\"Location\" formControlName=\"folderLocationControl\" disabled [required]=\"classifierSelectOption === 'location'\"/>\n            <button mat-button matSuffix mat-icon-button aria-label=\"Pick Folder\" (click)=\"openFolderPicker()\">\n              <mat-icon>folder</mat-icon>\n            </button>\n          </mat-form-field>  \n        </mat-grid-tile>\n      </mat-grid-list>\n      <div>\n        <button mat-button type=\"button\" (click)=\"finished()\">Done</button>\n        <button mat-button type=\"button\" matStepperPrevious>Back</button>\n      </div>\n    </form>\n  </mat-step>\n</mat-vertical-stepper>"
+module.exports = "<mat-vertical-stepper (selectionChange)=\"stepChanged($event)\" linear #stepper>\n  <mat-step label=\"Name\" [stepControl]=\"nameFormGroup\">\n    <form [formGroup]=\"nameFormGroup\">\n      <mat-form-field>\n          <input matInput placeholder=\"Rule Name\" formControlName=\"ruleName\" required>\n      </mat-form-field>\n      <div>\n        <button mat-button type=\"button\" matStepperNext>Next</button>\n      </div>\n    </form>\n  </mat-step>\n  <mat-step label=\"Trait\" [stepControl]=\"classifierFormGroup\">\n    <form [formGroup]=\"classifierFormGroup\">\n      <mat-form-field>\n        <mat-select placeholder=\"Trait\" formControlName=\"classifierControl\" [(value)]=\"classifierSelectOption\">\n          <mat-option *ngFor=\"let classifier of classifiers\" [value]=\"classifier.value\">\n            {{ classifier.label }}\n          </mat-option>\n        </mat-select>\n      </mat-form-field>\n      <div>\n        <button mat-button type=\"button\" matStepperNext>Next</button>\n        <button mat-button type=\"button\" matStepperPrevious>Back</button>\n      </div>\n    </form>\n  </mat-step>\n  <mat-step label=\"Limitation\" [stepControl]=\"constraintFormGroup\">\n    <form [formGroup]=\"constraintFormGroup\">\n      <mat-form-field>\n        <mat-select placeholder=\"Limitation\" formControlName=\"constraintControl\" [(value)]=\"constraintSelectOption\">\n          <mat-option *ngFor=\"let constraint of constriants\" [value]=\"constraint.value\">\n            {{ constraint.label }}\n          </mat-option>\n          <mat-option [disabled]=\"startEndWithDisabled\" value=\"startWith\">\n            Start\n          </mat-option>\n          <mat-option [disabled]=\"startEndWithDisabled\" value=\"endWith\">\n            End\n          </mat-option>\n          <mat-option [disabled]=\"betweenConstraintDisabled\" value=\"between\">\n            Between\n          </mat-option>\n        </mat-select>\n      </mat-form-field>\n      <div>\n        <button mat-button type=\"button\" matStepperNext>Next</button>\n        <button mat-button type=\"button\" matStepperPrevious>Back</button>\n      </div>\n    </form>\n  </mat-step>\n  <mat-step label=\"Input\" [stepControl]=\"inputFieldGroup\">\n    <form [formGroup]=\"inputFieldGroup\">\n      <mat-grid-list cols=\"2\" rowHeight=\"2:1\" gutterSize=\"4px\">\n        <mat-grid-tile colspan=\"2\" *ngIf=\"classifierSelectOption === 'title'\">\n          <mat-form-field>\n            <input matInput placeholder=\"Title Text\" formControlName=\"titleTextControl\" [required]=\"classifierSelectOption === 'title'\">\n          </mat-form-field>\n        </mat-grid-tile>\n        <mat-grid-tile colspan=\"2\" *ngIf=\"classifierSelectOption === 'owner'\">\n          <mat-form-field>\n            <input matInput placeholder=\"Owner Name\" formControlName=\"ownerTextControl\" [required]=\"classifierSelectOption === 'owner'\">\n          </mat-form-field>\n        </mat-grid-tile>\n        <mat-grid-tile colspan=\"2\" *ngIf=\"classifierSelectOption === 'type'\">\n          <mat-form-field>\n            <mat-select placeholder=\"Drive File Type\" formControlName=\"fileTypeControl\" [required]=\"classifierSelectOption === 'type'\">\n              <mat-option *ngFor=\"let fileType of driveFileTypes\" [value]=\"fileType.value\">\n                {{ fileType.label }}\n              </mat-option>\n            </mat-select>\n          </mat-form-field>\n        </mat-grid-tile>\n        <mat-grid-tile colspan=\"2\" *ngIf=\"datePickerSingleNeeded() === 1\">\n          <mat-form-field>\n            <input matInput [matDatepicker]=\"datePicker\" placeholder=\"Date\" formControlName=\"dateControl\" [required]=\"datePickerSingleNeeded() === 1\">\n            <mat-datepicker-toggle matSuffix [for]=\"datePicker\"></mat-datepicker-toggle>\n            <mat-datepicker #datePicker startView=\"month\"></mat-datepicker>\n          </mat-form-field>          \n        </mat-grid-tile>\n        <div *ngIf=\"datePickerSingleNeeded() === 2\">\n          <mat-grid-tile colspan=\"2\">\n            <mat-form-field>\n              <input matInput [matDatepicker]=\"datePickerBetweenFirst\" formControlName=\"firstDateControl\" placeholder=\"Starting Date\" [required]=\"datePickerSingleNeeded() === 2\">\n              <mat-datepicker-toggle matSuffix [for]=\"datePickerBetweenFirst\"></mat-datepicker-toggle>\n              <mat-datepicker #datePickerBetweenFirst startView=\"month\"></mat-datepicker>\n            </mat-form-field>          \n          </mat-grid-tile>\n          <mat-grid-tile colspan=\"2\">\n            <mat-form-field>\n              <input matInput [matDatepicker]=\"datePickerBetweenSecond\" formControlName=\"secondDateControl\" placeholder=\"Ending Date\" [required]=\"datePickerSingleNeeded() === 2\">\n              <mat-datepicker-toggle matSuffix [for]=\"datePickerBetweenSecond\"></mat-datepicker-toggle>\n              <mat-datepicker #datePickerBetweenSecond startView=\"month\"></mat-datepicker>\n            </mat-form-field>          \n          </mat-grid-tile>\n        </div>\n      </mat-grid-list>\n      <div>\n        <button mat-button type=\"button\" (click)=\"finished()\">Done</button>\n        <button mat-button type=\"button\" matStepperPrevious>Back</button>\n      </div>\n    </form>\n  </mat-step>\n</mat-vertical-stepper>"
 
 /***/ }),
 
@@ -4350,13 +4350,6 @@ var NewRuleStepperComponent = /** @class */ (function () {
                 label: 'Type',
                 value: 'type',
                 inputFieldControl: 'fileTypeControl',
-                hideBetween: true,
-                hideStartEnd: true
-            },
-            {
-                label: 'Location',
-                value: 'location',
-                inputFieldControl: 'folderLocationControl',
                 hideBetween: true,
                 hideStartEnd: true
             },
@@ -4481,10 +4474,6 @@ var NewRuleStepperComponent = /** @class */ (function () {
             constraintControl: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]
         });
         this.inputFieldGroup = this.formBuilder.group({
-            folderLocationControl: [{
-                    value: null,
-                    disabled: true
-                }],
             secondDateControl: null,
             firstDateControl: null,
             titleTextControl: null,
@@ -4506,9 +4495,6 @@ var NewRuleStepperComponent = /** @class */ (function () {
                 case 'fileTypeControl':
                     this.inputFieldGroup.get('fileTypeControl')
                         .setValue(this.inputRule.data.fileType);
-                    break;
-                case 'folderLocationControl':
-                    this.pickedFolder = this.inputRule.data.folder;
                     break;
                 case 'ownerTextControl':
                     this.inputFieldGroup.get('ownerTextControl')
@@ -4544,9 +4530,6 @@ var NewRuleStepperComponent = /** @class */ (function () {
                 break;
             case 'fileTypeControl':
                 data['fileType'] = this.inputFieldGroup.get('fileTypeControl').value;
-                break;
-            case 'folderLocationControl':
-                data['folder'] = this.pickedFolder;
                 break;
             case 'ownerTextControl':
                 data['owner'] = this.inputFieldGroup.get('ownerTextControl').value;
@@ -4593,7 +4576,6 @@ var NewRuleStepperComponent = /** @class */ (function () {
         return 0;
     };
     NewRuleStepperComponent.prototype.stepChanged = function (event) {
-        var _this = this;
         if (event.previouslySelectedIndex === 1) {
             var classifierValue = this.classifierFormGroup.get('classifierControl').value;
             this.betweenConstraintDisabled = this.checkIfBetweenDisabled(classifierValue);
@@ -4601,13 +4583,6 @@ var NewRuleStepperComponent = /** @class */ (function () {
             if (this.betweenConstraintDisabled) {
                 this.constraintFormGroup.get('constraintControl').setValue('include');
             }
-        }
-        if (event.selectedIndex === 2) {
-            var folderPickedSubscription_1 = this.google.folderPicked$.subscribe(function (folder) {
-                _this.pickedFolder = folder.id;
-                _this.inputFieldGroup.get('folderLocationControl').setValue(folder.name);
-                folderPickedSubscription_1.unsubscribe();
-            });
         }
     };
     NewRuleStepperComponent.prototype.openFolderPicker = function () {
@@ -5060,7 +5035,7 @@ var ConfigComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\" style=\"padding-top: 10px;\">\n  <mat-card class=\"col-4 col-6-sm\">\n    <mat-card-header>\n      <mat-icon mat-card-avatar color=\"accent\">settings_power</mat-icon>\n      <mat-card-title>Active Config</mat-card-title>\n    </mat-card-header>\n    <mat-card-content>\n      {{ activeConfigName }}\n    </mat-card-content>\n  </mat-card>\n</div>"
+module.exports = "<div class=\"row\" style=\"padding-top: 10px;\">\n  <mat-card class=\"col-4 col-6-sm\">\n    <mat-card-header>\n      <mat-icon mat-card-avatar color=\"accent\">settings_power</mat-icon>\n      <mat-card-title>Active Config</mat-card-title>\n    </mat-card-header>\n    <mat-card-content>\n      {{ activeConfigName }}\n    </mat-card-content>\n  </mat-card>\n  <mat-card class=\"col-4 col-6-sm\">\n    <mat-card-header>\n      <mat-icon mat-card-avatar color=\"accent\">sort</mat-icon>\n      <mat-card-title>Sorting</mat-card-title>\n    </mat-card-header>\n    <mat-card-content>\n      <button mat-raised-button style=\"width: 100%;\" color=\"primary\" [disabled]=\"!isActiveConfig\" (click)=\"sortUsersDrive()\">Sort Now</button>\n    </mat-card-content>\n  </mat-card>\n</div>"
 
 /***/ }),
 
@@ -5087,6 +5062,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HomeComponent", function() { return HomeComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _services_firebase_database_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../services/firebase/database.service */ "./src/app/services/firebase/database.service.ts");
+/* harmony import */ var _services_sorter_sorter_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../services/sorter/sorter.service */ "./src/app/services/sorter/sorter.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5096,6 +5072,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 /**
@@ -5110,8 +5087,10 @@ var HomeComponent = /** @class */ (function () {
      * Creates an instance of HomeComponent.
      * @memberof HomeComponent
      */
-    function HomeComponent(database) {
+    function HomeComponent(database, sorterService) {
         this.database = database;
+        this.sorterService = sorterService;
+        this.isActiveConfig = false;
         this.activeConfigName = 'Loading...';
     }
     /**
@@ -5127,12 +5106,17 @@ var HomeComponent = /** @class */ (function () {
                     _this.database.getConfig(activeConfig, function (config) {
                         _this.activeConfigName = config.name;
                     });
+                    _this.isActiveConfig = true;
                 }
                 else {
                     _this.activeConfigName = 'No active configuration!';
+                    _this.isActiveConfig = false;
                 }
             });
         }
+    };
+    HomeComponent.prototype.sortUsersDrive = function () {
+        this.sorterService.test();
     };
     HomeComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -5140,7 +5124,8 @@ var HomeComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./home.component.html */ "./src/app/components/tabs/home/home.component.html"),
             styles: [__webpack_require__(/*! ./home.component.scss */ "./src/app/components/tabs/home/home.component.scss")]
         }),
-        __metadata("design:paramtypes", [_services_firebase_database_service__WEBPACK_IMPORTED_MODULE_1__["DatabaseService"]])
+        __metadata("design:paramtypes", [_services_firebase_database_service__WEBPACK_IMPORTED_MODULE_1__["DatabaseService"],
+            _services_sorter_sorter_service__WEBPACK_IMPORTED_MODULE_2__["SorterService"]])
     ], HomeComponent);
     return HomeComponent;
 }());
@@ -5823,6 +5808,7 @@ var GoogleService = /** @class */ (function () {
     GoogleService.prototype.init = function (config, callback) {
         var _this = this;
         gapi.load('client:auth2', function () {
+            console.debug('GAPI: Client & Auth Loaded');
             gapi
                 .client
                 .init(config)
@@ -5838,6 +5824,7 @@ var GoogleService = /** @class */ (function () {
                 var authStatus = authInstance.isSignedIn.get();
                 _this._authState.next(authStatus);
                 gapi.load('picker', function () {
+                    console.debug('GAPI: Picker Loaded');
                     var view = new google.picker.DocsView(google.picker.ViewId.FOLDERS)
                         .setIncludeFolders(true)
                         .setSelectFolderEnabled(true)
@@ -5902,6 +5889,14 @@ var GoogleService = /** @class */ (function () {
     GoogleService.prototype.getToken = function () {
         return authInstance.currentUser.get().getAuthResponse().id_token;
     };
+    GoogleService.prototype.listFiles = function (query, cb) {
+        console.log(query);
+        gapi.client.drive.files.list({
+            q: query
+        }).execute(function (resp) {
+            cb(resp);
+        });
+    };
     GoogleService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
         __metadata("design:paramtypes", [angularfire2_auth__WEBPACK_IMPORTED_MODULE_2__["AngularFireAuth"]])
@@ -5923,7 +5918,9 @@ var GoogleService = /** @class */ (function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SorterService", function() { return SorterService; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _firebase_database_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../firebase/database.service */ "./src/app/services/firebase/database.service.ts");
+/* harmony import */ var _google_google_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../google/google.service */ "./src/app/services/google/google.service.ts");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5934,12 +5931,40 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
 var SorterService = /** @class */ (function () {
-    function SorterService() {
+    function SorterService(google, database) {
+        var _this = this;
+        this.google = google;
+        this.database = database;
+        this.loadConfig(function () {
+            console.log(_this.config);
+        });
+        this.database.activeConfigChanged.subscribe(function () {
+            _this.loadConfig(function () {
+                console.log(_this.config);
+            });
+        });
     }
+    SorterService.prototype.loadConfig = function (cb) {
+        var _this = this;
+        this.database.getActiveConfig(function (activeConfig) {
+            if (activeConfig) {
+                _this.database.getConfig(activeConfig, function (config) {
+                    _this.config = config;
+                    if (cb)
+                        cb();
+                });
+            }
+        });
+    };
+    SorterService.prototype.test = function () {
+    };
     SorterService = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
-        __metadata("design:paramtypes", [])
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Injectable"])(),
+        __metadata("design:paramtypes", [_google_google_service__WEBPACK_IMPORTED_MODULE_1__["GoogleService"],
+            _firebase_database_service__WEBPACK_IMPORTED_MODULE_0__["DatabaseService"]])
     ], SorterService);
     return SorterService;
 }());
