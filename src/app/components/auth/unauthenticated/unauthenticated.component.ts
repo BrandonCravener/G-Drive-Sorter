@@ -3,7 +3,7 @@ import { GoogleService } from '../../../services/google/google.service';
 
 /**
  * Declare the component to be shown when the user isn't authenticated.
- * 
+ *
  * @export
  * @class UnauthenticatedComponent
  */
@@ -18,15 +18,14 @@ export class UnauthenticatedComponent {
    * @param {GoogleService} google Declare the Google Service as google.
    * @memberof UnauthenticatedComponent
    */
-  constructor(public google: GoogleService) { }
-  
+  constructor(public google: GoogleService) {}
+
   /**
    * Method to log the user in.
-   * 
+   *
    * @memberof UnauthenticatedComponent
    */
   login() {
     this.google.signIn();
   }
-
 }

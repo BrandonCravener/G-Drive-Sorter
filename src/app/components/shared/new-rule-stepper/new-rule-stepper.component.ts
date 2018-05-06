@@ -60,11 +60,11 @@ export class NewRuleStepperComponent implements OnInit {
 
   constriants = [
     {
-      label: 'Include\'s',
+      label: 'Include\'s / After',
       value: 'include'
     },
     {
-      label: 'Exclude\'s',
+      label: 'Exclude\'s / Before',
       value: 'exclude'
     }
   ]
@@ -74,43 +74,37 @@ export class NewRuleStepperComponent implements OnInit {
       label: 'Title',
       value: 'title',
       inputFieldControl: 'titleTextControl',
-      hideBetween: true,
-      hideStartEnd: false
+      hideBetween: true
     },
     {
       label: 'Type',
       value: 'type',
       inputFieldControl: 'fileTypeControl',
-      hideBetween: true,
-      hideStartEnd: true
+      hideBetween: true
     },
     {
       label: 'Owner',
       value: 'owner',
       inputFieldControl: 'ownerTextControl',
-      hideBetween: true,
-      hideStartEnd: false
+      hideBetween: true
     },
     {
       label: 'Creation Date',
       value: 'creationDate',
       inputFieldControl: 'dateControl',
-      hideBetween: false,
-      hideStartEnd: true
+      hideBetween: false
     },
     {
       label: 'Last Opened',
       value: 'lastOpened',
       inputFieldControl: 'dateControl',
-      hideBetween: false,
-      hideStartEnd: true
+      hideBetween: false
     },
     {
       label: 'Last Modified',
       value: 'lastModified',
       inputFieldControl: 'dateControl',
-      hideBetween: false,
-      hideStartEnd: true
+      hideBetween: false
     }
   ]
 
@@ -193,12 +187,6 @@ export class NewRuleStepperComponent implements OnInit {
     return this
       .valueArrayToObject(this.classifiers)[classifierValue]
       .hideBetween;
-  }
-
-  private checkIfStartEndDisabled(classifierValue: string): boolean {
-    return this
-      .valueArrayToObject(this.classifiers)[classifierValue]
-      .hideStartEnd;
   }
 
   private getFieldControl(classifierValue: string): string {
@@ -324,7 +312,6 @@ export class NewRuleStepperComponent implements OnInit {
     if (event.previouslySelectedIndex === 1) {
       const classifierValue = this.classifierFormGroup.get('classifierControl').value;
       this.betweenConstraintDisabled = this.checkIfBetweenDisabled(classifierValue);
-      this.startEndWithDisabled = this.checkIfStartEndDisabled(classifierValue);
       if (this.betweenConstraintDisabled) {
         this.constraintFormGroup.get('constraintControl').setValue('include');
       }

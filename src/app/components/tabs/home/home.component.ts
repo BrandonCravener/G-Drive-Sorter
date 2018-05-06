@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from '../../../services/firebase/database.service';
+import { MatSnackBar } from '@angular/material';
 import { SorterService } from '../../../services/sorter/sorter.service';
 
 /**
  * Declare a component to be shown when the home tab is selected.
- * 
+ *
  * @export
  * @class HomeComponent
  * @implements {OnInit}
@@ -15,22 +16,22 @@ import { SorterService } from '../../../services/sorter/sorter.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  
   public isActiveConfig: boolean = false;
-  public activeConfigName: string = 'Loading...'
+  public activeConfigName: string = 'Loading...';
 
   /**
    * Creates an instance of HomeComponent.
    * @memberof HomeComponent
    */
   constructor(
+    private snackBar: MatSnackBar,
     private database: DatabaseService,
     private sorterService: SorterService
-  ) { }
+  ) {}
 
   /**
    * Handle component initalization
-   * 
+   *
    * @memberof HomeComponent
    */
   ngOnInit() {
@@ -42,7 +43,7 @@ export class HomeComponent implements OnInit {
           });
           this.isActiveConfig = true;
         } else {
-          this.activeConfigName = 'No active configuration!'
+          this.activeConfigName = 'No active configuration!';
           this.isActiveConfig = false;
         }
       });
@@ -50,7 +51,10 @@ export class HomeComponent implements OnInit {
   }
 
   sortUsersDrive() {
-    this.sorterService.test();
+    this.sorterService.sort().then(() => {
+      this.snackBar.open('Google Drive sorted!', 'OK', {
+        duration: 5000
+      });
+    }, err => console.error);
   }
-
 }

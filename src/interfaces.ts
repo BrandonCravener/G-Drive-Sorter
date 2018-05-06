@@ -7,7 +7,7 @@ export interface ConfigInterface {
 export interface RuleInterface {
     id: string,
     name: string,
-    data?: object,
+    data?: any,
     classifier?: string,
     constraint?: string
 }

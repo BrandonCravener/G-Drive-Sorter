@@ -31,12 +31,6 @@
           <mat-option *ngFor="let constraint of constriants" [value]="constraint.value">
             {{ constraint.label }}
           </mat-option>
-          <mat-option [disabled]="startEndWithDisabled" value="startWith">
-            Start
-          </mat-option>
-          <mat-option [disabled]="startEndWithDisabled" value="endWith">
-            End
-          </mat-option>
           <mat-option [disabled]="betweenConstraintDisabled" value="between">
             Between
           </mat-option>

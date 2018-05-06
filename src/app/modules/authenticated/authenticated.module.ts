@@ -22,6 +22,7 @@ import {
   MatNativeDateModule,
   MatPaginatorModule,
   MatSelectModule,
+  MatSnackBarModule,
   MatStepperModule,
   MatTableModule,
   MatTooltipModule
@@ -32,16 +33,12 @@ import { SorterService } from '../../services/sorter/sorter.service';
 
 /**
  * Handles all authenticated components
- * 
+ *
  * @export
  * @class AuthenticatedModule
  */
 @NgModule({
-  declarations: [
-    HomeComponent,
-    ConfigComponent,
-    SettingsComponent
-  ],
+  declarations: [HomeComponent, ConfigComponent, SettingsComponent],
   imports: [
     FormsModule,
     CommonModule,
@@ -52,22 +49,17 @@ import { SorterService } from '../../services/sorter/sorter.service';
     MatButtonModule,
     MatDialogModule,
     MatTooltipModule,
+    MatSnackBarModule,
     ReactiveFormsModule,
     ConfigModule.forRoot()
   ],
-  providers: [
-    DatabaseService,
-    SorterService
-  ],
-  exports: [
-    ConfigComponent
-  ]
+  providers: [DatabaseService, SorterService],
+  exports: [ConfigComponent]
 })
-export class AuthenticatedModule { 
-
+export class AuthenticatedModule {
   /**
    * Register with the root module of the app
-   * 
+   *
    * @static
    * @returns {ModuleWithProviders} This module
    * @memberof AuthenticatedModule
@@ -76,6 +68,6 @@ export class AuthenticatedModule {
     return {
       ngModule: AuthenticatedModule,
       providers: []
-    }
+    };
   }
 }
