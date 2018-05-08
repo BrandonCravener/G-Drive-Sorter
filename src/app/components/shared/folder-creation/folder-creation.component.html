@@ -1,0 +1,39 @@
+<div class="full-width overflow-limit" [class.hidden]="!creatingFolder">
+  <div class="full-width">
+    <mat-form-field style="width: 70%;">
+      <input matInput type="text" placeholder="Parent" [value]="createFolder.parent.name" disabled required/>
+      <button mat-button matSuffix mat-icon-button aria-label="Pick Parent Folder" [disabled]="parentFolderIsRoot" (click)="openFolderPicker()">
+        <mat-icon>folder</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-slide-toggle (change)="rootToggleChange($event)" [checked]="parentFolderIsRoot">My Drive</mat-slide-toggle>
+  </div>
+  <div class="row">
+    <mat-form-field class="col-3 col-12-sm">
+      <mat-select placeholder="Prefix"  [(ngModel)]="createFolder.prefix.type">
+        <mat-option *ngFor="let option of namingOptions" [value]="option.value">{{ option.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="col-3 col-12-sm">
+      <mat-select placeholder="Name" [(ngModel)]="createFolder.name.type">
+        <mat-option *ngFor="let option of namingOptions" [value]="option.value">{{ option.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="col-3 col-12-sm">
+      <mat-select placeholder="Suffix" [(ngModel)]="createFolder.suffix.type">
+        <mat-option *ngFor="let option of namingOptions" [value]="option.value">{{ option.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <mat-form-field class="col-3 col-12-sm">
+      <input matInput placeholder="Prefix Text" [(ngModel)]="createFolder.prefix.value" [disabled]="createFolder.prefix.type !== 'text'">
+    </mat-form-field>
+    <mat-form-field class="col-3 col-12-sm">
+      <input matInput placeholder="Name Text" [(ngModel)]="createFolder.name.value" [disabled]="createFolder.name.type !== 'text'">
+    </mat-form-field>
+    <mat-form-field class="col-3 col-12-sm">
+      <input matInput placeholder="Suffix Text" [(ngModel)]="createFolder.suffix.value" [disabled]="createFolder.suffix.type !== 'text'">
+    </mat-form-field>
+  </div>
+</div>

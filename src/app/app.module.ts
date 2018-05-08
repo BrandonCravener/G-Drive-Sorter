@@ -25,11 +25,12 @@ import { NgModule } from '@angular/core';
 import { ParallaxConfig, ParallaxModule } from 'ngx-parallax';
 import { RouterModule, Routes } from '@angular/router';
 import { UnauthenticatedComponent } from './components/auth/unauthenticated/unauthenticated.component';
+import { FolderCreationComponent } from './components/shared/folder-creation/folder-creation.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UnauthenticatedComponent,
+    UnauthenticatedComponent
   ],
   imports: [
     BrowserModule,

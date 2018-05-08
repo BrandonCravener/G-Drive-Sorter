@@ -1,7 +1,7 @@
 <div [class.container]="isPage">
   <h3 mat-dialog-title *ngIf="!isPage">Create New Config</h3>
   <h3 *ngIf="isPage">Create New Config</h3>
-  <div mat-dialog-content>
+  <div mat-dialog-content [class.overflow-limit]="!isPage">
     <form [formGroup]="newConfig">
       <mat-accordion>
         <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)">
@@ -54,25 +54,31 @@
               Where all files matching group rules will go.
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <ng-template matExpansionPanelContent>
-              <div class="full-width">
-                <mat-form-field style="width: 70%;">
-                  <input matInput type="text" placeholder="From" [value]="source.name" disabled required/>
-                  <button mat-button matSuffix mat-icon-button aria-label="Pick From Folder" [disabled]="folderButtonSourceDisabled" (click)="openFolderPicker('source')">
-                    <mat-icon>folder</mat-icon>
-                  </button>
-                </mat-form-field> 
-                <mat-slide-toggle (change)="rootToggleChange($event, 'source')">My Drive</mat-slide-toggle>
+          <ng-template matExpansionPanelContent class="overflow-limit">
+            <div class="full-width">
+              <mat-form-field style="width: 70%;">
+                <input matInput type="text" placeholder="From" [value]="source.name" disabled required/>
+                <button mat-button matSuffix mat-icon-button aria-label="Pick From Folder" [disabled]="folderButtonSourceDisabled" (click)="openFolderPicker('source')">
+                  <mat-icon>folder</mat-icon>
+                </button>
+              </mat-form-field>
+              <mat-slide-toggle (change)="rootToggleChange($event, 'source')">My Drive</mat-slide-toggle>
+            </div>
+            <div>
+              <mat-slide-toggle (change)="createToggleChange($event)">Create Folder</mat-slide-toggle>
+              <app-folder-creation [class.hidden]="!creatingFolder"></app-folder-creation>
+              <div class="full-width" [class.hidden]="creatingFolder">
+                <div class="full-width">
+                  <mat-form-field style="width: 70%;">
+                    <input matInput type="text" placeholder="To" [value]="destination.name" disabled required/>
+                    <button mat-button matSuffix mat-icon-button aria-label="Pick To Folder" [disabled]="folderButtonDestinationDisabled" (click)="openFolderPicker('destination')">
+                      <mat-icon>folder</mat-icon>
+                    </button>
+                  </mat-form-field>
+                  <mat-slide-toggle (change)="rootToggleChange($event, 'destination')">My Drive</mat-slide-toggle>
+                </div>
               </div>
-              <div class="full-width">
-                <mat-form-field style="width: 70%;">
-                  <input matInput type="text" placeholder="To" [value]="destination.name" disabled required/>
-                  <button mat-button matSuffix mat-icon-button aria-label="Pick To Folder" [disabled]="folderButtonDestinationDisabled" (click)="openFolderPicker('destination')">
-                    <mat-icon>folder</mat-icon>
-                  </button>
-                </mat-form-field> 
-                <mat-slide-toggle (change)="rootToggleChange($event, 'destination')">My Drive</mat-slide-toggle>
-              </div>
+            </div>
           </ng-template>
           <mat-action-row>
             <button mat-button color="warn" (click)="prevStep()">Previous</button>
@@ -98,8 +104,8 @@
       </mat-accordion>
     </form>
     <br>
-  <div mat-dialog-actions>
-    <button mat-button (click)="create()" [disabled]="!finished">Create</button>
-    <button mat-button (click)="close()">Cancel</button>
+    <div mat-dialog-actions>
+      <button mat-button (click)="create()" [disabled]="!finished">Create</button>
+      <button mat-button (click)="close()">Cancel</button>
+    </div>
   </div>
-</div>
