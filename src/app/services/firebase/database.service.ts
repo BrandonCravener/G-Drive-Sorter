@@ -6,7 +6,8 @@ import {
   ConfigsInterface,
   GroupFolderInterface,
   RuleInterface,
-  UserDocument
+  UserDocument,
+  FolderCreation
 } from '../../../interfaces';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
@@ -52,6 +53,7 @@ export class DatabaseService {
     firstGroupName: string,
     sourceLocation: GroupFolderInterface,
     destinationLocation: GroupFolderInterface,
+    createFolder: FolderCreation,
     firstGroupRule: RuleInterface
   ): void {
     const newConfig = ConfigBuilder.generateNewConfig(
@@ -59,8 +61,10 @@ export class DatabaseService {
       firstGroupName,
       sourceLocation,
       destinationLocation,
+      createFolder,
       firstGroupRule
     );
+    console.log(newConfig);
     this
       .configsCollection
       .add(newConfig)

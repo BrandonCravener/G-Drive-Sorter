@@ -1,9 +1,10 @@
 import {
-    ConfigInterface,
-    ConfigsInterface,
-    GroupFolderInterface,
-    RuleInterface
-    } from '../../interfaces';
+  ConfigInterface,
+  ConfigsInterface,
+  GroupFolderInterface,
+  RuleInterface,
+  FolderCreation
+} from '../../interfaces';
 import { v4 as uuid } from 'uuid';
 
 export class ConfigBuilder {
@@ -12,6 +13,7 @@ export class ConfigBuilder {
     firstGroupName: string,
     sourceFolder: GroupFolderInterface,
     destinationFolder: GroupFolderInterface,
+    createFolder: FolderCreation,
     firstGroupRule: RuleInterface
   ): ConfigsInterface {
     const configHolder: ConfigsInterface = {
@@ -21,12 +23,16 @@ export class ConfigBuilder {
           id: uuid(),
           name: firstGroupName,
           source: sourceFolder,
-          destination: destinationFolder,
           rules: [firstGroupRule]
         }
       ],
       id: uuid()
     };
+    if (createFolder) {
+      configHolder.groups[0].createFolder = createFolder;
+    } else {
+      configHolder.groups[0].destination = destinationFolder;
+    }
     return configHolder;
   }
 
@@ -56,7 +62,6 @@ export class ConfigBuilder {
     }
     config.groups.forEach(group => {
       if (
-        !group.destination.folderID ||
         !group.id ||
         !group.source.folderID ||
         !group.name ||
@@ -64,6 +69,9 @@ export class ConfigBuilder {
         group.name.length <= 0
       ) {
         valid = false;
+      }
+      if (!group.createFolder) {
+        valid = group.destination.folderID ? true : false;
       }
       group.rules.forEach(rule => {
         if (
@@ -79,5 +87,34 @@ export class ConfigBuilder {
       });
     });
     return valid;
+  }
+
+  static folderNameBuilder(createFolderConfig: FolderCreation): string {
+    let outputString: string = '';
+    switch (createFolderConfig.prefix.type) {
+      case 'text':
+        outputString += createFolderConfig.prefix.value;
+        break;
+      case 'date':
+        outputString += Date();
+        break;
+    }
+    switch (createFolderConfig.name.type) {
+      case 'text':
+        outputString += ` ${createFolderConfig.name.value}`;
+        break;
+      case 'date':
+        outputString += ` ${Date()}`;
+        break;
+    }
+    switch (createFolderConfig.suffix.type) {
+      case 'text':
+        outputString += ` ${createFolderConfig.suffix.value}`;
+        break;
+      case 'date':
+        outputString += ` ${Date()}`;
+        break;
+    }
+    return outputString;
   }
 }

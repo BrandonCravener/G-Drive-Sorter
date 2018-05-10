@@ -1,8 +1,12 @@
 import { ConfigsInterface, GroupInterface } from '../../../interfaces';
 import { DatabaseService } from '../firebase/database.service';
-import { DriveMimeType, DriveQueryBuilder } from '../../classes/drive-query-builder';
+import {
+  DriveMimeType,
+  DriveQueryBuilder
+} from '../../classes/drive-query-builder';
 import { GoogleService } from '../google/google.service';
 import { Injectable } from '@angular/core';
+import { ConfigBuilder } from '../../classes/config-builder';
 
 /**
  * Workaround for testing
@@ -126,23 +130,46 @@ export class SorterService {
       const drive = gapi.client.drive;
       let success = true;
       this.config.groups.forEach(group => {
-        this.google.listFiles(this.getDriveQuery(group), resp => {
-          if (resp.error) {
-            reject(resp.error);
-          } else {
-            resp.files.forEach(file => {
-              this.google.moveFile(
-                file.id,
-                group.destination.folderID,
-                success => {
-                  if (!success) {
-                    success = false;
+        if (group.destination) {
+          this.google.listFiles(this.getDriveQuery(group), resp => {
+            if (resp.error) {
+              reject(resp.error);
+            } else {
+              resp.files.forEach(file => {
+                this.google.moveFile(
+                  file.id,
+                  group.destination.folderID,
+                  success => {
+                    if (!success) {
+                      success = false;
+                    }
                   }
+                );
+              }, this);
+            }
+          });
+        } else {
+          let newFolderName = ConfigBuilder.folderNameBuilder(
+            group.createFolder
+          );
+          this.google
+            .createFolder(newFolderName, group.createFolder.parent.folderID)
+            .then(newFolderID => {
+              this.google.listFiles(this.getDriveQuery(group), resp => {
+                if (resp.error) {
+                  reject(resp.error);
+                } else {
+                  resp.files.forEach(file => {
+                    this.google.moveFile(file.id, newFolderID, success => {
+                      if (!success) {
+                        success = false;
+                      }
+                    });
+                  }, this);
                 }
-              );
-            }, this);
-          }
-        });
+              });
+            }, err => console.error);
+        }
       });
       if (success) resolve();
       else reject();

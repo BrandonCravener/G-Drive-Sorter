@@ -18,27 +18,33 @@
               {{ group.name | unNamed }}
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <ng-template matExpansionPanelContent>
+          <ng-template matExpansionPanelContent class="overflow-limit">
             <mat-form-field class="full-width">
                 <input matInput placeholder="Group Name" [(ngModel)]="group.name" required>
             </mat-form-field>
             <div class="full-width">
               <mat-form-field style="width: 70%;">
-                <input matInput type="text" [value]="group.source.name" placeholder="From" disabled required/>
-                <button mat-button matSuffix mat-icon-button aria-label="Pick Source Folder" [disabled]="group.source.folderID === 'root'" (click)="openFolderPicker(group.id, 'source')">
+                <input matInput type="text" placeholder="From" [value]="group.source.name" disabled required/>
+                <button mat-button matSuffix mat-icon-button aria-label="Pick From Folder" [disabled]="group.source.folderID === 'root'" (click)="openFolderPicker(group.id ,'source')">
                   <mat-icon>folder</mat-icon>
                 </button>
               </mat-form-field>
-              <mat-slide-toggle [checked]="group.source.folderID === 'root'" (change)="rootToggleChange($event, 'source', group.id)">My Drive</mat-slide-toggle>
+              <mat-slide-toggle (change)="rootToggleChange($event, 'source', group.id)" [checked]="group.source.folderID === 'root'">My Drive</mat-slide-toggle>
             </div>
-            <div class="full-width">
-              <mat-form-field style="width: 70%;">
-                <input matInput type="text" [value]="group.destination.name" placeholder="To" disabled required/>
-                <button mat-button matSuffix mat-icon-button aria-label="Pick Destination Folder" [disabled]="group.destination.folderID === 'root'" (click)="openFolderPicker(group.id, 'destination')">
-                  <mat-icon>folder</mat-icon>
-                </button>
-              </mat-form-field>
-              <mat-slide-toggle [checked]="group.destination.folderID === 'root'" (change)="rootToggleChange($event, 'destination', group.id)">My Drive</mat-slide-toggle> 
+            <div>
+              <mat-slide-toggle (change)="createFolderToggleChange(group.id, $event)" [checked]="group.createFolder">Create Folder</mat-slide-toggle>
+              <app-folder-creation *ngIf="group.createFolder" [inputFolder]="group.createFolder" (valueChange)="createFolderChange(group.id, $event)"></app-folder-creation>
+              <div class="full-width" *ngIf="!group.createFolder">
+                <div class="full-width">
+                  <mat-form-field style="width: 70%;">
+                    <input matInput type="text" placeholder="To" [value]="group.destination.name" disabled required/>
+                    <button mat-button matSuffix mat-icon-button aria-label="Pick To Folder" [disabled]="group.destination.folderID === 'root'" (click)="openFolderPicker(group.id, 'destination')">
+                      <mat-icon>folder</mat-icon>
+                    </button>
+                  </mat-form-field>
+                  <mat-slide-toggle (change)="rootToggleChange($event, 'destination', group.id)" [checked]="group.destination.folderID === 'root'">My Drive</mat-slide-toggle>
+                </div>
+              </div>
             </div>
             <h5>
               Rule's
@@ -63,7 +69,7 @@
               <button mat-button color="warn" (click)="removeGroup(group.id)" [disabled]="config.groups.length < 2">Remove Group</button>
             </mat-action-row>
           </ng-template>
-        </mat-expansion-panel>            
+        </mat-expansion-panel>
     </div>
   </div>
   <div mat-dialog-actions>

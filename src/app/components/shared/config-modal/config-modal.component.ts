@@ -3,13 +3,17 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { ConfigBuilder } from '../../../classes/config-builder';
 import { DatabaseService } from '../../../services/firebase/database.service';
+import { FolderCreationComponent } from '../folder-creation/folder-creation.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GoogleService } from '../../../services/google/google.service';
 import { GroupFolderInterface } from '../../../../interfaces';
-import { MatDialogRef, MatSlideToggleChange } from '@angular/material';
+import {
+  MatDialogRef,
+  MatSlideToggleChange,
+  MatSnackBar
+} from '@angular/material';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { FolderCreationComponent } from '../folder-creation/folder-creation.component';
 
 @Component({
   selector: 'app-config-modal',
@@ -19,7 +23,6 @@ import { FolderCreationComponent } from '../folder-creation/folder-creation.comp
 export class ConfigModalComponent implements OnInit {
   @ViewChild(FolderCreationComponent)
   private folderComponent: FolderCreationComponent;
-
   private rule: any;
   private folderType: string;
   private _closeCommand = new Subject<Boolean>();
@@ -44,8 +47,9 @@ export class ConfigModalComponent implements OnInit {
   constructor(
     public zone: NgZone,
     public router: Router,
-    public formBuilder: FormBuilder,
+    private snackbar: MatSnackBar,
     private google: GoogleService,
+    public formBuilder: FormBuilder,
     private database: DatabaseService,
     private firebase: AngularFirestore,
     private firebaseAuth: AngularFireAuth
@@ -69,20 +73,32 @@ export class ConfigModalComponent implements OnInit {
     return !anyInvalid;
   }
 
-  checkValidation(stepNumber: number) {
+  checkValidation(stepNumber: number): boolean {
     switch (stepNumber) {
       case 0:
         return this.newConfig.get('newConfigNameControl').valid;
       case 1:
         return this.newConfig.get('newGroupNameControl').valid;
       case 2:
-        if (
-          this.source.folderID === undefined ||
-          this.destination.folderID === undefined
-        ) {
-          return false;
+        if (this.creatingFolder) {
+          if (this.folderComponent.value) {
+            if (this.source.folderID === undefined) {
+              return false;
+            } else {
+              return true;
+            }
+          } else {
+            return false;
+          }
         } else {
-          return true;
+          if (
+            this.source.folderID === undefined ||
+            this.destination.folderID === undefined
+          ) {
+            return false;
+          } else {
+            return true;
+          }
         }
       case 3:
         return this.rule === undefined ? false : true;
@@ -121,6 +137,10 @@ export class ConfigModalComponent implements OnInit {
   nextStep() {
     if (this.checkValidation(this.step)) {
       this.step++;
+    } else {
+      this.snackbar.open('Please complete all fields!', 'OK', {
+        duration: 3000
+      });
     }
   }
 
@@ -170,6 +190,7 @@ export class ConfigModalComponent implements OnInit {
         this.newConfig.get('newGroupNameControl').value,
         this.source,
         this.destination,
+        this.folderComponent.value,
         this.rule
       );
       this._closeCommand.next(true);

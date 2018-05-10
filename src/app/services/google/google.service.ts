@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs';
 import 'firebase/auth';
+import { DriveMimeType } from '../../classes/drive-query-builder';
 
 /**
  * Workaround for testing
@@ -178,6 +179,25 @@ export class GoogleService {
           cb(resp);
         }
       });
+  }
+
+  createFolder(name: string, parent?: string): Promise<string> {
+    const fileResource = {
+      name: name,
+      mimeType: DriveMimeType.folder
+    }
+    if (parent) fileResource['parents'] = [parent];
+    return new Promise((resolve, reject) => {
+      gapi.client.drive.files
+        .create({
+          resource: fileResource,
+          fields: 'id'
+        })
+        .execute(resp => {
+          if (resp.err) reject(resp.err);
+          else resolve(resp.id);
+        });
+    });
   }
 
   moveFile(fileID: string, folder: string, cb: Function): void {
