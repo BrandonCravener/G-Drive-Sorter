@@ -4,7 +4,10 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AppComponent } from './app.component';
 import { appRoutes } from './app.routes';
 import { AuthenticatedModule } from './modules/authenticated/authenticated.module';
-import { AuthGuardService, PreventAuthGuardService } from './services/auth/auth-guard.service';
+import {
+  AuthGuardService,
+  PreventAuthGuardService
+} from './services/auth/auth-guard.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { ConfigModule } from './modules/config/config.module';
@@ -18,7 +21,7 @@ import {
   MatInputModule,
   MatStepperModule,
   MatToolbarModule
-  } from '@angular/material';
+} from '@angular/material';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgModule } from '@angular/core';
@@ -28,10 +31,7 @@ import { UnauthenticatedComponent } from './components/auth/unauthenticated/unau
 import { FolderCreationComponent } from './components/shared/folder-creation/folder-creation.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    UnauthenticatedComponent
-  ],
+  declarations: [AppComponent, UnauthenticatedComponent],
   imports: [
     BrowserModule,
     MatMenuModule,
@@ -42,17 +42,20 @@ import { FolderCreationComponent } from './components/shared/folder-creation/fol
     MatButtonModule,
     MatDialogModule,
     MatToolbarModule,
-    RouterModule.forRoot(
-      appRoutes
-    ),
+    RouterModule.forRoot(appRoutes),
     AngularFireAuthModule,
     AngularFirestoreModule,
     ConfigModule.forRoot(),
     BrowserAnimationsModule,
     AuthenticatedModule.forRoot(),
-    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireModule.initializeApp(environment.firebase)
   ],
-  providers: [GoogleService, AuthGuardService, PreventAuthGuardService],
+  providers: [
+    GoogleService,
+    AuthGuardService,
+    PreventAuthGuardService,
+    AppComponent
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
