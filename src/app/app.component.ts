@@ -29,7 +29,9 @@ declare var gapi: any;
 export class AppComponent implements AfterViewInit {
 
   private openConfigModal: Subject<boolean> = new Subject<boolean>();
+  private loaderRemoved: Boolean = false;
 
+  public loaded: Boolean = false;
   public authenticated: Boolean;
   public rlaSafe: boolean = false;
   public createConfigButtonState: string = 'inactive';
@@ -72,6 +74,13 @@ export class AppComponent implements AfterViewInit {
           console.debug('Google initalized.')
         });
         this.google.authState$.subscribe(state => {
+          if (!this.loaderRemoved) {
+            this.loaded = true;
+            setTimeout(() => {
+              document.getElementById('loader').remove();
+              this.loaderRemoved = true;
+            }, 500);
+          }
           this.authenticated = state;
           if (state) {
             this.zone.run(() => {

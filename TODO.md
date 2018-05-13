@@ -1,3 +1,3 @@
 # Todo
-1. Add identical name renamer
-2. Add preset configs
+1. Add preset configs functionality
+2. Add identical name renamer

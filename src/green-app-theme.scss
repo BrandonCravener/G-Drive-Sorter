@@ -2,7 +2,7 @@
 @include mat-core();
 
 $green-app-primary: mat-palette($mat-green);
-$green-app-accent:  mat-palette($mat-blue, A200, A100, A400);
+$green-app-accent: mat-palette($mat-blue, A200, A100, A400);
 
 $green-app-theme: mat-light-theme($green-app-primary, $green-app-accent);
 

@@ -1,7 +1,10 @@
 <div class="header">
   <span style="font-size: 2rem;">Configuration's</span>
-  <span class="right refresh-button" matTooltip="Refresh Config's" matTooltipPosition="left">
-    <button mat-icon-button color="accent" (click)="refreshConfigs()">
+  <span class="right refresh-button" >
+    <button mat-icon-button color="accent" (click)="openPresets()" matTooltip="Preset Config's" matTooltipPosition="left">
+      <mat-icon aria-label="Presets list">list</mat-icon>
+    </button>
+    <button mat-icon-button color="accent" (click)="refreshConfigs()" matTooltip="Refresh Config's" matTooltipPosition="right">
       <mat-icon aria-label="Refresh configurations">refresh</mat-icon>
     </button>
   </span>

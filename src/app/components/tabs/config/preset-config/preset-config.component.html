@@ -1,0 +1,20 @@
+<div [class.container]="isPage">
+  <h3 mat-dialog-title *ngIf="!isPage">Preset Configs</h3>
+  <h3 *ngIf="isPage">Preset Configs</h3>
+  <div mat-dialog-content [class.overflow-limit]="!isPage">
+    <mat-card *ngFor="let preset of presets">
+      <mat-card-header>
+        <mat-card-title>{{ preset.name }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ preset.description }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button (click)="addPreset(preset.id)">Add Preset</button>
+      </mat-card-actions>
+    </mat-card>
+    <div mat-dialog-actions>
+      <button style="margin-top: 10px;" mat-button (click)="close()">Cancel</button>
+    </div>
+  </div>
+</div>

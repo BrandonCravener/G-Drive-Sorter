@@ -24,12 +24,16 @@ import {
   MatSnackBarModule,
   MatStepperModule,
   MatTableModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatCardModule
   } from '@angular/material';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { NewConfigPageComponent } from '../../components/shared/new-config-page/new-config-page.component';
 import { NewRuleStepperComponent } from '../../components/shared/new-rule-stepper/new-rule-stepper.component';
 import { UnNamedPipe } from '../../pipes/un-named.pipe';
+import { PresetConfigComponent } from '../../components/tabs/config/preset-config/preset-config.component';
+import { PresetConfigPageComponent } from '../../components/tabs/config/preset-config-page/preset-config-page.component';
+import { ConfigRoutingModule } from './config-routing.module';
 
 @NgModule({
   declarations: [
@@ -40,6 +44,8 @@ import { UnNamedPipe } from '../../pipes/un-named.pipe';
     EditConfigModalComponent,
     EditConfigPageComponent,
     FolderCreationComponent,
+    PresetConfigComponent,
+    PresetConfigPageComponent,
     UnNamedPipe
   ],
   imports: [
@@ -47,6 +53,7 @@ import { UnNamedPipe } from '../../pipes/un-named.pipe';
     CommonModule,
     MatIconModule,
     MatListModule,
+    MatCardModule,
     MatInputModule,
     MatTableModule,
     MatSelectModule,
@@ -62,9 +69,10 @@ import { UnNamedPipe } from '../../pipes/un-named.pipe';
     MatNativeDateModule,
     ReactiveFormsModule,
     MatProgressBarModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    ConfigRoutingModule
   ],
-  entryComponents: [ConfigModalComponent, EditConfigModalComponent],
+  entryComponents: [ConfigModalComponent, EditConfigModalComponent, PresetConfigComponent],
   exports: [ConfigListComponent]
 })
 export class ConfigModule {

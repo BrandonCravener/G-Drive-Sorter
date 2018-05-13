@@ -6,6 +6,7 @@ import { NewConfigPageComponent } from './components/shared/new-config-page/new-
 import { Routes } from '@angular/router';
 import { SettingsComponent } from './components/tabs/settings/settings.component';
 import { UnauthenticatedComponent } from './components/auth/unauthenticated/unauthenticated.component';
+import { PresetConfigPageComponent } from './components/tabs/config/preset-config-page/preset-config-page.component';
 
 export const appRoutes: Routes = [
   {
@@ -17,6 +18,10 @@ export const appRoutes: Routes = [
     }
   },
   {
+    path: 'app/config',
+    loadChildren: './modules/config/config.module#ConfigModule'
+  },
+  {
     path: 'app/home',
     component: HomeComponent,
     canActivate: [AuthGuard],
@@ -25,35 +30,11 @@ export const appRoutes: Routes = [
     }
   },
   {
-    path: 'app/config',
-    component: ConfigComponent,
-    canActivate: [AuthGuard],
-    data: {
-      state: 'appConfig'
-    }
-  },
-  {
     path: 'app/settings',
     component: SettingsComponent,
     canActivate: [AuthGuard],
     data: {
       state: 'appSettings'
-    }
-  },
-  {
-    path: 'app/config/create',
-    component: NewConfigPageComponent,
-    canActivate: [AuthGuard],
-    data: {
-      state: 'appConfigCreate'
-    }
-  },
-  {
-    path: 'app/config/edit',
-    component: EditConfigPageComponent,
-    canActivate: [AuthGuard],
-    data: {
-      state: 'appConfigEdit'
     }
   },
   {
