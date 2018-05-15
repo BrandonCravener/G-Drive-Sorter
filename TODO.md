@@ -1,3 +1,3 @@
 # Todo
-1. Add preset configs functionality
-2. Add identical name renamer
+1. Add identical name renamer
+2. Ensure all router changes have a transition

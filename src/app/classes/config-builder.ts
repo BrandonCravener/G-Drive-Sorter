@@ -117,4 +117,12 @@ export class ConfigBuilder {
     }
     return outputString;
   }
+
+  static configFromGroup(groups, name: string): ConfigsInterface {
+    return {
+      id: uuid(),
+      name: name,
+      groups: groups
+    };
+  }
 }
