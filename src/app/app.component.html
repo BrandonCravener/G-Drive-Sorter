@@ -1,3 +1,11 @@
+<div id="loader" class="loading-overlay" [class.hidden]="loaded">
+  <div class="square-holder">
+    <div class="square-1"></div>
+    <div class="square-2"></div>
+    <div class="square-3"></div>
+    <div class="square-4"></div>
+  </div>
+</div>
 <mat-toolbar color="primary">
   <mat-toolbar-row>
     <div></div>
@@ -18,16 +26,16 @@
   </mat-toolbar-row>
   <mat-toolbar-row *ngIf="authenticated">
     <nav mat-tab-nav-bar color="accent">
-      <a mat-tab-link
-         *ngFor="let link of tabLinks"
-         [routerLink]="link.path"
-         routerLinkActive #rla="routerLinkActive"
-         [active]="rlaSafe&&rla.isActive">
+      <a mat-tab-link *ngFor="let link of tabLinks" [routerLink]="link.path" routerLinkActive #rla="routerLinkActive" [active]="rlaSafe&&rla.isActive">
         {{ link.label }}
       </a>
     </nav>
   </mat-toolbar-row>
 </mat-toolbar>
-<div [@routerTransition]="getRouteAnimation(route)">
+<div class="container" [@routerTransition]="getRouteState(route)">
   <router-outlet #route="outlet"></router-outlet>
 </div>
+<button class="new-config-button" matTooltip="Create Config" matTooltipPosition="left" mat-fab color="accent" [@createConfigFABState]="createConfigButtonState"
+  (click)="openConfigModalFunc()">
+  <mat-icon aria-label="Create new config button.">add</mat-icon>
+</button>

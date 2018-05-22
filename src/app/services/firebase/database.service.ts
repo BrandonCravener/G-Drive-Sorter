@@ -6,10 +6,13 @@ import {
   ConfigsInterface,
   GroupFolderInterface,
   RuleInterface,
-  UserDocument
-  } from '../../../interfaces';
+  UserDocument,
+  FolderCreation
+} from '../../../interfaces';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
+import { resolve } from 'dns';
+import { reject } from 'q';
 
 @Injectable()
 export class DatabaseService {
@@ -33,6 +36,9 @@ export class DatabaseService {
     private firebase: AngularFirestore,
     private firebaseAuth: AngularFireAuth
   ) {
+    firebase.firestore.settings({
+      timestampsInSnapshots: true
+    });
     if (this.firebaseAuth.auth.currentUser) {
       this.userID = firebaseAuth
         .auth
@@ -49,6 +55,7 @@ export class DatabaseService {
     firstGroupName: string,
     sourceLocation: GroupFolderInterface,
     destinationLocation: GroupFolderInterface,
+    createFolder: FolderCreation,
     firstGroupRule: RuleInterface
   ): void {
     const newConfig = ConfigBuilder.generateNewConfig(
@@ -56,8 +63,10 @@ export class DatabaseService {
       firstGroupName,
       sourceLocation,
       destinationLocation,
+      createFolder,
       firstGroupRule
     );
+    console.log(newConfig);
     this
       .configsCollection
       .add(newConfig)
@@ -67,6 +76,19 @@ export class DatabaseService {
         console.error(err);
         this._configSubject.next(false);
       });
+  }
+
+  addConfig(config: ConfigsInterface): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.configsCollection.add(config).then(() => {
+        this._configSubject.next(true);
+        resolve();
+      }, err => {
+        console.error(err);
+        this._configSubject.next(false);
+        reject();
+      })
+    });
   }
 
   deleteConfig(configID: string): void {

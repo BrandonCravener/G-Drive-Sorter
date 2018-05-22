@@ -1,9 +1,8 @@
-import { Component, NgZone, AfterViewInit } from '@angular/core';
-import { Router } from '@angular/router';
-
+import { AfterViewInit, Component, NgZone } from '@angular/core';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { fabAnimation, routerAnimation } from '../animations';
 import { GoogleService } from './services/google/google.service';
-
-import { routerAnimation } from '../router.animations';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 
 /**
  * Workaround for testing
@@ -12,7 +11,7 @@ declare var gapi: any;
 
 /**
  * Base application component.
- * 
+ *
  * @export
  * @class AppComponent
  * @implements {AfterViewInit}
@@ -20,33 +19,21 @@ declare var gapi: any;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-  providers: [ GoogleService ],
-  animations: [ routerAnimation ]
+  styleUrls: ['./app.component.scss'],
+  providers: [GoogleService],
+  animations: [routerAnimation, fabAnimation]
 })
 export class AppComponent implements AfterViewInit {
-  /**
-   * Checks if the view has initalized yet.
-   * 
-   * @public
-   * @type {boolean}
-   * @memberof AppComponent
-   */
-  public rlaSafe: boolean = false;
-  /**
-   * Hold the users authenitcation status
-   * 
-   * @type {Boolean}
-   * @memberof AppComponent
-   */
-  authenticated: Boolean;
+  private openConfigModal: Subject<boolean> = new Subject<boolean>();
+  private loaderRemoved: Boolean = false;
 
-  /**
-   * An array of links thats translated into tabs.
-   * 
-   * @memberof AppComponent
-   */
-  tabLinks = [
+  public tabsEnabled = true;
+  public loaded: Boolean = false;
+  public authenticated: Boolean;
+  public rlaSafe: boolean = false;
+  public createConfigButtonState: string = 'inactive';
+  public openConfigModal$ = this.openConfigModal.asObservable();
+  public tabLinks = [
     {
       path: 'app/home',
       label: 'Home'
@@ -60,6 +47,7 @@ export class AppComponent implements AfterViewInit {
       label: 'Settings'
     }
   ];
+
   /**
    * Creates an instance of AppComponent.
    * @param {GoogleService} google Declare the Google Service as google
@@ -67,18 +55,35 @@ export class AppComponent implements AfterViewInit {
    * @param {NgZone} zone  Declare NgZone as zon
    * @memberof AppComponent
    */
-  constructor(private google: GoogleService, private router: Router, private zone: NgZone) {
+  constructor(
+    private google: GoogleService,
+    private router: Router,
+    private zone: NgZone
+  ) {
     const googleInitInterval = setInterval(() => {
       if (window['gapi']) {
-        this.google.init({
-          apiKey: 'AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM',
-          clientId: '362606538820-om1dhhvv5d9npas7jj02mbtvi5mjksmo.apps.googleusercontent.com',
-          discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'],
-          scope: 'https://www.googleapis.com/auth/drive'
-        }, () => {
-          console.debug('Google initalized.')
-        });
+        this.google.init(
+          {
+            apiKey: 'AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM',
+            clientId:
+              '362606538820-om1dhhvv5d9npas7jj02mbtvi5mjksmo.apps.googleusercontent.com',
+            discoveryDocs: [
+              'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'
+            ],
+            scope: 'https://www.googleapis.com/auth/drive'
+          },
+          () => {
+            console.debug('Google initalized.');
+          }
+        );
         this.google.authState$.subscribe(state => {
+          if (!this.loaderRemoved) {
+            this.loaded = true;
+            setTimeout(() => {
+              document.getElementById('loader').remove();
+              this.loaderRemoved = true;
+            }, 500);
+          }
           this.authenticated = state;
           if (state) {
             this.zone.run(() => {
@@ -97,18 +102,33 @@ export class AppComponent implements AfterViewInit {
 
   /**
    * Called after the view is initalized.
-   * 
+   *
    * @memberof AppComponent
    */
   public ngAfterViewInit() {
     this.rlaSafe = true;
+    // Listen for route changes
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        if (event.url === '/app/config') {
+          this.createConfigButtonState = 'active';
+        } else {
+          this.createConfigButtonState = 'inactive';
+        }
+        console.log(event.url);
+        if (
+          event.url === '/app/config/create' ||
+          event.url === '/app/config/presets' ||
+          event.url === '/app/config/edit'
+        ) {
+          this.tabsEnabled = false;
+        } else {
+          this.tabsEnabled = true;
+        }
+      }
+    });
   }
-  
-  /**
-   * Signs the user out.
-   * 
-   * @memberof AppComponent
-   */
+
   signOut() {
     this.google.signOut();
   }
@@ -116,16 +136,19 @@ export class AppComponent implements AfterViewInit {
   signIn() {
     this.google.signIn();
   }
-  
-  /**
-   * Gets the current route information.
-   * 
-   * @param {any} outlet The route
-   * @returns 
-   * @memberof AppComponent
-   */
-  getRouteAnimation(outlet) {
-    return outlet.activatedRouteData.name;
+
+  openConfigModalFunc() {
+    this.openConfigModal.next(true);
   }
 
+  /**
+   * Gets the current route information.
+   *
+   * @param {any} outlet The route
+   * @returns
+   * @memberof AppComponent
+   */
+  getRouteState(outlet) {
+    return outlet.activatedRouteData.state;
+  }
 }

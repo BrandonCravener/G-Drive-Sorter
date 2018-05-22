@@ -5,7 +5,6 @@ import { ConfigModule } from '../../../modules/config/config.module';
 import { AuthenticatedModule } from '../../../modules/authenticated/authenticated.module';
 import { APP_BASE_HREF } from '@angular/common';
 
-
 describe("ConfigComponent", () => {
   let component: ConfigComponent;
   let fixture: ComponentFixture<ConfigComponent>;

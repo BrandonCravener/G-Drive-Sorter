@@ -1,37 +1,57 @@
 import { AngularFirestoreCollection } from 'angularfire2/firestore';
 
 export interface ConfigInterface {
-    activeConfig: string;
+  activeConfig: string;
 }
 
 export interface RuleInterface {
-    id: string,
-    name: string,
-    data?: object,
-    classifier?: string,
-    constraint?: string
+  id: string;
+  name: string;
+  data?: any;
+  classifier?: string;
+  constraint?: string;
 }
 
 export interface GroupFolderInterface {
-    name?: string,
-    folderID?: string
+  name?: string;
+  folderID?: string;
 }
 
 export interface GroupInterface {
-    id: string,
-    name: string,
-    rules: Array<RuleInterface>,
-    source: GroupFolderInterface,
-    destination: GroupFolderInterface
+  id: string;
+  name: string;
+  rules: Array<RuleInterface>;
+  source: GroupFolderInterface;
+  destination?: GroupFolderInterface;
+  createFolder?: FolderCreation;
 }
 
 export interface ConfigsInterface {
-    id: string,
-    name: string,
-    groups: Array<GroupInterface>
+  id: string;
+  name: string;
+  groups: Array<GroupInterface>;
 }
 
 export interface UserDocument {
-    activeConfig: string,
-    configs: AngularFirestoreCollection<ConfigsInterface>
+  activeConfig: string;
+  configs: AngularFirestoreCollection<ConfigsInterface>;
+}
+
+export interface FolderCreation {
+  parent: {
+    folderID: string | undefined;
+    name: string | null;
+  };
+  prefix: {
+    type: string | null;
+    value: string;
+  };
+  name: {
+    type: string | null;
+    value: string;
+  };
+  suffix: {
+    type: string | null;
+    value: string;
+  };
 }

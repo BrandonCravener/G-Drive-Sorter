@@ -1,12 +1,13 @@
-.overflow-limit {
-    max-height: 40vh;
-    overflow-y: auto;
-}
-
 .full-width {
-    width: 100%;
+  width: 100%;
 }
-
 .right {
-    float: right;
+  float: right;
+}
+.overflow-limit {
+  max-height: 40vh;
+  overflow-y: auto;
+}
+.hidden {
+  display: none;
 }

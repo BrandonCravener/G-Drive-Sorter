@@ -1,10 +1,9 @@
-import { TestBed, inject } from '@angular/core/testing';
-
-import { DatabaseService } from './database.service';
+import { APP_BASE_HREF } from '@angular/common';
 import { AppModule } from '../../app.module';
 import { AuthenticatedModule } from '../../modules/authenticated/authenticated.module';
 import { ConfigModule } from '../../modules/config/config.module';
-import { APP_BASE_HREF } from '@angular/common';
+import { DatabaseService } from './database.service';
+import { inject, TestBed } from '@angular/core/testing';
 
 describe('DatabaseService', () => {
   beforeEach(() => {

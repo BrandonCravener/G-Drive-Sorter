@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { ConfigModule } from './modules/config/config.module';
 import { environment } from '../environments/environment.prod';
+import { FolderCreationComponent } from './components/shared/folder-creation/folder-creation.component';
 import { GoogleService } from './services/google/google.service';
 import { MatButtonModule } from '@angular/material/button';
 import {
@@ -27,10 +28,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { UnauthenticatedComponent } from './components/auth/unauthenticated/unauthenticated.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    UnauthenticatedComponent,
-  ],
+  declarations: [AppComponent, UnauthenticatedComponent],
   imports: [
     BrowserModule,
     MatMenuModule,
@@ -41,17 +39,20 @@ import { UnauthenticatedComponent } from './components/auth/unauthenticated/unau
     MatButtonModule,
     MatDialogModule,
     MatToolbarModule,
-    RouterModule.forRoot(
-      appRoutes
-    ),
+    RouterModule.forRoot(appRoutes),
     AngularFireAuthModule,
     AngularFirestoreModule,
     ConfigModule.forRoot(),
     BrowserAnimationsModule,
     AuthenticatedModule.forRoot(),
-    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireModule.initializeApp(environment.firebase)
   ],
-  providers: [GoogleService, AuthGuardService, PreventAuthGuardService],
+  providers: [
+    GoogleService,
+    AuthGuardService,
+    PreventAuthGuardService,
+    AppComponent
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

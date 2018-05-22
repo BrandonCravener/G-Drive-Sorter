@@ -1,17 +1,15 @@
-import { Injectable } from '@angular/core';
-
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import * as firebase from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
-
-import * as firebase from "firebase/app";
-import "firebase/auth";
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Subject } from 'rxjs';
+import 'firebase/auth';
+import { DriveMimeType } from '../../classes/drive-query-builder';
 
 /**
  * Workaround for testing
  */
 declare var gapi: any;
-
 declare var google: any;
 
 /**
@@ -33,7 +31,7 @@ function folderPicked(data: any): void {
 
 /**
  * Utility class to handle all interacting with the Google API
- * 
+ *
  * @export
  * @class GoogleService
  */
@@ -41,7 +39,7 @@ function folderPicked(data: any): void {
 export class GoogleService {
   /**
    * Holds a subject that is used to update subscribers with the authentication status.
-   * 
+   *
    * @private
    * @memberof GoogleService
    */
@@ -49,7 +47,7 @@ export class GoogleService {
 
   /**
    * Allows other modules / services to subscribe to the authentication status.
-   * 
+   *
    * @memberof GoogleService
    */
   public authState$ = this._authState.asObservable();
@@ -60,44 +58,49 @@ export class GoogleService {
    * Creates an instance of GoogleService.
    * @memberof GoogleService
    */
-  constructor (private firebaseAuth: AngularFireAuth) {}
+  constructor(private firebaseAuth: AngularFireAuth) {}
 
   /**
    * Initialize the Google API
-   * 
-   * @param {Object} config 
+   *
+   * @param {Object} config
    * @memberof GoogleService
    */
   init(config: Object, callback?: Function) {
     gapi.load('client:auth2', () => {
-      gapi
-      .client
-      .init(config)
-      .then(() => {
+      console.debug('GAPI: Client & Auth Loaded');
+      gapi.client.init(config).then(() => {
         authInstance = gapi.auth2.getAuthInstance();
         authInstance.isSignedIn.listen(() => {
           this._authState.next(authInstance.isSignedIn.get());
           if (authInstance.isSignedIn.get()) {
-            const credential = firebase.auth.GoogleAuthProvider.credential(this.getToken());
-            this.firebaseAuth.auth.signInWithCredential(credential)
+            const credential = firebase.auth.GoogleAuthProvider.credential(
+              this.getToken()
+            );
+            this.firebaseAuth.auth.signInWithCredential(credential);
           }
         });
         const authStatus = authInstance.isSignedIn.get();
         this._authState.next(authStatus);
         gapi.load('picker', () => {
+          console.debug('GAPI: Picker Loaded');
           const view = new google.picker.DocsView(google.picker.ViewId.FOLDERS)
             .setIncludeFolders(true)
-            .setSelectFolderEnabled(true);
+            .setSelectFolderEnabled(true)
+            .setParent('root')
+            .setOwnedByMe(true);
 
           folderPicker = new google.picker.PickerBuilder()
             .disableFeature(google.picker.Feature.SUPPORT_TEAM_DRIVES)
             .setAppId(362606538820)
-            .setOAuthToken(authInstance.currentUser.get().getAuthResponse().access_token)
+            .setOAuthToken(
+              authInstance.currentUser.get().getAuthResponse().access_token
+            )
             .setDeveloperKey('AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM')
             .setSelectableMimeTypes('application/vnd.google-apps.folder')
             .addView(view)
             .setCallback(folderPicked)
-            .build()
+            .build();
           if (callback) {
             callback();
           }
@@ -112,8 +115,8 @@ export class GoogleService {
 
   /**
    * Returns the users current authentication status.
-   * 
-   * @returns {Boolean} 
+   *
+   * @returns {Boolean}
    * @memberof GoogleService
    */
   getAuthStatus(): Boolean {
@@ -126,31 +129,93 @@ export class GoogleService {
 
   /**
    * Opens a popup allowing the user to sign in.
-   * 
+   *
    * @memberof GoogleService
    */
-  signIn() {
+  signIn(): void {
     authInstance.signIn();
   }
-  
+
   /**
    * Signs a user out
-   * 
+   *
    * @memberof GoogleService
    */
-  signOut() {
+  signOut(): void {
     authInstance.signOut();
     this.firebaseAuth.auth.signOut();
   }
 
   /**
    * Gets the users id token
-   * 
-   * @returns {string} 
+   *
+   * @returns {string}
    * @memberof GoogleService
    */
   getToken(): string {
     return authInstance.currentUser.get().getAuthResponse().id_token;
   }
 
+  listFiles(query: string, cb: Function): void {
+    gapi.client.drive.files
+      .list({
+        q: query
+      })
+      .execute(resp => {
+        cb(resp);
+      });
+  }
+
+  getFileInfo(fileID: string, fields: string, cb: Function): void {
+    gapi.client.drive.files
+      .get({
+        fileId: fileID,
+        fields: fields
+      })
+      .execute(resp => {
+        if (resp.err) {
+          console.error(resp.err);
+        } else {
+          cb(resp);
+        }
+      });
+  }
+
+  createFolder(name: string, parent?: string): Promise<string> {
+    const fileResource = {
+      name: name,
+      mimeType: DriveMimeType.folder
+    }
+    if (parent) fileResource['parents'] = [parent];
+    return new Promise((resolve, reject) => {
+      gapi.client.drive.files
+        .create({
+          resource: fileResource,
+          fields: 'id'
+        })
+        .execute(resp => {
+          if (resp.err) reject(resp.err);
+          else resolve(resp.id);
+        });
+    });
+  }
+
+  moveFile(fileID: string, folder: string, cb: Function): void {
+    this.getFileInfo(fileID, 'parents', file => {
+      const prevParents = file.parents.join(',');
+      gapi.client.drive.files
+        .update({
+          fileId: fileID,
+          addParents: folder,
+          removeParents: prevParents
+        })
+        .execute(resp => {
+          if (resp.err) {
+            console.error(resp.err);
+          } else {
+            cb(true);
+          }
+        });
+    });
+  }
 }
