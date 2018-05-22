@@ -11,7 +11,7 @@ declare var gapi: any;
 
 /**
  * Base application component.
- * 
+ *
  * @export
  * @class AppComponent
  * @implements {AfterViewInit}
@@ -20,17 +20,14 @@ declare var gapi: any;
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  providers: [ GoogleService ],
-  animations: [ 
-    routerAnimation,
-    fabAnimation
-  ]
+  providers: [GoogleService],
+  animations: [routerAnimation, fabAnimation]
 })
 export class AppComponent implements AfterViewInit {
-
   private openConfigModal: Subject<boolean> = new Subject<boolean>();
   private loaderRemoved: Boolean = false;
 
+  public tabsEnabled = true;
   public loaded: Boolean = false;
   public authenticated: Boolean;
   public rlaSafe: boolean = false;
@@ -39,7 +36,7 @@ export class AppComponent implements AfterViewInit {
   public tabLinks = [
     {
       path: 'app/home',
-      label: 'Home'	
+      label: 'Home'
     },
     {
       path: 'app/config',
@@ -59,20 +56,26 @@ export class AppComponent implements AfterViewInit {
    * @memberof AppComponent
    */
   constructor(
-    private google: GoogleService, 
-    private router: Router, 
+    private google: GoogleService,
+    private router: Router,
     private zone: NgZone
   ) {
     const googleInitInterval = setInterval(() => {
       if (window['gapi']) {
-        this.google.init({
-          apiKey: 'AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM',
-          clientId: '362606538820-om1dhhvv5d9npas7jj02mbtvi5mjksmo.apps.googleusercontent.com',
-          discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'],
-          scope: 'https://www.googleapis.com/auth/drive'
-        }, () => {
-          console.debug('Google initalized.')
-        });
+        this.google.init(
+          {
+            apiKey: 'AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM',
+            clientId:
+              '362606538820-om1dhhvv5d9npas7jj02mbtvi5mjksmo.apps.googleusercontent.com',
+            discoveryDocs: [
+              'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'
+            ],
+            scope: 'https://www.googleapis.com/auth/drive'
+          },
+          () => {
+            console.debug('Google initalized.');
+          }
+        );
         this.google.authState$.subscribe(state => {
           if (!this.loaderRemoved) {
             this.loaded = true;
@@ -99,7 +102,7 @@ export class AppComponent implements AfterViewInit {
 
   /**
    * Called after the view is initalized.
-   * 
+   *
    * @memberof AppComponent
    */
   public ngAfterViewInit() {
@@ -112,8 +115,18 @@ export class AppComponent implements AfterViewInit {
         } else {
           this.createConfigButtonState = 'inactive';
         }
+        console.log(event.url);
+        if (
+          event.url === '/app/config/create' ||
+          event.url === '/app/config/presets' ||
+          event.url === '/app/config/edit'
+        ) {
+          this.tabsEnabled = false;
+        } else {
+          this.tabsEnabled = true;
+        }
       }
-    })
+    });
   }
 
   signOut() {
@@ -127,16 +140,15 @@ export class AppComponent implements AfterViewInit {
   openConfigModalFunc() {
     this.openConfigModal.next(true);
   }
-  
+
   /**
    * Gets the current route information.
-   * 
+   *
    * @param {any} outlet The route
-   * @returns 
+   * @returns
    * @memberof AppComponent
    */
   getRouteState(outlet) {
     return outlet.activatedRouteData.state;
   }
-
 }

@@ -1,4 +1,4 @@
-<div [class.container]="isPage" *ngIf="configLoaded | async; else loadingConfig">
+<div *ngIf="configLoaded | async; else loadingConfig">
   <h3 mat-dialog-title *ngIf="!isPage">Editing Config - {{ config.name | unNamed }}</h3>
   <h3 *ngIf="isPage">Editing Config - {{ config.name | unNamed }}</h3>
   <div mat-dialog-content>

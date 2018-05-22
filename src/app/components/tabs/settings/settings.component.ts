@@ -17,7 +17,7 @@ declare var gapi: any;
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss', '../../../../simple-grid.scss']
+  styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent {
   /**

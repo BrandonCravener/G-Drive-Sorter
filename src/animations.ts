@@ -9,7 +9,7 @@ import {
   style,
   transition,
   trigger
-  } from '@angular/animations';
+} from '@angular/animations';
 import { Optional } from '@angular/core';
 
 const fadeOutIn = [
@@ -158,6 +158,60 @@ const slideRight = [
   ])
 ];
 
+const slideDown = [
+  query(
+    ':enter, :leave',
+    style({
+      position: 'fixed',
+      width: '100%',
+      height: '100%'
+    }),
+    {
+      optional: false
+    }
+  ),
+  group([
+    query(
+      ':enter',
+      [
+        style({
+          transform: 'translateY(100%)',
+          opacity: 0
+        }),
+        animate(
+          '0.5s',
+          style({
+            transform: 'translateY(0%)',
+            opacity: 1
+          })
+        )
+      ],
+      {
+        optional: false
+      }
+    ),
+    query(
+      ':leave',
+      [
+        style({
+          transform: 'translateY(0%)',
+          opacity: 1
+        }),
+        animate(
+          '0.5s',
+          style({
+            transform: 'translateY(100%)',
+            opacity: 0
+          })
+        )
+      ],
+      {
+        optional: false
+      }
+    )
+  ])
+];
+
 /**
  * Animation for switching between routes
  */
@@ -171,7 +225,26 @@ export const routerAnimation = trigger('routerTransition', [
   transition('appHome => appSettings', slideLeft),
   transition('appSettings => appHome', slideRight),
   transition('appConfig => appSettings', slideLeft),
-  transition('appSettings => appConfig', slideRight)
+  transition('appSettings => appConfig', slideRight),
+  // Small screen pages
+  transition('appConfig => appConfigEdit', slideDown),
+  transition('appConfigEdit => appConfig', slideDown),
+  transition('appConfig => appConfigCreate', slideDown),
+  transition('appConfigCreate => appConfig', slideDown),
+  transition('appConfig => appConfigPresets', slideDown),
+  transition('appConfigPresets => appConfig', slideDown),
+  transition('appSettings => appConfigEdit', slideDown),
+  transition('appConfigEdit => appSettings', slideDown),
+  transition('appSettings => appConfigCreate', slideDown),
+  transition('appConfigCreate => appSettings', slideDown),
+  transition('appSettings => appConfigPresets', slideDown),
+  transition('appConfigPresets => appSettings', slideDown),
+  transition('appHome => appConfigEdit', slideDown),
+  transition('appConfigEdit => appHome', slideDown),
+  transition('appHome => appConfigCreate', slideDown),
+  transition('appConfigCreate => appHome', slideDown),
+  transition('appHome => appConfigPresets', slideDown),
+  transition('appConfigPresets => appHome', slideDown)
 ]);
 
 export const fabAnimation = trigger('createConfigFABState', [

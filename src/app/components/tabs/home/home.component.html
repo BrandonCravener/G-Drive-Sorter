@@ -1,5 +1,5 @@
 <div class="row" style="padding-top: 10px;">
-  <mat-card class="col-4 col-6-sm">
+  <mat-card class="col-5 col-10-sm">
     <mat-card-header>
       <mat-icon mat-card-avatar color="accent">settings_power</mat-icon>
       <mat-card-title>Active Config</mat-card-title>
@@ -8,7 +8,7 @@
       {{ activeConfigName }}
     </mat-card-content>
   </mat-card>
-  <mat-card class="col-4 col-6-sm">
+  <mat-card class="col-5 col-10-sm">
     <mat-card-header>
       <mat-icon mat-card-avatar color="accent">sort</mat-icon>
       <mat-card-title>Sorting</mat-card-title>
@@ -16,5 +16,19 @@
     <mat-card-content>
       <button mat-raised-button style="width: 100%;" color="primary" [disabled]="!isActiveConfig" (click)="sortUsersDrive()">Sort Now</button>
     </mat-card-content>
+  </mat-card>
+</div>
+<div class="row">
+  <mat-card class="col-5 col-10-sm">
+    <mat-card-header>
+      <mat-icon mat-card-avatar color="accent">settings</mat-icon>
+      <mat-card-title>Configuration's</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      Configuration's control how your Google Drive is sorted!
+    </mat-card-content>
+    <mat-card-actions>
+      <button color="primary" (click)="goToConfigPage()" mat-button>Go to Configuration's</button>
+    </mat-card-actions>
   </mat-card>
 </div>

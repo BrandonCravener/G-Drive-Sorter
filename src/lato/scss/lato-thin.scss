@@ -1,11 +1,11 @@
 /* Webfont: Lato-Thin */
 @font-face {
     font-family: 'LatoWebThin';
-    src: url('./lato/fonts/Lato-Thin.eot'); /* IE9 Compat Modes */
-    src: url('./lato/fonts/Lato-Thin.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-         url('./lato/fonts/Lato-Thin.woff2') format('woff2'), /* Modern Browsers */
-         url('./lato/fonts/Lato-Thin.woff') format('woff'), /* Modern Browsers */
-         url('./lato/fonts/Lato-Thin.ttf') format('truetype');
+    src: url('../lato/fonts/Lato-Thin.eot'); /* IE9 Compat Modes */
+    src: url('../lato/fonts/Lato-Thin.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('../lato/fonts/Lato-Thin.woff2') format('woff2'), /* Modern Browsers */
+         url('../lato/fonts/Lato-Thin.woff') format('woff'), /* Modern Browsers */
+         url('../lato/fonts/Lato-Thin.ttf') format('truetype');
     font-style: normal;
     font-weight: normal;
     text-rendering: optimizeLegibility;
@@ -14,11 +14,11 @@
 /* Webfont: Lato-ThinItalic */
 @font-face {
     font-family: 'LatoWebThin';
-    src: url('./lato/fonts/Lato-ThinItalic.eot'); /* IE9 Compat Modes */
-    src: url('./lato/fonts/Lato-ThinItalic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-         url('./lato/fonts/Lato-ThinItalic.woff2') format('woff2'), /* Modern Browsers */
-         url('./lato/fonts/Lato-ThinItalic.woff') format('woff'), /* Modern Browsers */
-         url('./lato/fonts/Lato-ThinItalic.ttf') format('truetype');
+    src: url('../lato/fonts/Lato-ThinItalic.eot'); /* IE9 Compat Modes */
+    src: url('../lato/fonts/Lato-ThinItalic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('../lato/fonts/Lato-ThinItalic.woff2') format('woff2'), /* Modern Browsers */
+         url('../lato/fonts/Lato-ThinItalic.woff') format('woff'), /* Modern Browsers */
+         url('../lato/fonts/Lato-ThinItalic.ttf') format('truetype');
     font-style: italic;
     font-weight: normal;
     text-rendering: optimizeLegibility;

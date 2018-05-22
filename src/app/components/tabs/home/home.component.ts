@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { DatabaseService } from '../../../services/firebase/database.service';
 import { MatSnackBar } from '@angular/material';
 import { SorterService } from '../../../services/sorter/sorter.service';
+import { Router } from '@angular/router';
 
 /**
  * Declare a component to be shown when the home tab is selected.
@@ -24,6 +25,8 @@ export class HomeComponent implements OnInit {
    * @memberof HomeComponent
    */
   constructor(
+    private zone: NgZone,
+    private router: Router,
     private snackBar: MatSnackBar,
     private database: DatabaseService,
     private sorterService: SorterService
@@ -56,5 +59,11 @@ export class HomeComponent implements OnInit {
         duration: 5000
       });
     }, err => console.error);
+  }
+
+  goToConfigPage() {
+    this.zone.run(() => {
+      this.router.navigateByUrl('/app/config');
+    });
   }
 }

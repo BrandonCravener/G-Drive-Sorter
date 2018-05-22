@@ -32,7 +32,7 @@
     </nav>
   </mat-toolbar-row>
 </mat-toolbar>
-<div [@routerTransition]="getRouteState(route)">
+<div class="container" [@routerTransition]="getRouteState(route)">
   <router-outlet #route="outlet"></router-outlet>
 </div>
 <button class="new-config-button" matTooltip="Create Config" matTooltipPosition="left" mat-fab color="accent" [@createConfigFABState]="createConfigButtonState"
