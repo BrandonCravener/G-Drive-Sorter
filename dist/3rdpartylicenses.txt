@@ -350,7 +350,7 @@ THE SOFTWARE.
 MIT
 MIT
 
-@angular/cdk@6.0.0
+@angular/cdk@6.1.0
 MIT
 The MIT License
 
