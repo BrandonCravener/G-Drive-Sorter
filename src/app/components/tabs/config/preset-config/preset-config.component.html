@@ -12,7 +12,7 @@
         <p>{{ preset.description }}</p>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button (click)="addPreset(preset.id)">Add Preset</button>
+        <button mat-button (click)="addPreset(preset.id)" [disabled]="!creationEnabled">Add Preset</button>
       </mat-card-actions>
     </mat-card>
     <div mat-dialog-actions>

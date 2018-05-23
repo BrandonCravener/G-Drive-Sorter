@@ -11,8 +11,6 @@ import {
 } from '../../../interfaces';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { resolve } from 'dns';
-import { reject } from 'q';
 
 @Injectable()
 export class DatabaseService {

@@ -18,7 +18,9 @@ export class PresetConfigComponent implements OnInit {
 
   public closeCommand = this._closeCommand.asObservable();
 
+  public isPage = false;
   public presets = presets;
+  public creationEnabled = true;
 
   constructor(
     public zone: NgZone,
@@ -43,6 +45,7 @@ export class PresetConfigComponent implements OnInit {
     const createdFolders = [];
     let requestsSent = 0;
     let requestsRecived = 0;
+    this.creationEnabled = false;
     createFolders.forEach(folder => {
       requestsSent += 1;
       this.google
@@ -73,9 +76,11 @@ export class PresetConfigComponent implements OnInit {
           .then(
             () => {
               this.close();
+              this.creationEnabled = true;
             },
             err => {
               this.snackbar.open('There was a problem adding your preset!');
+              this.creationEnabled = true;
             }
           );
       }

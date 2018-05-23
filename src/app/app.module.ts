@@ -23,7 +23,6 @@ import {
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgModule } from '@angular/core';
-import { ParallaxConfig, ParallaxModule } from 'ngx-parallax';
 import { RouterModule, Routes } from '@angular/router';
 import { UnauthenticatedComponent } from './components/auth/unauthenticated/unauthenticated.component';
 
@@ -34,7 +33,6 @@ import { UnauthenticatedComponent } from './components/auth/unauthenticated/unau
     MatMenuModule,
     MatIconModule,
     MatTabsModule,
-    ParallaxModule,
     MatInputModule,
     MatButtonModule,
     MatDialogModule,
