@@ -87,14 +87,14 @@
                         <a href="modules/AppModule.html" data-type="entity-link">AppModule</a>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#xs-components-links-module-AppModule-1a4c0542640caab8fd00b9de43fb57b6"
+                                        data-target="#xs-components-links-module-AppModule-f0c00182328e7c7d193553aab0901ece"
                                     >
                                     <span class="fa fa-fw fa-cogs"></span>
                                     <span>Components</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="xs-components-links-module-AppModule-1a4c0542640caab8fd00b9de43fb57b6"
+                                        id="xs-components-links-module-AppModule-f0c00182328e7c7d193553aab0901ece"
                                     >
                                         <li class="link">
                                             <a href="components/AppComponent.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">AppComponent</a>
@@ -106,14 +106,14 @@
                             </li>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#xs-injectables-links-module-AppModule-1a4c0542640caab8fd00b9de43fb57b6"
+                                        data-target="#xs-injectables-links-module-AppModule-f0c00182328e7c7d193553aab0901ece"
                                     >
                                     <span class="fa fa-fw fa-long-arrow-down"></span>
                                     <span>Injectables</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="xs-injectables-links-module-AppModule-1a4c0542640caab8fd00b9de43fb57b6"
+                                        id="xs-injectables-links-module-AppModule-f0c00182328e7c7d193553aab0901ece"
                                     >
                                         <li class="link">
                                             <a href="injectables/AuthGuardService.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules"}>AuthGuardService</a>
@@ -444,14 +444,14 @@
                         <a href="modules/AppModule.html" data-type="entity-link">AppModule</a>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#components-links-module-AppModule-1a4c0542640caab8fd00b9de43fb57b6"
+                                        data-target="#components-links-module-AppModule-f0c00182328e7c7d193553aab0901ece"
 >
                                     <span class="fa fa-fw fa-cogs"></span>
                                     <span>Components</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="components-links-module-AppModule-1a4c0542640caab8fd00b9de43fb57b6"
+                                        id="components-links-module-AppModule-f0c00182328e7c7d193553aab0901ece"
 >
                                         <li class="link">
                                             <a href="components/AppComponent.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">AppComponent</a>
@@ -463,14 +463,14 @@
                             </li>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#injectables-links-module-AppModule-1a4c0542640caab8fd00b9de43fb57b6"
+                                        data-target="#injectables-links-module-AppModule-f0c00182328e7c7d193553aab0901ece"
 >
                                     <span class="fa fa-fw fa-long-arrow-down"></span>
                                     <span>Injectables</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="injectables-links-module-AppModule-1a4c0542640caab8fd00b9de43fb57b6"
+                                        id="injectables-links-module-AppModule-f0c00182328e7c7d193553aab0901ece"
 >
                                         <li class="link">
                                             <a href="injectables/AuthGuardService.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules"}>AuthGuardService</a>
@@ -1725,7 +1725,7 @@ export class FolderCreationComponent implements AfterViewInit {
       Folder Creation
     &lt;/mat-panel-title&gt;
   &lt;/mat-expansion-panel-header&gt;
-  &lt;div class&#x3D;&quot;full-width overflow-limit&quot; [class.hidden]&#x3D;&quot;!creatingFolder&quot;&gt;
+  &lt;div class&#x3D;&quot;full-width overflow-limit&quot;&gt;
     &lt;div class&#x3D;&quot;full-width&quot;&gt;
       &lt;mat-form-field style&#x3D;&quot;width: 70%;&quot;&gt;
         &lt;input matInput type&#x3D;&quot;text&quot; placeholder&#x3D;&quot;Parent&quot; [value]&#x3D;&quot;createFolder.parent.name&quot; disabled required/&gt;
@@ -1795,7 +1795,7 @@ export class FolderCreationComponent implements AfterViewInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><mat-expansion-panel [expanded]="!finished" (opened)="finished = false">  <mat-expansion-panel-header>    <mat-panel-title>      Folder Creation    </mat-panel-title>  </mat-expansion-panel-header>  <div class="full-width overflow-limit" [class.hidden]="!creatingFolder">    <div class="full-width">      <mat-form-field style="width: 70%;">        <input matInput type="text" placeholder="Parent" [value]="createFolder.parent.name" disabled required/>        <button mat-button matSuffix mat-icon-button aria-label="Pick Parent Folder" [disabled]="createFolder.parent.folderID === \'root\' || parentFolderIsRoot" (click)="openFolderPicker()">          <mat-icon>folder</mat-icon>        </button>      </mat-form-field>      <mat-slide-toggle (change)="rootToggleChange($event)" [checked]="createFolder.parent.folderID === \'root\' || parentFolderIsRoot">My Drive</mat-slide-toggle>    </div>    <div class="row">      <mat-form-field class="col-3 col-12-sm">        <mat-select placeholder="Prefix" [(ngModel)]="createFolder.prefix.type">          <mat-option *ngFor="let option of namingOptions" [value]="option.value">{{ option.name }}</mat-option>        </mat-select>      </mat-form-field>      <mat-form-field class="col-3 col-12-sm">        <mat-select placeholder="Name" [(ngModel)]="createFolder.name.type">          <mat-option *ngFor="let option of namingOptions" [value]="option.value">{{ option.name }}</mat-option>        </mat-select>      </mat-form-field>      <mat-form-field class="col-3 col-12-sm">        <mat-select placeholder="Suffix" [(ngModel)]="createFolder.suffix.type">          <mat-option *ngFor="let option of namingOptions" [value]="option.value">{{ option.name }}</mat-option>        </mat-select>      </mat-form-field>    </div>    <div class="row">      <mat-form-field class="col-3 col-12-sm">        <input matInput placeholder="Prefix Text" [(ngModel)]="createFolder.prefix.value" [disabled]="createFolder.prefix.type !== \'text\'">      </mat-form-field>      <mat-form-field class="col-3 col-12-sm">        <input matInput placeholder="Name Text" [(ngModel)]="createFolder.name.value" [disabled]="createFolder.name.type !== \'text\'">      </mat-form-field>      <mat-form-field class="col-3 col-12-sm">        <input matInput placeholder="Suffix Text" [(ngModel)]="createFolder.suffix.value" [disabled]="createFolder.suffix.type !== \'text\'">      </mat-form-field>    </div>  </div>  <mat-action-row>    <button mat-button color="primary" (click)="done()">Done</button>  </mat-action-row></mat-expansion-panel></div>'
+        var COMPONENT_TEMPLATE = '<div><mat-expansion-panel [expanded]="!finished" (opened)="finished = false">  <mat-expansion-panel-header>    <mat-panel-title>      Folder Creation    </mat-panel-title>  </mat-expansion-panel-header>  <div class="full-width overflow-limit">    <div class="full-width">      <mat-form-field style="width: 70%;">        <input matInput type="text" placeholder="Parent" [value]="createFolder.parent.name" disabled required/>        <button mat-button matSuffix mat-icon-button aria-label="Pick Parent Folder" [disabled]="createFolder.parent.folderID === \'root\' || parentFolderIsRoot" (click)="openFolderPicker()">          <mat-icon>folder</mat-icon>        </button>      </mat-form-field>      <mat-slide-toggle (change)="rootToggleChange($event)" [checked]="createFolder.parent.folderID === \'root\' || parentFolderIsRoot">My Drive</mat-slide-toggle>    </div>    <div class="row">      <mat-form-field class="col-3 col-12-sm">        <mat-select placeholder="Prefix" [(ngModel)]="createFolder.prefix.type">          <mat-option *ngFor="let option of namingOptions" [value]="option.value">{{ option.name }}</mat-option>        </mat-select>      </mat-form-field>      <mat-form-field class="col-3 col-12-sm">        <mat-select placeholder="Name" [(ngModel)]="createFolder.name.type">          <mat-option *ngFor="let option of namingOptions" [value]="option.value">{{ option.name }}</mat-option>        </mat-select>      </mat-form-field>      <mat-form-field class="col-3 col-12-sm">        <mat-select placeholder="Suffix" [(ngModel)]="createFolder.suffix.type">          <mat-option *ngFor="let option of namingOptions" [value]="option.value">{{ option.name }}</mat-option>        </mat-select>      </mat-form-field>    </div>    <div class="row">      <mat-form-field class="col-3 col-12-sm">        <input matInput placeholder="Prefix Text" [(ngModel)]="createFolder.prefix.value" [disabled]="createFolder.prefix.type !== \'text\'">      </mat-form-field>      <mat-form-field class="col-3 col-12-sm">        <input matInput placeholder="Name Text" [(ngModel)]="createFolder.name.value" [disabled]="createFolder.name.type !== \'text\'">      </mat-form-field>      <mat-form-field class="col-3 col-12-sm">        <input matInput placeholder="Suffix Text" [(ngModel)]="createFolder.suffix.value" [disabled]="createFolder.suffix.type !== \'text\'">      </mat-form-field>    </div>  </div>  <mat-action-row>    <button mat-button color="primary" (click)="done()">Done</button>  </mat-action-row></mat-expansion-panel></div>'
     var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ConfigComponent', 'selector': 'app-config'},{'name': 'ConfigListComponent', 'selector': 'app-config-list'},{'name': 'ConfigModalComponent', 'selector': 'app-config-modal'},{'name': 'EditConfigModalComponent', 'selector': 'app-edit-config-modal'},{'name': 'EditConfigPageComponent', 'selector': 'app-edit-config-page'},{'name': 'FolderCreationComponent', 'selector': 'app-folder-creation'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'NewConfigPageComponent', 'selector': 'app-new-rule-page'},{'name': 'NewRuleStepperComponent', 'selector': 'app-new-rule-stepper'},{'name': 'PresetConfigComponent', 'selector': 'app-preset-config'},{'name': 'PresetConfigPageComponent', 'selector': 'app-preset-config-page'},{'name': 'SettingsComponent', 'selector': 'app-settings'},{'name': 'UnauthenticatedComponent', 'selector': 'app-unauthenticated'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'FolderCreationComponent'};

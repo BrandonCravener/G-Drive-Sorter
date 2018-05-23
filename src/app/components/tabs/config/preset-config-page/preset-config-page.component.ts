@@ -7,7 +7,7 @@ import { PresetConfigComponent } from '../preset-config/preset-config.component'
   styleUrls: ['../preset-config/preset-config.component.scss']
 })
 export class PresetConfigPageComponent extends PresetConfigComponent {
-  isPage = true;
+  public isPage = true;
 
   close() {
     this.zone.run(() => {

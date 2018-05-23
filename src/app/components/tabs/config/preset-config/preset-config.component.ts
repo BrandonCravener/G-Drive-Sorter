@@ -18,6 +18,7 @@ export class PresetConfigComponent implements OnInit {
 
   public closeCommand = this._closeCommand.asObservable();
 
+  public isPage = false;
   public presets = presets;
   public creationEnabled = true;
 
