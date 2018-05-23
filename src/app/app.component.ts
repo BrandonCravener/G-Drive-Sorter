@@ -115,7 +115,6 @@ export class AppComponent implements AfterViewInit {
         } else {
           this.createConfigButtonState = 'inactive';
         }
-        console.log(event.url);
         if (
           event.url === '/app/config/create' ||
           event.url === '/app/config/presets' ||

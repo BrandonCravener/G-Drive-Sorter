@@ -40,11 +40,11 @@
 <title>cluster_AuthenticatedModule_providers</title>
 <polygon fill="none" stroke="#000000" points="16,-78 16,-130 328,-130 328,-78 16,-78"/>
 </g>
-<!-- HomeComponent -->
+<!-- ConfigComponent -->
 <g id="node1" class="node">
-<title>HomeComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="863.5451,-122 748.4549,-122 748.4549,-86 863.5451,-86 863.5451,-122"/>
-<text text-anchor="middle" x="806" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">HomeComponent</text>
+<title>ConfigComponent</title>
+<polygon fill="#ffffb3" stroke="#000000" points="864.2204,-122 743.7796,-122 743.7796,-86 864.2204,-86 864.2204,-122"/>
+<text text-anchor="middle" x="804" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">ConfigComponent</text>
 </g>
 <!-- AuthenticatedModule -->
 <g id="node4" class="node">
@@ -52,23 +52,23 @@
 <polygon fill="#8dd3c7" stroke="#000000" points="530.0772,-187 527.0772,-191 506.0772,-191 503.0772,-187 391.9228,-187 391.9228,-151 530.0772,-151 530.0772,-187"/>
 <text text-anchor="middle" x="461" y="-164.8" font-family="Times,serif" font-size="14.00" fill="#000000">AuthenticatedModule</text>
 </g>
-<!-- HomeComponent&#45;&gt;AuthenticatedModule -->
-<g id="edge1" class="edge">
-<title>HomeComponent&#45;&gt;AuthenticatedModule</title>
-<path fill="none" stroke="#000000" d="M806,-122.2843C806,-143.3211 806,-175 806,-175 806,-175 540.4009,-175 540.4009,-175"/>
-<polygon fill="#000000" stroke="#000000" points="540.4009,-171.5001 530.4009,-175 540.4009,-178.5001 540.4009,-171.5001"/>
-</g>
-<!-- ConfigComponent -->
-<g id="node2" class="node">
-<title>ConfigComponent</title>
-<polygon fill="#ffffb3" stroke="#000000" points="730.2204,-122 609.7796,-122 609.7796,-86 730.2204,-86 730.2204,-122"/>
-<text text-anchor="middle" x="670" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">ConfigComponent</text>
-</g>
 <!-- ConfigComponent&#45;&gt;AuthenticatedModule -->
-<g id="edge2" class="edge">
+<g id="edge1" class="edge">
 <title>ConfigComponent&#45;&gt;AuthenticatedModule</title>
-<path fill="none" stroke="#000000" d="M670,-122.0225C670,-139.3734 670,-163 670,-163 670,-163 540.3037,-163 540.3037,-163"/>
-<polygon fill="#000000" stroke="#000000" points="540.3037,-159.5001 530.3037,-163 540.3036,-166.5001 540.3037,-159.5001"/>
+<path fill="none" stroke="#000000" d="M804,-122.2843C804,-143.3211 804,-175 804,-175 804,-175 540.4112,-175 540.4112,-175"/>
+<polygon fill="#000000" stroke="#000000" points="540.4112,-171.5001 530.4112,-175 540.4111,-178.5001 540.4112,-171.5001"/>
+</g>
+<!-- HomeComponent -->
+<g id="node2" class="node">
+<title>HomeComponent</title>
+<polygon fill="#ffffb3" stroke="#000000" points="725.5451,-122 610.4549,-122 610.4549,-86 725.5451,-86 725.5451,-122"/>
+<text text-anchor="middle" x="668" y="-99.8" font-family="Times,serif" font-size="14.00" fill="#000000">HomeComponent</text>
+</g>
+<!-- HomeComponent&#45;&gt;AuthenticatedModule -->
+<g id="edge2" class="edge">
+<title>HomeComponent&#45;&gt;AuthenticatedModule</title>
+<path fill="none" stroke="#000000" d="M668,-122.0225C668,-139.3734 668,-163 668,-163 668,-163 540.2158,-163 540.2158,-163"/>
+<polygon fill="#000000" stroke="#000000" points="540.2158,-159.5001 530.2158,-163 540.2158,-166.5001 540.2158,-159.5001"/>
 </g>
 <!-- SettingsComponent -->
 <g id="node3" class="node">

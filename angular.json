@@ -22,7 +22,8 @@
               "src/favicon.ico",
               "src/terms.html",
               "src/assets",
-              "src/CNAME"
+              "src/CNAME",
+              "src/404.html"
             ],
             "styles": [
               {
@@ -87,7 +88,8 @@
               "src/favicon.ico",
               "src/terms.html",
               "src/assets",
-              "src/CNAME"
+              "src/CNAME",
+              "src/404.html"
             ]
           }
         },

@@ -223,7 +223,7 @@ var fabAnimation = Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["trig
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"loader\" class=\"loading-overlay\" [class.hidden]=\"loaded\">\n  <div class=\"square-holder\">\n    <div class=\"square-1\"></div>\n    <div class=\"square-2\"></div>\n    <div class=\"square-3\"></div>\n    <div class=\"square-4\"></div>\n  </div>\n</div>\n<mat-toolbar color=\"primary\">\n  <mat-toolbar-row>\n    <div></div>\n    <div>\n      <img class=\"toolbar-logo\" src=\"assets/images/icon.png\" alt=\"G-Drive Sorter Logo\">\n    </div>\n    <div>\n      <mat-menu #appMenu=\"matMenu\">\n        <button mat-menu-item (click)=\"signOut()\">Sign Out</button>\n      </mat-menu>\n      <button *ngIf=\"authenticated\" mat-icon-button [matMenuTriggerFor]=\"appMenu\">\n        <mat-icon>more_vert</mat-icon>\n      </button>\n      <button *ngIf=\"!authenticated\" mat-button (click)=\"signIn()\">\n        Sign In\n      </button>\n    </div>\n  </mat-toolbar-row>\n  <mat-toolbar-row *ngIf=\"authenticated\">\n    <nav mat-tab-nav-bar color=\"accent\">\n      <a mat-tab-link *ngFor=\"let link of tabLinks\" [routerLink]=\"link.path\" routerLinkActive #rla=\"routerLinkActive\" [active]=\"rlaSafe&&rla.isActive\">\n        {{ link.label }}\n      </a>\n    </nav>\n  </mat-toolbar-row>\n</mat-toolbar>\n<div class=\"container\" [@routerTransition]=\"getRouteState(route)\">\n  <router-outlet #route=\"outlet\"></router-outlet>\n</div>\n<button class=\"new-config-button\" matTooltip=\"Create Config\" matTooltipPosition=\"left\" mat-fab color=\"accent\" [@createConfigFABState]=\"createConfigButtonState\"\n  (click)=\"openConfigModalFunc()\">\n  <mat-icon aria-label=\"Create new config button.\">add</mat-icon>\n</button>"
+module.exports = "<div id=\"loader\" class=\"loading-overlay\" [class.hidden]=\"loaded\">\n  <div class=\"square-holder\">\n    <div class=\"square-1\"></div>\n    <div class=\"square-2\"></div>\n    <div class=\"square-3\"></div>\n    <div class=\"square-4\"></div>\n  </div>\n</div>\n<mat-toolbar color=\"primary\">\n  <mat-toolbar-row>\n    <div></div>\n    <div>\n      <img class=\"toolbar-logo\" src=\"assets/images/icon.png\" alt=\"G-Drive Sorter Logo\">\n    </div>\n    <div>\n      <mat-menu #appMenu=\"matMenu\">\n        <button mat-menu-item (click)=\"signOut()\">Sign Out</button>\n      </mat-menu>\n      <button *ngIf=\"authenticated\" mat-icon-button [matMenuTriggerFor]=\"appMenu\">\n        <mat-icon>more_vert</mat-icon>\n      </button>\n      <button *ngIf=\"!authenticated\" mat-button (click)=\"signIn()\">\n        Sign In\n      </button>\n    </div>\n  </mat-toolbar-row>\n  <mat-toolbar-row *ngIf=\"authenticated\">\n    <nav mat-tab-nav-bar color=\"accent\">\n      <a mat-tab-link *ngFor=\"let link of tabLinks\" [routerLink]=\"link.path\" routerLinkActive #rla=\"routerLinkActive\" [active]=\"rlaSafe&&rla.isActive\">\n        {{ link.label }}\n      </a>\n    </nav>\n  </mat-toolbar-row>\n</mat-toolbar>\n<div [class.container]=\"authenticated\" [@routerTransition]=\"getRouteState(route)\">\n  <router-outlet #route=\"outlet\"></router-outlet>\n</div>\n<button class=\"new-config-button\" matTooltip=\"Create Config\" matTooltipPosition=\"left\" mat-fab color=\"accent\" [@createConfigFABState]=\"createConfigButtonState\"\n  (click)=\"openConfigModalFunc()\">\n  <mat-icon aria-label=\"Create new config button.\">add</mat-icon>\n</button>"
 
 /***/ }),
 
@@ -361,7 +361,6 @@ var AppComponent = /** @class */ (function () {
                 else {
                     _this.createConfigButtonState = 'inactive';
                 }
-                console.log(event.url);
                 if (event.url === '/app/config/create' ||
                     event.url === '/app/config/presets' ||
                     event.url === '/app/config/edit') {
@@ -438,10 +437,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_material_menu__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/material/menu */ "./node_modules/@angular/material/esm5/menu.es5.js");
 /* harmony import */ var _angular_material_tabs__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/material/tabs */ "./node_modules/@angular/material/esm5/tabs.es5.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var ngx_parallax__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ngx-parallax */ "./node_modules/ngx-parallax/dist/bundle.js");
-/* harmony import */ var ngx_parallax__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(ngx_parallax__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _components_auth_unauthenticated_unauthenticated_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/auth/unauthenticated/unauthenticated.component */ "./src/app/components/auth/unauthenticated/unauthenticated.component.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _components_auth_unauthenticated_unauthenticated_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/auth/unauthenticated/unauthenticated.component */ "./src/app/components/auth/unauthenticated/unauthenticated.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -467,24 +464,22 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
-
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_16__["NgModule"])({
-            declarations: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"], _components_auth_unauthenticated_unauthenticated_component__WEBPACK_IMPORTED_MODULE_19__["UnauthenticatedComponent"]],
+            declarations: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"], _components_auth_unauthenticated_unauthenticated_component__WEBPACK_IMPORTED_MODULE_18__["UnauthenticatedComponent"]],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_8__["BrowserModule"],
                 _angular_material_menu__WEBPACK_IMPORTED_MODULE_14__["MatMenuModule"],
                 _angular_material__WEBPACK_IMPORTED_MODULE_13__["MatIconModule"],
                 _angular_material_tabs__WEBPACK_IMPORTED_MODULE_15__["MatTabsModule"],
-                ngx_parallax__WEBPACK_IMPORTED_MODULE_17__["ParallaxModule"],
                 _angular_material__WEBPACK_IMPORTED_MODULE_13__["MatInputModule"],
                 _angular_material_button__WEBPACK_IMPORTED_MODULE_12__["MatButtonModule"],
                 _angular_material__WEBPACK_IMPORTED_MODULE_13__["MatDialogModule"],
                 _angular_material__WEBPACK_IMPORTED_MODULE_13__["MatToolbarModule"],
-                _angular_router__WEBPACK_IMPORTED_MODULE_18__["RouterModule"].forRoot(_app_routes__WEBPACK_IMPORTED_MODULE_4__["appRoutes"]),
+                _angular_router__WEBPACK_IMPORTED_MODULE_17__["RouterModule"].forRoot(_app_routes__WEBPACK_IMPORTED_MODULE_4__["appRoutes"]),
                 angularfire2_auth__WEBPACK_IMPORTED_MODULE_0__["AngularFireAuthModule"],
                 angularfire2_firestore__WEBPACK_IMPORTED_MODULE_2__["AngularFirestoreModule"],
                 _modules_config_config_module__WEBPACK_IMPORTED_MODULE_9__["ConfigModule"].forRoot(),
@@ -892,7 +887,7 @@ var DriveQueryBuilder = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div parallax>\n  <div class=\"parallax-overlay\">\n    <h1>G-Drive Sorter</h1>\n    <h3>An organized Google Drive™ has never been easier</h3>\n    <button (click)=\"login()\" mat-raised-button color=\"accent\">Get Organized</button>\n  </div>\n</div>\n<div class=\"container\">\n  <div class=\"usage-points row\">\n    <div class=\"col-4 col-12-sm\">\n      <h1 class=\"center\"><i class=\"teal-text large material-icons\">view_list</i></h1>\n      <h2 class=\"center\"><b>Effectively Sort Files</b></h2>\n      <p>Sorting your drive only requires a quick visit to this website. And we do the rest of the work for you!</p>\n    </div>\n    <div class=\"col-4 col-12-sm\">\n      <h1 class=\"center\"><i class=\"teal-text large material-icons\">accessibility</i></h1>\n      <h2 class=\"center\"><b>Simplistic Use</b></h2>\n      <p>Preset configurations and a simplistic user interface makes the G-Drive sorter suitable for all Google Drive users.</p>\n    </div>\n    <div class=\"col-4 col-12-sm\">\n      <h1 class=\"center\"><i class=\"teal-text large material-icons\">art_track</i></h1>\n      <h2 class=\"center\"><b>Fully Customizable</b></h2>\n      <p>Fully customizable configurations that sorts all Google Drive files based on type, creation date, name, current owner, and much more.</p>\n    </div>\n  </div>\n</div>"
+module.exports = "<div>\n  <div class=\"parallax\">\n    <h1>G-Drive Sorter</h1>\n    <h3>An organized Google Drive™ has never been easier</h3>\n    <button (click)=\"login()\" mat-raised-button color=\"accent\">Get Organized</button>\n  </div>\n</div>\n<div class=\"container\">\n  <div class=\"usage-points row\">\n    <div class=\"col-4 col-12-sm\">\n      <h1 class=\"center\"><i class=\"teal-text large material-icons\">view_list</i></h1>\n      <h2 class=\"center\"><b>Effectively Sort Files</b></h2>\n      <p>Sorting your drive only requires a quick visit to this website. And we do the rest of the work for you!</p>\n    </div>\n    <div class=\"col-4 col-12-sm\">\n      <h1 class=\"center\"><i class=\"teal-text large material-icons\">accessibility</i></h1>\n      <h2 class=\"center\"><b>Simplistic Use</b></h2>\n      <p>Preset configurations and a simplistic user interface makes the G-Drive sorter suitable for all Google Drive users.</p>\n    </div>\n    <div class=\"col-4 col-12-sm\">\n      <h1 class=\"center\"><i class=\"teal-text large material-icons\">art_track</i></h1>\n      <h2 class=\"center\"><b>Fully Customizable</b></h2>\n      <p>Fully customizable configurations that sorts all Google Drive files based on type, creation date, name, current owner, and much more.</p>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -903,7 +898,7 @@ module.exports = "<div parallax>\n  <div class=\"parallax-overlay\">\n    <h1>G-
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "*[parallax] {\n  width: 100%;\n  height: 400px;\n  background-image: url('messy_files.jpg');\n  background-size: 100%; }\n\n.usage-points h1 i {\n  font-size: 80px; }\n\n.container {\n  width: 96%;\n  max-width: unset; }\n\n.usage-points p {\n  font-size: 1.5rem; }\n\n.parallax-overlay {\n  text-align: center;\n  padding-top: 90px; }\n\n.parallax-overlay > * {\n  color: white; }\n\n@media all and (max-width: 650px) {\n  *[parallax] {\n    background-size: cover; } }\n"
+module.exports = ".parallax {\n  height: 50%;\n  padding: 10vw;\n  text-align: center;\n  background-size: cover;\n  background-position: center;\n  background-repeat: no-repeat;\n  background-attachment: fixed;\n  background-image: url('messy_files.jpg'); }\n\n.parallax > * {\n  color: white; }\n\n.usage-points h1 i {\n  font-size: 80px; }\n\n.container {\n  width: 96%;\n  max-width: unset; }\n\n.usage-points p {\n  font-size: 1.5rem; }\n"
 
 /***/ }),
 
@@ -2631,7 +2626,7 @@ var PresetConfigPageComponent = /** @class */ (function (_super) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n  <h3 mat-dialog-title *ngIf=\"!isPage\">Preset Configs</h3>\n  <h3 *ngIf=\"isPage\">Preset Configs</h3>\n  <div mat-dialog-content [class.overflow-limit]=\"!isPage\">\n    <mat-card *ngFor=\"let preset of presets\">\n      <mat-card-header>\n          <div *ngIf=\"preset.imageURL\" mat-card-avatar style=\"background-size: cover;\" [style.background-image]=\"'url(' + preset.imageURL + ')'\"></div>\n        <mat-card-title>{{ preset.name }}</mat-card-title>\n        <mat-card-subtitle>{{ preset.category }}</mat-card-subtitle>\n      </mat-card-header>\n      <mat-card-content>\n        <p>{{ preset.description }}</p>\n      </mat-card-content>\n      <mat-card-actions>\n        <button mat-button (click)=\"addPreset(preset.id)\">Add Preset</button>\n      </mat-card-actions>\n    </mat-card>\n    <div mat-dialog-actions>\n      <button style=\"margin-top: 10px;\" mat-button (click)=\"close()\">Cancel</button>\n    </div>\n  </div>\n</div>"
+module.exports = "<div>\n  <h3 mat-dialog-title *ngIf=\"!isPage\">Preset Configs</h3>\n  <h3 *ngIf=\"isPage\">Preset Configs</h3>\n  <div mat-dialog-content [class.overflow-limit]=\"!isPage\">\n    <mat-card *ngFor=\"let preset of presets\">\n      <mat-card-header>\n          <div *ngIf=\"preset.imageURL\" mat-card-avatar style=\"background-size: cover;\" [style.background-image]=\"'url(' + preset.imageURL + ')'\"></div>\n        <mat-card-title>{{ preset.name }}</mat-card-title>\n        <mat-card-subtitle>{{ preset.category }}</mat-card-subtitle>\n      </mat-card-header>\n      <mat-card-content>\n        <p>{{ preset.description }}</p>\n      </mat-card-content>\n      <mat-card-actions>\n        <button mat-button (click)=\"addPreset(preset.id)\" [disabled]=\"!creationEnabled\">Add Preset</button>\n      </mat-card-actions>\n    </mat-card>\n    <div mat-dialog-actions>\n      <button style=\"margin-top: 10px;\" mat-button (click)=\"close()\">Cancel</button>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -2694,6 +2689,7 @@ var PresetConfigComponent = /** @class */ (function () {
         this._closeCommand = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Subject"]();
         this.closeCommand = this._closeCommand.asObservable();
         this.presets = _presets__WEBPACK_IMPORTED_MODULE_3__["presets"];
+        this.creationEnabled = true;
     }
     PresetConfigComponent.prototype.ngOnInit = function () { };
     PresetConfigComponent.prototype.close = function () {
@@ -2709,6 +2705,7 @@ var PresetConfigComponent = /** @class */ (function () {
         var createdFolders = [];
         var requestsSent = 0;
         var requestsRecived = 0;
+        this.creationEnabled = false;
         createFolders.forEach(function (folder) {
             requestsSent += 1;
             _this.google
@@ -2738,8 +2735,10 @@ var PresetConfigComponent = /** @class */ (function () {
                     .addConfig(_classes_config_builder__WEBPACK_IMPORTED_MODULE_6__["ConfigBuilder"].configFromGroup(groups, 'I-STEM'))
                     .then(function () {
                     _this.close();
+                    _this.creationEnabled = true;
                 }, function (err) {
                     _this.snackbar.open('There was a problem adding your preset!');
+                    _this.creationEnabled = true;
                 });
             }
         }, 100);
