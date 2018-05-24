@@ -161,4 +161,11 @@ export class DatabaseService {
       cb(0);
     }
   }
+  deleteUser(){
+    this
+    .firebase
+    .doc(`users/${this.userID}`)
+    .delete()
+    .then( err => console.error);
+    }
 }
