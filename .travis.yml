@@ -22,4 +22,4 @@ before_script:
   - yarn
 script: yarn run test --single-run
 after_success:
-  - codecov -f coverage/coverage-final.json
+  - codecov
