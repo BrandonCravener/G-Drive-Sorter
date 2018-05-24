@@ -1,5 +1,9 @@
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection,
+  AngularFirestoreDocument
+} from 'angularfire2/firestore';
 import { ConfigBuilder } from '../../classes/config-builder';
 import {
   ConfigInterface,
@@ -14,7 +18,6 @@ import { Subject } from 'rxjs';
 
 @Injectable()
 export class DatabaseService {
-
   private _configSubject = new Subject<Boolean>();
   public configSubject = this._configSubject.asObservable();
 
@@ -28,7 +31,6 @@ export class DatabaseService {
   private userDoc: AngularFirestoreDocument<UserDocument>;
 
   public editingConfig: string;
-  
 
   constructor(
     private firebase: AngularFirestore,
@@ -38,13 +40,14 @@ export class DatabaseService {
       timestampsInSnapshots: true
     });
     if (this.firebaseAuth.auth.currentUser) {
-      this.userID = firebaseAuth
-        .auth
-        .currentUser
-        .uid;
+      this.userID = firebaseAuth.auth.currentUser.uid;
       this.userDoc = firebase.doc(`users/${this.userID}`);
-      this.configDocument = firebase.doc(`users/${this.userID}/userData/config`);
-      this.configsCollection = this.userDoc.collection<ConfigsInterface>('configs');
+      this.configDocument = firebase.doc(
+        `users/${this.userID}/userData/config`
+      );
+      this.configsCollection = this.userDoc.collection<ConfigsInterface>(
+        'configs'
+      );
     }
   }
 
@@ -65,59 +68,68 @@ export class DatabaseService {
       firstGroupRule
     );
     console.log(newConfig);
-    this
-      .configsCollection
-      .add(newConfig)
-      .then(() => {
+    this.configsCollection.add(newConfig).then(
+      () => {
         this._configSubject.next(true);
-      }, err => {
+      },
+      err => {
         console.error(err);
         this._configSubject.next(false);
-      });
+      }
+    );
   }
 
   addConfig(config: ConfigsInterface): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.configsCollection.add(config).then(() => {
-        this._configSubject.next(true);
-        resolve();
-      }, err => {
-        console.error(err);
-        this._configSubject.next(false);
-        reject();
-      })
+      this.configsCollection.add(config).then(
+        () => {
+          this._configSubject.next(true);
+          resolve();
+        },
+        err => {
+          console.error(err);
+          this._configSubject.next(false);
+          reject();
+        }
+      );
     });
   }
 
   deleteConfig(configID: string): void {
-    this
-      .configsCollection
+    this.configsCollection
       .doc(configID)
       .delete()
-      .then(() => {
-        this._configSubject.next(true);
-      }, err => {
-        console.error(err);
-        this._configSubject.next(false);
-      })
+      .then(
+        () => {
+          this._configSubject.next(true);
+        },
+        err => {
+          console.error(err);
+          this._configSubject.next(false);
+        }
+      );
   }
 
   setActiveConfig(configID: string): void {
-    this
-      .configDocument
+    this.configDocument
       .set({
         activeConfig: configID
       })
-      .then(() => {
-        this._activeConfigChanged.next(configID);
-      }, err => {
-        console.error(err);
-        this._activeConfigChanged.error(err);
-      })
+      .then(
+        () => {
+          this._activeConfigChanged.next(configID);
+        },
+        err => {
+          console.error(err);
+          this._activeConfigChanged.error(err);
+        }
+      );
   }
 
   updateConfig(newConfig: ConfigsInterface): void {
-    this.configsCollection.doc(this.editingConfig).ref.set(newConfig)
+    this.configsCollection
+      .doc(this.editingConfig)
+      .ref.set(newConfig)
       .then(() => {
         this.editingConfig = '';
         this._configSubject.next(true);
@@ -125,18 +137,17 @@ export class DatabaseService {
   }
 
   getConfig(configID: string, cb: Function): void {
-    this.configsCollection.doc(configID).ref.get().then(snapshot => {
-      cb(snapshot.data());
-    }, err => console.error);
+    this.configsCollection
+      .doc(configID)
+      .ref.get()
+      .then(snapshot => {
+        cb(snapshot.data());
+      }, err => console.error);
   }
 
   getActiveConfig(cb: Function): void {
     if (this.configDocument) {
-      this
-      .configDocument
-      .ref
-      .get()
-      .then(snapshot => {
+      this.configDocument.ref.get().then(snapshot => {
         if (snapshot && snapshot.data()) {
           cb(snapshot.data()['activeConfig']);
         } else {
@@ -150,22 +161,29 @@ export class DatabaseService {
 
   numberConfigs(cb: Function): void {
     if (this.configsCollection) {
-      this
-      .configsCollection
-      .ref
-      .get()
-      .then(snapshot => {
+      this.configsCollection.ref.get().then(snapshot => {
         cb(snapshot.docs.length);
       });
     } else {
       cb(0);
     }
   }
-  deleteUser(){
-    this
-    .firebase
-    .doc(`users/${this.userID}`)
-    .delete()
-    .then( err => console.error);
-    }
+  deleteUser(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.configsCollection.ref.get().then(snapshot => {
+        snapshot.docs.forEach(document => {
+          document.ref.delete();
+        });
+      }, err => reject);
+      this.userDoc
+        .collection('userData')
+        .ref.get()
+        .then(snapshot => {
+          snapshot.forEach(document => {
+            document.ref.delete();
+          });
+        }, err => reject);
+        resolve();
+    });
+  }
 }
