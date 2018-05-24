@@ -20,6 +20,6 @@ before_script:
   - yarn global add karma
   - yarn global add codecov
   - yarn
-script: yarn run test --single-run
+script: yarn run test
 after_success:
   - codecov
