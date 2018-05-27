@@ -18,6 +18,7 @@ import { Subject } from 'rxjs';
 
 @Injectable()
 export class DatabaseService {
+  private initalized = false;
   private _configSubject = new Subject<Boolean>();
   public configSubject = this._configSubject.asObservable();
 
@@ -35,19 +36,24 @@ export class DatabaseService {
   constructor(
     private firebase: AngularFirestore,
     private firebaseAuth: AngularFireAuth
-  ) {
-    firebase.firestore.settings({
-      timestampsInSnapshots: true
-    });
-    if (this.firebaseAuth.auth.currentUser) {
-      this.userID = firebaseAuth.auth.currentUser.uid;
-      this.userDoc = firebase.doc(`users/${this.userID}`);
-      this.configDocument = firebase.doc(
-        `users/${this.userID}/userData/config`
-      );
-      this.configsCollection = this.userDoc.collection<ConfigsInterface>(
-        'configs'
-      );
+  ) {}
+
+  initalize(): void {
+    if (!this.initalized) {
+      this.firebase.firestore.settings({
+        timestampsInSnapshots: true
+      });
+      if (this.firebaseAuth.auth.currentUser) {
+        this.userID = this.firebaseAuth.auth.currentUser.uid;
+        this.userDoc = this.firebase.doc(`users/${this.userID}`);
+        this.configDocument = this.firebase.doc(
+          `users/${this.userID}/userData/config`
+        );
+        this.configsCollection = this.userDoc.collection<ConfigsInterface>(
+          'configs'
+        );
+        this.initalized = true;
+      }
     }
   }
 
@@ -183,7 +189,7 @@ export class DatabaseService {
             document.ref.delete();
           });
         }, err => reject);
-        resolve();
+      resolve();
     });
   }
 }

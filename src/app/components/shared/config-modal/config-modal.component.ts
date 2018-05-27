@@ -108,7 +108,9 @@ export class ConfigModalComponent implements OnInit {
   }
 
   setStep(index: number) {
-    this.step = index;
+    setTimeout(_ => {
+      this.step = index;
+    });
   }
 
   openFolderPicker(folderType: string) {
@@ -136,7 +138,9 @@ export class ConfigModalComponent implements OnInit {
 
   nextStep() {
     if (this.checkValidation(this.step)) {
-      this.step++;
+      setTimeout(_ => {
+        this.step++;
+      });
     } else {
       this.snackbar.open('Please complete all fields!', 'OK', {
         duration: 3000
