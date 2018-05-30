@@ -186,6 +186,10 @@ export class ConfigModalComponent implements OnInit {
       this.folderComponent.reset();
     }
   }
+  
+  renameUntitledChange(event: MatSlideToggleChange) {
+    this.source.renameUntitled = event.checked;
+  }
 
   create() {
     if (this.checkAllValidation()) {

@@ -1,4 +1,8 @@
-import { ConfigsInterface, GroupInterface } from '../../../interfaces';
+import {
+  ConfigsInterface,
+  GroupInterface,
+  GroupFolderInterface
+} from '../../../interfaces';
 import { DatabaseService } from '../firebase/database.service';
 import {
   DriveMimeType,
@@ -28,6 +32,7 @@ export class SorterService {
   }
 
   private getDriveQuery(group: GroupInterface): string {
+    1;
     let driveQuery = new DriveQueryBuilder(group.source.folderID, true);
     group.rules.forEach(rule => {
       switch (rule.classifier) {
@@ -114,6 +119,12 @@ export class SorterService {
     return driveQuery.get();
   }
 
+  private getUntitledFiles(destination: GroupFolderInterface) {
+    return new DriveQueryBuilder(destination.folderID, true)
+      .nameContains('Untitled')
+      .get();
+  }
+
   loadConfig(cb?: Function): void {
     this.database.getActiveConfig(activeConfig => {
       if (activeConfig) {
@@ -148,6 +159,19 @@ export class SorterService {
               }, this);
             }
           });
+          console.log(group.source.renameUntitled);
+          if (group.source.renameUntitled) {
+            this.google.listFiles(this.getUntitledFiles(group.source), resp => {
+              console.log(resp);
+              if (resp.error) {
+                reject(resp.error);
+              } else {
+                resp.files.forEach(file => {
+                  this.google.renameFile(file.id, Date());
+                });
+              }
+            });
+          }
         } else {
           let newFolderName = ConfigBuilder.folderNameBuilder(
             group.createFolder

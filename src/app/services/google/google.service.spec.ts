@@ -1,26 +1,21 @@
-// Angular
 import { TestBed, inject } from '@angular/core/testing';
-
-// utils
 import { environment } from '../../../environments/environment';
-
-// Services
 import { GoogleService } from './google.service';
-
-// Angularfire
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireAuthModule } from 'angularfire2/auth';
-import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AppModule } from '../../app.module';
+import { APP_BASE_HREF } from '@angular/common';
 
 describe('GoogleService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        AngularFireModule.initializeApp(environment.firebase),
-        AngularFireAuthModule,
-        AngularFirestoreModule
+        AppModule
       ],
-      providers: [GoogleService]
+      providers: [
+        {
+          provide: APP_BASE_HREF,
+          useValue: '/'
+        }
+      ]
     });
   });
 

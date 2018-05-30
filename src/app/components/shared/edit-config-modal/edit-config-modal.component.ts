@@ -173,6 +173,11 @@ export class EditConfigModalComponent implements OnInit {
     }
   }
 
+  renameUntitledChange(groupID: string, event: MatSlideToggleChange) {
+    const groupIndex = this.getGroupIndex(groupID);
+    this.config.groups[groupIndex].source.renameUntitled = event.checked;
+  }
+
   createFolderToggleChange(groupID: string, event: MatSlideToggleChange) {
     const groupIndex = this.getGroupIndex(groupID);
     if (event.checked) {

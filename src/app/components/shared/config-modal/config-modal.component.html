@@ -65,7 +65,10 @@
               <mat-slide-toggle (change)="rootToggleChange($event, 'source')">My Drive</mat-slide-toggle>
             </div>
             <div>
-              <mat-slide-toggle (change)="createToggleChange($event)">Create Folder</mat-slide-toggle>
+              <div class="row">
+                <mat-slide-toggle class="col-6" (change)="createToggleChange($event)">Create Folder</mat-slide-toggle>
+                <mat-slide-toggle class="col-6" (change)="renameUntitledChange($event)" matTooltip="Rename's untitled files to the sorting date">Rename Untitled Files</mat-slide-toggle>
+              </div>
               <app-folder-creation [class.hidden]="!creatingFolder"></app-folder-creation>
               <div class="full-width" [class.hidden]="creatingFolder">
                 <div class="full-width">

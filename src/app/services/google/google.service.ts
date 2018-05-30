@@ -204,6 +204,19 @@ export class GoogleService {
     });
   }
 
+  renameFile(fileID: string, name: string) {
+    return new Promise((resolve, reject) => {
+      gapi.client.drive.files.update({
+        'resource': {
+          'name': name
+        }
+      }).execute(resp => {
+        if (resp.err) reject(resp.err);
+        else resolve();
+      })
+    });
+  }
+
   moveFile(fileID: string, folder: string, cb: Function): void {
     this.getFileInfo(fileID, 'parents', file => {
       const prevParents = file.parents.join(',');

@@ -25,6 +25,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UnauthenticatedComponent } from './components/auth/unauthenticated/unauthenticated.component';
+import { DatabaseService } from './services/firebase/database.service';
 
 @NgModule({
   declarations: [AppComponent, UnauthenticatedComponent],
@@ -37,15 +38,16 @@ import { UnauthenticatedComponent } from './components/auth/unauthenticated/unau
     MatButtonModule,
     MatDialogModule,
     MatToolbarModule,
-    RouterModule.forRoot(appRoutes),
     AngularFireAuthModule,
     AngularFirestoreModule,
     ConfigModule.forRoot(),
     BrowserAnimationsModule,
     AuthenticatedModule.forRoot(),
+    RouterModule.forRoot(appRoutes),
     AngularFireModule.initializeApp(environment.firebase)
   ],
   providers: [
+    DatabaseService,
     GoogleService,
     AuthGuardService,
     PreventAuthGuardService,
