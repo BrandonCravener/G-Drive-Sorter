@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Subject } from 'rxjs';
 import 'firebase/auth';
 import { DriveMimeType } from '../../classes/drive-query-builder';
+import { DatabaseService } from '../firebase/database.service';
 
 /**
  * Workaround for testing
@@ -58,7 +59,10 @@ export class GoogleService {
    * Creates an instance of GoogleService.
    * @memberof GoogleService
    */
-  constructor(private firebaseAuth: AngularFireAuth) {}
+  constructor(
+    private database: DatabaseService,
+    private firebaseAuth: AngularFireAuth
+  ) {}
 
   /**
    * Initialize the Google API
@@ -197,6 +201,19 @@ export class GoogleService {
           if (resp.err) reject(resp.err);
           else resolve(resp.id);
         });
+    });
+  }
+
+  renameFile(fileID: string, name: string) {
+    return new Promise((resolve, reject) => {
+      gapi.client.drive.files.update({
+        'resource': {
+          'name': name
+        }
+      }).execute(resp => {
+        if (resp.err) reject(resp.err);
+        else resolve();
+      })
     });
   }
 

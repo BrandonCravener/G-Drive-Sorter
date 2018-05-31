@@ -3,6 +3,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { fabAnimation, routerAnimation } from '../animations';
 import { GoogleService } from './services/google/google.service';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { DatabaseService } from './services/firebase/database.service';
 
 /**
  * Workaround for testing
@@ -56,6 +57,7 @@ export class AppComponent implements AfterViewInit {
    * @memberof AppComponent
    */
   constructor(
+    private database: DatabaseService,
     private google: GoogleService,
     private router: Router,
     private zone: NgZone
@@ -86,6 +88,7 @@ export class AppComponent implements AfterViewInit {
           }
           this.authenticated = state;
           if (state) {
+            this.database.initalize();
             this.zone.run(() => {
               this.router.navigate(['/app/home']);
             });

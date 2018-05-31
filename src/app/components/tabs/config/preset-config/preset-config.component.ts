@@ -68,7 +68,7 @@ export class PresetConfigComponent implements OnInit {
         groups.forEach(group => {
           group['id'] = uuid();
           group.rules.forEach(rule => {
-            rule.data['id'] = uuid();
+            rule['id'] = uuid();
           });
         });
         this.database

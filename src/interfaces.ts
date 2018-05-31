@@ -14,7 +14,27 @@ export interface RuleInterface {
 
 export interface GroupFolderInterface {
   name?: string;
+  renameUntitled?: boolean;
   folderID?: string;
+}
+
+export interface FolderCreation {
+  parent: {
+    folderID: string | undefined;
+    name: string | null;
+  };
+  prefix: {
+    type: string | null;
+    value: string;
+  };
+  name: {
+    type: string | null;
+    value: string;
+  };
+  suffix: {
+    type: string | null;
+    value: string;
+  };
 }
 
 export interface GroupInterface {
@@ -35,23 +55,4 @@ export interface ConfigsInterface {
 export interface UserDocument {
   activeConfig: string;
   configs: AngularFirestoreCollection<ConfigsInterface>;
-}
-
-export interface FolderCreation {
-  parent: {
-    folderID: string | undefined;
-    name: string | null;
-  };
-  prefix: {
-    type: string | null;
-    value: string;
-  };
-  name: {
-    type: string | null;
-    value: string;
-  };
-  suffix: {
-    type: string | null;
-    value: string;
-  };
 }

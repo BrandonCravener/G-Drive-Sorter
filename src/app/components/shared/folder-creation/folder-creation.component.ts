@@ -5,7 +5,7 @@ import {
   Input,
   OnInit,
   Output
-  } from '@angular/core';
+} from '@angular/core';
 import { FolderCreation } from '../../../../interfaces';
 import { GoogleService } from '../../../services/google/google.service';
 import { MatSlideToggleChange, MatSnackBar } from '@angular/material';
@@ -66,9 +66,7 @@ export class FolderCreationComponent implements AfterViewInit {
     }
   }
 
-  constructor(
-    private google: GoogleService // private snackbar: MatSnackBar
-  ) {}
+  constructor(private google: GoogleService, private snackbar: MatSnackBar) {}
 
   ngAfterViewInit() {
     if (this.inputFolder) {
@@ -76,6 +74,12 @@ export class FolderCreationComponent implements AfterViewInit {
         this.createFolder = this.inputFolder;
       });
     }
+  }
+
+  opened() {
+    setTimeout(_ => {
+      this.finished = false;
+    });
   }
 
   openFolderPicker() {
@@ -131,7 +135,6 @@ export class FolderCreationComponent implements AfterViewInit {
           }
         });
         if (numNone === 3) {
-          // this.snackbar.open('All naming options can\'t be \'None\'!');
           anyInvalid = true;
         }
         return !anyInvalid;
@@ -167,5 +170,6 @@ export class FolderCreationComponent implements AfterViewInit {
       }
     };
     this.parentFolderIsRoot = false;
+    this.finished = false;
   }
 }

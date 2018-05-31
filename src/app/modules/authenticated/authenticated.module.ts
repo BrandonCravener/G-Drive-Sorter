@@ -3,7 +3,6 @@ import { ConfigComponent } from '../../components/tabs/config/config.component';
 import { ConfigListComponent } from '../../components/tabs/config/config-list/config-list.component';
 import { ConfigModalComponent } from '../../components/shared/config-modal/config-modal.component';
 import { ConfigModule } from '../config/config.module';
-import { DatabaseService } from '../../services/firebase/database.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from '../../components/tabs/home/home.component';
 import {
@@ -53,7 +52,7 @@ import { SorterService } from '../../services/sorter/sorter.service';
     ReactiveFormsModule,
     ConfigModule.forRoot()
   ],
-  providers: [DatabaseService, SorterService],
+  providers: [SorterService],
   exports: [ConfigComponent]
 })
 export class AuthenticatedModule {

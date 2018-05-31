@@ -1,6 +1,7 @@
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Component, OnInit } from '@angular/core';
+import { DatabaseService } from '../../../services/firebase/database.service';
 import { GoogleService } from '../../../services/google/google.service';
 
 /**
@@ -10,7 +11,7 @@ declare var gapi: any;
 
 /**
  * Declare the component to be shown when the settings tab is selected.
- * 
+ *
  * @export
  * @class SettingsComponent
  */
@@ -24,17 +25,16 @@ export class SettingsComponent {
    * Creates an instance of SettingsComponent.
    * @memberof SettingsComponent
    */
-  constructor(private firebase: AngularFirestore, private firebaseAuth: AngularFireAuth, private google: GoogleService) { }
+  constructor(
+    private firebase: AngularFirestore,
+    private firebaseAuth: AngularFireAuth,
+    private google: GoogleService,
+    private database: DatabaseService
+  ) {}
 
   deleteAccount() {
-    this
-      .firebaseAuth
-      .auth
-      .currentUser
-      .delete()
-      .then(() => {
-        this.google.signOut();
-    }, err => console.error)
+    this.database.deleteUser().then(() => {
+      this.google.signOut();
+    }, err => console.error);
   }
-
 }

@@ -56,36 +56,57 @@ export class ConfigBuilder {
 
   static verifyConfig(config: ConfigsInterface): boolean {
     let valid = true;
-    // Check if config has name and groups
-    if (!config.name || !config.groups || config.name.length <= 0) {
+    if (
+      !config.groups ||
+      !config.id ||
+      !config.name ||
+      config.name.length <= 0
+    ) {
       valid = false;
-    }
-    config.groups.forEach(group => {
-      if (
-        !group.id ||
-        !group.source.folderID ||
-        !group.name ||
-        !group.rules ||
-        group.name.length <= 0
-      ) {
-        valid = false;
-      }
-      if (!group.createFolder) {
-        valid = group.destination.folderID ? true : false;
-      }
-      group.rules.forEach(rule => {
+    } else {
+      config.groups.forEach(group => {
+        if (group.createFolder) {
+          if (
+            !group.createFolder.name ||
+            !group.createFolder.parent ||
+            !group.createFolder.prefix ||
+            !group.createFolder.suffix ||
+            group.createFolder.name.value.length <= 0
+          ) {
+            valid = false;
+          }
+        } else {
+          if (
+            !group.destination.folderID ||
+            group.destination.folderID === undefined
+          )
+            valid = false;
+        }
         if (
-          !rule.classifier ||
-          !rule.constraint ||
-          !rule.data ||
-          !rule.id ||
-          !rule.name ||
-          rule.name.length <= 0
+          !group.id ||
+          !group.name ||
+          !group.rules ||
+          !group.source ||
+          group.name.length <= 0 ||
+          group.rules.length <= 0 ||
+          group.source.folderID === undefined
         ) {
           valid = false;
+        } else {
+          group.rules.forEach(rule => {
+            if (
+              !rule.name ||
+              !rule.id ||
+              !rule.data ||
+              !rule.constraint ||
+              !rule.classifier
+            ) {
+              valid = false;
+            }
+          });
         }
       });
-    });
+    }
     return valid;
   }
 
