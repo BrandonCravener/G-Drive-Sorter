@@ -18,7 +18,7 @@ import { Subject } from 'rxjs';
 
 @Injectable()
 export class DatabaseService {
-  private initalized = false;
+  public initalized = false;
   private _configSubject = new Subject<Boolean>();
   public configSubject = this._configSubject.asObservable();
 
@@ -73,7 +73,6 @@ export class DatabaseService {
       createFolder,
       firstGroupRule
     );
-    console.log(newConfig);
     this.configsCollection.add(newConfig).then(
       () => {
         this._configSubject.next(true);
@@ -174,7 +173,8 @@ export class DatabaseService {
       cb(0);
     }
   }
-  deleteUser(): Promise<void> {
+
+  clearConfigs(): Promise<void> {
     return new Promise((resolve, reject) => {
       this.configsCollection.ref.get().then(snapshot => {
         snapshot.docs.forEach(document => {

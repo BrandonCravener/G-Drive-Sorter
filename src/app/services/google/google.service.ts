@@ -77,12 +77,6 @@ export class GoogleService {
         authInstance = gapi.auth2.getAuthInstance();
         authInstance.isSignedIn.listen(() => {
           this._authState.next(authInstance.isSignedIn.get());
-          if (authInstance.isSignedIn.get()) {
-            const credential = firebase.auth.GoogleAuthProvider.credential(
-              this.getToken()
-            );
-            this.firebaseAuth.auth.signInWithCredential(credential);
-          }
         });
         const authStatus = authInstance.isSignedIn.get();
         this._authState.next(authStatus);
@@ -147,6 +141,7 @@ export class GoogleService {
    */
   signOut(): void {
     authInstance.signOut();
+    this.database.initalized = false;
     this.firebaseAuth.auth.signOut();
   }
 
@@ -207,6 +202,7 @@ export class GoogleService {
   renameFile(fileID: string, name: string) {
     return new Promise((resolve, reject) => {
       gapi.client.drive.files.update({
+        'fileId': fileID,
         'resource': {
           'name': name
         }

@@ -52,58 +52,61 @@ export class NewRuleStepperComponent implements OnInit {
   inputFieldGroup: FormGroup;
   nameFormGroup: FormGroup;
 
+  excludeDisabled: boolean = false;
   betweenConstraintDisabled: boolean = false;
   startEndWithDisabled: boolean = false;
 
   classifierSelectOption: string;
   constraintSelectOption: string;
 
-  constriants = [
-    {
-      label: "Include's / After",
-      value: 'include'
-    },
-    {
-      label: "Exclude's / Before",
-      value: 'exclude'
-    }
-  ];
-
   classifiers = [
+    {
+      label: 'Text',
+      value: 'fullText',
+      inputFieldControl: 'fullTextControl',
+      hideExclude: true,
+      hideBetween: true
+    },
     {
       label: 'Title',
       value: 'title',
       inputFieldControl: 'titleTextControl',
+      hideExclude: false,
       hideBetween: true
     },
     {
       label: 'Type',
       value: 'type',
       inputFieldControl: 'fileTypeControl',
+      hideExclude: false,
       hideBetween: true
     },
     {
       label: 'Owner',
       value: 'owner',
       inputFieldControl: 'ownerTextControl',
+      hideExclude: false,
       hideBetween: true
     },
     {
       label: 'Creation Date',
       value: 'creationDate',
       inputFieldControl: 'dateControl',
+      hideExclude: false,
       hideBetween: false
     },
     {
       label: 'Last Opened',
       value: 'lastOpened',
       inputFieldControl: 'dateControl',
+      hideExclude: false,
       hideBetween: false
     },
     {
       label: 'Last Modified',
       value: 'lastModified',
       inputFieldControl: 'dateControl',
+      hideExclude: false,
       hideBetween: false
     }
   ];
@@ -187,6 +190,11 @@ export class NewRuleStepperComponent implements OnInit {
       .hideBetween;
   }
 
+  private checkIfExcludeDisabled(classifierValue: string): boolean {
+    return this.valueArrayToObject(this.classifiers)[classifierValue]
+      .hideExclude;
+  }
+
   private getFieldControl(classifierValue: string): string {
     return this.valueArrayToObject(this.classifiers)[classifierValue]
       .inputFieldControl;
@@ -207,6 +215,7 @@ export class NewRuleStepperComponent implements OnInit {
       firstDateControl: null,
       titleTextControl: null,
       ownerTextControl: null,
+      fullTextControl: null,
       fileTypeControl: null,
       dateControl: null
     });
@@ -221,6 +230,10 @@ export class NewRuleStepperComponent implements OnInit {
         .get('constraintControl')
         .setValue(this.inputRule.constraint);
       switch (this.getFieldControl(this.classifierSelectOption)) {
+        case 'fullTextControl':
+          this.inputFieldGroup
+            .get('fullTextControl')
+            .setValue(this.inputRule.data.fullText);
         case 'titleTextControl':
           this.inputFieldGroup
             .get('titleTextControl')
@@ -263,6 +276,9 @@ export class NewRuleStepperComponent implements OnInit {
       ruleUUID = uuid();
     }
     switch (this.getFieldControl(this.classifierSelectOption)) {
+      case 'fullTextControl':
+        data['fullText'] = this.inputFieldGroup.get('fullTextControl').value;
+        break;
       case 'titleTextControl':
         data['title'] = this.inputFieldGroup.get('titleTextControl').value;
         break;
@@ -326,7 +342,8 @@ export class NewRuleStepperComponent implements OnInit {
       this.betweenConstraintDisabled = this.checkIfBetweenDisabled(
         classifierValue
       );
-      if (this.betweenConstraintDisabled) {
+      this.excludeDisabled = this.checkIfExcludeDisabled(classifierValue);
+      if (this.betweenConstraintDisabled || this.excludeDisabled) {
         this.constraintFormGroup.get('constraintControl').setValue('include');
       }
     }

@@ -777,7 +777,7 @@
         <h3>Implements</h3>
     </p>
     <p class="comment">
-                <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+                <code><a href="https://angular.io/api/core/AfterViewInit" target="_blank" >AfterViewInit</a></code>
     </p>
 
     <p class="comment">
@@ -859,7 +859,7 @@
                                 <a href="#goToConfigPage">goToConfigPage</a>
                             </li>
                             <li>
-                                <a href="#ngOnInit">ngOnInit</a>
+                                <a href="#ngAfterViewInit">ngAfterViewInit</a>
                             </li>
                             <li>
                                 <a href="#sortUsersDrive">sortUsersDrive</a>
@@ -1006,7 +1006,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">src/app/components/tabs/home/home.component.ts:64</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">src/app/components/tabs/home/home.component.ts:67</a></div>
                             </td>
                         </tr>
 
@@ -1026,18 +1026,18 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="ngOnInit"></a>
+                        <a name="ngAfterViewInit"></a>
                         <span class="name">
                             <b>
-                            ngOnInit
+                            ngAfterViewInit
                             </b>
-                            <a href="#ngOnInit"><span class="fa fa-link"></span></a>
+                            <a href="#ngAfterViewInit"><span class="fa fa-link"></span></a>
                         </span>
                     </td>
                 </tr>
                 <tr>
                     <td class="col-md-4">
-<code>ngOnInit()</code>
+<code>ngAfterViewInit()</code>
                     </td>
                 </tr>
 
@@ -1084,7 +1084,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/app/components/tabs/home/home.component.ts:56</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/components/tabs/home/home.component.ts:59</a></div>
                             </td>
                         </tr>
 
@@ -1193,7 +1193,7 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, NgZone } from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, NgZone, AfterViewInit } from &#x27;@angular/core&#x27;;
 import { DatabaseService } from &#x27;../../../services/firebase/database.service&#x27;;
 import { MatSnackBar } from &#x27;@angular/material&#x27;;
 import { SorterService } from &#x27;../../../services/sorter/sorter.service&#x27;;
@@ -1211,7 +1211,7 @@ import { Router } from &#x27;@angular/router&#x27;;
   templateUrl: &#x27;./home.component.html&#x27;,
   styleUrls: [&#x27;./home.component.scss&#x27;]
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements AfterViewInit {
   public isActiveConfig: boolean &#x3D; false;
   public activeConfigName: string &#x3D; &#x27;Loading...&#x27;;
 
@@ -1232,20 +1232,23 @@ export class HomeComponent implements OnInit {
    *
    * @memberof HomeComponent
    */
-  ngOnInit() {
-    if (this.database.userID) {
-      this.database.getActiveConfig(activeConfig &#x3D;&gt; {
-        if (activeConfig) {
-          this.database.getConfig(activeConfig, config &#x3D;&gt; {
-            this.activeConfigName &#x3D; config.name;
-          });
-          this.isActiveConfig &#x3D; true;
-        } else {
-          this.activeConfigName &#x3D; &#x27;No active configuration!&#x27;;
-          this.isActiveConfig &#x3D; false;
-        }
-      });
-    }
+  ngAfterViewInit() {
+    let databaseInitalizedCheck &#x3D; setInterval(() &#x3D;&gt; {
+      if (this.database.initalized) {
+        this.database.getActiveConfig(activeConfig &#x3D;&gt; {
+          if (activeConfig) {
+            this.database.getConfig(activeConfig, config &#x3D;&gt; {
+              this.activeConfigName &#x3D; config.name;
+            });
+            this.isActiveConfig &#x3D; true;
+          } else {
+            this.activeConfigName &#x3D; &#x27;No active configuration!&#x27;;
+            this.isActiveConfig &#x3D; false;
+          }
+        });
+        clearInterval(databaseInitalizedCheck);
+      }
+    }, 750);
   }
 
   sortUsersDrive() {

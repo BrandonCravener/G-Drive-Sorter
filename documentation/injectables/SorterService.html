@@ -977,7 +977,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="122" class="link-to-prism">src/app/services/sorter/sorter.service.ts:122</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="125" class="link-to-prism">src/app/services/sorter/sorter.service.ts:125</a></div>
                             </td>
                         </tr>
 
@@ -1046,7 +1046,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="128" class="link-to-prism">src/app/services/sorter/sorter.service.ts:128</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="131" class="link-to-prism">src/app/services/sorter/sorter.service.ts:131</a></div>
                             </td>
                         </tr>
 
@@ -1115,7 +1115,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="139" class="link-to-prism">src/app/services/sorter/sorter.service.ts:139</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="142" class="link-to-prism">src/app/services/sorter/sorter.service.ts:142</a></div>
                             </td>
                         </tr>
 
@@ -1216,6 +1216,9 @@ export class SorterService {
     let driveQuery &#x3D; new DriveQueryBuilder(group.source.folderID, true);
     group.rules.forEach(rule &#x3D;&gt; {
       switch (rule.classifier) {
+        case &#x27;fullText&#x27;:
+          driveQuery &#x3D; driveQuery.fullTextContains(rule.data.fullText);
+          break;
         case &#x27;title&#x27;:
           let title &#x3D; rule.data.title;
           switch (rule.constraint) {
@@ -1339,10 +1342,8 @@ export class SorterService {
               }, this);
             }
           });
-          console.log(group.source.renameUntitled);
           if (group.source.renameUntitled) {
             this.google.listFiles(this.getUntitledFiles(group.source), resp &#x3D;&gt; {
-              console.log(resp);
               if (resp.error) {
                 reject(resp.error);
               } else {

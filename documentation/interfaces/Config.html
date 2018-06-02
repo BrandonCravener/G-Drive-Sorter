@@ -977,7 +977,6 @@ export class ConfigListComponent implements OnInit, OnDestroy {
         err &#x3D;&gt; console.error
       );
       setTimeout(_ &#x3D;&gt; {
-        // Listen for loading state changes
         this.loadingSubscription &#x3D; this.dataSource.loading$.subscribe(
           loading &#x3D;&gt; {
             this.loading &#x3D; loading;
@@ -1068,10 +1067,12 @@ export class ConfigListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.loadingSubscription.unsubscribe();
-    this.paginatorSubscription.unsubscribe();
-    this.configChangeSubscription.unsubscribe();
-    this.activeConfigChangeSubscription.unsubscribe();
+    if (this.loadingSubscription) this.loadingSubscription.unsubscribe();
+    if (this.paginatorSubscription) this.paginatorSubscription.unsubscribe();
+    if (this.configChangeSubscription)
+      this.configChangeSubscription.unsubscribe();
+    if (this.activeConfigChangeSubscription)
+      this.activeConfigChangeSubscription.unsubscribe();
   }
 }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, NgZone, AfterViewInit } from '@angular/core';
 import { DatabaseService } from '../../../services/firebase/database.service';
 import { MatSnackBar } from '@angular/material';
 import { SorterService } from '../../../services/sorter/sorter.service';
@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements AfterViewInit {
   public isActiveConfig: boolean = false;
   public activeConfigName: string = 'Loading...';
 
@@ -37,20 +37,23 @@ export class HomeComponent implements OnInit {
    *
    * @memberof HomeComponent
    */
-  ngOnInit() {
-    if (this.database.userID) {
-      this.database.getActiveConfig(activeConfig => {
-        if (activeConfig) {
-          this.database.getConfig(activeConfig, config => {
-            this.activeConfigName = config.name;
-          });
-          this.isActiveConfig = true;
-        } else {
-          this.activeConfigName = 'No active configuration!';
-          this.isActiveConfig = false;
-        }
-      });
-    }
+  ngAfterViewInit() {
+    let databaseInitalizedCheck = setInterval(() => {
+      if (this.database.initalized) {
+        this.database.getActiveConfig(activeConfig => {
+          if (activeConfig) {
+            this.database.getConfig(activeConfig, config => {
+              this.activeConfigName = config.name;
+            });
+            this.isActiveConfig = true;
+          } else {
+            this.activeConfigName = 'No active configuration!';
+            this.isActiveConfig = false;
+          }
+        });
+        clearInterval(databaseInitalizedCheck);
+      }
+    }, 750);
   }
 
   sortUsersDrive() {

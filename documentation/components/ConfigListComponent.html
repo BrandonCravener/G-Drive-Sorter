@@ -1069,7 +1069,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="194" class="link-to-prism">src/app/components/tabs/config/config-list/config-list.component.ts:194</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="193" class="link-to-prism">src/app/components/tabs/config/config-list/config-list.component.ts:193</a></div>
                             </td>
                         </tr>
 
@@ -1138,7 +1138,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="172" class="link-to-prism">src/app/components/tabs/config/config-list/config-list.component.ts:172</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="171" class="link-to-prism">src/app/components/tabs/config/config-list/config-list.component.ts:171</a></div>
                             </td>
                         </tr>
 
@@ -1207,7 +1207,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="205" class="link-to-prism">src/app/components/tabs/config/config-list/config-list.component.ts:205</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="204" class="link-to-prism">src/app/components/tabs/config/config-list/config-list.component.ts:204</a></div>
                             </td>
                         </tr>
 
@@ -1276,7 +1276,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="129" class="link-to-prism">src/app/components/tabs/config/config-list/config-list.component.ts:129</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="128" class="link-to-prism">src/app/components/tabs/config/config-list/config-list.component.ts:128</a></div>
                             </td>
                         </tr>
 
@@ -1352,7 +1352,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="209" class="link-to-prism">src/app/components/tabs/config/config-list/config-list.component.ts:209</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="208" class="link-to-prism">src/app/components/tabs/config/config-list/config-list.component.ts:208</a></div>
                             </td>
                         </tr>
 
@@ -1428,7 +1428,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="140" class="link-to-prism">src/app/components/tabs/config/config-list/config-list.component.ts:140</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="139" class="link-to-prism">src/app/components/tabs/config/config-list/config-list.component.ts:139</a></div>
                             </td>
                         </tr>
 
@@ -1466,7 +1466,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="161" class="link-to-prism">src/app/components/tabs/config/config-list/config-list.component.ts:161</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="160" class="link-to-prism">src/app/components/tabs/config/config-list/config-list.component.ts:160</a></div>
                             </td>
                         </tr>
 
@@ -1504,7 +1504,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="201" class="link-to-prism">src/app/components/tabs/config/config-list/config-list.component.ts:201</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="200" class="link-to-prism">src/app/components/tabs/config/config-list/config-list.component.ts:200</a></div>
                             </td>
                         </tr>
 
@@ -2155,7 +2155,6 @@ export class ConfigListComponent implements OnInit, OnDestroy {
         err &#x3D;&gt; console.error
       );
       setTimeout(_ &#x3D;&gt; {
-        // Listen for loading state changes
         this.loadingSubscription &#x3D; this.dataSource.loading$.subscribe(
           loading &#x3D;&gt; {
             this.loading &#x3D; loading;
@@ -2246,10 +2245,12 @@ export class ConfigListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.loadingSubscription.unsubscribe();
-    this.paginatorSubscription.unsubscribe();
-    this.configChangeSubscription.unsubscribe();
-    this.activeConfigChangeSubscription.unsubscribe();
+    if (this.loadingSubscription) this.loadingSubscription.unsubscribe();
+    if (this.paginatorSubscription) this.paginatorSubscription.unsubscribe();
+    if (this.configChangeSubscription)
+      this.configChangeSubscription.unsubscribe();
+    if (this.activeConfigChangeSubscription)
+      this.activeConfigChangeSubscription.unsubscribe();
   }
 }
 

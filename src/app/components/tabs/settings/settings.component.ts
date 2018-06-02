@@ -26,14 +26,16 @@ export class SettingsComponent {
    * @memberof SettingsComponent
    */
   constructor(
-    private firebase: AngularFirestore,
-    private firebaseAuth: AngularFireAuth,
     private google: GoogleService,
     private database: DatabaseService
   ) {}
 
+  clearConfigs() {
+    this.database.clearConfigs().catch(err => console.error);
+  }
+
   deleteAccount() {
-    this.database.deleteUser().then(() => {
+    this.database.clearConfigs().then(() => {
       this.google.signOut();
     }, err => console.error);
   }
