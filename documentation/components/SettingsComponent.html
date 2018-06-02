@@ -831,6 +831,9 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                <a href="#clearConfigs">clearConfigs</a>
+                            </li>
+                            <li>
                                 <a href="#deleteAccount">deleteAccount</a>
                             </li>
                         </ul>
@@ -851,7 +854,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(firebase: AngularFirestore, firebaseAuth: AngularFireAuth, google: <a href="../injectables/GoogleService.html">GoogleService</a>, database: <a href="../injectables/DatabaseService.html">DatabaseService</a>)</code>
+<code>constructor(google: <a href="../injectables/GoogleService.html">GoogleService</a>, database: <a href="../injectables/DatabaseService.html">DatabaseService</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -875,30 +878,6 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                                <tr>
-                                                        <td>firebase</td>
-                                                  
-                                                        <td>
-                                                                    <code>AngularFirestore</code>
-                                                        </td>
-                                                  
-                                                    <td>
-                                                            no
-                                                    </td>
-                                                    
-                                                </tr>
-                                                <tr>
-                                                        <td>firebaseAuth</td>
-                                                  
-                                                        <td>
-                                                                    <code>AngularFireAuth</code>
-                                                        </td>
-                                                  
-                                                    <td>
-                                                            no
-                                                    </td>
-                                                    
-                                                </tr>
                                                 <tr>
                                                         <td>google</td>
                                                   
@@ -945,6 +924,44 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
+                        <a name="clearConfigs"></a>
+                        <span class="name">
+                            <b>
+                            clearConfigs
+                            </b>
+                            <a href="#clearConfigs"><span class="fa fa-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>clearConfigs()</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/components/tabs/settings/settings.component.ts:33</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
                         <a name="deleteAccount"></a>
                         <span class="name">
                             <b>
@@ -963,7 +980,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/components/tabs/settings/settings.component.ts:35</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/components/tabs/settings/settings.component.ts:37</a></div>
                             </td>
                         </tr>
 
@@ -1014,14 +1031,16 @@ export class SettingsComponent {
    * @memberof SettingsComponent
    */
   constructor(
-    private firebase: AngularFirestore,
-    private firebaseAuth: AngularFireAuth,
     private google: GoogleService,
     private database: DatabaseService
   ) {}
 
+  clearConfigs() {
+    this.database.clearConfigs().catch(err &#x3D;&gt; console.error);
+  }
+
   deleteAccount() {
-    this.database.deleteUser().then(() &#x3D;&gt; {
+    this.database.clearConfigs().then(() &#x3D;&gt; {
       this.google.signOut();
     }, err &#x3D;&gt; console.error);
   }
@@ -1031,6 +1050,11 @@ export class SettingsComponent {
 
     <div class="tab-pane fade " id="c-templateData">
         <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;row&quot;&gt;
+    &lt;div class&#x3D;&quot;center&quot;&gt;
+        &lt;button mat-raised-button color&#x3D;&quot;warn&quot; class&#x3D;&quot;buttons&quot; (click)&#x3D;&quot;clearConfigs()&quot;&gt;Clear Configurations&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class&#x3D;&quot;row&quot;&gt;
     &lt;div class&#x3D;&quot;center&quot;&gt;
         &lt;button mat-raised-button color&#x3D;&quot;warn&quot; class&#x3D;&quot;buttons&quot; (click)&#x3D;&quot;deleteAccount()&quot;&gt;Delete Account&lt;/button&gt;
     &lt;/div&gt;
@@ -1062,7 +1086,7 @@ export class SettingsComponent {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="row">    <div class="center">        <button mat-raised-button color="warn" class="buttons" (click)="deleteAccount()">Delete Account</button>    </div></div></div>'
+        var COMPONENT_TEMPLATE = '<div><div class="row">    <div class="center">        <button mat-raised-button color="warn" class="buttons" (click)="clearConfigs()">Clear Configurations</button>    </div></div><div class="row">    <div class="center">        <button mat-raised-button color="warn" class="buttons" (click)="deleteAccount()">Delete Account</button>    </div></div></div>'
     var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ConfigComponent', 'selector': 'app-config'},{'name': 'ConfigListComponent', 'selector': 'app-config-list'},{'name': 'ConfigModalComponent', 'selector': 'app-config-modal'},{'name': 'EditConfigModalComponent', 'selector': 'app-edit-config-modal'},{'name': 'EditConfigPageComponent', 'selector': 'app-edit-config-page'},{'name': 'FolderCreationComponent', 'selector': 'app-folder-creation'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'NewConfigPageComponent', 'selector': 'app-new-rule-page'},{'name': 'NewRuleStepperComponent', 'selector': 'app-new-rule-stepper'},{'name': 'PresetConfigComponent', 'selector': 'app-preset-config'},{'name': 'PresetConfigPageComponent', 'selector': 'app-preset-config-page'},{'name': 'SettingsComponent', 'selector': 'app-settings'},{'name': 'UnauthenticatedComponent', 'selector': 'app-unauthenticated'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'SettingsComponent'};

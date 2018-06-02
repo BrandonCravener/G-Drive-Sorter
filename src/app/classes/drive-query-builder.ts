@@ -199,4 +199,15 @@ export class DriveQueryBuilder {
     }'`;
     return this;
   }
+
+  /**
+   * Require the document name, description, content, or indexable text to have the supplied text
+   *
+   * @param {string} text The text the document needs to have
+   * @memberof DriveQueryBuilder
+   */
+  fullTextContains(text: string): DriveQueryBuilder {
+    this.query += ` and fullText contains '${text}'`;
+    return this;
+  }
 }

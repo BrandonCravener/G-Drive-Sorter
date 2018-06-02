@@ -821,6 +821,9 @@
                                 <a href="#excludeType">excludeType</a>
                             </li>
                             <li>
+                                <a href="#fullTextContains">fullTextContains</a>
+                            </li>
+                            <li>
                                 <a href="#get">get</a>
                             </li>
                             <li>
@@ -1274,6 +1277,82 @@
 
                                                         <td>
                                                                 <code><p>The file type to ignore</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="../classes/DriveQueryBuilder.html" target="_self" >DriveQueryBuilder</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="fullTextContains"></a>
+                        <span class="name">
+                            <b>
+                            fullTextContains
+                            </b>
+                            <a href="#fullTextContains"><span class="fa fa-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>fullTextContains(text: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="209" class="link-to-prism">src/app/classes/drive-query-builder.ts:209</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Require the document name, description, content, or indexable text to have the supplied text</p>
+</div>
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>text</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            no
+                                                    </td>
+                                                    
+
+                                                        <td>
+                                                                <code><p>The text the document needs to have</p>
 </code>
                                                         </td>
                                                 </tr>
@@ -2146,6 +2225,17 @@ export class DriveQueryBuilder {
     this.query +&#x3D; &#x60; and viewedByMeTime &lt;&#x3D; &#x27;${
       date.toISOString().split(&#x27;.&#x27;)[0]
     }&#x27;&#x60;;
+    return this;
+  }
+
+  /**
+   * Require the document name, description, content, or indexable text to have the supplied text
+   *
+   * @param {string} text The text the document needs to have
+   * @memberof DriveQueryBuilder
+   */
+  fullTextContains(text: string): DriveQueryBuilder {
+    this.query +&#x3D; &#x60; and fullText contains &#x27;${text}&#x27;&#x60;;
     return this;
   }
 }

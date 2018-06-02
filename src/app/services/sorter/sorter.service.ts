@@ -36,6 +36,9 @@ export class SorterService {
     let driveQuery = new DriveQueryBuilder(group.source.folderID, true);
     group.rules.forEach(rule => {
       switch (rule.classifier) {
+        case 'fullText':
+          driveQuery = driveQuery.fullTextContains(rule.data.fullText);
+          break;
         case 'title':
           let title = rule.data.title;
           switch (rule.constraint) {
@@ -159,10 +162,8 @@ export class SorterService {
               }, this);
             }
           });
-          console.log(group.source.renameUntitled);
           if (group.source.renameUntitled) {
             this.google.listFiles(this.getUntitledFiles(group.source), resp => {
-              console.log(resp);
               if (resp.error) {
                 reject(resp.error);
               } else {
