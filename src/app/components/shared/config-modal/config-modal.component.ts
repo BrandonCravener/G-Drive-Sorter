@@ -1,8 +1,6 @@
-import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFirestore } from 'angularfire2/firestore';
 import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { ConfigBuilder } from '../../../classes/config-builder';
-import { DatabaseService } from '../../../services/firebase/database.service';
+import { DatabaseService } from '../../../services/database/database.service';
 import { FolderCreationComponent } from '../folder-creation/folder-creation.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GoogleService } from '../../../services/google/google.service';
@@ -50,9 +48,7 @@ export class ConfigModalComponent implements OnInit {
     private snackbar: MatSnackBar,
     private google: GoogleService,
     public formBuilder: FormBuilder,
-    private database: DatabaseService,
-    private firebase: AngularFirestore,
-    private firebaseAuth: AngularFireAuth
+    private database: DatabaseService
   ) {}
 
   ngOnInit() {
@@ -186,7 +182,7 @@ export class ConfigModalComponent implements OnInit {
       this.folderComponent.reset();
     }
   }
-  
+
   renameUntitledChange(event: MatSlideToggleChange) {
     this.source.renameUntitled = event.checked;
   }

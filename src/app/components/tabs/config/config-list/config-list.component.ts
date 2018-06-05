@@ -1,13 +1,8 @@
-import { AngularFireAuth } from 'angularfire2/auth';
-import {
-  AngularFirestore,
-  AngularFirestoreCollection
-} from 'angularfire2/firestore';
 import { BehaviorSubject } from 'rxjs';
 import { Component, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ConfigComponent } from '../config.component';
 import { createDirective } from '@angular/compiler/src/core';
-import { DatabaseService } from '../../../../services/firebase/database.service';
+import { DatabaseService } from '../../../../services/database/database.service';
 import { DataSource } from '@angular/cdk/collections';
 import { EditConfigModalComponent } from '../../../shared/edit-config-modal/edit-config-modal.component';
 import {
@@ -20,6 +15,8 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { PresetConfigComponent } from '../preset-config/preset-config.component';
+import { GoogleService } from '../../../../services/google/google.service';
+import { ConfigsInterface } from '../../../../../interfaces';
 
 export interface Config {
   name: String;
@@ -34,8 +31,6 @@ export interface Config {
 export class ConfigListComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  private userID: string;
-  private configCollection;
   private activeConfig: string;
   private oldPageSize: number = 10;
   private loadingSubscription: Subscription;
@@ -49,25 +44,20 @@ export class ConfigListComponent implements OnInit, OnDestroy {
   public tableColumns = ['name', 'actions'];
 
   constructor(
-    private firebaseAuth: AngularFireAuth,
-    private firebase: AngularFirestore,
     private database: DatabaseService,
+    private google: GoogleService,
     private dialog: MatDialog,
     private router: Router,
     private zone: NgZone
   ) {}
 
   ngOnInit() {
-    if (this.firebaseAuth.auth.currentUser) {
-      this.userID = this.firebaseAuth.auth.currentUser.uid;
-      this.configCollection = this.firebase
-        .doc(`users/${this.userID}`)
-        .collection('configs');
+    if (this.google.getAuthStatus()) {
       this.dataSource = new ConfigDataSource(
-        this.configCollection,
+        this.database.getConfigs(),
         this.paginator
       );
-      this.database.numberConfigs(numConfigs => {
+      this.database.numberConfigs().then(numConfigs => {
         if (numConfigs === 0) {
           this.noConfigs = true;
         } else {
@@ -78,7 +68,7 @@ export class ConfigListComponent implements OnInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    if (this.firebaseAuth.auth.currentUser) {
+    if (this.google.getAuthStatus()) {
       // Listen for page changes
       this.paginatorSubscription = this.paginator.page.subscribe(() => {
         if (this.oldPageSize == this.paginator.pageSize) {
@@ -95,7 +85,7 @@ export class ConfigListComponent implements OnInit, OnDestroy {
       // Load the configurations
       this.dataSource.loadConfigs();
       // Pass the number of configs to the paginator
-      this.database.numberConfigs(numConfigs => {
+      this.database.numberConfigs().then(numConfigs => {
         this.paginator.length = numConfigs;
       });
       // Listen for config changes
@@ -105,9 +95,11 @@ export class ConfigListComponent implements OnInit, OnDestroy {
         }
       );
       // Retrive the active config
-      this.database.getActiveConfig(activeConfig => {
+      this.database.getActiveConfig().then(activeConfig => {
         this.activeConfig = activeConfig;
-      });
+      }, () => {
+        this.activeConfig = undefined;
+      })
       // Listen for active config changes
       this.activeConfigChangeSubscription = this.database.activeConfigChanged.subscribe(
         newConfigID => {
@@ -159,7 +151,7 @@ export class ConfigListComponent implements OnInit, OnDestroy {
 
   refreshConfigs() {
     this.dataSource.loadConfigs();
-    this.database.numberConfigs(numConfigs => {
+    this.database.numberConfigs().then(numConfigs => {
       if (numConfigs === 0) {
         this.noConfigs = true;
       } else {
@@ -221,7 +213,7 @@ export class ConfigDataSource implements DataSource<Config> {
   private loadingSubject = new BehaviorSubject<boolean>(true);
   public loading$ = this.loadingSubject.asObservable();
 
-  constructor(private configCollection, private paginator) {}
+  constructor(private configs: Array<ConfigsInterface>, private paginator) {}
 
   private calculateStart(page: number, pageSize: number): number {
     return page ? page * pageSize : 0;
@@ -237,24 +229,18 @@ export class ConfigDataSource implements DataSource<Config> {
   }
 
   loadConfigs(page: number = 0, pageSize: number = 10) {
+    let start = this.calculateStart(page, pageSize);
+    let configs = this.configs.slice(start, start + pageSize);
     this.loadingSubject.next(true);
-    this.configCollection.ref
-      .orderBy('name')
-      .startAt(this.calculateStart(page, pageSize))
-      .limit(pageSize)
-      .get()
-      .then(snapshot => {
-        const configs = snapshot.docs;
-        let data = [];
-        for (const config in configs) {
-          const name = configs[config].data()['name'];
-          data.push({
-            name: name,
-            key: configs[config].id
-          });
-        }
-        this.configSubject.next(data);
-        this.loadingSubject.next(false);
-      }, err => console.error);
+    let data = [];
+    for (const config in configs) {
+      const name = configs[config]['name'];
+      data.push({
+        name: name,
+        key: configs[config].id
+      });
+    }
+    this.configSubject.next(data);
+    this.loadingSubject.next(false);
   }
 }

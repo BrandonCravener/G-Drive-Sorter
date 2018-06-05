@@ -1,6 +1,3 @@
-import { AngularFireAuthModule } from 'angularfire2/auth';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AppComponent } from './app.component';
 import { appRoutes } from './app.routes';
 import { AuthenticatedModule } from './modules/authenticated/authenticated.module';
@@ -25,7 +22,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UnauthenticatedComponent } from './components/auth/unauthenticated/unauthenticated.component';
-import { DatabaseService } from './services/firebase/database.service';
+import { DatabaseService } from './services/database/database.service';
 
 @NgModule({
   declarations: [AppComponent, UnauthenticatedComponent],
@@ -38,13 +35,10 @@ import { DatabaseService } from './services/firebase/database.service';
     MatButtonModule,
     MatDialogModule,
     MatToolbarModule,
-    AngularFireAuthModule,
-    AngularFirestoreModule,
     ConfigModule.forRoot(),
     BrowserAnimationsModule,
     AuthenticatedModule.forRoot(),
     RouterModule.forRoot(appRoutes),
-    AngularFireModule.initializeApp(environment.firebase)
   ],
   providers: [
     DatabaseService,

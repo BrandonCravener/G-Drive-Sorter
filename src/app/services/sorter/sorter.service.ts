@@ -3,7 +3,7 @@ import {
   GroupInterface,
   GroupFolderInterface
 } from '../../../interfaces';
-import { DatabaseService } from '../firebase/database.service';
+import { DatabaseService } from '../database/database.service';
 import {
   DriveMimeType,
   DriveQueryBuilder
@@ -32,7 +32,6 @@ export class SorterService {
   }
 
   private getDriveQuery(group: GroupInterface): string {
-    1;
     let driveQuery = new DriveQueryBuilder(group.source.folderID, true);
     group.rules.forEach(rule => {
       switch (rule.classifier) {
@@ -129,14 +128,14 @@ export class SorterService {
   }
 
   loadConfig(cb?: Function): void {
-    this.database.getActiveConfig(activeConfig => {
+    this.database.getActiveConfig().then(activeConfig => {
       if (activeConfig) {
         this.database.getConfig(activeConfig, config => {
           this.config = config;
           if (cb) cb();
         });
       }
-    });
+    }, err=>{});
   }
 
   sort() {

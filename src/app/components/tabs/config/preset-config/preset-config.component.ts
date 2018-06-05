@@ -5,7 +5,7 @@ import { presets } from '../presets';
 import { GoogleService } from '../../../../services/google/google.service';
 import { v4 as uuid } from 'uuid';
 import { ConfigBuilder } from '../../../../classes/config-builder';
-import { DatabaseService } from '../../../../services/firebase/database.service';
+import { DatabaseService } from '../../../../services/database/database.service';
 import { MatSnackBar } from '@angular/material';
 
 @Component({

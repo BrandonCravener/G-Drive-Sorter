@@ -1,11 +1,8 @@
-import * as firebase from 'firebase/app';
-import { AngularFireAuth } from 'angularfire2/auth';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs';
-import 'firebase/auth';
 import { DriveMimeType } from '../../classes/drive-query-builder';
-import { DatabaseService } from '../firebase/database.service';
+import { DatabaseService } from '../database/database.service';
 
 /**
  * Workaround for testing
@@ -60,8 +57,7 @@ export class GoogleService {
    * @memberof GoogleService
    */
   constructor(
-    private database: DatabaseService,
-    private firebaseAuth: AngularFireAuth
+    private database: DatabaseService
   ) {}
 
   /**
@@ -142,7 +138,6 @@ export class GoogleService {
   signOut(): void {
     authInstance.signOut();
     this.database.initalized = false;
-    this.firebaseAuth.auth.signOut();
   }
 
   /**

@@ -1,5 +1,3 @@
-import { AngularFirestoreCollection } from 'angularfire2/firestore';
-
 export interface ConfigInterface {
   activeConfig: string;
 }
@@ -52,7 +50,7 @@ export interface ConfigsInterface {
   groups: Array<GroupInterface>;
 }
 
-export interface UserDocument {
-  activeConfig: string;
-  configs: AngularFirestoreCollection<ConfigsInterface>;
+export interface JSONConfiguration {
+  configs: Array<ConfigsInterface>;
+  activeConfig: string
 }

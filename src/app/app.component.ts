@@ -1,11 +1,9 @@
-import * as firebase from 'firebase/app';
 import { AfterViewInit, Component, NgZone } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { fabAnimation, routerAnimation } from '../animations';
 import { GoogleService } from './services/google/google.service';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
-import { DatabaseService } from './services/firebase/database.service';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { DatabaseService } from './services/database/database.service';
 
 /**
  * Workaround for testing
@@ -61,7 +59,6 @@ export class AppComponent implements AfterViewInit {
   constructor(
     private google: GoogleService,
     private database: DatabaseService,
-    private firebaseAuth: AngularFireAuth,
     private router: Router,
     private zone: NgZone
   ) {
@@ -75,7 +72,8 @@ export class AppComponent implements AfterViewInit {
             discoveryDocs: [
               'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'
             ],
-            scope: 'https://www.googleapis.com/auth/drive'
+            scope:
+              'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.appdata'
           },
           () => {
             console.debug('Google initalized.');
@@ -91,13 +89,7 @@ export class AppComponent implements AfterViewInit {
           }
           this.authenticated = state;
           if (state) {
-            const credential = firebase.auth.GoogleAuthProvider.credential(
-              this.google.getToken()
-            );
-            this.firebaseAuth.auth.signInWithCredential(credential).then(() => {
-              this.database.initalize();
-              console.debug('Database initalized.');
-            }, err => console.error);
+            this.database.initalize();
             this.zone.run(() => {
               this.router.navigate(['/app/home']);
             });

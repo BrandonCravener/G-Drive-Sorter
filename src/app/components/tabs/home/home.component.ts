@@ -1,5 +1,5 @@
 import { Component, NgZone, AfterViewInit } from '@angular/core';
-import { DatabaseService } from '../../../services/firebase/database.service';
+import { DatabaseService } from '../../../services/database/database.service';
 import { MatSnackBar } from '@angular/material';
 import { SorterService } from '../../../services/sorter/sorter.service';
 import { Router } from '@angular/router';
@@ -40,17 +40,19 @@ export class HomeComponent implements AfterViewInit {
   ngAfterViewInit() {
     let databaseInitalizedCheck = setInterval(() => {
       if (this.database.initalized) {
-        this.database.getActiveConfig(activeConfig => {
-          if (activeConfig) {
+        this.database.getActiveConfig().then(
+          activeConfig => {
             this.database.getConfig(activeConfig, config => {
               this.activeConfigName = config.name;
             });
             this.isActiveConfig = true;
-          } else {
-            this.activeConfigName = 'No active configuration!';
+          },
+          err => {
+            console.log(err);
+            this.activeConfigName = err;
             this.isActiveConfig = false;
           }
-        });
+        );
         clearInterval(databaseInitalizedCheck);
       }
     }, 750);

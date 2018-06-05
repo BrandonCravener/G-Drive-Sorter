@@ -7,7 +7,7 @@ import {
   RuleInterface,
   FolderCreation
 } from '../../../../interfaces';
-import { DatabaseService } from '../../../services/firebase/database.service';
+import { DatabaseService } from '../../../services/database/database.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GoogleService } from '../../../services/google/google.service';
 import {

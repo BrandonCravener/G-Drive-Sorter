@@ -87,14 +87,14 @@
                         <a href="modules/AppModule.html" data-type="entity-link">AppModule</a>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#xs-components-links-module-AppModule-a46d8c1baad067ce358307d082c447dd"
+                                        data-target="#xs-components-links-module-AppModule-2d290feb4c682a10550c99adaa08e684"
                                     >
                                     <span class="fa fa-fw fa-cogs"></span>
                                     <span>Components</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="xs-components-links-module-AppModule-a46d8c1baad067ce358307d082c447dd"
+                                        id="xs-components-links-module-AppModule-2d290feb4c682a10550c99adaa08e684"
                                     >
                                         <li class="link">
                                             <a href="components/AppComponent.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">AppComponent</a>
@@ -106,14 +106,14 @@
                             </li>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#xs-injectables-links-module-AppModule-a46d8c1baad067ce358307d082c447dd"
+                                        data-target="#xs-injectables-links-module-AppModule-2d290feb4c682a10550c99adaa08e684"
                                     >
                                     <span class="fa fa-fw fa-long-arrow-down"></span>
                                     <span>Injectables</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="xs-injectables-links-module-AppModule-a46d8c1baad067ce358307d082c447dd"
+                                        id="xs-injectables-links-module-AppModule-2d290feb4c682a10550c99adaa08e684"
                                     >
                                         <li class="link">
                                             <a href="injectables/AuthGuardService.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules"}>AuthGuardService</a>
@@ -321,10 +321,10 @@
                         <a href="interfaces/GroupInterface.html" data-type="entity-link">GroupInterface</a>
                     </li>
                     <li class="link">
-                        <a href="interfaces/RuleInterface.html" data-type="entity-link">RuleInterface</a>
+                        <a href="interfaces/JSONConfiguration.html" data-type="entity-link">JSONConfiguration</a>
                     </li>
                     <li class="link">
-                        <a href="interfaces/UserDocument.html" data-type="entity-link">UserDocument</a>
+                        <a href="interfaces/RuleInterface.html" data-type="entity-link">RuleInterface</a>
                     </li>
             </ul>
         </li>
@@ -444,14 +444,14 @@
                         <a href="modules/AppModule.html" data-type="entity-link">AppModule</a>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#components-links-module-AppModule-a46d8c1baad067ce358307d082c447dd"
+                                        data-target="#components-links-module-AppModule-2d290feb4c682a10550c99adaa08e684"
 >
                                     <span class="fa fa-fw fa-cogs"></span>
                                     <span>Components</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="components-links-module-AppModule-a46d8c1baad067ce358307d082c447dd"
+                                        id="components-links-module-AppModule-2d290feb4c682a10550c99adaa08e684"
 >
                                         <li class="link">
                                             <a href="components/AppComponent.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">AppComponent</a>
@@ -463,14 +463,14 @@
                             </li>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#injectables-links-module-AppModule-a46d8c1baad067ce358307d082c447dd"
+                                        data-target="#injectables-links-module-AppModule-2d290feb4c682a10550c99adaa08e684"
 >
                                     <span class="fa fa-fw fa-long-arrow-down"></span>
                                     <span>Injectables</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="injectables-links-module-AppModule-a46d8c1baad067ce358307d082c447dd"
+                                        id="injectables-links-module-AppModule-2d290feb4c682a10550c99adaa08e684"
 >
                                         <li class="link">
                                             <a href="injectables/AuthGuardService.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules"}>AuthGuardService</a>
@@ -678,10 +678,10 @@
                         <a href="interfaces/GroupInterface.html" data-type="entity-link">GroupInterface</a>
                     </li>
                     <li class="link">
-                        <a href="interfaces/RuleInterface.html" data-type="entity-link">RuleInterface</a>
+                        <a href="interfaces/JSONConfiguration.html" data-type="entity-link">JSONConfiguration</a>
                     </li>
                     <li class="link">
-                        <a href="interfaces/UserDocument.html" data-type="entity-link">UserDocument</a>
+                        <a href="interfaces/RuleInterface.html" data-type="entity-link">RuleInterface</a>
                     </li>
             </ul>
         </li>
@@ -859,16 +859,11 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { AngularFireAuth } from &#x27;angularfire2/auth&#x27;;
-import {
-  AngularFirestore,
-  AngularFirestoreCollection
-} from &#x27;angularfire2/firestore&#x27;;
-import { BehaviorSubject } from &#x27;rxjs&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { BehaviorSubject } from &#x27;rxjs&#x27;;
 import { Component, NgZone, OnDestroy, OnInit, ViewChild } from &#x27;@angular/core&#x27;;
 import { ConfigComponent } from &#x27;../config.component&#x27;;
 import { createDirective } from &#x27;@angular/compiler/src/core&#x27;;
-import { DatabaseService } from &#x27;../../../../services/firebase/database.service&#x27;;
+import { DatabaseService } from &#x27;../../../../services/database/database.service&#x27;;
 import { DataSource } from &#x27;@angular/cdk/collections&#x27;;
 import { EditConfigModalComponent } from &#x27;../../../shared/edit-config-modal/edit-config-modal.component&#x27;;
 import {
@@ -881,6 +876,8 @@ import { Observable } from &#x27;rxjs&#x27;;
 import { Router } from &#x27;@angular/router&#x27;;
 import { Subscription } from &#x27;rxjs&#x27;;
 import { PresetConfigComponent } from &#x27;../preset-config/preset-config.component&#x27;;
+import { GoogleService } from &#x27;../../../../services/google/google.service&#x27;;
+import { ConfigsInterface } from &#x27;../../../../../interfaces&#x27;;
 
 export interface Config {
   name: String;
@@ -895,8 +892,6 @@ export interface Config {
 export class ConfigListComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  private userID: string;
-  private configCollection;
   private activeConfig: string;
   private oldPageSize: number &#x3D; 10;
   private loadingSubscription: Subscription;
@@ -910,25 +905,20 @@ export class ConfigListComponent implements OnInit, OnDestroy {
   public tableColumns &#x3D; [&#x27;name&#x27;, &#x27;actions&#x27;];
 
   constructor(
-    private firebaseAuth: AngularFireAuth,
-    private firebase: AngularFirestore,
     private database: DatabaseService,
+    private google: GoogleService,
     private dialog: MatDialog,
     private router: Router,
     private zone: NgZone
   ) {}
 
   ngOnInit() {
-    if (this.firebaseAuth.auth.currentUser) {
-      this.userID &#x3D; this.firebaseAuth.auth.currentUser.uid;
-      this.configCollection &#x3D; this.firebase
-        .doc(&#x60;users/${this.userID}&#x60;)
-        .collection(&#x27;configs&#x27;);
+    if (this.google.getAuthStatus()) {
       this.dataSource &#x3D; new ConfigDataSource(
-        this.configCollection,
+        this.database.getConfigs(),
         this.paginator
       );
-      this.database.numberConfigs(numConfigs &#x3D;&gt; {
+      this.database.numberConfigs().then(numConfigs &#x3D;&gt; {
         if (numConfigs &#x3D;&#x3D;&#x3D; 0) {
           this.noConfigs &#x3D; true;
         } else {
@@ -939,7 +929,7 @@ export class ConfigListComponent implements OnInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    if (this.firebaseAuth.auth.currentUser) {
+    if (this.google.getAuthStatus()) {
       // Listen for page changes
       this.paginatorSubscription &#x3D; this.paginator.page.subscribe(() &#x3D;&gt; {
         if (this.oldPageSize &#x3D;&#x3D; this.paginator.pageSize) {
@@ -956,7 +946,7 @@ export class ConfigListComponent implements OnInit, OnDestroy {
       // Load the configurations
       this.dataSource.loadConfigs();
       // Pass the number of configs to the paginator
-      this.database.numberConfigs(numConfigs &#x3D;&gt; {
+      this.database.numberConfigs().then(numConfigs &#x3D;&gt; {
         this.paginator.length &#x3D; numConfigs;
       });
       // Listen for config changes
@@ -966,9 +956,11 @@ export class ConfigListComponent implements OnInit, OnDestroy {
         }
       );
       // Retrive the active config
-      this.database.getActiveConfig(activeConfig &#x3D;&gt; {
+      this.database.getActiveConfig().then(activeConfig &#x3D;&gt; {
         this.activeConfig &#x3D; activeConfig;
-      });
+      }, () &#x3D;&gt; {
+        this.activeConfig &#x3D; undefined;
+      })
       // Listen for active config changes
       this.activeConfigChangeSubscription &#x3D; this.database.activeConfigChanged.subscribe(
         newConfigID &#x3D;&gt; {
@@ -1020,7 +1012,7 @@ export class ConfigListComponent implements OnInit, OnDestroy {
 
   refreshConfigs() {
     this.dataSource.loadConfigs();
-    this.database.numberConfigs(numConfigs &#x3D;&gt; {
+    this.database.numberConfigs().then(numConfigs &#x3D;&gt; {
       if (numConfigs &#x3D;&#x3D;&#x3D; 0) {
         this.noConfigs &#x3D; true;
       } else {
@@ -1082,7 +1074,7 @@ export class ConfigDataSource implements DataSource&lt;Config&gt; {
   private loadingSubject &#x3D; new BehaviorSubject&lt;boolean&gt;(true);
   public loading$ &#x3D; this.loadingSubject.asObservable();
 
-  constructor(private configCollection, private paginator) {}
+  constructor(private configs: Array&lt;ConfigsInterface&gt;, private paginator) {}
 
   private calculateStart(page: number, pageSize: number): number {
     return page ? page * pageSize : 0;
@@ -1098,25 +1090,19 @@ export class ConfigDataSource implements DataSource&lt;Config&gt; {
   }
 
   loadConfigs(page: number &#x3D; 0, pageSize: number &#x3D; 10) {
+    let start &#x3D; this.calculateStart(page, pageSize);
+    let configs &#x3D; this.configs.slice(start, start + pageSize);
     this.loadingSubject.next(true);
-    this.configCollection.ref
-      .orderBy(&#x27;name&#x27;)
-      .startAt(this.calculateStart(page, pageSize))
-      .limit(pageSize)
-      .get()
-      .then(snapshot &#x3D;&gt; {
-        const configs &#x3D; snapshot.docs;
-        let data &#x3D; [];
-        for (const config in configs) {
-          const name &#x3D; configs[config].data()[&#x27;name&#x27;];
-          data.push({
-            name: name,
-            key: configs[config].id
-          });
-        }
-        this.configSubject.next(data);
-        this.loadingSubject.next(false);
-      }, err &#x3D;&gt; console.error);
+    let data &#x3D; [];
+    for (const config in configs) {
+      const name &#x3D; configs[config][&#x27;name&#x27;];
+      data.push({
+        name: name,
+        key: configs[config].id
+      });
+    }
+    this.configSubject.next(data);
+    this.loadingSubject.next(false);
   }
 }
 </code></pre>
