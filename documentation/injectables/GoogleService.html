@@ -821,9 +821,6 @@
                                 <a href="#getFileInfo">getFileInfo</a>
                             </li>
                             <li>
-                                <a href="#getToken">getToken</a>
-                            </li>
-                            <li>
                                 <a href="#init">init</a>
                             </li>
                             <li>
@@ -934,7 +931,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="176" class="link-to-prism">src/app/services/google/google.service.ts:176</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="166" class="link-to-prism">src/app/services/google/google.service.ts:166</a></div>
                             </td>
                         </tr>
 
@@ -1060,7 +1057,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="161" class="link-to-prism">src/app/services/google/google.service.ts:161</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="151" class="link-to-prism">src/app/services/google/google.service.ts:151</a></div>
                             </td>
                         </tr>
 
@@ -1122,51 +1119,6 @@
                             </div>
                             <div class="io-description">
                                 <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                            </div>
-                                <div class="io-description">
-                                    
-                                </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="getToken"></a>
-                        <span class="name">
-                            <b>
-                            getToken
-                            </b>
-                            <a href="#getToken"><span class="fa fa-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-<code>getToken()</code>
-                    </td>
-                </tr>
-
-
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="147" class="link-to-prism">src/app/services/google/google.service.ts:147</a></div>
-                            </td>
-                        </tr>
-
-
-                <tr>
-                    <td class="col-md-4">
-                            <div class="io-description"><p>Gets the users id token</p>
-</div>
-
-                            <div>
-                            </div>
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
                             </div>
                                 <div class="io-description">
@@ -1281,7 +1233,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="151" class="link-to-prism">src/app/services/google/google.service.ts:151</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="141" class="link-to-prism">src/app/services/google/google.service.ts:141</a></div>
                             </td>
                         </tr>
 
@@ -1362,7 +1314,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="207" class="link-to-prism">src/app/services/google/google.service.ts:207</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="197" class="link-to-prism">src/app/services/google/google.service.ts:197</a></div>
                             </td>
                         </tr>
 
@@ -1493,7 +1445,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="194" class="link-to-prism">src/app/services/google/google.service.ts:194</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="184" class="link-to-prism">src/app/services/google/google.service.ts:184</a></div>
                             </td>
                         </tr>
 
@@ -1897,16 +1849,6 @@ export class GoogleService {
   signOut(): void {
     authInstance.signOut();
     this.database.initalized &#x3D; false;
-  }
-
-  /**
-   * Gets the users id token
-   *
-   * @returns {string}
-   * @memberof GoogleService
-   */
-  getToken(): string {
-    return authInstance.currentUser.get().getAuthResponse().id_token;
   }
 
   listFiles(query: string, cb: Function): void {

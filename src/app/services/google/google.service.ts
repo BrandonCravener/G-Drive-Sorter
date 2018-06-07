@@ -138,16 +138,6 @@ export class GoogleService {
     this.database.initalized = false;
   }
 
-  /**
-   * Gets the users id token
-   *
-   * @returns {string}
-   * @memberof GoogleService
-   */
-  getToken(): string {
-    return authInstance.currentUser.get().getAuthResponse().id_token;
-  }
-
   listFiles(query: string, cb: Function): void {
     gapi.client.drive.files
       .list({
