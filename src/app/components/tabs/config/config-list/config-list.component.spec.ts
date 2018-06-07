@@ -7,7 +7,7 @@ import { ConfigListComponent } from './config-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
-describe("ConfigListComponent", () => {
+describe('ConfigListComponent', () => {
   let component: ConfigListComponent;
   let fixture: ComponentFixture<ConfigListComponent>;
 
@@ -21,7 +21,7 @@ describe("ConfigListComponent", () => {
       ],
       providers: [
         {
-          provide: APP_BASE_HREF, 
+          provide: APP_BASE_HREF,
           useValue: '/'
         }
       ]
@@ -35,7 +35,7 @@ describe("ConfigListComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

@@ -1442,17 +1442,17 @@ export class PresetConfigComponent implements OnInit {
         .createFolder(folder)
         .then(id &#x3D;&gt; {
           requestsRecived +&#x3D; 1;
-          let group &#x3D; groups.find(group &#x3D;&gt; {
+          const foundGroup &#x3D; groups.find(group &#x3D;&gt; {
             return group.destination.presetID &#x3D;&#x3D;&#x3D; folder;
           });
-          group.destination &#x3D; {
+          foundGroup.destination &#x3D; {
             folderID: id,
             name: folder
           };
         })
         .catch(err &#x3D;&gt; console.error);
     });
-    let checkInterval &#x3D; setInterval(() &#x3D;&gt; {
+    const checkInterval &#x3D; setInterval(() &#x3D;&gt; {
       if (requestsSent &#x3D;&#x3D;&#x3D; requestsRecived) {
         clearInterval(checkInterval);
         groups.forEach(group &#x3D;&gt; {

@@ -909,7 +909,12 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export interface ConfigInterface {
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export interface Config {
+  name: String;
+  key: String;
+}
+
+export interface ConfigInterface {
   activeConfig: string;
 }
 
@@ -963,8 +968,9 @@ export interface ConfigsInterface {
 
 export interface JSONConfiguration {
   configs: Array&lt;ConfigsInterface&gt;;
-  activeConfig: string
-}</code></pre>
+  activeConfig: string;
+}
+</code></pre>
     </div>
 </div>
 

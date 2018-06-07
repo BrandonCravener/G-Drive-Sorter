@@ -26,9 +26,9 @@ export class ConfigModalComponent implements OnInit {
   private _closeCommand = new Subject<Boolean>();
 
   public isPage = false;
-  public step: number = -1;
+  public step = -1;
   public newConfig: FormGroup;
-  public finished: boolean = false;
+  public finished = false;
   public source: GroupFolderInterface = {
     folderID: undefined,
     name: null
@@ -37,10 +37,10 @@ export class ConfigModalComponent implements OnInit {
     folderID: undefined,
     name: null
   };
-  public creatingFolder: boolean = false;
-  public folderButtonSourceDisabled: boolean = false;
+  public creatingFolder = false;
+  public folderButtonSourceDisabled = false;
   public closeCommand = this._closeCommand.asObservable();
-  public folderButtonDestinationDisabled: boolean = false;
+  public folderButtonDestinationDisabled = false;
 
   constructor(
     public zone: NgZone,
@@ -110,7 +110,7 @@ export class ConfigModalComponent implements OnInit {
   }
 
   openFolderPicker(folderType: string) {
-    let folderPickedListener = this.google.folderPicked$.subscribe(
+    const folderPickedListener = this.google.folderPicked$.subscribe(
       pickedFolder => {
         if (folderType === 'destination') {
           this.destination = {

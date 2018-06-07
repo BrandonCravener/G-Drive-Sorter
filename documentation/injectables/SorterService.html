@@ -1115,7 +1115,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="141" class="link-to-prism">src/app/services/sorter/sorter.service.ts:141</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="146" class="link-to-prism">src/app/services/sorter/sorter.service.ts:146</a></div>
                             </td>
                         </tr>
 
@@ -1219,7 +1219,7 @@ export class SorterService {
           driveQuery &#x3D; driveQuery.fullTextContains(rule.data.fullText);
           break;
         case &#x27;title&#x27;:
-          let title &#x3D; rule.data.title;
+          const title &#x3D; rule.data.title;
           switch (rule.constraint) {
             case &#x27;include&#x27;:
               driveQuery &#x3D; driveQuery.nameContains(title);
@@ -1230,7 +1230,7 @@ export class SorterService {
           }
           break;
         case &#x27;type&#x27;:
-          let type &#x3D; rule.data.fileType;
+          const type &#x3D; rule.data.fileType;
           switch (rule.constraint) {
             case &#x27;include&#x27;:
               driveQuery &#x3D; driveQuery.requiresType(type);
@@ -1241,7 +1241,7 @@ export class SorterService {
           }
           break;
         case &#x27;owner&#x27;:
-          let owner &#x3D; rule.data.owner;
+          const owner &#x3D; rule.data.owner;
           switch (rule.constraint) {
             case &#x27;include&#x27;:
               driveQuery &#x3D; driveQuery.hasOwner(owner);
@@ -1308,20 +1308,25 @@ export class SorterService {
   }
 
   loadConfig(cb?: Function): void {
-    this.database.getActiveConfig().then(activeConfig &#x3D;&gt; {
-      if (activeConfig) {
-        this.database.getConfig(activeConfig, config &#x3D;&gt; {
-          this.config &#x3D; config;
-          if (cb) cb();
-        });
-      }
-    }, err&#x3D;&gt;{});
+    this.database.getActiveConfig().then(
+      activeConfig &#x3D;&gt; {
+        if (activeConfig) {
+          this.database.getConfig(activeConfig, config &#x3D;&gt; {
+            this.config &#x3D; config;
+            if (cb) {
+              cb();
+            }
+          });
+        }
+      },
+      err &#x3D;&gt; {}
+    );
   }
 
   sort() {
     return new Promise((resolve, reject) &#x3D;&gt; {
       const drive &#x3D; gapi.client.drive;
-      let success &#x3D; true;
+      const success &#x3D; true;
       this.config.groups.forEach(group &#x3D;&gt; {
         if (group.destination) {
           this.google.listFiles(this.getDriveQuery(group), resp &#x3D;&gt; {
@@ -1332,9 +1337,9 @@ export class SorterService {
                 this.google.moveFile(
                   file.id,
                   group.destination.folderID,
-                  success &#x3D;&gt; {
-                    if (!success) {
-                      success &#x3D; false;
+                  moved &#x3D;&gt; {
+                    if (!moved) {
+                      moved &#x3D; false;
                     }
                   }
                 );
@@ -1353,7 +1358,7 @@ export class SorterService {
             });
           }
         } else {
-          let newFolderName &#x3D; ConfigBuilder.folderNameBuilder(
+          const newFolderName &#x3D; ConfigBuilder.folderNameBuilder(
             group.createFolder
           );
           this.google
@@ -1364,9 +1369,9 @@ export class SorterService {
                   reject(resp.error);
                 } else {
                   resp.files.forEach(file &#x3D;&gt; {
-                    this.google.moveFile(file.id, newFolderID, success &#x3D;&gt; {
-                      if (!success) {
-                        success &#x3D; false;
+                    this.google.moveFile(file.id, newFolderID, moved &#x3D;&gt; {
+                      if (!moved) {
+                        moved &#x3D; false;
                       }
                     });
                   }, this);
@@ -1375,8 +1380,11 @@ export class SorterService {
             }, err &#x3D;&gt; console.error);
         }
       });
-      if (success) resolve();
-      else reject();
+      if (success) {
+        resolve();
+      } else {
+        reject();
+      }
     });
   }
 }

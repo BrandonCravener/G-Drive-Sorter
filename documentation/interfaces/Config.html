@@ -762,7 +762,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/app/components/tabs/config/config-list/config-list.component.ts</code>
+            <code>src/interfaces.ts</code>
         </p>
 
 
@@ -859,251 +859,66 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { BehaviorSubject } from &#x27;rxjs&#x27;;
-import { Component, NgZone, OnDestroy, OnInit, ViewChild } from &#x27;@angular/core&#x27;;
-import { ConfigComponent } from &#x27;../config.component&#x27;;
-import { createDirective } from &#x27;@angular/compiler/src/core&#x27;;
-import { DatabaseService } from &#x27;../../../../services/database/database.service&#x27;;
-import { DataSource } from &#x27;@angular/cdk/collections&#x27;;
-import { EditConfigModalComponent } from &#x27;../../../shared/edit-config-modal/edit-config-modal.component&#x27;;
-import {
-  MatDialog,
-  MatPaginator,
-  MatTable,
-  MatTableDataSource
-} from &#x27;@angular/material&#x27;;
-import { Observable } from &#x27;rxjs&#x27;;
-import { Router } from &#x27;@angular/router&#x27;;
-import { Subscription } from &#x27;rxjs&#x27;;
-import { PresetConfigComponent } from &#x27;../preset-config/preset-config.component&#x27;;
-import { GoogleService } from &#x27;../../../../services/google/google.service&#x27;;
-import { ConfigsInterface } from &#x27;../../../../../interfaces&#x27;;
-
-export interface Config {
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export interface Config {
   name: String;
   key: String;
 }
 
-@Component({
-  selector: &#x27;app-config-list&#x27;,
-  templateUrl: &#x27;./config-list.component.html&#x27;,
-  styleUrls: [&#x27;./config-list.component.scss&#x27;]
-})
-export class ConfigListComponent implements OnInit, OnDestroy {
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-
-  private activeConfig: string;
-  private oldPageSize: number &#x3D; 10;
-  private loadingSubscription: Subscription;
-  private paginatorSubscription: Subscription;
-  private configChangeSubscription: Subscription;
-  private activeConfigChangeSubscription: Subscription;
-
-  public loading: boolean &#x3D; true;
-  public noConfigs: boolean &#x3D; true;
-  public dataSource: ConfigDataSource;
-  public tableColumns &#x3D; [&#x27;name&#x27;, &#x27;actions&#x27;];
-
-  constructor(
-    private database: DatabaseService,
-    private google: GoogleService,
-    private dialog: MatDialog,
-    private router: Router,
-    private zone: NgZone
-  ) {}
-
-  ngOnInit() {
-    if (this.google.getAuthStatus()) {
-      this.dataSource &#x3D; new ConfigDataSource(
-        this.database.getConfigs(),
-        this.paginator
-      );
-      this.database.numberConfigs().then(numConfigs &#x3D;&gt; {
-        if (numConfigs &#x3D;&#x3D;&#x3D; 0) {
-          this.noConfigs &#x3D; true;
-        } else {
-          this.noConfigs &#x3D; false;
-        }
-      });
-    }
-  }
-
-  ngAfterViewInit() {
-    if (this.google.getAuthStatus()) {
-      // Listen for page changes
-      this.paginatorSubscription &#x3D; this.paginator.page.subscribe(() &#x3D;&gt; {
-        if (this.oldPageSize &#x3D;&#x3D; this.paginator.pageSize) {
-          this.dataSource.loadConfigs(
-            this.paginator.pageIndex,
-            this.paginator.pageSize
-          );
-        } else {
-          this.dataSource.loadConfigs(0, this.paginator.pageSize);
-          this.oldPageSize &#x3D; this.paginator.pageSize;
-          this.paginator.pageIndex &#x3D; 0;
-        }
-      });
-      // Load the configurations
-      this.dataSource.loadConfigs();
-      // Pass the number of configs to the paginator
-      this.database.numberConfigs().then(numConfigs &#x3D;&gt; {
-        this.paginator.length &#x3D; numConfigs;
-      });
-      // Listen for config changes
-      this.configChangeSubscription &#x3D; this.database.configSubject.subscribe(
-        created &#x3D;&gt; {
-          this.refreshConfigs();
-        }
-      );
-      // Retrive the active config
-      this.database.getActiveConfig().then(activeConfig &#x3D;&gt; {
-        this.activeConfig &#x3D; activeConfig;
-      }, () &#x3D;&gt; {
-        this.activeConfig &#x3D; undefined;
-      })
-      // Listen for active config changes
-      this.activeConfigChangeSubscription &#x3D; this.database.activeConfigChanged.subscribe(
-        newConfigID &#x3D;&gt; {
-          this.activeConfig &#x3D; newConfigID;
-        },
-        err &#x3D;&gt; console.error
-      );
-      setTimeout(_ &#x3D;&gt; {
-        this.loadingSubscription &#x3D; this.dataSource.loading$.subscribe(
-          loading &#x3D;&gt; {
-            this.loading &#x3D; loading;
-          }
-        );
-      });
-    }
-  }
-
-  getDialogWidth() {
-    const width: number &#x3D; document.body.clientWidth;
-    if (width &gt;&#x3D; 1280) {
-      return width / 2;
-    } else if (width &gt;&#x3D; 640) {
-      return width / 1.5;
-    } else {
-      return 0;
-    }
-  }
-
-  openPresets() {
-    let dialogWidth &#x3D; this.getDialogWidth();
-    if (dialogWidth) {
-      const dialogInstance &#x3D; this.dialog.open(PresetConfigComponent, {
-        width: &#x60;${dialogWidth}px&#x60;,
-        maxHeight: &#x60;${document.body.clientHeight * 0.9}px&#x60;
-      });
-      const componentInstance &#x3D; dialogInstance.componentInstance;
-      let closeSubscription &#x3D; componentInstance.closeCommand.subscribe(
-        close &#x3D;&gt; {
-          dialogInstance.close();
-          closeSubscription.unsubscribe();
-        }
-      );
-    } else {
-      this.zone.run(() &#x3D;&gt; {
-        this.router.navigate([&#x27;/app/config/presets&#x27;]);
-      });
-    }
-  }
-
-  refreshConfigs() {
-    this.dataSource.loadConfigs();
-    this.database.numberConfigs().then(numConfigs &#x3D;&gt; {
-      if (numConfigs &#x3D;&#x3D;&#x3D; 0) {
-        this.noConfigs &#x3D; true;
-      } else {
-        this.noConfigs &#x3D; false;
-      }
-    });
-  }
-
-  editConfig(configID: string) {
-    this.database.editingConfig &#x3D; configID;
-    let dialogWidth &#x3D; this.getDialogWidth();
-    if (dialogWidth) {
-      const dialogInstance &#x3D; this.dialog.open(EditConfigModalComponent, {
-        width: &#x60;${dialogWidth}px&#x60;,
-        maxHeight: &#x60;${document.body.clientHeight * 0.9}px&#x60;
-      });
-      const componentInstance &#x3D; dialogInstance.componentInstance;
-      let closeSubscription &#x3D; componentInstance.closeCommand.subscribe(
-        close &#x3D;&gt; {
-          dialogInstance.close();
-          closeSubscription.unsubscribe();
-        }
-      );
-    } else {
-      this.zone.run(() &#x3D;&gt; {
-        this.router.navigate([&#x27;/app/config/edit&#x27;]);
-      });
-    }
-  }
-
-  deleteConfig(configKey: string) {
-    if (configKey &#x3D;&#x3D;&#x3D; this.activeConfig) {
-      this.setActiveConfig(&#x27;&#x27;);
-    }
-    this.database.deleteConfig(configKey);
-  }
-
-  setActiveConfig(configKey: string) {
-    this.database.setActiveConfig(configKey);
-  }
-
-  getActiveConfig(configKey: string): boolean {
-    return this.activeConfig &#x3D;&#x3D;&#x3D; configKey ? true : false;
-  }
-
-  ngOnDestroy() {
-    if (this.loadingSubscription) this.loadingSubscription.unsubscribe();
-    if (this.paginatorSubscription) this.paginatorSubscription.unsubscribe();
-    if (this.configChangeSubscription)
-      this.configChangeSubscription.unsubscribe();
-    if (this.activeConfigChangeSubscription)
-      this.activeConfigChangeSubscription.unsubscribe();
-  }
+export interface ConfigInterface {
+  activeConfig: string;
 }
 
-export class ConfigDataSource implements DataSource&lt;Config&gt; {
-  private configSubject &#x3D; new BehaviorSubject&lt;Config[]&gt;([]);
+export interface RuleInterface {
+  id: string;
+  name: string;
+  data?: any;
+  classifier?: string;
+  constraint?: string;
+}
 
-  private loadingSubject &#x3D; new BehaviorSubject&lt;boolean&gt;(true);
-  public loading$ &#x3D; this.loadingSubject.asObservable();
+export interface GroupFolderInterface {
+  name?: string;
+  renameUntitled?: boolean;
+  folderID?: string;
+}
 
-  constructor(private configs: Array&lt;ConfigsInterface&gt;, private paginator) {}
+export interface FolderCreation {
+  parent: {
+    folderID: string | undefined;
+    name: string | null;
+  };
+  prefix: {
+    type: string | null;
+    value: string;
+  };
+  name: {
+    type: string | null;
+    value: string;
+  };
+  suffix: {
+    type: string | null;
+    value: string;
+  };
+}
 
-  private calculateStart(page: number, pageSize: number): number {
-    return page ? page * pageSize : 0;
-  }
+export interface GroupInterface {
+  id: string;
+  name: string;
+  rules: Array&lt;RuleInterface&gt;;
+  source: GroupFolderInterface;
+  destination?: GroupFolderInterface;
+  createFolder?: FolderCreation;
+}
 
-  connect(): Observable&lt;Config[]&gt; {
-    return this.configSubject.asObservable();
-  }
+export interface ConfigsInterface {
+  id: string;
+  name: string;
+  groups: Array&lt;GroupInterface&gt;;
+}
 
-  disconnect(): void {
-    this.configSubject.complete();
-    this.loadingSubject.complete();
-  }
-
-  loadConfigs(page: number &#x3D; 0, pageSize: number &#x3D; 10) {
-    let start &#x3D; this.calculateStart(page, pageSize);
-    let configs &#x3D; this.configs.slice(start, start + pageSize);
-    this.loadingSubject.next(true);
-    let data &#x3D; [];
-    for (const config in configs) {
-      const name &#x3D; configs[config][&#x27;name&#x27;];
-      data.push({
-        name: name,
-        key: configs[config].id
-      });
-    }
-    this.configSubject.next(data);
-    this.loadingSubject.next(false);
-  }
+export interface JSONConfiguration {
+  configs: Array&lt;ConfigsInterface&gt;;
+  activeConfig: string;
 }
 </code></pre>
     </div>

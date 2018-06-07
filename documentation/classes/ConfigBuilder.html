@@ -963,7 +963,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="142" class="link-to-prism">src/app/classes/config-builder.ts:142</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="143" class="link-to-prism">src/app/classes/config-builder.ts:143</a></div>
                             </td>
                         </tr>
 
@@ -1045,7 +1045,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="113" class="link-to-prism">src/app/classes/config-builder.ts:113</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="114" class="link-to-prism">src/app/classes/config-builder.ts:114</a></div>
                             </td>
                         </tr>
 
@@ -1386,8 +1386,9 @@ export class ConfigBuilder {
           if (
             !group.destination.folderID ||
             group.destination.folderID &#x3D;&#x3D;&#x3D; undefined
-          )
+          ) {
             valid &#x3D; false;
+          }
         }
         if (
           !group.id ||
@@ -1418,7 +1419,7 @@ export class ConfigBuilder {
   }
 
   static folderNameBuilder(createFolderConfig: FolderCreation): string {
-    let outputString: string &#x3D; &#x27;&#x27;;
+    let outputString &#x3D; &#x27;&#x27;;
     switch (createFolderConfig.prefix.type) {
       case &#x27;text&#x27;:
         outputString +&#x3D; createFolderConfig.prefix.value;

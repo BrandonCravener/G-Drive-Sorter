@@ -5,7 +5,7 @@ import { AuthenticatedModule } from '../../../modules/authenticated/authenticate
 import { ConfigModule } from '../../../modules/config/config.module';
 import { HomeComponent } from './home.component';
 
-describe("HomeComponent", () => {
+describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
 
@@ -18,7 +18,7 @@ describe("HomeComponent", () => {
       ],
       providers: [
         {
-          provide: APP_BASE_HREF, 
+          provide: APP_BASE_HREF,
           useValue: '/'
         }
       ]
@@ -32,7 +32,7 @@ describe("HomeComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

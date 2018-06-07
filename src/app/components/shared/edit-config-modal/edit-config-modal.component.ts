@@ -28,7 +28,7 @@ export class EditConfigModalComponent implements OnInit {
   private _closeCommand = new Subject<Boolean>();
   private groups: Array<GroupInterface>;
 
-  public valid: boolean = true;
+  public valid = true;
   public editingRuleID: string;
   public config: ConfigsInterface;
   public configLoaded: Promise<boolean>;
@@ -71,7 +71,7 @@ export class EditConfigModalComponent implements OnInit {
   }
 
   openFolderPicker(groupID: string, folderType: string) {
-    let folderPickedListener = this.google.folderPicked$.subscribe(
+    const folderPickedListener = this.google.folderPicked$.subscribe(
       folder => {
         if (folderType === 'source') {
           this.config.groups[this.getGroupIndex(groupID)].source = {
@@ -96,7 +96,7 @@ export class EditConfigModalComponent implements OnInit {
   }
 
   addGroup() {
-    let newConfigUUID = uuid();
+    const newConfigUUID = uuid();
     this.config.groups.push({
       id: newConfigUUID,
       destination: {
@@ -113,7 +113,7 @@ export class EditConfigModalComponent implements OnInit {
   }
 
   addRule(groupID: string) {
-    let newRuleUUID = uuid();
+    const newRuleUUID = uuid();
     this.config.groups[this.getGroupIndex(groupID)].rules.push({
       id: newRuleUUID,
       name: ''

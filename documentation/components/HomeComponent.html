@@ -1006,7 +1006,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">src/app/components/tabs/home/home.component.ts:69</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">src/app/components/tabs/home/home.component.ts:68</a></div>
                             </td>
                         </tr>
 
@@ -1084,7 +1084,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">src/app/components/tabs/home/home.component.ts:61</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">src/app/components/tabs/home/home.component.ts:60</a></div>
                             </td>
                         </tr>
 
@@ -1163,16 +1163,10 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <span class="modifier-icon fa fa-reset"></span><code>isActiveConfig:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                        <span class="modifier-icon fa fa-reset"></span><code>isActiveConfig:     <code></code>
 </code>
                     </td>
                 </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
-
-                        </td>
-                    </tr>
                     <tr>
                         <td class="col-md-4">
                             <i>Default value : </i><code>false</code>
@@ -1212,8 +1206,8 @@ import { Router } from &#x27;@angular/router&#x27;;
   styleUrls: [&#x27;./home.component.scss&#x27;]
 })
 export class HomeComponent implements AfterViewInit {
-  public isActiveConfig: boolean &#x3D; false;
-  public activeConfigName: string &#x3D; &#x27;Loading...&#x27;;
+  public isActiveConfig &#x3D; false;
+  public activeConfigName &#x3D; &#x27;Loading...&#x27;;
 
   /**
    * Creates an instance of HomeComponent.
@@ -1233,7 +1227,7 @@ export class HomeComponent implements AfterViewInit {
    * @memberof HomeComponent
    */
   ngAfterViewInit() {
-    let databaseInitalizedCheck &#x3D; setInterval(() &#x3D;&gt; {
+    const databaseInitalizedCheck &#x3D; setInterval(() &#x3D;&gt; {
       if (this.database.initalized) {
         this.database.getActiveConfig().then(
           activeConfig &#x3D;&gt; {
@@ -1243,7 +1237,6 @@ export class HomeComponent implements AfterViewInit {
             this.isActiveConfig &#x3D; true;
           },
           err &#x3D;&gt; {
-            console.log(err);
             this.activeConfigName &#x3D; err;
             this.isActiveConfig &#x3D; false;
           }

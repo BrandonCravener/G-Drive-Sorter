@@ -7,7 +7,7 @@ import { AppComponent } from '../../../app.component';
 import { Subscription } from 'rxjs';
 /**
  * Declare component to be shown when the config tab is selected.
- * 
+ *
  * @export
  * @class ConfigComponent
  * @implements {OnInit}
@@ -19,23 +19,23 @@ import { Subscription } from 'rxjs';
 })
 export class ConfigComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  public initalized: boolean = false;
+  public initalized = false;
 
   private openConfigModalListener: Subscription;
-  
+
   /**
    * Creates an instance of ConfigComponent.
    * @memberof ConfigComponent
    */
   constructor(
     private appComponent: AppComponent,
-    private dialog: MatDialog, 
-    private router: Router, 
+    private dialog: MatDialog,
+    private router: Router,
     private zone: NgZone
   ) { }
 
   ngOnInit() {
-    this.openConfigModalListener = 
+    this.openConfigModalListener =
       this.appComponent.openConfigModal$.subscribe(open => {
         if (open === true) {
           this.openNewConfigDialog();
@@ -63,14 +63,14 @@ export class ConfigComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   openNewConfigDialog() {
-    let dialogWidth = this.getDialogWidth();
+    const dialogWidth = this.getDialogWidth();
     if (dialogWidth) {
       const dialogInstance = this.dialog.open(ConfigModalComponent, {
         width: `${dialogWidth}px`,
         maxHeight: `${document.body.clientHeight * .9}px`
       });
       const componentInstance = dialogInstance.componentInstance;
-      let dialogSubscription = 
+      const dialogSubscription =
         componentInstance
           .closeCommand
           .subscribe(close => {

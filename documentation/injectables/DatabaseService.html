@@ -855,6 +855,10 @@
                                 <a href="#numberConfigs">numberConfigs</a>
                             </li>
                             <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#readConfiguration">readConfiguration</a>
+                            </li>
+                            <li>
                                 <a href="#setActiveConfig">setActiveConfig</a>
                             </li>
                             <li>
@@ -862,7 +866,11 @@
                             </li>
                             <li>
                                     <span class="modifier">Private</span>
-                                <a href="#updateConfiguration">updateConfiguration</a>
+                                <a href="#updateLocalConfiguration">updateLocalConfiguration</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#updateRemoteConfiguration">updateRemoteConfiguration</a>
                             </li>
                         </ul>
                     </td>
@@ -922,7 +930,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="92" class="link-to-prism">src/app/services/database/database.service.ts:92</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="131" class="link-to-prism">src/app/services/database/database.service.ts:131</a></div>
                             </td>
                         </tr>
 
@@ -991,7 +999,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="125" class="link-to-prism">src/app/services/database/database.service.ts:125</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="174" class="link-to-prism">src/app/services/database/database.service.ts:174</a></div>
                             </td>
                         </tr>
 
@@ -1029,7 +1037,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">src/app/services/database/database.service.ts:72</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="110" class="link-to-prism">src/app/services/database/database.service.ts:110</a></div>
                             </td>
                         </tr>
 
@@ -1158,7 +1166,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="118" class="link-to-prism">src/app/services/database/database.service.ts:118</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="159" class="link-to-prism">src/app/services/database/database.service.ts:159</a></div>
                             </td>
                         </tr>
 
@@ -1227,7 +1235,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="138" class="link-to-prism">src/app/services/database/database.service.ts:138</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="198" class="link-to-prism">src/app/services/database/database.service.ts:198</a></div>
                             </td>
                         </tr>
 
@@ -1265,7 +1273,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="109" class="link-to-prism">src/app/services/database/database.service.ts:109</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="150" class="link-to-prism">src/app/services/database/database.service.ts:150</a></div>
                             </td>
                         </tr>
 
@@ -1346,7 +1354,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="149" class="link-to-prism">src/app/services/database/database.service.ts:149</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="211" class="link-to-prism">src/app/services/database/database.service.ts:211</a></div>
                             </td>
                         </tr>
 
@@ -1422,7 +1430,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="153" class="link-to-prism">src/app/services/database/database.service.ts:153</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="215" class="link-to-prism">src/app/services/database/database.service.ts:215</a></div>
                             </td>
                         </tr>
 
@@ -1434,6 +1442,77 @@
                                 <b>Returns : </b>    <code>Promise&lt;number&gt;</code>
 
                             </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="readConfiguration"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            readConfiguration
+                            </b>
+                            <a href="#readConfiguration"><span class="fa fa-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon fa fa-reset"></span>
+                        <code>readConfiguration(fileID: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">src/app/services/database/database.service.ts:71</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>fileID</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            no
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code>Promise&lt;any&gt;</code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
                     </td>
                 </tr>
             </tbody>
@@ -1460,7 +1539,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="134" class="link-to-prism">src/app/services/database/database.service.ts:134</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="186" class="link-to-prism">src/app/services/database/database.service.ts:186</a></div>
                             </td>
                         </tr>
 
@@ -1529,7 +1608,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="99" class="link-to-prism">src/app/services/database/database.service.ts:99</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="139" class="link-to-prism">src/app/services/database/database.service.ts:139</a></div>
                             </td>
                         </tr>
 
@@ -1580,27 +1659,27 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="updateConfiguration"></a>
+                        <a name="updateLocalConfiguration"></a>
                         <span class="name">
                             <b>
                                 <span class="modifier">Private</span>
-                            updateConfiguration
+                            updateLocalConfiguration
                             </b>
-                            <a href="#updateConfiguration"><span class="fa fa-link"></span></a>
+                            <a href="#updateLocalConfiguration"><span class="fa fa-link"></span></a>
                         </span>
                     </td>
                 </tr>
                 <tr>
                     <td class="col-md-4">
                             <span class="modifier-icon fa fa-reset"></span>
-                        <code>updateConfiguration()</code>
+                        <code>updateLocalConfiguration()</code>
                     </td>
                 </tr>
 
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">src/app/services/database/database.service.ts:68</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="83" class="link-to-prism">src/app/services/database/database.service.ts:83</a></div>
                             </td>
                         </tr>
 
@@ -1610,6 +1689,46 @@
 
                             <div class="io-description">
                                 <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="updateRemoteConfiguration"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            updateRemoteConfiguration
+                            </b>
+                            <a href="#updateRemoteConfiguration"><span class="fa fa-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                            <span class="modifier-icon fa fa-reset"></span>
+                        <code>updateRemoteConfiguration()</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="89" class="link-to-prism">src/app/services/database/database.service.ts:89</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
 
                             </div>
                     </td>
@@ -2022,36 +2141,74 @@ export class DatabaseService {
   initalize(): void {
     gapi.client.drive.files
       .list({
-        q: &quot;name &#x3D; &#x27;configuration.json&#x27;&quot;,
+        q: &#x60;name &#x3D; &#x27;configuration.json&#x27;&#x60;,
         spaces: &#x27;appDataFolder&#x27;,
         fields: &#x27;files(id)&#x27;
       })
-      .then(response &#x3D;&gt; {
-        if (response.result.files.length &gt; 0) {
-          this.configID &#x3D; response.result.files[0].id;
+      .then(listResponse &#x3D;&gt; {
+        if (listResponse.result.files.length &gt; 0) {
+          this.configID &#x3D; listResponse.result.files[0].id;
+          this.updateLocalConfiguration();
         } else {
           gapi.client.drive.files
             .create({
-              fields: &#x27;id&#x27;,
               resource: {
                 name: &#x27;configuration.json&#x27;,
                 parents: [&#x27;appDataFolder&#x27;]
-              }
+              },
+              fields: &#x27;id&#x27;
             })
-            .then(response &#x3D;&gt; {
-              this.configID &#x3D; response.result.id;
+            .then(createResponse &#x3D;&gt; {
+              this.configID &#x3D; createResponse.result.id;
+              this.updateRemoteConfiguration().then(() &#x3D;&gt; {
+                this.updateLocalConfiguration();
+              }, err &#x3D;&gt; console.error);
             }, err &#x3D;&gt; console.error);
         }
       }, err &#x3D;&gt; console.error);
-    this.initalized &#x3D; true;
   }
 
   /*
-    Configuration functions
+  Configuration functions
   */
-  private updateConfiguration() {}
+  private readConfiguration(fileID: string): Promise&lt;any&gt; {
+    return new Promise((resolve, reject) &#x3D;&gt; {
+      gapi.client.drive.files
+        .get({
+          fileId: fileID,
+          alt: &#x27;media&#x27;
+        })
+        .then(response &#x3D;&gt; {
+          resolve(response);
+        }, err &#x3D;&gt; reject);
+    });
+  }
+  private updateLocalConfiguration() {
+    this.readConfiguration(this.configID).then(response &#x3D;&gt; {
+      this.configuration &#x3D; JSON.parse(response.body);
+      this.initalized &#x3D; true;
+    }, err &#x3D;&gt; console.error);
+  }
+  private updateRemoteConfiguration(): Promise&lt;void&gt; {
+    return new Promise((resolve, reject) &#x3D;&gt; {
+      gapi.client
+        .request({
+          path: &#x60;https://www.googleapis.com/upload/drive/v3/files/${
+            this.configID
+          }&#x60;,
+          method: &#x27;PATCH&#x27;,
+          params: {
+            uploadType: &#x27;media&#x27;
+          },
+          body: JSON.stringify(this.configuration)
+        })
+        .then(response &#x3D;&gt; {
+          resolve();
+        }, err &#x3D;&gt; reject);
+    });
+  }
   /*
-  Config functions 
+  Config functions
   */
   createConfig(
     configName: string,
@@ -2071,11 +2228,13 @@ export class DatabaseService {
     );
     this.configuration.configs.push(newConfig);
     this._configSubject.next(true);
+    this.updateRemoteConfiguration().catch(err &#x3D;&gt; console.error);
   }
 
   addConfig(config: ConfigsInterface): Promise&lt;void&gt; {
     return new Promise((resolve, reject) &#x3D;&gt; {
       this.configuration.configs.push(config);
+      this.updateRemoteConfiguration().then(res &#x3D;&gt; resolve, err &#x3D;&gt; reject);
       resolve();
     });
   }
@@ -2086,12 +2245,13 @@ export class DatabaseService {
         config &#x3D; newConfig;
         this.editingConfig &#x3D; &#x27;&#x27;;
         this._configSubject.next(true);
+        this.updateRemoteConfiguration().catch(err &#x3D;&gt; console.error);
       }
     });
   }
 
   getConfig(configID: string, cb: Function): void {
-    let configs &#x3D; this.configuration.configs;
+    const configs &#x3D; this.configuration.configs;
     cb(
       configs.find(config &#x3D;&gt; {
         return config.id &#x3D;&#x3D;&#x3D; configID;
@@ -2100,23 +2260,42 @@ export class DatabaseService {
   }
 
   deleteConfig(configID: string): void {
-    let configIndex &#x3D; this.configs.findIndex(config &#x3D;&gt; {
+    const configIndex &#x3D; this.configuration.configs.findIndex(config &#x3D;&gt; {
       return config.id &#x3D;&#x3D;&#x3D; configID;
     });
     this.configuration.configs.splice(configIndex, 1);
+    this.updateRemoteConfiguration()
+      .then(() &#x3D;&gt; {
+        this._configSubject.next(true);
+      })
+      .catch(err &#x3D;&gt; {
+        this._configSubject.next(false);
+        console.error(err);
+      });
   }
 
   clearConfigs(): Promise&lt;void&gt; {
     return new Promise((resolve, reject) &#x3D;&gt; {
-      if (this.configuration.configs) this.configuration.configs &#x3D; [];
-      if (this.configuration.activeConfig)
-        this.configuration.activeConfig &#x3D; null;
-      resolve();
+      if (this.configuration.configs) {
+        this.configuration.configs &#x3D; [];
+      }
+      if (this.configuration.activeConfig) {
+        this.configuration.activeConfig &#x3D; &#x27;&#x27;;
+      }
+      this.updateRemoteConfiguration().then(res &#x3D;&gt; resolve, err &#x3D;&gt; reject);
     });
   }
 
   setActiveConfig(configID: string): void {
     this.configuration.activeConfig &#x3D; configID;
+    this.updateRemoteConfiguration().then(
+      () &#x3D;&gt; {
+        this._activeConfigChanged.next(configID);
+      },
+      err &#x3D;&gt; {
+        this._activeConfigChanged.error(err);
+      }
+    );
   }
 
   getActiveConfig(): Promise&lt;string&gt; {
@@ -2124,9 +2303,11 @@ export class DatabaseService {
       if (
         this.configuration.activeConfig &amp;&amp;
         this.configuration.activeConfig.length &gt; 0
-      )
+      ) {
         resolve(this.configuration.activeConfig);
-      else reject(&#x27;No active config&#x27;);
+      } else {
+        reject(&#x27;No active config&#x27;);
+      }
     });
   }
 
@@ -2136,9 +2317,11 @@ export class DatabaseService {
 
   numberConfigs(): Promise&lt;number&gt; {
     return new Promise((resolve, reject) &#x3D;&gt; {
-      if (this.configuration.configs)
+      if (this.configuration.configs) {
         resolve(this.configuration.configs.length);
-      else resolve(0);
+      } else {
+        resolve(0);
+      }
     });
   }
 }

@@ -1,3 +1,8 @@
+export interface Config {
+  name: String;
+  key: String;
+}
+
 export interface ConfigInterface {
   activeConfig: string;
 }
@@ -52,5 +57,5 @@ export interface ConfigsInterface {
 
 export interface JSONConfiguration {
   configs: Array<ConfigsInterface>;
-  activeConfig: string
+  activeConfig: string;
 }

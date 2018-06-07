@@ -79,8 +79,9 @@ export class ConfigBuilder {
           if (
             !group.destination.folderID ||
             group.destination.folderID === undefined
-          )
+          ) {
             valid = false;
+          }
         }
         if (
           !group.id ||
@@ -111,7 +112,7 @@ export class ConfigBuilder {
   }
 
   static folderNameBuilder(createFolderConfig: FolderCreation): string {
-    let outputString: string = '';
+    let outputString = '';
     switch (createFolderConfig.prefix.type) {
       case 'text':
         outputString += createFolderConfig.prefix.value;

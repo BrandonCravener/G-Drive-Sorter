@@ -29,10 +29,10 @@ export class AppComponent implements AfterViewInit {
   private loaderRemoved: Boolean = false;
 
   public tabsEnabled = true;
-  public loaded: Boolean = false;
+  public loaded = false;
   public authenticated: Boolean;
-  public rlaSafe: boolean = false;
-  public createConfigButtonState: string = 'inactive';
+  public rlaSafe = false;
+  public createConfigButtonState = 'inactive';
   public openConfigModal$ = this.openConfigModal.asObservable();
   public tabLinks = [
     {
@@ -64,21 +64,16 @@ export class AppComponent implements AfterViewInit {
   ) {
     const googleInitInterval = setInterval(() => {
       if (window['gapi']) {
-        this.google.init(
-          {
-            apiKey: 'AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM',
-            clientId:
-              '362606538820-om1dhhvv5d9npas7jj02mbtvi5mjksmo.apps.googleusercontent.com',
-            discoveryDocs: [
-              'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'
-            ],
-            scope:
-              'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.appdata'
-          },
-          () => {
-            console.debug('Google initalized.');
-          }
-        );
+        this.google.init({
+          apiKey: 'AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM',
+          clientId:
+            '362606538820-om1dhhvv5d9npas7jj02mbtvi5mjksmo.apps.googleusercontent.com',
+          discoveryDocs: [
+            'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'
+          ],
+          scope:
+            'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.appdata'
+        });
         this.google.authState$.subscribe(state => {
           if (!this.loaderRemoved) {
             this.loaded = true;

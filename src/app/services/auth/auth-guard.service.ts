@@ -4,7 +4,7 @@ import { Injectable, NgZone } from '@angular/core';
 
 /**
  * Prevent a user from accessing a route if they aren't authenticated.
- * 
+ *
  * @export
  * @class AuthGuardService
  * @implements {CanActivate}
@@ -21,7 +21,7 @@ export class AuthGuardService implements CanActivate {
 constructor(public google: GoogleService, public router: Router, public zone: NgZone) { }
   /**
    * Determines whether the user can go to the page and handle it.
-   * 
+   *
    * @returns {boolean} Whether or not the user can access the route
    * @memberof AuthGuardService
    */
@@ -38,7 +38,7 @@ constructor(public google: GoogleService, public router: Router, public zone: Ng
 
 /**
  * Prevent a user from accessing a route if they are authenticated.
- * 
+ *
  * @export
  * @class PreventAuthGuardService
  * @implements {CanActivate}
@@ -55,7 +55,7 @@ export class PreventAuthGuardService implements CanActivate {
 constructor(public google: GoogleService, public router: Router, public zone: NgZone) { }
   /**
    * Determines whether the user can go to the page and handle it.
-   * 
+   *
    * @returns {boolean} Whether or not the user can access the route
    * @memberof PreventAuthGuardService
    */

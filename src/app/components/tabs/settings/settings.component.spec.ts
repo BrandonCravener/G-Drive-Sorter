@@ -18,7 +18,7 @@ describe('SettingsComponent', () => {
       ],
       providers: [
         {
-          provide: APP_BASE_HREF, 
+          provide: APP_BASE_HREF,
           useValue: '/'
         }
       ]

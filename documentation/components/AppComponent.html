@@ -1050,7 +1050,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="154" class="link-to-prism">src/app/app.component.ts:154</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="149" class="link-to-prism">src/app/app.component.ts:149</a></div>
                             </td>
                         </tr>
 
@@ -1124,7 +1124,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="112" class="link-to-prism">src/app/app.component.ts:112</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="107" class="link-to-prism">src/app/app.component.ts:107</a></div>
                             </td>
                         </tr>
 
@@ -1164,7 +1164,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="143" class="link-to-prism">src/app/app.component.ts:143</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="138" class="link-to-prism">src/app/app.component.ts:138</a></div>
                             </td>
                         </tr>
 
@@ -1202,7 +1202,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="139" class="link-to-prism">src/app/app.component.ts:139</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="134" class="link-to-prism">src/app/app.component.ts:134</a></div>
                             </td>
                         </tr>
 
@@ -1240,7 +1240,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="135" class="link-to-prism">src/app/app.component.ts:135</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="130" class="link-to-prism">src/app/app.component.ts:130</a></div>
                             </td>
                         </tr>
 
@@ -1354,16 +1354,10 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <span class="modifier-icon fa fa-reset"></span><code>loaded:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" target="_blank" >Boolean</a></code>
+                        <span class="modifier-icon fa fa-reset"></span><code>loaded:     <code></code>
 </code>
                     </td>
                 </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" target="_blank" >Boolean</a></code>
-
-                        </td>
-                    </tr>
                     <tr>
                         <td class="col-md-4">
                             <i>Default value : </i><code>false</code>
@@ -1508,16 +1502,10 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <span class="modifier-icon fa fa-reset"></span><code>rlaSafe:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                        <span class="modifier-icon fa fa-reset"></span><code>rlaSafe:     <code></code>
 </code>
                     </td>
                 </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
-
-                        </td>
-                    </tr>
                     <tr>
                         <td class="col-md-4">
                             <i>Default value : </i><code>false</code>
@@ -1656,10 +1644,10 @@ export class AppComponent implements AfterViewInit {
   private loaderRemoved: Boolean &#x3D; false;
 
   public tabsEnabled &#x3D; true;
-  public loaded: Boolean &#x3D; false;
+  public loaded &#x3D; false;
   public authenticated: Boolean;
-  public rlaSafe: boolean &#x3D; false;
-  public createConfigButtonState: string &#x3D; &#x27;inactive&#x27;;
+  public rlaSafe &#x3D; false;
+  public createConfigButtonState &#x3D; &#x27;inactive&#x27;;
   public openConfigModal$ &#x3D; this.openConfigModal.asObservable();
   public tabLinks &#x3D; [
     {
@@ -1691,21 +1679,16 @@ export class AppComponent implements AfterViewInit {
   ) {
     const googleInitInterval &#x3D; setInterval(() &#x3D;&gt; {
       if (window[&#x27;gapi&#x27;]) {
-        this.google.init(
-          {
-            apiKey: &#x27;AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM&#x27;,
-            clientId:
-              &#x27;362606538820-om1dhhvv5d9npas7jj02mbtvi5mjksmo.apps.googleusercontent.com&#x27;,
-            discoveryDocs: [
-              &#x27;https://www.googleapis.com/discovery/v1/apis/drive/v3/rest&#x27;
-            ],
-            scope:
-              &#x27;https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.appdata&#x27;
-          },
-          () &#x3D;&gt; {
-            console.debug(&#x27;Google initalized.&#x27;);
-          }
-        );
+        this.google.init({
+          apiKey: &#x27;AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM&#x27;,
+          clientId:
+            &#x27;362606538820-om1dhhvv5d9npas7jj02mbtvi5mjksmo.apps.googleusercontent.com&#x27;,
+          discoveryDocs: [
+            &#x27;https://www.googleapis.com/discovery/v1/apis/drive/v3/rest&#x27;
+          ],
+          scope:
+            &#x27;https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.appdata&#x27;
+        });
         this.google.authState$.subscribe(state &#x3D;&gt; {
           if (!this.loaderRemoved) {
             this.loaded &#x3D; true;

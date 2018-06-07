@@ -1196,16 +1196,10 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <span class="modifier-icon fa fa-reset"></span><code>initalized:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                        <span class="modifier-icon fa fa-reset"></span><code>initalized:     <code></code>
 </code>
                     </td>
                 </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
-
-                        </td>
-                    </tr>
                     <tr>
                         <td class="col-md-4">
                             <i>Default value : </i><code>false</code>
@@ -1270,7 +1264,7 @@ import { AppComponent } from &#x27;../../../app.component&#x27;;
 import { Subscription } from &#x27;rxjs&#x27;;
 /**
  * Declare component to be shown when the config tab is selected.
- * 
+ *
  * @export
  * @class ConfigComponent
  * @implements {OnInit}
@@ -1282,23 +1276,23 @@ import { Subscription } from &#x27;rxjs&#x27;;
 })
 export class ConfigComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  public initalized: boolean &#x3D; false;
+  public initalized &#x3D; false;
 
   private openConfigModalListener: Subscription;
-  
+
   /**
    * Creates an instance of ConfigComponent.
    * @memberof ConfigComponent
    */
   constructor(
     private appComponent: AppComponent,
-    private dialog: MatDialog, 
-    private router: Router, 
+    private dialog: MatDialog,
+    private router: Router,
     private zone: NgZone
   ) { }
 
   ngOnInit() {
-    this.openConfigModalListener &#x3D; 
+    this.openConfigModalListener &#x3D;
       this.appComponent.openConfigModal$.subscribe(open &#x3D;&gt; {
         if (open &#x3D;&#x3D;&#x3D; true) {
           this.openNewConfigDialog();
@@ -1326,14 +1320,14 @@ export class ConfigComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   openNewConfigDialog() {
-    let dialogWidth &#x3D; this.getDialogWidth();
+    const dialogWidth &#x3D; this.getDialogWidth();
     if (dialogWidth) {
       const dialogInstance &#x3D; this.dialog.open(ConfigModalComponent, {
         width: &#x60;${dialogWidth}px&#x60;,
         maxHeight: &#x60;${document.body.clientHeight * .9}px&#x60;
       });
       const componentInstance &#x3D; dialogInstance.componentInstance;
-      let dialogSubscription &#x3D; 
+      const dialogSubscription &#x3D;
         componentInstance
           .closeCommand
           .subscribe(close &#x3D;&gt; {

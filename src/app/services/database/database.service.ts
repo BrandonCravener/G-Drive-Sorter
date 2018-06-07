@@ -38,36 +38,74 @@ export class DatabaseService {
   initalize(): void {
     gapi.client.drive.files
       .list({
-        q: "name = 'configuration.json'",
+        q: `name = 'configuration.json'`,
         spaces: 'appDataFolder',
         fields: 'files(id)'
       })
-      .then(response => {
-        if (response.result.files.length > 0) {
-          this.configID = response.result.files[0].id;
+      .then(listResponse => {
+        if (listResponse.result.files.length > 0) {
+          this.configID = listResponse.result.files[0].id;
+          this.updateLocalConfiguration();
         } else {
           gapi.client.drive.files
             .create({
-              fields: 'id',
               resource: {
                 name: 'configuration.json',
                 parents: ['appDataFolder']
-              }
+              },
+              fields: 'id'
             })
-            .then(response => {
-              this.configID = response.result.id;
+            .then(createResponse => {
+              this.configID = createResponse.result.id;
+              this.updateRemoteConfiguration().then(() => {
+                this.updateLocalConfiguration();
+              }, err => console.error);
             }, err => console.error);
         }
       }, err => console.error);
-    this.initalized = true;
   }
 
   /*
-    Configuration functions
+  Configuration functions
   */
-  private updateConfiguration() {}
+  private readConfiguration(fileID: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      gapi.client.drive.files
+        .get({
+          fileId: fileID,
+          alt: 'media'
+        })
+        .then(response => {
+          resolve(response);
+        }, err => reject);
+    });
+  }
+  private updateLocalConfiguration() {
+    this.readConfiguration(this.configID).then(response => {
+      this.configuration = JSON.parse(response.body);
+      this.initalized = true;
+    }, err => console.error);
+  }
+  private updateRemoteConfiguration(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      gapi.client
+        .request({
+          path: `https://www.googleapis.com/upload/drive/v3/files/${
+            this.configID
+          }`,
+          method: 'PATCH',
+          params: {
+            uploadType: 'media'
+          },
+          body: JSON.stringify(this.configuration)
+        })
+        .then(response => {
+          resolve();
+        }, err => reject);
+    });
+  }
   /*
-  Config functions 
+  Config functions
   */
   createConfig(
     configName: string,
@@ -87,11 +125,13 @@ export class DatabaseService {
     );
     this.configuration.configs.push(newConfig);
     this._configSubject.next(true);
+    this.updateRemoteConfiguration().catch(err => console.error);
   }
 
   addConfig(config: ConfigsInterface): Promise<void> {
     return new Promise((resolve, reject) => {
       this.configuration.configs.push(config);
+      this.updateRemoteConfiguration().then(res => resolve, err => reject);
       resolve();
     });
   }
@@ -102,12 +142,13 @@ export class DatabaseService {
         config = newConfig;
         this.editingConfig = '';
         this._configSubject.next(true);
+        this.updateRemoteConfiguration().catch(err => console.error);
       }
     });
   }
 
   getConfig(configID: string, cb: Function): void {
-    let configs = this.configuration.configs;
+    const configs = this.configuration.configs;
     cb(
       configs.find(config => {
         return config.id === configID;
@@ -116,23 +157,42 @@ export class DatabaseService {
   }
 
   deleteConfig(configID: string): void {
-    let configIndex = this.configs.findIndex(config => {
+    const configIndex = this.configuration.configs.findIndex(config => {
       return config.id === configID;
     });
     this.configuration.configs.splice(configIndex, 1);
+    this.updateRemoteConfiguration()
+      .then(() => {
+        this._configSubject.next(true);
+      })
+      .catch(err => {
+        this._configSubject.next(false);
+        console.error(err);
+      });
   }
 
   clearConfigs(): Promise<void> {
     return new Promise((resolve, reject) => {
-      if (this.configuration.configs) this.configuration.configs = [];
-      if (this.configuration.activeConfig)
-        this.configuration.activeConfig = null;
-      resolve();
+      if (this.configuration.configs) {
+        this.configuration.configs = [];
+      }
+      if (this.configuration.activeConfig) {
+        this.configuration.activeConfig = '';
+      }
+      this.updateRemoteConfiguration().then(res => resolve, err => reject);
     });
   }
 
   setActiveConfig(configID: string): void {
     this.configuration.activeConfig = configID;
+    this.updateRemoteConfiguration().then(
+      () => {
+        this._activeConfigChanged.next(configID);
+      },
+      err => {
+        this._activeConfigChanged.error(err);
+      }
+    );
   }
 
   getActiveConfig(): Promise<string> {
@@ -140,9 +200,11 @@ export class DatabaseService {
       if (
         this.configuration.activeConfig &&
         this.configuration.activeConfig.length > 0
-      )
+      ) {
         resolve(this.configuration.activeConfig);
-      else reject('No active config');
+      } else {
+        reject('No active config');
+      }
     });
   }
 
@@ -152,9 +214,11 @@ export class DatabaseService {
 
   numberConfigs(): Promise<number> {
     return new Promise((resolve, reject) => {
-      if (this.configuration.configs)
+      if (this.configuration.configs) {
         resolve(this.configuration.configs.length);
-      else resolve(0);
+      } else {
+        resolve(0);
+      }
     });
   }
 }

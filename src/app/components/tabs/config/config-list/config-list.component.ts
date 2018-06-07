@@ -1,5 +1,13 @@
 import { BehaviorSubject } from 'rxjs';
-import { Component, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  NgZone,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ChangeDetectorRef,
+  AfterViewInit
+} from '@angular/core';
 import { ConfigComponent } from '../config.component';
 import { createDirective } from '@angular/compiler/src/core';
 import { DatabaseService } from '../../../../services/database/database.service';
@@ -17,33 +25,30 @@ import { Subscription } from 'rxjs';
 import { PresetConfigComponent } from '../preset-config/preset-config.component';
 import { GoogleService } from '../../../../services/google/google.service';
 import { ConfigsInterface } from '../../../../../interfaces';
-
-export interface Config {
-  name: String;
-  key: String;
-}
+import { ConfigDataSource } from '../../../../classes/config-data-source';
 
 @Component({
   selector: 'app-config-list',
   templateUrl: './config-list.component.html',
   styleUrls: ['./config-list.component.scss']
 })
-export class ConfigListComponent implements OnInit, OnDestroy {
+export class ConfigListComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   private activeConfig: string;
-  private oldPageSize: number = 10;
+  private oldPageSize = 10;
   private loadingSubscription: Subscription;
   private paginatorSubscription: Subscription;
   private configChangeSubscription: Subscription;
   private activeConfigChangeSubscription: Subscription;
 
-  public loading: boolean = true;
-  public noConfigs: boolean = true;
+  public loading = true;
+  public noConfigs = true;
   public dataSource: ConfigDataSource;
   public tableColumns = ['name', 'actions'];
 
   constructor(
+    private changeDetector: ChangeDetectorRef,
     private database: DatabaseService,
     private google: GoogleService,
     private dialog: MatDialog,
@@ -53,10 +58,7 @@ export class ConfigListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (this.google.getAuthStatus()) {
-      this.dataSource = new ConfigDataSource(
-        this.database.getConfigs(),
-        this.paginator
-      );
+      this.dataSource = new ConfigDataSource(this.paginator, this.database);
       this.database.numberConfigs().then(numConfigs => {
         if (numConfigs === 0) {
           this.noConfigs = true;
@@ -71,19 +73,22 @@ export class ConfigListComponent implements OnInit, OnDestroy {
     if (this.google.getAuthStatus()) {
       // Listen for page changes
       this.paginatorSubscription = this.paginator.page.subscribe(() => {
-        if (this.oldPageSize == this.paginator.pageSize) {
+        if (this.oldPageSize === this.paginator.pageSize) {
           this.dataSource.loadConfigs(
             this.paginator.pageIndex,
             this.paginator.pageSize
           );
+          this.changeDetector.detectChanges();
         } else {
           this.dataSource.loadConfigs(0, this.paginator.pageSize);
+          this.changeDetector.detectChanges();
           this.oldPageSize = this.paginator.pageSize;
           this.paginator.pageIndex = 0;
         }
       });
       // Load the configurations
       this.dataSource.loadConfigs();
+      this.changeDetector.detectChanges();
       // Pass the number of configs to the paginator
       this.database.numberConfigs().then(numConfigs => {
         this.paginator.length = numConfigs;
@@ -92,14 +97,18 @@ export class ConfigListComponent implements OnInit, OnDestroy {
       this.configChangeSubscription = this.database.configSubject.subscribe(
         created => {
           this.refreshConfigs();
+          this.loading = false;
         }
       );
       // Retrive the active config
-      this.database.getActiveConfig().then(activeConfig => {
-        this.activeConfig = activeConfig;
-      }, () => {
-        this.activeConfig = undefined;
-      })
+      this.database.getActiveConfig().then(
+        activeConfig => {
+          this.activeConfig = activeConfig;
+        },
+        () => {
+          this.activeConfig = undefined;
+        }
+      );
       // Listen for active config changes
       this.activeConfigChangeSubscription = this.database.activeConfigChanged.subscribe(
         newConfigID => {
@@ -129,14 +138,14 @@ export class ConfigListComponent implements OnInit, OnDestroy {
   }
 
   openPresets() {
-    let dialogWidth = this.getDialogWidth();
+    const dialogWidth = this.getDialogWidth();
     if (dialogWidth) {
       const dialogInstance = this.dialog.open(PresetConfigComponent, {
         width: `${dialogWidth}px`,
         maxHeight: `${document.body.clientHeight * 0.9}px`
       });
       const componentInstance = dialogInstance.componentInstance;
-      let closeSubscription = componentInstance.closeCommand.subscribe(
+      const closeSubscription = componentInstance.closeCommand.subscribe(
         close => {
           dialogInstance.close();
           closeSubscription.unsubscribe();
@@ -150,26 +159,29 @@ export class ConfigListComponent implements OnInit, OnDestroy {
   }
 
   refreshConfigs() {
+    this.loading = true;
     this.dataSource.loadConfigs();
+    this.changeDetector.detectChanges();
     this.database.numberConfigs().then(numConfigs => {
       if (numConfigs === 0) {
         this.noConfigs = true;
       } else {
         this.noConfigs = false;
       }
+      this.paginator.length = numConfigs;
     });
   }
 
   editConfig(configID: string) {
     this.database.editingConfig = configID;
-    let dialogWidth = this.getDialogWidth();
+    const dialogWidth = this.getDialogWidth();
     if (dialogWidth) {
       const dialogInstance = this.dialog.open(EditConfigModalComponent, {
         width: `${dialogWidth}px`,
         maxHeight: `${document.body.clientHeight * 0.9}px`
       });
       const componentInstance = dialogInstance.componentInstance;
-      let closeSubscription = componentInstance.closeCommand.subscribe(
+      const closeSubscription = componentInstance.closeCommand.subscribe(
         close => {
           dialogInstance.close();
           closeSubscription.unsubscribe();
@@ -183,6 +195,7 @@ export class ConfigListComponent implements OnInit, OnDestroy {
   }
 
   deleteConfig(configKey: string) {
+    this.loading = true;
     if (configKey === this.activeConfig) {
       this.setActiveConfig('');
     }
@@ -198,49 +211,17 @@ export class ConfigListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.loadingSubscription) this.loadingSubscription.unsubscribe();
-    if (this.paginatorSubscription) this.paginatorSubscription.unsubscribe();
-    if (this.configChangeSubscription)
-      this.configChangeSubscription.unsubscribe();
-    if (this.activeConfigChangeSubscription)
-      this.activeConfigChangeSubscription.unsubscribe();
-  }
-}
-
-export class ConfigDataSource implements DataSource<Config> {
-  private configSubject = new BehaviorSubject<Config[]>([]);
-
-  private loadingSubject = new BehaviorSubject<boolean>(true);
-  public loading$ = this.loadingSubject.asObservable();
-
-  constructor(private configs: Array<ConfigsInterface>, private paginator) {}
-
-  private calculateStart(page: number, pageSize: number): number {
-    return page ? page * pageSize : 0;
-  }
-
-  connect(): Observable<Config[]> {
-    return this.configSubject.asObservable();
-  }
-
-  disconnect(): void {
-    this.configSubject.complete();
-    this.loadingSubject.complete();
-  }
-
-  loadConfigs(page: number = 0, pageSize: number = 10) {
-    let start = this.calculateStart(page, pageSize);
-    let configs = this.configs.slice(start, start + pageSize);
-    this.loadingSubject.next(true);
-    let data = [];
-    for (const config in configs) {
-      const name = configs[config]['name'];
-      data.push({
-        name: name,
-        key: configs[config].id
-      });
+    if (this.loadingSubscription) {
+      this.loadingSubscription.unsubscribe();
     }
-    this.configSubject.next(data);
-    this.loadingSubject.next(false);
+    if (this.paginatorSubscription) {
+      this.paginatorSubscription.unsubscribe();
+    }
+    if (this.configChangeSubscription) {
+      this.configChangeSubscription.unsubscribe();
+    }
+    if (this.activeConfigChangeSubscription) {
+      this.activeConfigChangeSubscription.unsubscribe();
+    }
   }
 }

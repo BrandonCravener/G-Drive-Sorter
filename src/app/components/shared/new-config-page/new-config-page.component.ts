@@ -8,7 +8,7 @@ import { NewRuleStepperComponent } from '../new-rule-stepper/new-rule-stepper.co
   templateUrl: '../config-modal/config-modal.component.html',
   styleUrls: ['../config-modal/config-modal.component.scss']
 })
-export class NewConfigPageComponent extends ConfigModalComponent { 
+export class NewConfigPageComponent extends ConfigModalComponent {
   isPage = true;
 
   close() {

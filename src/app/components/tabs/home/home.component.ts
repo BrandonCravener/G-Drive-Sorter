@@ -17,8 +17,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements AfterViewInit {
-  public isActiveConfig: boolean = false;
-  public activeConfigName: string = 'Loading...';
+  public isActiveConfig = false;
+  public activeConfigName = 'Loading...';
 
   /**
    * Creates an instance of HomeComponent.
@@ -38,7 +38,7 @@ export class HomeComponent implements AfterViewInit {
    * @memberof HomeComponent
    */
   ngAfterViewInit() {
-    let databaseInitalizedCheck = setInterval(() => {
+    const databaseInitalizedCheck = setInterval(() => {
       if (this.database.initalized) {
         this.database.getActiveConfig().then(
           activeConfig => {
@@ -48,7 +48,6 @@ export class HomeComponent implements AfterViewInit {
             this.isActiveConfig = true;
           },
           err => {
-            console.log(err);
             this.activeConfigName = err;
             this.isActiveConfig = false;
           }
