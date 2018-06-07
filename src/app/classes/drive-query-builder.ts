@@ -37,7 +37,7 @@ export class DriveQueryBuilder {
    * @type {string}
    * @memberof DriveQueryBuilder
    */
-  private query: string = '';
+  private query = '';
 
   /**
    * Returns the current query

@@ -1,11 +1,9 @@
-import * as firebase from 'firebase/app';
 import { AfterViewInit, Component, NgZone } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { fabAnimation, routerAnimation } from '../animations';
 import { GoogleService } from './services/google/google.service';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
-import { DatabaseService } from './services/firebase/database.service';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { DatabaseService } from './services/database/database.service';
 
 /**
  * Workaround for testing
@@ -31,10 +29,10 @@ export class AppComponent implements AfterViewInit {
   private loaderRemoved: Boolean = false;
 
   public tabsEnabled = true;
-  public loaded: Boolean = false;
+  public loaded = false;
   public authenticated: Boolean;
-  public rlaSafe: boolean = false;
-  public createConfigButtonState: string = 'inactive';
+  public rlaSafe = false;
+  public createConfigButtonState = 'inactive';
   public openConfigModal$ = this.openConfigModal.asObservable();
   public tabLinks = [
     {
@@ -61,26 +59,21 @@ export class AppComponent implements AfterViewInit {
   constructor(
     private google: GoogleService,
     private database: DatabaseService,
-    private firebaseAuth: AngularFireAuth,
     private router: Router,
     private zone: NgZone
   ) {
     const googleInitInterval = setInterval(() => {
       if (window['gapi']) {
-        this.google.init(
-          {
-            apiKey: 'AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM',
-            clientId:
-              '362606538820-om1dhhvv5d9npas7jj02mbtvi5mjksmo.apps.googleusercontent.com',
-            discoveryDocs: [
-              'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'
-            ],
-            scope: 'https://www.googleapis.com/auth/drive'
-          },
-          () => {
-            console.debug('Google initalized.');
-          }
-        );
+        this.google.init({
+          apiKey: 'AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM',
+          clientId:
+            '362606538820-om1dhhvv5d9npas7jj02mbtvi5mjksmo.apps.googleusercontent.com',
+          discoveryDocs: [
+            'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'
+          ],
+          scope:
+            'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.appdata'
+        });
         this.google.authState$.subscribe(state => {
           if (!this.loaderRemoved) {
             this.loaded = true;
@@ -91,13 +84,7 @@ export class AppComponent implements AfterViewInit {
           }
           this.authenticated = state;
           if (state) {
-            const credential = firebase.auth.GoogleAuthProvider.credential(
-              this.google.getToken()
-            );
-            this.firebaseAuth.auth.signInWithCredential(credential).then(() => {
-              this.database.initalize();
-              console.debug('Database initalized.');
-            }, err => console.error);
+            this.database.initalize();
             this.zone.run(() => {
               this.router.navigate(['/app/home']);
             });

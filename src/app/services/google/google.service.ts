@@ -1,11 +1,8 @@
-import * as firebase from 'firebase/app';
-import { AngularFireAuth } from 'angularfire2/auth';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs';
-import 'firebase/auth';
 import { DriveMimeType } from '../../classes/drive-query-builder';
-import { DatabaseService } from '../firebase/database.service';
+import { DatabaseService } from '../database/database.service';
 
 /**
  * Workaround for testing
@@ -20,7 +17,7 @@ let authInstance;
 
 let folderPicker;
 
-let _folderPicked = new Subject<any>();
+const _folderPicked = new Subject<any>();
 
 function folderPicked(data: any): void {
   if (data.action === 'picked') {
@@ -60,8 +57,7 @@ export class GoogleService {
    * @memberof GoogleService
    */
   constructor(
-    private database: DatabaseService,
-    private firebaseAuth: AngularFireAuth
+    private database: DatabaseService
   ) {}
 
   /**
@@ -72,7 +68,6 @@ export class GoogleService {
    */
   init(config: Object, callback?: Function) {
     gapi.load('client:auth2', () => {
-      console.debug('GAPI: Client & Auth Loaded');
       gapi.client.init(config).then(() => {
         authInstance = gapi.auth2.getAuthInstance();
         authInstance.isSignedIn.listen(() => {
@@ -81,7 +76,6 @@ export class GoogleService {
         const authStatus = authInstance.isSignedIn.get();
         this._authState.next(authStatus);
         gapi.load('picker', () => {
-          console.debug('GAPI: Picker Loaded');
           const view = new google.picker.DocsView(google.picker.ViewId.FOLDERS)
             .setIncludeFolders(true)
             .setSelectFolderEnabled(true)
@@ -142,7 +136,6 @@ export class GoogleService {
   signOut(): void {
     authInstance.signOut();
     this.database.initalized = false;
-    this.firebaseAuth.auth.signOut();
   }
 
   /**
@@ -184,8 +177,8 @@ export class GoogleService {
     const fileResource = {
       name: name,
       mimeType: DriveMimeType.folder
-    }
-    if (parent) fileResource['parents'] = [parent];
+    };
+    if (parent) { fileResource['parents'] = [parent]; }
     return new Promise((resolve, reject) => {
       gapi.client.drive.files
         .create({
@@ -193,8 +186,7 @@ export class GoogleService {
           fields: 'id'
         })
         .execute(resp => {
-          if (resp.err) reject(resp.err);
-          else resolve(resp.id);
+          if (resp.err) { reject(resp.err); } else { resolve(resp.id); }
         });
     });
   }
@@ -207,9 +199,8 @@ export class GoogleService {
           'name': name
         }
       }).execute(resp => {
-        if (resp.err) reject(resp.err);
-        else resolve();
-      })
+        if (resp.err) { reject(resp.err); } else { resolve(); }
+      });
     });
   }
 

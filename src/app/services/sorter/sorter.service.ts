@@ -3,7 +3,7 @@ import {
   GroupInterface,
   GroupFolderInterface
 } from '../../../interfaces';
-import { DatabaseService } from '../firebase/database.service';
+import { DatabaseService } from '../database/database.service';
 import {
   DriveMimeType,
   DriveQueryBuilder
@@ -32,7 +32,6 @@ export class SorterService {
   }
 
   private getDriveQuery(group: GroupInterface): string {
-    1;
     let driveQuery = new DriveQueryBuilder(group.source.folderID, true);
     group.rules.forEach(rule => {
       switch (rule.classifier) {
@@ -40,7 +39,7 @@ export class SorterService {
           driveQuery = driveQuery.fullTextContains(rule.data.fullText);
           break;
         case 'title':
-          let title = rule.data.title;
+          const title = rule.data.title;
           switch (rule.constraint) {
             case 'include':
               driveQuery = driveQuery.nameContains(title);
@@ -51,7 +50,7 @@ export class SorterService {
           }
           break;
         case 'type':
-          let type = rule.data.fileType;
+          const type = rule.data.fileType;
           switch (rule.constraint) {
             case 'include':
               driveQuery = driveQuery.requiresType(type);
@@ -62,7 +61,7 @@ export class SorterService {
           }
           break;
         case 'owner':
-          let owner = rule.data.owner;
+          const owner = rule.data.owner;
           switch (rule.constraint) {
             case 'include':
               driveQuery = driveQuery.hasOwner(owner);
@@ -129,20 +128,25 @@ export class SorterService {
   }
 
   loadConfig(cb?: Function): void {
-    this.database.getActiveConfig(activeConfig => {
-      if (activeConfig) {
-        this.database.getConfig(activeConfig, config => {
-          this.config = config;
-          if (cb) cb();
-        });
-      }
-    });
+    this.database.getActiveConfig().then(
+      activeConfig => {
+        if (activeConfig) {
+          this.database.getConfig(activeConfig, config => {
+            this.config = config;
+            if (cb) {
+              cb();
+            }
+          });
+        }
+      },
+      err => {}
+    );
   }
 
   sort() {
     return new Promise((resolve, reject) => {
       const drive = gapi.client.drive;
-      let success = true;
+      const success = true;
       this.config.groups.forEach(group => {
         if (group.destination) {
           this.google.listFiles(this.getDriveQuery(group), resp => {
@@ -153,9 +157,9 @@ export class SorterService {
                 this.google.moveFile(
                   file.id,
                   group.destination.folderID,
-                  success => {
-                    if (!success) {
-                      success = false;
+                  moved => {
+                    if (!moved) {
+                      moved = false;
                     }
                   }
                 );
@@ -174,7 +178,7 @@ export class SorterService {
             });
           }
         } else {
-          let newFolderName = ConfigBuilder.folderNameBuilder(
+          const newFolderName = ConfigBuilder.folderNameBuilder(
             group.createFolder
           );
           this.google
@@ -185,9 +189,9 @@ export class SorterService {
                   reject(resp.error);
                 } else {
                   resp.files.forEach(file => {
-                    this.google.moveFile(file.id, newFolderID, success => {
-                      if (!success) {
-                        success = false;
+                    this.google.moveFile(file.id, newFolderID, moved => {
+                      if (!moved) {
+                        moved = false;
                       }
                     });
                   }, this);
@@ -196,8 +200,11 @@ export class SorterService {
             }, err => console.error);
         }
       });
-      if (success) resolve();
-      else reject();
+      if (success) {
+        resolve();
+      } else {
+        reject();
+      }
     });
   }
 }

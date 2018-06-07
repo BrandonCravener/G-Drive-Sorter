@@ -54,9 +54,9 @@ export class FolderCreationComponent implements AfterViewInit {
       value: ''
     }
   };
-  public parentFolderIsRoot: boolean = false;
+  public parentFolderIsRoot = false;
 
-  public finished: boolean = false;
+  public finished = false;
 
   public get value(): FolderCreation {
     if (this.validate()) {
@@ -83,7 +83,7 @@ export class FolderCreationComponent implements AfterViewInit {
   }
 
   openFolderPicker() {
-    let folderPickedListener = this.google.folderPicked$.subscribe(
+    const folderPickedListener = this.google.folderPicked$.subscribe(
       pickedFolder => {
         this.createFolder.parent = {
           folderID: pickedFolder.id,

@@ -1,7 +1,5 @@
-import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFirestore } from 'angularfire2/firestore';
 import { Component, OnInit } from '@angular/core';
-import { DatabaseService } from '../../../services/firebase/database.service';
+import { DatabaseService } from '../../../services/database/database.service';
 import { GoogleService } from '../../../services/google/google.service';
 
 /**

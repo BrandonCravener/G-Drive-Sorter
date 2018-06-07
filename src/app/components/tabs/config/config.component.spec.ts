@@ -5,7 +5,7 @@ import { ConfigModule } from '../../../modules/config/config.module';
 import { AuthenticatedModule } from '../../../modules/authenticated/authenticated.module';
 import { APP_BASE_HREF } from '@angular/common';
 
-describe("ConfigComponent", () => {
+describe('ConfigComponent', () => {
   let component: ConfigComponent;
   let fixture: ComponentFixture<ConfigComponent>;
 
@@ -18,7 +18,7 @@ describe("ConfigComponent", () => {
       ],
       providers: [
         {
-          provide: APP_BASE_HREF, 
+          provide: APP_BASE_HREF,
           useValue: '/'
         }
       ]
@@ -32,7 +32,7 @@ describe("ConfigComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

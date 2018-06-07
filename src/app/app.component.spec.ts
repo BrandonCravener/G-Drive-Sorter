@@ -6,12 +6,10 @@ import { async, TestBed } from '@angular/core/testing';
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        AppModule
-      ],
+      imports: [AppModule],
       providers: [
         {
-          provide: APP_BASE_HREF, 
+          provide: APP_BASE_HREF,
           useValue: '/'
         }
       ]

@@ -16,7 +16,7 @@ describe('DatabaseService', () => {
       providers: [
         DatabaseService,
         {
-          provide: APP_BASE_HREF, 
+          provide: APP_BASE_HREF,
           useValue: '/'
         }
       ]
