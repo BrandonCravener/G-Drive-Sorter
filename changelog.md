@@ -14,5 +14,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Removed 
 - Firebase
 
-[Unreleased]: https://github.com/olivierlacan/keep-a-changelog/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/BrandonCravener/G-drive-Sorter/compare/v1.0.0...HEAD
 [1.0.0]: https://github.com/BrandonCravener/G-Drive-Sorter/tree/V1.0.0
