@@ -24,17 +24,10 @@ import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { v4 as uuid } from 'uuid';
 import { RuleInterface } from '../../../../interfaces';
 
-export const DEFAULT_VALUE_ACCESSOR: any = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => NewRuleStepperComponent),
-  multi: true
-};
-
 @Component({
   selector: 'app-new-rule-stepper',
   templateUrl: './new-rule-stepper.component.html',
-  styleUrls: ['./new-rule-stepper.component.scss'],
-  providers: [DEFAULT_VALUE_ACCESSOR]
+  styleUrls: ['./new-rule-stepper.component.scss']
 })
 export class NewRuleStepperComponent implements OnInit {
   @Input() inputRule: RuleInterface;
@@ -52,9 +45,9 @@ export class NewRuleStepperComponent implements OnInit {
   inputFieldGroup: FormGroup;
   nameFormGroup: FormGroup;
 
-  excludeDisabled: boolean = false;
-  betweenConstraintDisabled: boolean = false;
-  startEndWithDisabled: boolean = false;
+  excludeDisabled = false;
+  betweenConstraintDisabled = false;
+  startEndWithDisabled = false;
 
   classifierSelectOption: string;
   constraintSelectOption: string;
@@ -149,19 +142,19 @@ export class NewRuleStepperComponent implements OnInit {
       value: 'application/vnd.google-apps.photo'
     },
     {
-      label: "Slide's",
+      label: 'Slide\'s',
       value: 'application/vnd.google-apps.presentation'
     },
     {
-      label: "App's Script",
+      label: 'App\'s Script',
       value: 'application/vnd.google-apps.script'
     },
     {
-      label: "Site's",
+      label: 'Site\'s',
       value: 'application/vnd.google-apps.site'
     },
     {
-      label: "Sheet's",
+      label: 'Sheet\'s',
       value: 'application/vnd.google-apps.spreadsheet'
     },
     {
@@ -234,6 +227,7 @@ export class NewRuleStepperComponent implements OnInit {
           this.inputFieldGroup
             .get('fullTextControl')
             .setValue(this.inputRule.data.fullText);
+          break;
         case 'titleTextControl':
           this.inputFieldGroup
             .get('titleTextControl')
@@ -313,10 +307,10 @@ export class NewRuleStepperComponent implements OnInit {
   }
 
   /*
-    Datepicker Need Codes:
-      0 - No picker needed
-      1 - Single picker needed
-      2 - Double picker needed
+  Datepicker Need Codes:
+  0 - No picker needed
+  1 - Single picker needed
+  2 - Double picker needed
   */
   datePickerSingleNeeded(): number {
     const classifierVal = this.classifierSelectOption;

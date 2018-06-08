@@ -87,14 +87,14 @@
                         <a href="modules/AppModule.html" data-type="entity-link">AppModule</a>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#xs-components-links-module-AppModule-a46d8c1baad067ce358307d082c447dd"
+                                        data-target="#xs-components-links-module-AppModule-2d290feb4c682a10550c99adaa08e684"
                                     >
                                     <span class="fa fa-fw fa-cogs"></span>
                                     <span>Components</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="xs-components-links-module-AppModule-a46d8c1baad067ce358307d082c447dd"
+                                        id="xs-components-links-module-AppModule-2d290feb4c682a10550c99adaa08e684"
                                     >
                                         <li class="link">
                                             <a href="components/AppComponent.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">AppComponent</a>
@@ -106,14 +106,14 @@
                             </li>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#xs-injectables-links-module-AppModule-a46d8c1baad067ce358307d082c447dd"
+                                        data-target="#xs-injectables-links-module-AppModule-2d290feb4c682a10550c99adaa08e684"
                                     >
                                     <span class="fa fa-fw fa-long-arrow-down"></span>
                                     <span>Injectables</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="xs-injectables-links-module-AppModule-a46d8c1baad067ce358307d082c447dd"
+                                        id="xs-injectables-links-module-AppModule-2d290feb4c682a10550c99adaa08e684"
                                     >
                                         <li class="link">
                                             <a href="injectables/AuthGuardService.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules"}>AuthGuardService</a>
@@ -321,10 +321,10 @@
                         <a href="interfaces/GroupInterface.html" data-type="entity-link">GroupInterface</a>
                     </li>
                     <li class="link">
-                        <a href="interfaces/RuleInterface.html" data-type="entity-link">RuleInterface</a>
+                        <a href="interfaces/JSONConfiguration.html" data-type="entity-link">JSONConfiguration</a>
                     </li>
                     <li class="link">
-                        <a href="interfaces/UserDocument.html" data-type="entity-link">UserDocument</a>
+                        <a href="interfaces/RuleInterface.html" data-type="entity-link">RuleInterface</a>
                     </li>
             </ul>
         </li>
@@ -444,14 +444,14 @@
                         <a href="modules/AppModule.html" data-type="entity-link">AppModule</a>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#components-links-module-AppModule-a46d8c1baad067ce358307d082c447dd"
+                                        data-target="#components-links-module-AppModule-2d290feb4c682a10550c99adaa08e684"
 >
                                     <span class="fa fa-fw fa-cogs"></span>
                                     <span>Components</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="components-links-module-AppModule-a46d8c1baad067ce358307d082c447dd"
+                                        id="components-links-module-AppModule-2d290feb4c682a10550c99adaa08e684"
 >
                                         <li class="link">
                                             <a href="components/AppComponent.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">AppComponent</a>
@@ -463,14 +463,14 @@
                             </li>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#injectables-links-module-AppModule-a46d8c1baad067ce358307d082c447dd"
+                                        data-target="#injectables-links-module-AppModule-2d290feb4c682a10550c99adaa08e684"
 >
                                     <span class="fa fa-fw fa-long-arrow-down"></span>
                                     <span>Injectables</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="injectables-links-module-AppModule-a46d8c1baad067ce358307d082c447dd"
+                                        id="injectables-links-module-AppModule-2d290feb4c682a10550c99adaa08e684"
 >
                                         <li class="link">
                                             <a href="injectables/AuthGuardService.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules"}>AuthGuardService</a>
@@ -678,10 +678,10 @@
                         <a href="interfaces/GroupInterface.html" data-type="entity-link">GroupInterface</a>
                     </li>
                     <li class="link">
-                        <a href="interfaces/RuleInterface.html" data-type="entity-link">RuleInterface</a>
+                        <a href="interfaces/JSONConfiguration.html" data-type="entity-link">JSONConfiguration</a>
                     </li>
                     <li class="link">
-                        <a href="interfaces/UserDocument.html" data-type="entity-link">UserDocument</a>
+                        <a href="interfaces/RuleInterface.html" data-type="entity-link">RuleInterface</a>
                     </li>
             </ul>
         </li>
@@ -827,7 +827,10 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { AngularFirestoreCollection } from &#x27;angularfire2/firestore&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export interface Config {
+  name: String;
+  key: String;
+}
 
 export interface ConfigInterface {
   activeConfig: string;
@@ -881,10 +884,11 @@ export interface ConfigsInterface {
   groups: Array&lt;GroupInterface&gt;;
 }
 
-export interface UserDocument {
+export interface JSONConfiguration {
+  configs: Array&lt;ConfigsInterface&gt;;
   activeConfig: string;
-  configs: AngularFirestoreCollection&lt;ConfigsInterface&gt;;
-}</code></pre>
+}
+</code></pre>
     </div>
 </div>
 

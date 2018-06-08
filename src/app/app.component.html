@@ -19,7 +19,7 @@
       <button *ngIf="authenticated" mat-icon-button [matMenuTriggerFor]="appMenu">
         <mat-icon>more_vert</mat-icon>
       </button>
-      <button *ngIf="!authenticated" mat-button (click)="signIn()">
+      <button id="sign-in-button" *ngIf="!authenticated" mat-button (click)="signIn()">
         Sign In
       </button>
     </div>

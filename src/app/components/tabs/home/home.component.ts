@@ -1,5 +1,5 @@
 import { Component, NgZone, AfterViewInit } from '@angular/core';
-import { DatabaseService } from '../../../services/firebase/database.service';
+import { DatabaseService } from '../../../services/database/database.service';
 import { MatSnackBar } from '@angular/material';
 import { SorterService } from '../../../services/sorter/sorter.service';
 import { Router } from '@angular/router';
@@ -17,8 +17,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements AfterViewInit {
-  public isActiveConfig: boolean = false;
-  public activeConfigName: string = 'Loading...';
+  public isActiveConfig = false;
+  public activeConfigName = 'Loading...';
 
   /**
    * Creates an instance of HomeComponent.
@@ -38,19 +38,20 @@ export class HomeComponent implements AfterViewInit {
    * @memberof HomeComponent
    */
   ngAfterViewInit() {
-    let databaseInitalizedCheck = setInterval(() => {
+    const databaseInitalizedCheck = setInterval(() => {
       if (this.database.initalized) {
-        this.database.getActiveConfig(activeConfig => {
-          if (activeConfig) {
+        this.database.getActiveConfig().then(
+          activeConfig => {
             this.database.getConfig(activeConfig, config => {
               this.activeConfigName = config.name;
             });
             this.isActiveConfig = true;
-          } else {
-            this.activeConfigName = 'No active configuration!';
+          },
+          err => {
+            this.activeConfigName = err;
             this.isActiveConfig = false;
           }
-        });
+        );
         clearInterval(databaseInitalizedCheck);
       }
     }, 750);

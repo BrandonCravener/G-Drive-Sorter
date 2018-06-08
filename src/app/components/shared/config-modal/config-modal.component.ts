@@ -1,8 +1,6 @@
-import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFirestore } from 'angularfire2/firestore';
 import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { ConfigBuilder } from '../../../classes/config-builder';
-import { DatabaseService } from '../../../services/firebase/database.service';
+import { DatabaseService } from '../../../services/database/database.service';
 import { FolderCreationComponent } from '../folder-creation/folder-creation.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GoogleService } from '../../../services/google/google.service';
@@ -28,9 +26,9 @@ export class ConfigModalComponent implements OnInit {
   private _closeCommand = new Subject<Boolean>();
 
   public isPage = false;
-  public step: number = -1;
+  public step = -1;
   public newConfig: FormGroup;
-  public finished: boolean = false;
+  public finished = false;
   public source: GroupFolderInterface = {
     folderID: undefined,
     name: null
@@ -39,10 +37,10 @@ export class ConfigModalComponent implements OnInit {
     folderID: undefined,
     name: null
   };
-  public creatingFolder: boolean = false;
-  public folderButtonSourceDisabled: boolean = false;
+  public creatingFolder = false;
+  public folderButtonSourceDisabled = false;
   public closeCommand = this._closeCommand.asObservable();
-  public folderButtonDestinationDisabled: boolean = false;
+  public folderButtonDestinationDisabled = false;
 
   constructor(
     public zone: NgZone,
@@ -50,9 +48,7 @@ export class ConfigModalComponent implements OnInit {
     private snackbar: MatSnackBar,
     private google: GoogleService,
     public formBuilder: FormBuilder,
-    private database: DatabaseService,
-    private firebase: AngularFirestore,
-    private firebaseAuth: AngularFireAuth
+    private database: DatabaseService
   ) {}
 
   ngOnInit() {
@@ -114,7 +110,7 @@ export class ConfigModalComponent implements OnInit {
   }
 
   openFolderPicker(folderType: string) {
-    let folderPickedListener = this.google.folderPicked$.subscribe(
+    const folderPickedListener = this.google.folderPicked$.subscribe(
       pickedFolder => {
         if (folderType === 'destination') {
           this.destination = {
@@ -186,7 +182,7 @@ export class ConfigModalComponent implements OnInit {
       this.folderComponent.reset();
     }
   }
-  
+
   renameUntitledChange(event: MatSlideToggleChange) {
     this.source.renameUntitled = event.checked;
   }
