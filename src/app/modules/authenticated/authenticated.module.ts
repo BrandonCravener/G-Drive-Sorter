@@ -1,31 +1,19 @@
+import { AngularOnboardingModule } from 'angular-onboarding';
 import { CommonModule } from '@angular/common';
 import { ConfigComponent } from '../../components/tabs/config/config.component';
-import { ConfigListComponent } from '../../components/tabs/config/config-list/config-list.component';
-import { ConfigModalComponent } from '../../components/shared/config-modal/config-modal.component';
 import { ConfigModule } from '../config/config.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from '../../components/tabs/home/home.component';
 import {
   MatButtonModule,
   MatCardModule,
-  MatDatepicker,
-  MatDatepickerModule,
-  MatDialogContent,
   MatDialogModule,
-  MatExpansionModule,
-  MatFormFieldModule,
-  MatGridListModule,
   MatIconModule,
   MatInputModule,
   MatListModule,
-  MatNativeDateModule,
-  MatPaginatorModule,
-  MatSelectModule,
   MatSnackBarModule,
-  MatStepperModule,
-  MatTableModule,
   MatTooltipModule
-  } from '@angular/material';
+} from '@angular/material';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { SettingsComponent } from '../../components/tabs/settings/settings.component';
 import { SorterService } from '../../services/sorter/sorter.service';
@@ -50,7 +38,8 @@ import { SorterService } from '../../services/sorter/sorter.service';
     MatTooltipModule,
     MatSnackBarModule,
     ReactiveFormsModule,
-    ConfigModule.forRoot()
+    ConfigModule.forRoot(),
+    AngularOnboardingModule
   ],
   providers: [SorterService],
   exports: [ConfigComponent]

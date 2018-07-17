@@ -1,26 +1,27 @@
+import { aoConfig } from './../consts';
+import { AngularOnboardingModule } from 'angular-onboarding';
 import { AppComponent } from './app.component';
 import { appRoutes } from './app.routes';
 import { AuthenticatedModule } from './modules/authenticated/authenticated.module';
-import { AuthGuardService, PreventAuthGuardService } from './services/auth/auth-guard.service';
+import {
+  AuthGuardService,
+  PreventAuthGuardService
+} from './services/auth/auth-guard.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { ConfigModule } from './modules/config/config.module';
-import { environment } from '../environments/environment.prod';
-import { FolderCreationComponent } from './components/shared/folder-creation/folder-creation.component';
 import { GoogleService } from './services/google/google.service';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MatDialogModule,
-  MatFormFieldModule,
   MatIconModule,
   MatInputModule,
-  MatStepperModule,
   MatToolbarModule
-  } from '@angular/material';
+} from '@angular/material';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { UnauthenticatedComponent } from './components/auth/unauthenticated/unauthenticated.component';
 import { DatabaseService } from './services/database/database.service';
 
@@ -39,6 +40,7 @@ import { DatabaseService } from './services/database/database.service';
     BrowserAnimationsModule,
     AuthenticatedModule.forRoot(),
     RouterModule.forRoot(appRoutes),
+    AngularOnboardingModule.forRoot(aoConfig)
   ],
   providers: [
     DatabaseService,

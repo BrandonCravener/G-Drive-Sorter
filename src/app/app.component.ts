@@ -1,9 +1,10 @@
-import { AfterViewInit, Component, NgZone } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { AfterViewInit, Component, NgZone, ElementRef, ViewChild } from '@angular/core';
+import { Subject } from 'rxjs';
 import { fabAnimation, routerAnimation } from '../animations';
 import { GoogleService } from './services/google/google.service';
-import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { DatabaseService } from './services/database/database.service';
+import { AngularOnboardingService } from 'angular-onboarding';
 
 /**
  * Workaround for testing
@@ -25,13 +26,16 @@ declare var gapi: any;
   animations: [routerAnimation, fabAnimation]
 })
 export class AppComponent implements AfterViewInit {
-  private openConfigModal: Subject<boolean> = new Subject<boolean>();
-  private loaderRemoved: Boolean = false;
+  @ViewChild('routerOutlet', { read: ElementRef }) routerOutlet: ElementRef;
 
-  public tabsEnabled = true;
+  private loaderRemoved: Boolean = false;
+  private openConfigModal: Subject<boolean> = new Subject<boolean>();
+
   public loaded = false;
-  public authenticated: Boolean;
+  public showTour = true;
   public rlaSafe = false;
+  public tabsEnabled = true;
+  public authenticated: Boolean;
   public createConfigButtonState = 'inactive';
   public openConfigModal$ = this.openConfigModal.asObservable();
   public tabLinks = [
@@ -57,12 +61,16 @@ export class AppComponent implements AfterViewInit {
    * @memberof AppComponent
    */
   constructor(
-    private google: GoogleService,
+    public aoService: AngularOnboardingService,
     private database: DatabaseService,
+    private google: GoogleService,
     private router: Router,
     private zone: NgZone
   ) {
     const googleInitInterval = setInterval(() => {
+      aoService.navigateSubject.subscribe(path => {
+        router.navigateByUrl(path);
+      });
       if (window['gapi']) {
         this.google.init({
           apiKey: 'AIzaSyB-yE9IXT29Vl_eAU7bzvzv5Qe17flfpzM',
@@ -137,6 +145,16 @@ export class AppComponent implements AfterViewInit {
 
   openConfigModalFunc() {
     this.openConfigModal.next(true);
+  }
+
+  declineTutorial() {
+    this.aoService.exit();
+    this.showTour = false;
+  }
+
+  acceptTutorial() {
+    this.aoService.start();
+    this.showTour = false;
   }
 
   /**
