@@ -1,10 +1,11 @@
-import { AfterViewInit, Component, NgZone, ElementRef, ViewChild } from '@angular/core';
-import { Subject } from 'rxjs';
-import { fabAnimation, routerAnimation } from '../animations';
-import { GoogleService } from './services/google/google.service';
+import { AfterViewInit, Component, ElementRef, NgZone, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { DatabaseService } from './services/database/database.service';
 import { AngularOnboardingService } from 'angular-onboarding';
+import { Subject } from 'rxjs';
+
+import { fabAnimation, routerAnimation } from '../animations';
+import { DatabaseService } from './services/database/database.service';
+import { GoogleService } from './services/google/google.service';
 
 /**
  * Workaround for testing

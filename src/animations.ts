@@ -1,16 +1,4 @@
-import {
-  animate,
-  animateChild,
-  animation,
-  group,
-  query,
-  stagger,
-  state,
-  style,
-  transition,
-  trigger
-} from '@angular/animations';
-import { Optional } from '@angular/core';
+import { animate, group, query, state, style, transition, trigger } from '@angular/animations';
 
 const fadeOutIn = [
   query(

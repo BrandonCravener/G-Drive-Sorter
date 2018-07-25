@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Subject } from 'rxjs';
+
 import { DriveMimeType } from '../../classes/drive-query-builder';
 import { DatabaseService } from '../database/database.service';
 

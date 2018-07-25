@@ -1,15 +1,15 @@
-import { TutorialInterface } from './../../../interfaces';
-import { ConfigBuilder } from '../../classes/config-builder';
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+
 import {
-  ConfigInterface,
   ConfigsInterface,
   FolderCreation,
   GroupFolderInterface,
   JSONConfiguration,
-  RuleInterface
+  RuleInterface,
 } from '../../../interfaces';
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { ConfigBuilder } from '../../classes/config-builder';
+import { TutorialInterface } from './../../../interfaces';
 
 /**
  * Workaround for testing

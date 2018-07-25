@@ -1,6 +1,7 @@
 import { DataSource } from '@angular/cdk/collections';
-import { Config, ConfigsInterface } from 'src/interfaces';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Config, ConfigsInterface } from 'src/interfaces';
+
 import { DatabaseService } from '../services/database/database.service';
 
 export class ConfigDataSource implements DataSource<Config> {

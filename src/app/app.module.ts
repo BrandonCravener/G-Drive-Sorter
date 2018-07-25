@@ -1,29 +1,22 @@
-import { aoConfig } from './../consts';
-import { AngularOnboardingModule } from 'angular-onboarding';
-import { AppComponent } from './app.component';
-import { appRoutes } from './app.routes';
-import { AuthenticatedModule } from './modules/authenticated/authenticated.module';
-import {
-  AuthGuardService,
-  PreventAuthGuardService
-} from './services/auth/auth-guard.service';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
-import { ConfigModule } from './modules/config/config.module';
-import { GoogleService } from './services/google/google.service';
+import { NgModule } from '@angular/core';
+import { MatDialogModule, MatIconModule, MatInputModule, MatToolbarModule } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
-import {
-  MatDialogModule,
-  MatIconModule,
-  MatInputModule,
-  MatToolbarModule
-} from '@angular/material';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
-import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
+import { AngularOnboardingModule } from 'angular-onboarding';
+
+import { aoConfig } from './../consts';
+import { AppComponent } from './app.component';
+import { appRoutes } from './app.routes';
 import { UnauthenticatedComponent } from './components/auth/unauthenticated/unauthenticated.component';
+import { AuthenticatedModule } from './modules/authenticated/authenticated.module';
+import { ConfigModule } from './modules/config/config.module';
+import { AuthGuardService, PreventAuthGuardService } from './services/auth/auth-guard.service';
 import { DatabaseService } from './services/database/database.service';
+import { GoogleService } from './services/google/google.service';
 
 @NgModule({
   declarations: [AppComponent, UnauthenticatedComponent],

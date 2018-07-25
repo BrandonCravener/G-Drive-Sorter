@@ -1,12 +1,13 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { presets } from '../presets';
-import { GoogleService } from '../../../../services/google/google.service';
 import { v4 as uuid } from 'uuid';
+
 import { ConfigBuilder } from '../../../../classes/config-builder';
 import { DatabaseService } from '../../../../services/database/database.service';
-import { MatSnackBar } from '@angular/material';
+import { GoogleService } from '../../../../services/google/google.service';
+import { presets } from '../presets';
 
 @Component({
   selector: 'app-preset-config',

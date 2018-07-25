@@ -1,23 +1,14 @@
-import { Component, Input, NgZone, OnInit } from '@angular/core';
-import { ConfigBuilder } from '../../../classes/config-builder';
-import { ConfigListComponent } from '../../tabs/config/config-list/config-list.component';
-import {
-  ConfigsInterface,
-  GroupInterface,
-  RuleInterface,
-  FolderCreation
-} from '../../../../interfaces';
-import { DatabaseService } from '../../../services/database/database.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { GoogleService } from '../../../services/google/google.service';
-import {
-  MatExpansionPanel,
-  MatSlideToggleChange,
-  MatSnackBar
-} from '@angular/material';
+import { Component, NgZone, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { MatSlideToggleChange, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { v4 as uuid } from 'uuid';
+
+import { ConfigsInterface, FolderCreation, GroupInterface, RuleInterface } from '../../../../interfaces';
+import { ConfigBuilder } from '../../../classes/config-builder';
+import { DatabaseService } from '../../../services/database/database.service';
+import { GoogleService } from '../../../services/google/google.service';
 
 @Component({
   selector: 'app-edit-config-modal',

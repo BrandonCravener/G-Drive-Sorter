@@ -1,14 +1,8 @@
-import {
-  AfterViewInit,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output
-} from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatSlideToggleChange, MatSnackBar } from '@angular/material';
+
 import { FolderCreation } from '../../../../interfaces';
 import { GoogleService } from '../../../services/google/google.service';
-import { MatSlideToggleChange, MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-folder-creation',

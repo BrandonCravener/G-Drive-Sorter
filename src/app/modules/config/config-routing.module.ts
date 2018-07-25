@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { ConfigComponent } from '../../components/tabs/config/config.component';
-import { NewConfigPageComponent } from '../../components/shared/new-config-page/new-config-page.component';
-import { AuthGuardService } from '../../services/auth/auth-guard.service';
-import { PresetConfigPageComponent } from '../../components/tabs/config/preset-config-page/preset-config-page.component';
+import { RouterModule, Routes } from '@angular/router';
+
 import { EditConfigPageComponent } from '../../components/shared/edit-config-page/edit-config-page.component';
+import { NewConfigPageComponent } from '../../components/shared/new-config-page/new-config-page.component';
+import { ConfigComponent } from '../../components/tabs/config/config.component';
+import { PresetConfigPageComponent } from '../../components/tabs/config/preset-config-page/preset-config-page.component';
+import { AuthGuardService } from '../../services/auth/auth-guard.service';
 
 
 const routes: Routes = [

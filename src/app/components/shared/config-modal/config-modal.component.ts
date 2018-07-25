@@ -1,17 +1,13 @@
 import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
-import { ConfigBuilder } from '../../../classes/config-builder';
-import { DatabaseService } from '../../../services/database/database.service';
-import { FolderCreationComponent } from '../folder-creation/folder-creation.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { GoogleService } from '../../../services/google/google.service';
-import { GroupFolderInterface } from '../../../../interfaces';
-import {
-  MatDialogRef,
-  MatSlideToggleChange,
-  MatSnackBar
-} from '@angular/material';
+import { MatSlideToggleChange, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+
+import { GroupFolderInterface } from '../../../../interfaces';
+import { DatabaseService } from '../../../services/database/database.service';
+import { GoogleService } from '../../../services/google/google.service';
+import { FolderCreationComponent } from '../folder-creation/folder-creation.component';
 
 @Component({
   selector: 'app-config-modal',
@@ -22,7 +18,6 @@ export class ConfigModalComponent implements OnInit {
   @ViewChild(FolderCreationComponent)
   private folderComponent: FolderCreationComponent;
   private rule: any;
-  private folderType: string;
   private _closeCommand = new Subject<Boolean>();
 
   public isPage = false;

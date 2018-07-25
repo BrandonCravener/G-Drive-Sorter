@@ -1,10 +1,11 @@
-import { Component, NgZone, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
-import { ConfigModalComponent } from '../../shared/config-modal/config-modal.component';
+import { AfterViewInit, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { RepositionScrollStrategy } from '@angular/cdk/overlay';
 import { Router } from '@angular/router';
-import { AppComponent } from '../../../app.component';
 import { Subscription } from 'rxjs';
+
+import { AppComponent } from '../../../app.component';
+import { ConfigModalComponent } from '../../shared/config-modal/config-modal.component';
+
 /**
  * Declare component to be shown when the config tab is selected.
  *

@@ -1,16 +1,10 @@
-import {
-  ConfigsInterface,
-  GroupInterface,
-  GroupFolderInterface
-} from '../../../interfaces';
-import { DatabaseService } from '../database/database.service';
-import {
-  DriveMimeType,
-  DriveQueryBuilder
-} from '../../classes/drive-query-builder';
-import { GoogleService } from '../google/google.service';
 import { Injectable } from '@angular/core';
+
+import { ConfigsInterface, GroupFolderInterface, GroupInterface } from '../../../interfaces';
 import { ConfigBuilder } from '../../classes/config-builder';
+import { DriveQueryBuilder } from '../../classes/drive-query-builder';
+import { DatabaseService } from '../database/database.service';
+import { GoogleService } from '../google/google.service';
 
 /**
  * Workaround for testing

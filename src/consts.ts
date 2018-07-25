@@ -13,6 +13,11 @@ export const aoConfig: Config = {
     },
     {
       id: 2,
+      text: 'This is the presets button, it brings you to a list of presets you can choose from!',
+      path: '/app/config'
+    },
+    {
+      id: 3,
       text: 'This is the Settings page where you can manage your data.',
       path: '/app/settings'
     }

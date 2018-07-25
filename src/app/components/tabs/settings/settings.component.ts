@@ -1,8 +1,8 @@
-import { AppComponent } from './../../../app.component';
-import { AngularOnboardingService } from 'angular-onboarding';
 import { Component } from '@angular/core';
+
 import { DatabaseService } from '../../../services/database/database.service';
 import { GoogleService } from '../../../services/google/google.service';
+import { AppComponent } from './../../../app.component';
 
 /**
  * Workaround for testing

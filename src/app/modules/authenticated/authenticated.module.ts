@@ -1,9 +1,6 @@
-import { AngularOnboardingModule } from 'angular-onboarding';
 import { CommonModule } from '@angular/common';
-import { ConfigComponent } from '../../components/tabs/config/config.component';
-import { ConfigModule } from '../config/config.module';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HomeComponent } from '../../components/tabs/home/home.component';
 import {
   MatButtonModule,
   MatCardModule,
@@ -12,11 +9,15 @@ import {
   MatInputModule,
   MatListModule,
   MatSnackBarModule,
-  MatTooltipModule
+  MatTooltipModule,
 } from '@angular/material';
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { AngularOnboardingModule } from 'angular-onboarding';
+
+import { ConfigComponent } from '../../components/tabs/config/config.component';
+import { HomeComponent } from '../../components/tabs/home/home.component';
 import { SettingsComponent } from '../../components/tabs/settings/settings.component';
 import { SorterService } from '../../services/sorter/sorter.service';
+import { ConfigModule } from '../config/config.module';
 
 /**
  * Handles all authenticated components
