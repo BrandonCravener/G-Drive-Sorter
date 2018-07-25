@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+
 import { EditConfigModalComponent } from '../edit-config-modal/edit-config-modal.component';
 
 @Component({

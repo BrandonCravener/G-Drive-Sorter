@@ -1,10 +1,18 @@
-<div class="row">
+<div #settings>
+  <div class="row">
     <div class="center">
-        <button mat-raised-button color="warn" class="buttons" (click)="clearConfigs()">Clear Configurations</button>
+      <button mat-raised-button color="warn" class="buttons" (click)="clearConfigs()">Clear Configurations</button>
     </div>
-</div>
-<div class="row">
+  </div>
+  <div class="row">
     <div class="center">
-        <button mat-raised-button color="warn" class="buttons" (click)="deleteAccount()">Delete Account</button>
+      <button mat-raised-button color="warn" class="buttons" (click)="resetTour()">Reset Tour</button>
     </div>
+  </div>
+  <div class="row">
+    <div class="center">
+      <button mat-raised-button color="warn" class="buttons" (click)="deleteAccount()">Delete Account</button>
+    </div>
+  </div>
 </div>
+<ao-step id="3" [element]="settings" location="above"></ao-step>

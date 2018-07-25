@@ -1,11 +1,6 @@
-import {
-  ConfigInterface,
-  ConfigsInterface,
-  GroupFolderInterface,
-  RuleInterface,
-  FolderCreation
-} from '../../interfaces';
 import { v4 as uuid } from 'uuid';
+
+import { ConfigsInterface, FolderCreation, GroupFolderInterface, RuleInterface } from '../../interfaces';
 
 export class ConfigBuilder {
   static generateNewConfig(

@@ -1,14 +1,15 @@
-import { ConfigBuilder } from '../../classes/config-builder';
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+
 import {
-  ConfigInterface,
   ConfigsInterface,
   FolderCreation,
   GroupFolderInterface,
   JSONConfiguration,
-  RuleInterface
+  RuleInterface,
 } from '../../../interfaces';
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { ConfigBuilder } from '../../classes/config-builder';
+import { TutorialInterface } from './../../../interfaces';
 
 /**
  * Workaround for testing
@@ -22,7 +23,11 @@ export class DatabaseService {
   private _configSubject = new Subject<Boolean>();
   private configuration: JSONConfiguration = {
     configs: [],
-    activeConfig: ''
+    activeConfig: '',
+    tutorial: {
+      enabled: true,
+      location: 0
+    }
   };
   private configID: string;
 
@@ -80,12 +85,14 @@ export class DatabaseService {
         }, err => reject);
     });
   }
+
   private updateLocalConfiguration() {
     this.readConfiguration(this.configID).then(response => {
       this.configuration = JSON.parse(response.body);
       this.initalized = true;
     }, err => console.error);
   }
+
   private updateRemoteConfiguration(): Promise<void> {
     return new Promise((resolve, reject) => {
       gapi.client
@@ -104,6 +111,7 @@ export class DatabaseService {
         }, err => reject);
     });
   }
+
   /*
   Config functions
   */
@@ -179,7 +187,7 @@ export class DatabaseService {
       if (this.configuration.activeConfig) {
         this.configuration.activeConfig = '';
       }
-      this.updateRemoteConfiguration().then(res => resolve, err => reject);
+      this.updateRemoteConfiguration().then(() => resolve(), err => reject(err));
     });
   }
 
@@ -220,5 +228,17 @@ export class DatabaseService {
         resolve(0);
       }
     });
+  }
+
+  /*
+    Tutorial Functions
+  */
+  getTutorial(): TutorialInterface {
+    return this.configuration.tutorial;
+  }
+
+  updateTutorial(updated: TutorialInterface) {
+    this.configuration.tutorial = updated;
+    this.updateRemoteConfiguration().catch(err => console.error);
   }
 }

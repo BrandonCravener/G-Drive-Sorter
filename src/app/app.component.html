@@ -33,9 +33,19 @@
   </mat-toolbar-row>
 </mat-toolbar>
 <div [class.container]="authenticated" [@routerTransition]="getRouteState(route)">
-  <router-outlet #route="outlet"></router-outlet>
+  <router-outlet #routerOutlet #route="outlet"></router-outlet>
+  <ao-overlay></ao-overlay>
 </div>
 <button class="new-config-button" matTooltip="Create Config" matTooltipPosition="left" mat-fab color="accent" [@createConfigFABState]="createConfigButtonState"
-  (click)="openConfigModalFunc()">
-  <mat-icon aria-label="Create new config button.">add</mat-icon>
+(click)="openConfigModalFunc()">
+<mat-icon aria-label="Create new config button.">add</mat-icon>
 </button>
+<div *ngIf="!aoService.isFinished() && showTour" class="tour-box">
+  <p>Would you like to take a tour?</p>
+  <button mat-icon-button (click)="acceptTutorial()">
+    <mat-icon class="green" aria-label="Yes" >thumb_up</mat-icon>
+  </button>
+  <button mat-icon-button (click)="declineTutorial()">
+    <mat-icon class="red" aria-label="No">thumb_down</mat-icon>
+  </button>
+</div>

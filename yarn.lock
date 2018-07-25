@@ -551,6 +551,12 @@ amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
 
+angular-onboarding@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/angular-onboarding/-/angular-onboarding-0.1.0.tgz#7bbfb62b0854b1cecb0939c7099c58a17ec1c134"
+  dependencies:
+    tslib "^1.9.0"
+
 ansi-colors@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/ansi-colors/-/ansi-colors-1.1.0.tgz#6374b4dd5d4718ff3ce27a671a3b1cad077132a9"

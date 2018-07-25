@@ -1,8 +1,9 @@
-import { Component, NgZone, AfterViewInit } from '@angular/core';
-import { DatabaseService } from '../../../services/database/database.service';
+import { AfterViewInit, Component, NgZone } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
-import { SorterService } from '../../../services/sorter/sorter.service';
 import { Router } from '@angular/router';
+
+import { DatabaseService } from '../../../services/database/database.service';
+import { SorterService } from '../../../services/sorter/sorter.service';
 
 /**
  * Declare a component to be shown when the home tab is selected.

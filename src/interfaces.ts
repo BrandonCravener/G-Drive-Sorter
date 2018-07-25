@@ -55,7 +55,13 @@ export interface ConfigsInterface {
   groups: Array<GroupInterface>;
 }
 
+export interface TutorialInterface {
+  enabled: boolean;
+  location: number;
+}
+
 export interface JSONConfiguration {
   configs: Array<ConfigsInterface>;
   activeConfig: string;
+  tutorial: TutorialInterface;
 }

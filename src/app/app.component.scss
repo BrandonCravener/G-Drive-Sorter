@@ -89,6 +89,24 @@ nav.mat-tab-nav-bar {
   opacity: 0;
 }
 
+.tour-box {
+  right: 0;
+  bottom: 20px;
+  padding: 8px;
+  position: fixed;
+  border-radius: 4px 0 0 4px;
+  background-color: #B9F6CA;
+  p {
+    margin: 0;
+  }
+  .green {
+    color: green;
+  }
+  .red {
+    color: red;
+  }
+}
+
 @keyframes squareAnimation {
   0% {
     transform: translateY(0) rotate(0);

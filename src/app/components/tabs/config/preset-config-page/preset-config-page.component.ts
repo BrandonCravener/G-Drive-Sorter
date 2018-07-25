@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+
 import { PresetConfigComponent } from '../preset-config/preset-config.component';
 
 @Component({

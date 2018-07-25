@@ -1,6 +1,7 @@
-import { CanActivate, Router } from '@angular/router';
-import { GoogleService } from '../google/google.service';
 import { Injectable, NgZone } from '@angular/core';
+import { CanActivate, Router } from '@angular/router';
+
+import { GoogleService } from '../google/google.service';
 
 /**
  * Prevent a user from accessing a route if they aren't authenticated.

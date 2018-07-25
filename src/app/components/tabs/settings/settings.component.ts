@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+
 import { DatabaseService } from '../../../services/database/database.service';
 import { GoogleService } from '../../../services/google/google.service';
+import { AppComponent } from './../../../app.component';
 
 /**
  * Workaround for testing
@@ -24,15 +26,22 @@ export class SettingsComponent {
    * @memberof SettingsComponent
    */
   constructor(
+    private app: AppComponent,
     private google: GoogleService,
-    private database: DatabaseService
+    private database: DatabaseService,
   ) {}
 
   clearConfigs() {
     this.database.clearConfigs().catch(err => console.error);
   }
 
+  resetTour() {
+    this.app.showTour = true;
+    this.app.aoService.reset();
+  }
+
   deleteAccount() {
+    this.resetTour();
     this.database.clearConfigs().then(() => {
       this.google.signOut();
     }, err => console.error);

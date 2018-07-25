@@ -1,28 +1,12 @@
-import {
-  AfterViewInit,
-  Component,
-  EventEmitter,
-  forwardRef,
-  Input,
-  NgZone,
-  OnInit,
-  Output,
-  ViewChild
-} from '@angular/core';
-import {
-  ControlValueAccessor,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  NG_VALUE_ACCESSOR,
-  Validators
-} from '@angular/forms';
-import { GoogleService } from '../../../services/google/google.service';
+import { StepperSelectionEvent } from '@angular/cdk/stepper';
+import { Component, EventEmitter, Input, NgZone, OnInit, Output, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatVerticalStepper } from '@angular/material';
 import { Router } from '@angular/router';
-import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { v4 as uuid } from 'uuid';
+
 import { RuleInterface } from '../../../../interfaces';
+import { GoogleService } from '../../../services/google/google.service';
 
 @Component({
   selector: 'app-new-rule-stepper',

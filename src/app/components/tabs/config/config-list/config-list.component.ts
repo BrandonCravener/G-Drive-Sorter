@@ -1,31 +1,13 @@
-import { BehaviorSubject } from 'rxjs';
-import {
-  Component,
-  NgZone,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-  ChangeDetectorRef,
-  AfterViewInit
-} from '@angular/core';
-import { ConfigComponent } from '../config.component';
-import { createDirective } from '@angular/compiler/src/core';
-import { DatabaseService } from '../../../../services/database/database.service';
-import { DataSource } from '@angular/cdk/collections';
-import { EditConfigModalComponent } from '../../../shared/edit-config-modal/edit-config-modal.component';
-import {
-  MatDialog,
-  MatPaginator,
-  MatTable,
-  MatTableDataSource
-} from '@angular/material';
-import { Observable } from 'rxjs';
+import { AfterViewInit, ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatPaginator } from '@angular/material';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { PresetConfigComponent } from '../preset-config/preset-config.component';
-import { GoogleService } from '../../../../services/google/google.service';
-import { ConfigsInterface } from '../../../../../interfaces';
+
 import { ConfigDataSource } from '../../../../classes/config-data-source';
+import { DatabaseService } from '../../../../services/database/database.service';
+import { GoogleService } from '../../../../services/google/google.service';
+import { EditConfigModalComponent } from '../../../shared/edit-config-modal/edit-config-modal.component';
+import { PresetConfigComponent } from '../preset-config/preset-config.component';
 
 @Component({
   selector: 'app-config-list',
