@@ -40,7 +40,7 @@
 (click)="openConfigModalFunc()">
 <mat-icon aria-label="Create new config button.">add</mat-icon>
 </button>
-<div *ngIf="!aoService.isFinished() && showTour" class="tour-box">
+<div *ngIf="!aoService.isFinished() && showTour && authenticated" class="tour-box">
   <p>Would you like to take a tour?</p>
   <button mat-icon-button (click)="acceptTutorial()">
     <mat-icon class="green" aria-label="Yes" >thumb_up</mat-icon>
